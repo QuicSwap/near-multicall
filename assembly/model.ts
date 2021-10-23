@@ -24,3 +24,9 @@ export class SwapAction {
   // Required minimum amount of token_out.
   min_amount_out: u128;
 }
+
+@nearBindgen
+export class FtOnTransferMessage {
+  func: string;  // name of function to call
+  args: ContractCall[][]; // function arguments
+}

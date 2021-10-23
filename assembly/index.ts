@@ -1,15 +1,16 @@
-import { context, ContractPromiseBatch, ContractPromise, storage, PersistentMap, u128 } from 'near-sdk-as';
+import { logging, context, ContractPromiseBatch, ContractPromise, storage, PersistentUnorderedMap, u128 } from 'near-sdk-as';
 import { JSON } from 'assemblyscript-json';
 import { Buffer } from 'assemblyscript-json/util';
 import { ContractCall } from './model';
 import { StorageCostUtils } from './utils';
 
-const whitelist = new PersistentMap<string, boolean>('a');
+const admins = new PersistentUnorderedMap<string, boolean>('a');
+const tokens = new PersistentUnorderedMap<string, boolean>('b');
 const storageCosts = new StorageCostUtils();
 
 
-export function parallel(schedules: ContractCall[][]): void {
-  _is_whitelisted();
+export function multicall(schedules: ContractCall[][]): void {
+  _is_whitelisted(context.predecessor);
 
   assert(schedules.length != 0, "schedules cannot be empty");
 
@@ -73,23 +74,13 @@ export function parallel(schedules: ContractCall[][]): void {
   for (let i = 0; i < schedules.length; i++) {
 
     // inner loop is sequential
-    _internal_sequential(schedules[i]);
+    _sequential(schedules[i]);
 
   }
 
 }
 
-export function sequential(schedule: ContractCall[]): void {
-  _is_whitelisted();
-
-  assert(schedule.length != 0, "schedule cannot be empty");
-  assert(u128.le(schedule[0].depo, context.accountBalance), "insufficient funds");
-
-  _internal_sequential(schedule);
-
-}
-
-function _internal_sequential(schedule: ContractCall[]): void {
+function _sequential(schedule: ContractCall[]): void {
 
   // initial promise
   let promise: ContractPromise = ContractPromise.create(
@@ -117,9 +108,32 @@ function _internal_sequential(schedule: ContractCall[]): void {
   }
 }
 
+export function ft_on_transfer(sender_id: string, amount: u128, msg: string): u128 {
+  assert(tokens.contains(context.predecessor), context.predecessor + " needs to be whitelisted to call this function");
+  _is_whitelisted(sender_id);
+
+  // TODO: testing only
+  logging.log("prepaidGas:" + context.prepaidGas.toString() + " usedGas:" + context.usedGas.toString());
+
+  ContractPromise.create(
+
+    context.contractName,
+    "multicall",
+    Buffer.fromString(msg),
+    context.prepaidGas - context.usedGas - 15000000000000,
+    u128.Zero
+
+  );
+
+  // TODO: testing only
+  logging.log("prepaidGas:" + context.prepaidGas.toString() + " usedGas:" + context.usedGas.toString());
+
+  return u128.Zero;
+}
+
 // recover near funds. If amount is 0 then empty all contract funds
 export function recover_near(account_id: string, amount: u128 = u128.Zero): void {
-  _is_whitelisted();
+  _is_whitelisted(context.predecessor);
   if (amount == u128.Zero) {
     // calculate amount reserved for storage
     const minStorageAmt: u128 = get_min_storage_balance();
@@ -134,24 +148,44 @@ export function get_min_storage_balance () : u128 {
   return storageLockedAmt;
 }
 
-export function whitelist_add(account_ids: string[]): void {
-  _is_whitelisted();
+export function admins_add(account_ids: string[]): void {
+  _is_whitelisted(context.predecessor);
   for (let i = 0; i < account_ids.length; i++)
-    whitelist.set(account_ids[i], true);
+    admins.set(account_ids[i], true);
 }
 
-export function whitelist_remove(account_ids: string[]): void {
-  _is_whitelisted();
+export function admins_remove(account_ids: string[]): void {
+  _is_whitelisted(context.predecessor);
   for (let i = 0; i < account_ids.length; i++)
-    whitelist.delete(account_ids[i]);
+    admins.delete(account_ids[i]);
+}
+
+export function get_admins(start: i32 = 0, end: i32 = admins.length): string[] {
+  return admins.keys(start, end);
+}
+
+export function tokens_add(addresses: string[]): void {
+  _is_whitelisted(context.predecessor);
+  for (let i = 0; i < addresses.length; i++)
+    tokens.set(addresses[i], true);
+}
+
+export function tokens_remove(addresses: string[]): void {
+  _is_whitelisted(context.predecessor);
+  for (let i = 0; i < addresses.length; i++)
+    tokens.delete(addresses[i]);
+}
+
+export function get_tokens(start: i32 = 0, end: i32 = tokens.length): string[] {
+  return tokens.keys(start, end);
 }
 
 export function init(account_ids: string[]): void {
   assert(storage.get<string>("init") == null, "Already initialized");
   // whitelist contract address to allow nested calls
-  whitelist.set(context.contractName, true);
+  admins.set(context.contractName, true);
   for (let i = 0; i < account_ids.length; i++) {
-    whitelist.set(account_ids[i], true);
+    admins.set(account_ids[i], true);
   }
   storage.set("init", "done");
 }
@@ -159,7 +193,7 @@ export function init(account_ids: string[]): void {
 
 // helper to withdraw from Ref and transfer to DAO
 export function withdraw_from_ref(ref_address: string, tokens: string[], receiver_id: string, withdrawal_gas: u64, token_transfer_gas: u64): void {
-  _is_whitelisted();
+  _is_whitelisted(context.predecessor);
 
   // Get all results
   let results = ContractPromise.getResults();
@@ -196,6 +230,6 @@ export function withdraw_from_ref(ref_address: string, tokens: string[], receive
 
 }
 
-function _is_whitelisted(): void {
-  assert(whitelist.contains(context.predecessor), context.predecessor + " needs to be whitelisted to call this function");
+function _is_whitelisted(account_id: string): void {
+  assert(admins.contains(account_id), account_id + " needs to be whitelisted to call this function");
 }
