@@ -26,7 +26,32 @@ export class SwapAction {
 }
 
 @nearBindgen
-export class FtOnTransferMessage {
-  func: string;  // name of function to call
-  args: ContractCall[][]; // function arguments
+export class MulticallArgs {
+  schedules: ContractCall[][]; // function arguments
 }
+
+/*
+import { JSON } from 'assemblyscript-json';
+class JSONSchema {
+  firstName: string
+  lastName: string
+  age: i32
+}
+const msg = '{"firstName":"Satoshi","lastName":"Nakamoto","age":420}';
+
+// WHAT I WANT
+const person1: JSONSchema = JSON.parse<JSONSchema>(msg);
+
+// WHAT I HAVE
+let jsonObj: JSON.Obj = <JSON.Obj>(JSON.parse(msg));
+let firstNameOrNull: JSON.Str | null = jsonObj.getString("firstName");
+let lastNameOrNull: JSON.Str | null = jsonObj.getString("lastName");
+let ageOrNull: JSON.Num | null = jsonObj.getNum("lastName");
+if (firstNameOrNull != null && lastNameOrNull != null && ageOrNull != null) {
+  const firstName = <string> firstNameOrNull.valueOf();
+  const lastName = <string> lastNameOrNull.valueOf();
+  const age = <i32> ageOrNull.valueOf();
+  const person2 = new JSONSchema();
+  person2.firstName = firstName; person2.lastName = lastName; person2.age = age;
+}
+*/

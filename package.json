@@ -4,6 +4,7 @@
   "version": "1.0.0",
   "dependencies": {
     "assemblyscript-json": "^1.1.0",
+    "json-as": "^0.2.1",
     "near-sdk-as": "^3.2.3"
   }
 }

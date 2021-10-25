@@ -1,7 +1,8 @@
 import { logging, context, ContractPromiseBatch, ContractPromise, storage, PersistentUnorderedMap, u128 } from 'near-sdk-as';
 import { JSON } from 'assemblyscript-json';
+import { JSON as JSONAS } from 'json-as';
 import { Buffer } from 'assemblyscript-json/util';
-import { ContractCall } from './model';
+import { ContractCall, MulticallArgs } from './model';
 import { StorageCostUtils } from './utils';
 
 const admins = new PersistentUnorderedMap<string, boolean>('a');
@@ -11,7 +12,10 @@ const storageCosts = new StorageCostUtils();
 
 export function multicall(schedules: ContractCall[][]): void {
   _is_whitelisted(context.predecessor);
+  _internal_multicall(schedules);
+}
 
+function _internal_multicall(schedules: ContractCall[][]): void {
   assert(schedules.length != 0, "schedules cannot be empty");
 
   // group 1-element schedules with same target address into batch calls for gas efficiency
@@ -80,6 +84,9 @@ export function multicall(schedules: ContractCall[][]): void {
 
 }
 
+/**
+ * turn an array of contract calls into a promise chain 
+ */
 function _sequential(schedule: ContractCall[]): void {
 
   // initial promise
@@ -112,26 +119,29 @@ export function ft_on_transfer(sender_id: string, amount: u128, msg: string): u1
   assert(tokens.contains(context.predecessor), context.predecessor + " needs to be whitelisted to call this function");
   _is_whitelisted(sender_id);
 
-  // TODO: testing only
-  logging.log("prepaidGas:" + context.prepaidGas.toString() + " usedGas:" + context.usedGas.toString());
+  const parsed: ContractCall[][] = JSONAS.parse<ContractCall[][]>(msg);
+  _internal_multicall(parsed);
 
-  ContractPromise.create(
+  /*
+  // Parse an object using the JSON object
+  let jsonObj: JSON.Obj = <JSON.Obj>(JSON.parse(msg));
 
-    context.contractName,
-    "multicall",
-    Buffer.fromString(msg),
-    context.prepaidGas - context.usedGas - 15000000000000,
-    u128.Zero
+  let arrayOrNull: JSON.Arr | null = jsonObj.getArr("schedules"); // This will return a JSON.Str or null
+  if (arrayOrNull != null) {
+    // use .valueOf() to turn the high level JSON.Arr type into a string
+    const schedules_1: JSON.Obj[] = <JSON.Obj[]> arrayOrNull.valueOf();
+    const schedules_2 = <> schedules_1.;
 
-  );
-
-  // TODO: testing only
-  logging.log("prepaidGas:" + context.prepaidGas.toString() + " usedGas:" + context.usedGas.toString());
+  }
+  */
 
   return u128.Zero;
 }
 
-// recover near funds. If amount is 0 then empty all contract funds
+/**
+ * recover near funds from the contract.
+ * If amount is 0 then empty all contract funds. 
+ */
 export function recover_near(account_id: string, amount: u128 = u128.Zero): void {
   _is_whitelisted(context.predecessor);
   if (amount == u128.Zero) {
@@ -191,7 +201,9 @@ export function init(account_ids: string[]): void {
 }
 
 
-// helper to withdraw from Ref and transfer to DAO
+/**
+ * helper to withdraw from Ref-finance to a given account
+ */
 export function withdraw_from_ref(ref_address: string, tokens: string[], receiver_id: string, withdrawal_gas: u64, token_transfer_gas: u64): void {
   _is_whitelisted(context.predecessor);
 
