@@ -11,13 +11,13 @@
       "optimize": true,
       "optimizeLevel": 3,
       "converge": true,
-      "binaryFile": "./out/release/contract.wasm",
-      "textFile": "./out/release/contract.wat"
+      "binaryFile": "./res/release/contract.wasm",
+      "textFile": "./res/release/contract.wat"
     },
     "debug": {
       "debug": true,
-      "binaryFile": "./out/debug/contract.wasm",
-      "textFile": "./out/debug/contract.wat"
+      "binaryFile": "./res/debug/contract.wasm",
+      "textFile": "./res/debug/contract.wat"
     }
   },
   "experimentalDecorators": true
