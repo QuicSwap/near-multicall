@@ -19,12 +19,12 @@ export class ContractCallUtils {
     let gasOrNull: JSON.Str | null = jsonObj.getString("gas");
     let depoOrNull: JSON.Str | null = jsonObj.getString("depo");
     if (addrOrNull != null && funcOrNull != null && argsOrNull != null && gasOrNull != null && depoOrNull != null) {
-      const cAddr = <string> addrOrNull.valueOf();
-      const cFunc = <string> funcOrNull.valueOf();
-      const cArgs = <string> argsOrNull.valueOf();
-      const cGas = <string> gasOrNull.valueOf();
-      const cDepo = <u128> u128.fromString(depoOrNull.valueOf());
-      const cCall: ContractCall = {addr: cAddr, func: cFunc, args: cArgs, gas: <u64> parseInt(cGas), depo: cDepo}; 
+      const cAddr: string = addrOrNull.valueOf();
+      const cFunc: string = funcOrNull.valueOf();
+      const cArgs: string = argsOrNull.valueOf();
+      const cGas: u64 = <u64> parseInt(gasOrNull.valueOf());
+      const cDepo: u128 = u128.fromString(depoOrNull.valueOf());
+      const cCall: ContractCall = {addr: cAddr, func: cFunc, args: cArgs, gas: cGas, depo: cDepo}; 
       return cCall;
     }
     return null;

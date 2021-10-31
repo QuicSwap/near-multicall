@@ -1,4 +1,4 @@
-import { logging, context, ContractPromiseBatch, ContractPromise, storage, PersistentUnorderedMap, u128 } from 'near-sdk-as';
+import { context, ContractPromiseBatch, ContractPromise, storage, PersistentUnorderedMap, u128 } from 'near-sdk-as';
 //import { JSON as AS_JSON } from 'assemblyscript-json';
 import { JSON } from 'assemblyscript-json';
 import { Buffer } from 'assemblyscript-json/util';
@@ -119,23 +119,35 @@ export function ft_on_transfer(sender_id: string, amount: u128, msg: string): u1
   assert(tokens.contains(context.predecessor), context.predecessor + " needs to be whitelisted to call this function");
   _is_whitelisted(sender_id);
 
-  let multicallArgs: ContractCall[][] = [];
   let jsonObj: JSON.Obj = <JSON.Obj>(JSON.parse(msg));
-  let schedulesArrOrNull: JSON.Arr | null = jsonObj.getArr("schedules");
-  if (schedulesArrOrNull != null) {
-    let schedulesArr: JSON.Value[] = schedulesArrOrNull.valueOf();
-    for (let i = 0; i < schedulesArr.length; i++) {
-      multicallArgs[i] = [];
-      let currentSchedule: JSON.Value[] = (<JSON.Arr> schedulesArr[i]).valueOf();
-      for (let j = 0; j < currentSchedule.length; j++) {
-        const parsedCallOrNull: ContractCall | null = contractCallsUtils.fromJsonObj(<JSON.Obj> currentSchedule[j]);
-        assert(parsedCallOrNull != null, `could not parse contract call ${j.toString()} of schedule ${i.toString()}`);
-        const parsedCall = <ContractCall> parsedCallOrNull;
-        multicallArgs[i].push(parsedCall);
+  let funcToCallOrNull: JSON.Str | null = jsonObj.getString("function");
+  if (funcToCallOrNull != null) {
+    let funcToCall: string = funcToCallOrNull.valueOf();
+    // decode the respective function arguments
+    if (funcToCall == "multicall") {
+      let argsOrNull: JSON.Obj | null = jsonObj.getObj("args");
+      assert(argsOrNull != null, "error parsing multicall arguments");
+      // parse multicall args
+      let multicallArgs: ContractCall[][] = [];
+      let args: JSON.Obj = <JSON.Obj> argsOrNull;
+      let schedulesArrOrNull: JSON.Arr | null = args.getArr("schedules");
+      if (schedulesArrOrNull != null) {
+        let schedulesArr: JSON.Value[] = schedulesArrOrNull.valueOf();
+        for (let i = 0; i < schedulesArr.length; i++) {
+          multicallArgs[i] = [];
+          let currentSchedule: JSON.Value[] = (<JSON.Arr> schedulesArr[i]).valueOf();
+          for (let j = 0; j < currentSchedule.length; j++) {
+            const parsedCallOrNull: ContractCall | null = contractCallsUtils.fromJsonObj(<JSON.Obj> currentSchedule[j]);
+            assert(parsedCallOrNull != null, `could not parse contract call ${j.toString()} of schedule ${i.toString()}`);
+            const parsedCall = <ContractCall> parsedCallOrNull;
+            multicallArgs[i].push(parsedCall);
+          }
+        }
       }
+      // call multicall
+      _internal_multicall(multicallArgs);
     }
   }
-  _internal_multicall(multicallArgs);
   
   return u128.Zero;
 }
