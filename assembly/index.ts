@@ -1,12 +1,15 @@
 import { context, ContractPromiseBatch, ContractPromise, storage, PersistentUnorderedMap, u128 } from 'near-sdk-as';
-//import { JSON as AS_JSON } from 'assemblyscript-json';
 import { JSON } from 'assemblyscript-json';
 import { Buffer } from 'assemblyscript-json/util';
-import { ContractCall } from './model';
+import { ContractCall, Job } from './model';
 import { StorageCostUtils, ContractCallUtils } from './utils';
 
 const admins = new PersistentUnorderedMap<string, boolean>('a');
 const tokens = new PersistentUnorderedMap<string, boolean>('b');
+const jobs = new PersistentUnorderedMap<i32, Job>('c');
+const INIT_KEY: string = "init";
+const JOB_BOND_KEY: string = "job_bond";
+const JOB_ID_KEY: string = "next_job_id";
 const storageCosts = new StorageCostUtils();
 const contractCallsUtils = new ContractCallUtils();
 
@@ -205,13 +208,14 @@ export function get_tokens(start: i32 = 0, end: i32 = tokens.length): string[] {
 }
 
 export function init(account_ids: string[]): void {
-  assert(storage.get<string>("init") == null, "Already initialized");
+  assert(storage.get<string>(INIT_KEY) == null, "Already initialized");
+
   // whitelist contract address to allow nested calls
   admins.set(context.contractName, true);
   for (let i = 0; i < account_ids.length; i++) {
     admins.set(account_ids[i], true);
   }
-  storage.set("init", "done");
+  storage.set(INIT_KEY, "done");
 }
 
 
@@ -258,4 +262,112 @@ export function withdraw_from_ref(ref_address: string, tokens: string[], receive
 
 function _is_whitelisted(account_id: string): void {
   assert(admins.contains(account_id), account_id + " needs to be whitelisted to call this function");
+}
+
+
+// Job functions
+
+/**
+ * admins can set NEAR amount required to register a job
+ * since anyone is able to submit jobs, bond is necessary to protecc from spam
+ * 
+ * @param amount
+ */
+export function job_set_bond (amount: u128): void {
+  _is_whitelisted(context.predecessor);
+  storage.set<string>(JOB_BOND_KEY, amount.toString());  
+}
+
+export function job_get_bond (): u128 | null {
+  let jobBondOrNull: string | null = storage.get<string>(JOB_BOND_KEY);
+  return (jobBondOrNull == null) ? null : u128.fromString(<string> jobBondOrNull);
+}
+
+/**
+ * change a job's running state.
+ * true means active. False means inactive
+ * 
+ * @param job_id 
+ * @param running_state 
+ */
+
+// TODO: pay back the bond if turned on the first time.
+// after repaying set the job's bond to zero
+export function job_set_running_state (job_id: i32, running_state: boolean): void {
+  _is_whitelisted(context.predecessor);
+
+  // check that u can pay
+  // set bond to zero
+  // send money
+  let aJobOrNull: Job | null = jobs.get(job_id);
+  if (aJobOrNull != null) {
+    let aJob: Job = <Job> aJobOrNull;
+    aJob.is_active = running_state;
+  }
+}
+
+/**
+ * register a new job.
+ * First: a job is created, anyone can do this after paying a bond
+ * Second: admin sets job state to enabled
+ * third: a job can be triggered by anyone
+ * 
+ */
+// TODO
+export function job_add (
+    job_schedules: ContractCall[][],
+    job_interval: u64,
+    job_runs_max: u64,
+    job_start_at: u64 = context.blockTimestamp
+  ): i32 
+  {
+  // anyone can call this
+  let bondAmountOrNull: string | null = storage.get<string>(JOB_BOND_KEY);
+  assert(bondAmountOrNull != null, "current job bond amount is null");
+  let bondAmount: u128 = u128.fromString(<string> bondAmountOrNull);
+
+  // TODO: calculate non-locked amount, use that instead of attached deposit
+  assert(u128.ge(context.attachedDeposit, bondAmount), "attached deposit must be greater or equal than the required bond");
+  let jobIdOrNull: string | null =  storage.get<string>(JOB_ID_KEY);
+  let newJob: Job = {
+    job_id: (jobIdOrNull == null) ? <i32> 0 : <i32> parseInt(<string> jobIdOrNull),
+    creator: context.predecessor,
+    bond: bondAmount,
+    start_at: job_start_at,
+    runs_interval: job_interval,
+    runs_max: job_runs_max,
+    runs_current: 0,
+    is_active: false,
+    schedules: job_schedules
+  };
+  storage.set<string>(JOB_ID_KEY, (newJob.job_id + 1).toString());
+
+  return newJob.job_id;
+}
+
+/**
+ * multicall jobs can take lots of memory, thus locking part of the
+ * contract funds. Admins can free up space by deleting some jobs.
+ * 
+ * @param job_ids 
+ */
+export function job_remove (job_ids: i32[]): void {
+  _is_whitelisted(context.predecessor);
+  for (let i = 0; i < job_ids.length; i++)
+    jobs.delete(job_ids[i]);
+}
+
+/**
+ * list all registered jobs
+ * 
+ * @param start 
+ * @param end 
+ */
+export function get_jobs(start: i32 = 0, end: i32 = jobs.length): Job[] {
+  return jobs.values(start, end);
+}
+
+// TODO
+export function job_trigger (job_id: i32): void {
+  // anyone
 }

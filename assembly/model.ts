@@ -24,3 +24,16 @@ export class SwapAction {
   // Required minimum amount of token_out.
   min_amount_out: u128;
 }
+
+@nearBindgen
+export class Job {
+  job_id: i32;
+  creator: string;
+  bond: u128;
+  start_at: U64;
+  runs_interval: u64;
+  runs_max: u64;
+  runs_current: u64;
+  is_active: boolean;
+  schedules: ContractCall[][];
+}
