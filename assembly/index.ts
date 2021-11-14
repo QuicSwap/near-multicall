@@ -45,7 +45,7 @@ function _internal_multicall(schedules: ContractCall[][]): void {
     }
   }
 
-  assert(u128.le(totalDeposits, u128.sub(context.accountBalance, get_min_storage_balance())), "insufficient funds");
+  assert(u128.le(totalDeposits, u128.sub(context.accountBalance, storageCosts.get_min_storage_balance())), "funds insufficient for attached deposits");
 
   const batchGroups: ContractCall[][] = batches.values();
 
@@ -163,16 +163,10 @@ export function recover_near(account_id: string, amount: u128 = u128.Zero): void
   _is_whitelisted(context.predecessor);
   if (amount == u128.Zero) {
     // calculate amount reserved for storage
-    const minStorageAmt: u128 = get_min_storage_balance();
+    const minStorageAmt: u128 = storageCosts.get_min_storage_balance();
     amount = u128.sub(context.accountBalance, minStorageAmt);
   }
   ContractPromiseBatch.create(account_id).transfer(amount);
-}
-
-export function get_min_storage_balance () : u128 {
-  // calculate amount reserved for storage
-  const storageLockedAmt: u128 = u128.mul(storageCosts.storage_byte_cost() , u128.fromU64(context.storageUsage));
-  return storageLockedAmt;
 }
 
 export function admins_add(account_ids: string[]): void {
@@ -284,24 +278,23 @@ export function job_get_bond (): u128 | null {
 }
 
 /**
- * change a job's running state.
- * true means active. False means inactive
+ * change a job's running state. true for active. False otherwise.
+ * first time a job is set to running, the bond is reimbursed
  * 
  * @param job_id 
  * @param running_state 
  */
-
-// TODO: pay back the bond if turned on the first time.
-// after repaying set the job's bond to zero
 export function job_set_running_state (job_id: i32, running_state: boolean): void {
   _is_whitelisted(context.predecessor);
 
-  // check that u can pay
-  // set bond to zero
-  // send money
   let aJobOrNull: Job | null = jobs.get(job_id);
   if (aJobOrNull != null) {
     let aJob: Job = <Job> aJobOrNull;
+    if (u128.gt(aJob.bond, u128.Zero) && running_state == true) {
+      assert(u128.le(aJob.bond, u128.sub(context.accountBalance, storageCosts.get_min_storage_balance())), "funds insufficient for repaying bond");
+      aJob.bond = u128.Zero;
+      ContractPromiseBatch.create(aJob.creator).transfer(aJob.bond);
+    }
     aJob.is_active = running_state;
   }
 }
@@ -326,7 +319,6 @@ export function job_add (
   assert(bondAmountOrNull != null, "current job bond amount is null");
   let bondAmount: u128 = u128.fromString(<string> bondAmountOrNull);
 
-  // TODO: calculate non-locked amount, use that instead of attached deposit
   assert(u128.ge(context.attachedDeposit, bondAmount), "attached deposit must be greater or equal than the required bond");
   let jobIdOrNull: string | null =  storage.get<string>(JOB_ID_KEY);
   let newJob: Job = {
@@ -341,6 +333,8 @@ export function job_add (
     schedules: job_schedules
   };
   storage.set<string>(JOB_ID_KEY, (newJob.job_id + 1).toString());
+  // TODO: fix saving jobs to storage
+  jobs.set(newJob.job_id, newJob);
 
   return newJob.job_id;
 }
@@ -367,7 +361,20 @@ export function get_jobs(start: i32 = 0, end: i32 = jobs.length): Job[] {
   return jobs.values(start, end);
 }
 
-// TODO
+/**
+ * trigger execution of an activated job
+ * 
+ * @param job_id 
+ */
 export function job_trigger (job_id: i32): void {
-  // anyone
+
+  let aJobOrNull: Job | null = jobs.get(job_id);
+  assert(aJobOrNull != null, `job with ID ${job_id} not found`);
+  let aJob: Job = <Job> aJobOrNull;
+  if (aJob.runs_current >= aJob.runs_max) aJob.is_active = false;
+  assert(aJob.is_active == true, `job with ID ${job_id} must be activated`);
+  assert(context.blockTimestamp >= aJob.start_at, "pleae wait for job start time");
+  // TODO: assert that the time for execution is according to some schedule
+  _internal_multicall(aJob.schedules);
+  aJob.runs_current += 1;
 }

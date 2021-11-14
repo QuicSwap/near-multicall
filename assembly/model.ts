@@ -30,7 +30,7 @@ export class Job {
   job_id: i32;
   creator: string;
   bond: u128;
-  start_at: U64;
+  start_at: u64;
   runs_interval: u64;
   runs_max: u64;
   runs_current: u64;
