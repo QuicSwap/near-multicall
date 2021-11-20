@@ -27,7 +27,7 @@ export class SwapAction {
 
 @nearBindgen
 export class Job {
-  job_id: i32;
+  id: i32;
   creator: string;
   bond: u128;
   start_at: u64;

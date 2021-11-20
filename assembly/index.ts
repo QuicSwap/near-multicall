@@ -1,4 +1,4 @@
-import { context, ContractPromiseBatch, ContractPromise, storage, PersistentUnorderedMap, u128 } from 'near-sdk-as';
+import { context, ContractPromiseBatch, ContractPromise, storage, PersistentUnorderedMap, logging, u128 } from 'near-sdk-as';
 import { JSON } from 'assemblyscript-json';
 import { Buffer } from 'assemblyscript-json/util';
 import { ContractCall, Job } from './model';
@@ -14,7 +14,7 @@ const storageCosts = new StorageCostUtils();
 const contractCallsUtils = new ContractCallUtils();
 
 export function multicall(schedules: ContractCall[][]): void {
-  _is_whitelisted(context.predecessor);
+  _is_admin(context.predecessor);
   _internal_multicall(schedules);
 }
 
@@ -119,8 +119,8 @@ function _sequential(schedule: ContractCall[]): void {
 }
 
 export function ft_on_transfer(sender_id: string, amount: u128, msg: string): u128 {
-  assert(tokens.contains(context.predecessor), context.predecessor + " needs to be whitelisted to call this function");
-  _is_whitelisted(sender_id);
+  assert(tokens.contains(context.predecessor), `${context.predecessor} needs to be an admin`);
+  _is_admin(sender_id);
 
   let jsonObj: JSON.Obj = <JSON.Obj>(JSON.parse(msg));
   let funcToCallOrNull: JSON.Str | null = jsonObj.getString("function");
@@ -160,7 +160,7 @@ export function ft_on_transfer(sender_id: string, amount: u128, msg: string): u1
  * If amount is 0 then empty all contract funds. 
  */
 export function recover_near(account_id: string, amount: u128 = u128.Zero): void {
-  _is_whitelisted(context.predecessor);
+  _is_admin(context.predecessor);
   if (amount == u128.Zero) {
     // calculate amount reserved for storage
     const minStorageAmt: u128 = storageCosts.get_min_storage_balance();
@@ -170,13 +170,13 @@ export function recover_near(account_id: string, amount: u128 = u128.Zero): void
 }
 
 export function admins_add(account_ids: string[]): void {
-  _is_whitelisted(context.predecessor);
+  _is_admin(context.predecessor);
   for (let i = 0; i < account_ids.length; i++)
     admins.set(account_ids[i], true);
 }
 
 export function admins_remove(account_ids: string[]): void {
-  _is_whitelisted(context.predecessor);
+  _is_admin(context.predecessor);
   for (let i = 0; i < account_ids.length; i++)
     admins.delete(account_ids[i]);
 }
@@ -186,13 +186,13 @@ export function get_admins(start: i32 = 0, end: i32 = admins.length): string[] {
 }
 
 export function tokens_add(addresses: string[]): void {
-  _is_whitelisted(context.predecessor);
+  _is_admin(context.predecessor);
   for (let i = 0; i < addresses.length; i++)
     tokens.set(addresses[i], true);
 }
 
 export function tokens_remove(addresses: string[]): void {
-  _is_whitelisted(context.predecessor);
+  _is_admin(context.predecessor);
   for (let i = 0; i < addresses.length; i++)
     tokens.delete(addresses[i]);
 }
@@ -204,7 +204,7 @@ export function get_tokens(start: i32 = 0, end: i32 = tokens.length): string[] {
 export function init(account_ids: string[]): void {
   assert(storage.get<string>(INIT_KEY) == null, "Already initialized");
 
-  // whitelist contract address to allow nested calls
+  // add contract address as admin to allow nested calls
   admins.set(context.contractName, true);
   for (let i = 0; i < account_ids.length; i++) {
     admins.set(account_ids[i], true);
@@ -217,7 +217,7 @@ export function init(account_ids: string[]): void {
  * helper to withdraw from Ref-finance to a given account
  */
 export function withdraw_from_ref(ref_address: string, tokens: string[], receiver_id: string, withdrawal_gas: u64, token_transfer_gas: u64): void {
-  _is_whitelisted(context.predecessor);
+  _is_admin(context.predecessor);
 
   // Get all results
   let results = ContractPromise.getResults();
@@ -254,8 +254,8 @@ export function withdraw_from_ref(ref_address: string, tokens: string[], receive
 
 }
 
-function _is_whitelisted(account_id: string): void {
-  assert(admins.contains(account_id), account_id + " needs to be whitelisted to call this function");
+function _is_admin(account_id: string): void {
+  assert(admins.contains(account_id), `${account_id} must be an admin to call this function`);
 }
 
 
@@ -268,7 +268,7 @@ function _is_whitelisted(account_id: string): void {
  * @param amount
  */
 export function job_set_bond (amount: u128): void {
-  _is_whitelisted(context.predecessor);
+  _is_admin(context.predecessor);
   storage.set<string>(JOB_BOND_KEY, amount.toString());  
 }
 
@@ -278,35 +278,78 @@ export function job_get_bond (): u128 | null {
 }
 
 /**
- * change a job's running state. true for active. False otherwise.
+ * activate a job so it's ready for execution
  * first time a job is set to running, the bond is reimbursed
  * 
- * @param job_id 
+ * @param job_ids 
  * @param running_state 
  */
-export function job_set_running_state (job_id: i32, running_state: boolean): void {
-  _is_whitelisted(context.predecessor);
+export function jobs_activate (job_ids: i32[]): void {
+  _is_admin(context.predecessor);
 
-  let aJobOrNull: Job | null = jobs.get(job_id);
-  if (aJobOrNull != null) {
-    let aJob: Job = <Job> aJobOrNull;
-    if (u128.gt(aJob.bond, u128.Zero) && running_state == true) {
-      assert(u128.le(aJob.bond, u128.sub(context.accountBalance, storageCosts.get_min_storage_balance())), "funds insufficient for repaying bond");
-      aJob.bond = u128.Zero;
-      ContractPromiseBatch.create(aJob.creator).transfer(aJob.bond);
+  for (let i = 0; i < job_ids.length; i++) {
+    let aJobOrNull: Job | null = jobs.get(job_ids[i]);
+    if (aJobOrNull != null) {
+      let aJob: Job = <Job> aJobOrNull;
+      // was the job aleady activated?
+      if (aJob.is_active == true) {
+        logging.log(`job ${aJob.id} already active`);
+        continue;
+      }
+      // reimburse bond on first time activation
+      if (u128.gt(aJob.bond, u128.Zero)) {
+        assert(u128.le(aJob.bond, u128.sub(context.accountBalance, storageCosts.get_min_storage_balance())), "funds insufficient to repay bond");
+        const toReimburse: u128 = aJob.bond;
+        // setting bond to 0 indicates it's reimbursed
+        aJob.bond = u128.Zero;
+        ContractPromiseBatch.create(aJob.creator).transfer(toReimburse);
+      }
+      aJob.is_active = true;
+      jobs.set(aJob.id, aJob);
+    } else {
+      logging.log(`job ${job_ids[i]} not found`);
     }
-    aJob.is_active = running_state;
+  }
+}
+
+/**
+ * deactivate a job so it cannot be triggered
+ * 
+ * @param job_ids 
+ * @param running_state 
+ */
+ export function jobs_deactivate (job_ids: i32[]): void {
+  _is_admin(context.predecessor);
+
+  for (let i = 0; i < job_ids.length; i++) {
+    let aJobOrNull: Job | null = jobs.get(job_ids[i]);
+    if (aJobOrNull != null) {
+      let aJob: Job = <Job> aJobOrNull;
+      // was the job aleady deactivated?
+      if (aJob.is_active == false) {
+        logging.log(`job ${aJob.id} already not active`);
+        continue;
+      }
+      aJob.is_active = false;
+      jobs.set(aJob.id, aJob);
+    } else {
+      logging.log(`job ${job_ids[i]} not found`);
+    }
   }
 }
 
 /**
  * register a new job.
- * First: a job is created, anyone can do this after paying a bond
- * Second: admin sets job state to enabled
- * third: a job can be triggered by anyone
+ * First: a job is created, anyone can do this
+ * Second: admin activates the job
+ * third: a job can be triggered by CronCat
  * 
+ * @param job_schedules 
+ * @param job_interval 
+ * @param job_runs_max 
+ * @param job_start_at 
+ * @returns 
  */
-// TODO
 export function job_add (
     job_schedules: ContractCall[][],
     job_interval: u64,
@@ -314,7 +357,7 @@ export function job_add (
     job_start_at: u64 = context.blockTimestamp
   ): i32 
   {
-  // anyone can call this
+  // anyone can add jobs if they pay required bond
   let bondAmountOrNull: string | null = storage.get<string>(JOB_BOND_KEY);
   assert(bondAmountOrNull != null, "current job bond amount is null");
   let bondAmount: u128 = u128.fromString(<string> bondAmountOrNull);
@@ -322,7 +365,7 @@ export function job_add (
   assert(u128.ge(context.attachedDeposit, bondAmount), "attached deposit must be greater or equal than the required bond");
   let jobIdOrNull: string | null =  storage.get<string>(JOB_ID_KEY);
   let newJob: Job = {
-    job_id: (jobIdOrNull == null) ? <i32> 0 : <i32> parseInt(<string> jobIdOrNull),
+    id: (jobIdOrNull == null) ? <i32> 0 : <i32> parseInt(<string> jobIdOrNull),
     creator: context.predecessor,
     bond: bondAmount,
     start_at: job_start_at,
@@ -332,11 +375,10 @@ export function job_add (
     is_active: false,
     schedules: job_schedules
   };
-  storage.set<string>(JOB_ID_KEY, (newJob.job_id + 1).toString());
-  // TODO: fix saving jobs to storage
-  jobs.set(newJob.job_id, newJob);
+  storage.set<string>(JOB_ID_KEY, (newJob.id + 1).toString());
+  jobs.set(newJob.id, newJob);
 
-  return newJob.job_id;
+  return newJob.id;
 }
 
 /**
@@ -345,8 +387,8 @@ export function job_add (
  * 
  * @param job_ids 
  */
-export function job_remove (job_ids: i32[]): void {
-  _is_whitelisted(context.predecessor);
+export function jobs_remove (job_ids: i32[]): void {
+  _is_admin(context.predecessor);
   for (let i = 0; i < job_ids.length; i++)
     jobs.delete(job_ids[i]);
 }
@@ -366,15 +408,18 @@ export function get_jobs(start: i32 = 0, end: i32 = jobs.length): Job[] {
  * 
  * @param job_id 
  */
+// TODO: assert caller is CronCat agent
 export function job_trigger (job_id: i32): void {
 
   let aJobOrNull: Job | null = jobs.get(job_id);
-  assert(aJobOrNull != null, `job with ID ${job_id} not found`);
+  assert(aJobOrNull != null, `job ${job_id} not found`);
   let aJob: Job = <Job> aJobOrNull;
-  if (aJob.runs_current >= aJob.runs_max) aJob.is_active = false;
-  assert(aJob.is_active == true, `job with ID ${job_id} must be activated`);
+  assert(aJob.runs_max > aJob.runs_current, `cannot run job ${job_id} more than ${aJob.runs_max} times`);
+  assert(aJob.is_active == true, `job ${job_id} must be activated`);
   assert(context.blockTimestamp >= aJob.start_at, "pleae wait for job start time");
   // TODO: assert that the time for execution is according to some schedule
   _internal_multicall(aJob.schedules);
+  // increment runs after multicall, since it might revert
   aJob.runs_current += 1;
+  jobs.set(aJob.id, aJob);
 }
