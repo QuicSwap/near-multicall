@@ -1,27 +1,26 @@
-import { context, ContractPromiseBatch, ContractPromise, storage, PersistentUnorderedMap, logging, u128, ContractPromiseResult } from 'near-sdk-as';
+import { context, ContractPromiseBatch, ContractPromise, storage, PersistentUnorderedMap, logging, u128, base64, util } from 'near-sdk-as';
 import { JSON } from 'assemblyscript-json';
 import { Buffer } from 'assemblyscript-json/util';
 import { ContractCall, Job } from './model';
 import { StorageCostUtils, ContractCallUtils } from './utils';
-// TODO: have a look at helpful stuff from here
-import {util, base64} from 'near-sdk-core';
+
 
 const admins = new PersistentUnorderedMap<string, boolean>('a');
 const tokens = new PersistentUnorderedMap<string, boolean>('b');
 const jobs = new PersistentUnorderedMap<i32,Job>('c');
-const INIT_KEY: string = "init";
-const JOB_BOND_KEY: string = "job_bond";
-const JOB_ID_KEY: string = "next_job_id";
-const CRONCAT_MANAGER_ADDRESS = "croncat_manager_address";
+const KEY_INIT: string = "d";
+const KEY_JOB_BOND: string = "e";
+const KEY_JOB_COUNT: string = "f";
+const KEY_CRONCAT_MANAGER_ADDRESS: string = "g";
 const storageCosts = new StorageCostUtils();
 const contractCallsUtils = new ContractCallUtils();
 const ONE_TGAS: u64 = 1000000000000;
 
+
 // contract initialization steps:
 // call init() to add first admins
 // admins add whitelisted tokens
-// admins specify job_bond
-// admins specify croncat manager contract
+
 
 export function multicall(schedules: ContractCall[][]): void {
   _is_admin(context.predecessor);
@@ -221,15 +220,22 @@ export function get_tokens(start: i32 = 0, end: i32 = tokens.length): string[] {
   return tokens.keys(start, end);
 }
 
-export function init(account_ids: string[]): void {
-  assert(storage.get<string>(INIT_KEY) == null, "Already initialized");
+// TODO: only facory contract should have access to init
+export function init(admin_accounts: string[], croncat_manager: string, job_bond: u128): void {
+  assert(storage.get<string>(KEY_INIT) == null, "Already initialized");
 
   // add contract address as admin to allow nested calls
   admins.set(context.contractName, true);
-  for (let i = 0; i < account_ids.length; i++) {
-    admins.set(account_ids[i], true);
+  // add rest of admins
+  for (let i = 0; i < admin_accounts.length; i++) {
+    admins.set(admin_accounts[i], true);
   }
-  storage.set(INIT_KEY, "done");
+  // set croncat manager address
+  storage.set<string>(KEY_CRONCAT_MANAGER_ADDRESS, croncat_manager);
+  // set amount for job bond
+  storage.set<string>(KEY_JOB_BOND, job_bond.toString()); 
+
+  storage.set(KEY_INIT, "done");
 }
 
 
@@ -278,6 +284,21 @@ export function withdraw_from_ref(ref_address: string, tokens: string[], receive
 // Job functions
 
 /**
+ * set smart contract address of croncat manager
+ * croncat manager has privilege to trigger active jobs
+ * 
+ * @param address 
+ */
+export function set_croncat_manager (address: string): void {
+  _is_admin(context.predecessor);
+  storage.set<string>(KEY_CRONCAT_MANAGER_ADDRESS, address);
+}
+
+export function get_croncat_manager (): string {
+  return storage.getSome<string>(KEY_CRONCAT_MANAGER_ADDRESS);
+}
+
+/**
  * admins can set NEAR amount required to register a job
  * since anyone is able to submit jobs, bond is necessary to protecc from spam
  * 
@@ -285,11 +306,11 @@ export function withdraw_from_ref(ref_address: string, tokens: string[], receive
  */
 export function job_set_bond (amount: u128): void {
   _is_admin(context.predecessor);
-  storage.set<string>(JOB_BOND_KEY, amount.toString());  
+  storage.set<string>(KEY_JOB_BOND, amount.toString());  
 }
 
 export function job_get_bond (): u128 | null {
-  let jobBondOrNull: string | null = storage.get<string>(JOB_BOND_KEY);
+  let jobBondOrNull: string | null = storage.get<string>(KEY_JOB_BOND);
   return (jobBondOrNull == null) ? null : u128.fromString(<string> jobBondOrNull);
 }
 
@@ -309,20 +330,32 @@ export function job_activate (job_id: i32): void {
     logging.log(`job ${aJob.id} already has croncat task ${aJob.croncat_hash}`);
   } else {
     // TODO clean this
-    let buffBuffer: Uint8Array = Buffer.fromString(`{"job_id":${aJob.id}}`);
+    const GAS_JOB_ACTIVATE: u64 = 40 * ONE_TGAS;
+    const GAS_CREATE_TASK_CALLBACK: u64 = 10 * ONE_TGAS;
+    let cronArgsBuffer: Uint8Array = Buffer.fromString(`{"job_id":${aJob.id}}`);
 
     // create a croncat task
     ContractPromise.create(
-      storage.getSome<string>(CRONCAT_MANAGER_ADDRESS),
+      storage.getSome<string>(KEY_CRONCAT_MANAGER_ADDRESS),
       'create_task',
-      Buffer.fromString(`{"contract_id":"${context.contractName}","function_id":"job_trigger","cadence":"* * * * * *","recurring":false,"deposit":"0","gas":${40 * ONE_TGAS},"arguments":"${base64.encode(buffBuffer)}"}`),
-      30 * ONE_TGAS,
-      u128.fromString("100000000000000000000000")// TOOD: add total_amount
+      Buffer.fromString(
+        '{' +
+        `"contract_id":"${context.contractName}",` +
+        `"function_id":"job_trigger",` +
+        `"cadence":"${aJob.cadence}",` +
+        `"recurring":${aJob.runs_max > 1 ? true : false},` +
+        `"deposit":"${aJob.trigger_deposit}",` +
+        `"gas":${aJob.trigger_gas},` +
+        `"arguments":"${base64.encode(cronArgsBuffer)}"` +
+        '}'
+      ),
+      context.prepaidGas - GAS_JOB_ACTIVATE,
+      aJob.croncat_budget
     ).then(
       context.contractName,
       'create_task_callback',
       Buffer.fromString(`{"job_id":${aJob.id}}`),
-      7 * ONE_TGAS,
+      GAS_CREATE_TASK_CALLBACK,
       u128.Zero
     );
 
@@ -430,28 +463,37 @@ export function jobs_resume (job_ids: i32[]): void {
  */
 export function job_add (
     job_schedules: ContractCall[][],
+    job_cadence: string,
+    job_trigger_gas: u64,
+    job_trigger_deposit: u128,
+    job_total_budget: u128,
     job_runs_max: u64,
     job_start_at: u64 = context.blockTimestamp
   ): i32 
   {
   // anyone can add jobs if they pay required bond
-  let bondAmountOrNull: string | null = storage.get<string>(JOB_BOND_KEY);
+  let bondAmountOrNull: string | null = storage.get<string>(KEY_JOB_BOND);
   assert(bondAmountOrNull != null, "current job bond amount is null");
   let bondAmount: u128 = u128.fromString(<string> bondAmountOrNull);
 
   assert(u128.ge(context.attachedDeposit, bondAmount), "attached deposit must be greater or equal than the required bond");
-  let jobIdOrNull: string | null =  storage.get<string>(JOB_ID_KEY);
+  let currentJobId: i32 =  storage.getPrimitive<i32>(KEY_JOB_COUNT, 0);
   let newJob: Job = {
-    id: (jobIdOrNull == null) ? <i32> 0 : <i32> parseInt(<string> jobIdOrNull),
+    id: currentJobId,
+    croncat_hash: '', // added after croncat task creation (job activation)
     creator: context.predecessor,
     bond: bondAmount,
+    cadence: job_cadence,
+    trigger_gas: job_trigger_gas,
+    trigger_deposit: job_trigger_deposit,
+    croncat_budget: job_total_budget,
     start_at: job_start_at,
     runs_max: job_runs_max,
     runs_current: 0,
     is_active: false,
     schedules: job_schedules
   };
-  storage.set<string>(JOB_ID_KEY, (newJob.id + 1).toString());
+  storage.set<i32>(KEY_JOB_COUNT, newJob.id + 1);
   jobs.set(newJob.id, newJob);
 
   return newJob.id;
@@ -492,22 +534,15 @@ export function job_trigger (job_id: i32): void {
   let aJob: Job = <Job> aJobOrNull;
   assert(aJob.runs_max > aJob.runs_current, `cannot run job ${job_id} more than ${aJob.runs_max} times`);
   assert(aJob.is_active == true, `job ${job_id} must be activated`);
-  assert(context.blockTimestamp >= aJob.start_at, "pleae wait for job start time");
+  assert(context.blockTimestamp >= aJob.start_at, "please wait for job start time");
   _internal_multicall(aJob.schedules);
-  // increment runs after multicall, since it might revert
+  // increment runs after multicall, because it can revert
   aJob.runs_current += 1;
   jobs.set(aJob.id, aJob);
 }
 
-export function set_croncat_manager (address: string): void {
-  _is_admin(context.predecessor);
-  storage.set(CRONCAT_MANAGER_ADDRESS, address);
-}
-
-// TODO: automatically register CronCat jobs
+// TODO: automatically remove croncat tasks that reached runs_max
 // integrate Croncat CRUD operations
-// TODO: make a callback to make sure job was registered after first enable.
-// TODO: add missing attributes to JOB class
 // TODO: add Croncat class
 
 
@@ -533,15 +568,13 @@ function _is_admin(account_id: string): void {
  */
 function _is_croncat_manager(account_id: string): void {
   assert(
-    storage.getSome<string>(CRONCAT_MANAGER_ADDRESS) == account_id,
+    storage.getSome<string>(KEY_CRONCAT_MANAGER_ADDRESS) == account_id,
     `${account_id} must be croncat manager to call this function`
   );
 }
 
 /**
  * panick if caller isn't this contract's address
- * 
- * @param account_id 
  */
  function _is_private(): void {
   assert(

@@ -1,5 +1,4 @@
 import { u128 } from 'near-sdk-as';
-
 @nearBindgen
 export class ContractCall { 
   addr: string;
@@ -28,17 +27,16 @@ export class SwapAction {
 @nearBindgen
 export class Job {
   id: i32;
-  croncat_hash: string = ''; // optional because it's only added after job activation
+  croncat_hash: string;
   creator: string;
   bond: u128;
+  cadence: string;
+  trigger_gas: u64;
+  trigger_deposit: u128;
+  croncat_budget: u128;
   start_at: u64;
   runs_max: u64;
   runs_current: u64;
   is_active: boolean;
   schedules: ContractCall[][];
-}
-
-@nearBindgen
-export class Croncat {
-  
 }
