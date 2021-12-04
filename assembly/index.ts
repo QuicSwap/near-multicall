@@ -1,6 +1,5 @@
 import { context, ContractPromiseBatch, ContractPromise, storage, PersistentUnorderedMap, logging, u128, base64, util } from 'near-sdk-as';
 import { JSON } from 'assemblyscript-json';
-import { Buffer } from 'assemblyscript-json/util';
 import { ContractCall, Job } from './model';
 import { StorageCostUtils, ContractCallUtils } from './utils';
 
@@ -70,7 +69,7 @@ function _internal_multicall(schedules: ContractCall[][]): void {
     const last: i32 = batchGroups[i].length - 1;
     let promise: ContractPromiseBatch = ContractPromiseBatch.create(batchGroups[i][last].addr).function_call(
       batchGroups[i][last].func,
-      Buffer.fromString(batchGroups[i][last].args),
+      base64.decode(batchGroups[i][last].args),
       batchGroups[i][last].depo,
       batchGroups[i][last].gas
     );
@@ -79,7 +78,7 @@ function _internal_multicall(schedules: ContractCall[][]): void {
     for (let j = last - 1; j >= 0; j--) {
       promise = promise.function_call(
         batchGroups[i][j].func,
-        Buffer.fromString(batchGroups[i][j].args.replaceAll("\\\"", "\"").replaceAll("\\\\","\\")),
+        base64.decode(batchGroups[i][j].args),
         batchGroups[i][j].depo,
         batchGroups[i][j].gas
       );
@@ -106,7 +105,7 @@ function _sequential(schedule: ContractCall[]): void {
 
     schedule[0].addr,
     schedule[0].func,
-    Buffer.fromString(schedule[0].args),
+    base64.decode(schedule[0].args),
     schedule[0].gas,
     schedule[0].depo
 
@@ -119,7 +118,7 @@ function _sequential(schedule: ContractCall[]): void {
 
       schedule[i].addr,
       schedule[i].func,
-      Buffer.fromString(schedule[i].args.replaceAll("\\\"", "\"").replaceAll("\\\\","\\")),
+      base64.decode(schedule[i].args),
       schedule[i].gas,
       schedule[i].depo
 
@@ -263,13 +262,13 @@ export function withdraw_from_ref(ref_address: string, tokens: string[], receive
           ContractPromise.create(
             ref_address,
             "withdraw",
-            Buffer.fromString(`{"token_id":"${tokens[i]}","amount":"${amount}"}`),
+            util.stringToBytes(`{"token_id":"${tokens[i]}","amount":"${amount}"}`),
             withdrawal_gas,
             u128.fromString('1')
           ).then(
             tokens[i],
             "ft_transfer",
-            Buffer.fromString(`{"receiver_id": "${receiver_id}", "amount": "${amount}"}`),
+            util.stringToBytes(`{"receiver_id": "${receiver_id}", "amount": "${amount}"}`),
             token_transfer_gas,
             u128.fromString('1')
           );
@@ -332,13 +331,13 @@ export function job_activate (job_id: i32): void {
     // TODO clean this
     const GAS_JOB_ACTIVATE: u64 = 40 * ONE_TGAS;
     const GAS_CREATE_TASK_CALLBACK: u64 = 10 * ONE_TGAS;
-    let cronArgsBuffer: Uint8Array = Buffer.fromString(`{"job_id":${aJob.id}}`);
+    let croncatTaskArgs: Uint8Array = util.stringToBytes(`{"job_id":${aJob.id}}`);
 
     // create a croncat task
     ContractPromise.create(
       storage.getSome<string>(KEY_CRONCAT_MANAGER_ADDRESS),
       'create_task',
-      Buffer.fromString(
+      util.stringToBytes(
         '{' +
         `"contract_id":"${context.contractName}",` +
         `"function_id":"job_trigger",` +
@@ -346,7 +345,7 @@ export function job_activate (job_id: i32): void {
         `"recurring":${aJob.runs_max > 1 ? true : false},` +
         `"deposit":"${aJob.trigger_deposit}",` +
         `"gas":${aJob.trigger_gas},` +
-        `"arguments":"${base64.encode(cronArgsBuffer)}"` +
+        `"arguments":"${base64.encode(croncatTaskArgs)}"` +
         '}'
       ),
       context.prepaidGas - GAS_JOB_ACTIVATE,
@@ -354,7 +353,7 @@ export function job_activate (job_id: i32): void {
     ).then(
       context.contractName,
       'create_task_callback',
-      Buffer.fromString(`{"job_id":${aJob.id}}`),
+      util.stringToBytes(`{"job_id":${aJob.id}}`),
       GAS_CREATE_TASK_CALLBACK,
       u128.Zero
     );
