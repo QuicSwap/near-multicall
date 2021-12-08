@@ -3,9 +3,14 @@ import { u128 } from 'near-sdk-as';
 export class ContractCall { 
   addr: string;
   func: string; 
-  args: string; 
+  args: string; // base64 encoded
   gas: u64;
   depo: u128;
+}
+
+@nearBindgen
+export class ftOnTransferMulticallArgs {
+  args: ContractCall[][]
 }
 
 @nearBindgen

@@ -1,6 +1,6 @@
 import { context, ContractPromiseBatch, ContractPromise, storage, PersistentUnorderedMap, logging, u128, base64, util } from 'near-sdk-as';
 import { JSON } from 'assemblyscript-json';
-import { ContractCall, Job } from './model';
+import { ContractCall, Job, ftOnTransferMulticallArgs } from './model';
 import { StorageCostUtils, ContractCallUtils } from './utils';
 
 
@@ -140,6 +140,7 @@ export function ft_on_transfer(sender_id: string, amount: u128, msg: string): u1
   assert(tokens.contains(context.predecessor), `${context.predecessor} needs to be an admin`);
   _is_admin(sender_id);
 
+  // TODO: can we use util.parseFromString instead of assemblyscript-json ?
   let jsonObj: JSON.Obj = <JSON.Obj>(JSON.parse(msg));
   let funcToCallOrNull: JSON.Str | null = jsonObj.getString("function");
   if (funcToCallOrNull != null) {
@@ -176,6 +177,8 @@ export function ft_on_transfer(sender_id: string, amount: u128, msg: string): u1
 /**
  * recover near funds from the contract.
  * If amount is 0 then empty all contract funds. 
+ * 
+ * TODO: rename to near_transfer
  */
 export function recover_near(account_id: string, amount: u128 = u128.Zero): void {
   _is_admin(context.predecessor);
@@ -281,6 +284,10 @@ export function withdraw_from_ref(ref_address: string, tokens: string[], receive
 
 
 // Job functions
+// 1 - a job is created, anyone can do this
+// 2 - admin activates the job
+// 3 - jobs can be triggered by CronCat
+
 
 /**
  * set smart contract address of croncat manager
@@ -324,6 +331,11 @@ export function job_activate (job_id: i32): void {
   let aJobOrNull:Job | null = jobs.get(job_id);
   assert(aJobOrNull != null, `job ${job_id} not found`);
   let aJob:Job = <Job> aJobOrNull;
+  // is job already active?
+  if (aJob.is_active == true) {
+    logging.log(`job ${aJob.id} already active`);
+    return;
+  }
   // does job have a croncat task?
   if (aJob.croncat_hash != '') {
     logging.log(`job ${aJob.id} already has croncat task ${aJob.croncat_hash}`);
@@ -366,14 +378,10 @@ export function job_activate (job_id: i32): void {
     // setting bond to 0 indicates it's reimbursed
     aJob.bond = u128.Zero;
     ContractPromiseBatch.create(aJob.creator).transfer(toReimburse);
-  }
-  // is job already active?
-  if (aJob.is_active == true) {
-    logging.log(`job ${aJob.id} already active`);
-  } else {
-    aJob.is_active = true;
+    // persist bond change
     jobs.set(aJob.id, aJob);
   }
+
 }
 
 export function create_task_callback (job_id: i32): void {
@@ -382,16 +390,13 @@ export function create_task_callback (job_id: i32): void {
   let aJobOrNull:Job | null = jobs.get(job_id);
   assert(aJobOrNull != null, `job ${job_id} not found`);
   let aJob:Job = <Job> aJobOrNull;
-  if (aJob.croncat_hash == '') {
-    // get task hash from promise results
-    let result = ContractPromise.getResults()[0];
-    if (result.succeeded) {
-      aJob.croncat_hash = result.decode<string>();
-    } else {
-      // deactivate job on errors
-      aJob.is_active = false;
-    }
-    // persist changes
+  // get task hash from promise results
+  let result = ContractPromise.getResults()[0];
+  if (result.succeeded) {
+    aJob.croncat_hash = result.decode<string>();
+
+    // set job to active
+    aJob.is_active = true;
     jobs.set(aJob.id, aJob);
   }
 }
@@ -451,11 +456,12 @@ export function jobs_resume (job_ids: i32[]): void {
 
 /**
  * register a new job.
- * First: a job is created, anyone can do this
- * Second: admin activates the job
- * third: a job can be triggered by CronCat
  * 
  * @param job_schedules 
+ * @param job_cadence 
+ * @param job_trigger_gas 
+ * @param job_trigger_deposit 
+ * @param job_total_budget 
  * @param job_runs_max 
  * @param job_start_at 
  * @returns 
@@ -499,6 +505,51 @@ export function job_add (
 }
 
 /**
+ * edit job params controlled by multicall.
+ * for params controlled by croncat, it's safer
+ * to disable the job and create another one 
+ * 
+ * @param job_id 
+ * @param job_schedules 
+ * @param job_total_budget 
+ * @param job_runs_max 
+ * @param job_start_at 
+ * @param job_is_active 
+ */
+export function job_edit (
+  job_id: i32,
+  job_schedules: ContractCall[][],
+  job_total_budget: u128,
+  job_runs_max: u64,
+  job_start_at: u64,
+  job_is_active: boolean
+): void
+{
+  _is_admin(context.predecessor);
+
+  let aJobOrNull: Job | null = jobs.get(job_id);
+  assert(aJobOrNull != null, `job ${job_id} not found`);
+  let aJob: Job = <Job> aJobOrNull;
+  aJob.schedules = job_schedules;
+  aJob.runs_max = job_runs_max;
+  aJob.start_at = job_start_at;
+  aJob.is_active = job_is_active;
+
+  if (aJob.croncat_budget < job_total_budget) {
+    // refill job allowance on croncat
+    ContractPromise.create(
+      storage.getSome<string>(KEY_CRONCAT_MANAGER_ADDRESS),
+      'refill_balance',
+      util.stringToBytes(`{"task_hash":"${aJob.croncat_hash}"}`),
+      context.prepaidGas - (15 * ONE_TGAS),
+      u128.sub(job_total_budget, aJob.croncat_budget)
+    );
+  }
+
+  jobs.set(aJob.id, aJob);
+}
+
+/**
  * multicall jobs can take lots of memory, thus locking part of the
  * contract funds. Admins can free up space by deleting some jobs.
  * 
@@ -531,18 +582,33 @@ export function job_trigger (job_id: i32): void {
   let aJobOrNull: Job | null = jobs.get(job_id);
   assert(aJobOrNull != null, `job ${job_id} not found`);
   let aJob: Job = <Job> aJobOrNull;
-  assert(aJob.runs_max > aJob.runs_current, `cannot run job ${job_id} more than ${aJob.runs_max} times`);
+  if (aJob.runs_max <= aJob.runs_current) {
+    logging.log(`retiring job ${job_id}, max runs reached`);
+
+    // remove this job's croncat task
+    ContractPromise.create(
+      storage.getSome<string>(KEY_CRONCAT_MANAGER_ADDRESS),
+      'remove_task',
+      util.stringToBytes(`{"task_hash":"${aJob.croncat_hash}"}`),
+      context.prepaidGas - (15 * ONE_TGAS),
+      u128.Zero
+    );
+
+    aJob.is_active = false
+    jobs.set(aJob.id, aJob);
+
+    return;
+  }
   assert(aJob.is_active == true, `job ${job_id} must be activated`);
   assert(context.blockTimestamp >= aJob.start_at, "please wait for job start time");
   _internal_multicall(aJob.schedules);
   // increment runs after multicall, because it can revert
   aJob.runs_current += 1;
+  logging.log(`job ${aJob.id} runs max: ${aJob.runs_max} runs current: ${aJob.runs_current}`)
   jobs.set(aJob.id, aJob);
 }
 
-// TODO: automatically remove croncat tasks that reached runs_max
-// integrate Croncat CRUD operations
-// TODO: add Croncat class
+// TODO: add Croncat class for contants and CRUD operations as functions
 
 
 
