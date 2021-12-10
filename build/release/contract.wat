@@ -611,7 +611,7 @@
  (data (i32.const 17228) "\02A\00\00\00\00\00\00\02A")
  (export "multicall" (func $assembly/index/__wrapper_multicall))
  (export "ft_on_transfer" (func $assembly/index/__wrapper_ft_on_transfer))
- (export "recover_near" (func $assembly/index/__wrapper_recover_near))
+ (export "near_transfer" (func $assembly/index/__wrapper_near_transfer))
  (export "admins_add" (func $assembly/index/__wrapper_admins_add))
  (export "admins_remove" (func $assembly/index/__wrapper_admins_remove))
  (export "get_admins" (func $assembly/index/__wrapper_get_admins))
@@ -13432,7 +13432,7 @@
   i64.extend_i32_u
   call $~lib/near-sdk-core/env/env/env.promise_batch_action_transfer
  )
- (func $assembly/index/__wrapper_recover_near
+ (func $assembly/index/__wrapper_near_transfer
   (local $0 i32)
   (local $1 i32)
   (local $2 i32)

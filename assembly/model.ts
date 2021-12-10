@@ -10,7 +10,7 @@ export class ContractCall {
 
 @nearBindgen
 export class ftOnTransferMulticallArgs {
-  args: ContractCall[][]
+  schedules: ContractCall[][]
 }
 
 @nearBindgen

@@ -388,7 +388,7 @@
  (table $0 1 funcref)
  (export "multicall" (func $assembly/index/__wrapper_multicall))
  (export "ft_on_transfer" (func $assembly/index/__wrapper_ft_on_transfer))
- (export "recover_near" (func $assembly/index/__wrapper_recover_near))
+ (export "near_transfer" (func $assembly/index/__wrapper_near_transfer))
  (export "admins_add" (func $assembly/index/__wrapper_admins_add))
  (export "admins_remove" (func $assembly/index/__wrapper_admins_remove))
  (export "get_admins" (func $assembly/index/__wrapper_get_admins))
@@ -17088,7 +17088,7 @@
   call $~lib/near-sdk-core/env/env/env.promise_batch_action_transfer
   local.get $0
  )
- (func $assembly/index/recover_near (param $0 i32) (param $1 i32)
+ (func $assembly/index/near_transfer (param $0 i32) (param $1 i32)
   (local $2 i32)
   (local $3 i32)
   call $~lib/near-sdk-core/contract/Context.get:predecessor
@@ -17129,7 +17129,7 @@
   call $~lib/near-sdk-core/promise/ContractPromiseBatch#transfer
   drop
  )
- (func $assembly/index/__wrapper_recover_near
+ (func $assembly/index/__wrapper_near_transfer
   (local $0 i32)
   call $~lib/near-sdk-bindgen/index/getInput
   local.set $0
@@ -17157,7 +17157,7 @@
    i64.const 0
    call $~lib/as-bignum/integer/safe/u128/u128#constructor
   end
-  call $assembly/index/recover_near
+  call $assembly/index/near_transfer
  )
  (func $~lib/near-sdk-bindgen/index/isReallyNullable<~lib/array/Array<~lib/string/String>> (result i32)
   i32.const 1

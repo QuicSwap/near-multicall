@@ -175,12 +175,13 @@ export function ft_on_transfer(sender_id: string, amount: u128, msg: string): u1
 }
 
 /**
- * recover near funds from the contract.
+ * send $NEAR
  * If amount is 0 then empty all contract funds. 
  * 
- * TODO: rename to near_transfer
+ * @param account_id 
+ * @param amount 
  */
-export function recover_near(account_id: string, amount: u128 = u128.Zero): void {
+export function near_transfer(account_id: string, amount: u128 = u128.Zero): void {
   _is_admin(context.predecessor);
   if (amount == u128.Zero) {
     // calculate amount reserved for storage
