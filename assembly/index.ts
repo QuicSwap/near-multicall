@@ -137,7 +137,7 @@ function _sequential(schedule: ContractCall[]): void {
  * @returns 
  */
 export function ft_on_transfer(sender_id: string, amount: u128, msg: string): u128 {
-  assert(tokens.contains(context.predecessor), `${context.predecessor} needs to be an admin`);
+  assert(tokens.contains(context.predecessor), `${context.predecessor} not on token whitelist`);
   _is_admin(sender_id);
 
   // TODO: can we use util.parseFromString instead of assemblyscript-json ?
@@ -343,7 +343,7 @@ export function job_activate (job_id: i32): void {
   } else {
     // TODO clean this
     const GAS_JOB_ACTIVATE: u64 = 40 * ONE_TGAS;
-    const GAS_CREATE_TASK_CALLBACK: u64 = 10 * ONE_TGAS;
+    const GAS_CREATE_TASK_CALLBACK: u64 = 15 * ONE_TGAS;
     let croncatTaskArgs: Uint8Array = util.stringToBytes(`{"job_id":${aJob.id}}`);
 
     // create a croncat task
