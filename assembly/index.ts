@@ -1,9 +1,9 @@
 import { context, ContractPromiseBatch, ContractPromise, storage, PersistentUnorderedMap, logging, u128, base64, util } from 'near-sdk-as';
 import { JSON } from 'assemblyscript-json';
-import { ContractCall, Job, ftOnTransferMulticallArgs } from './model';
-import { StorageCostUtils, ContractCallUtils } from './utils';
+import { ContractCall, Job, FtOnTransferArgs, MulticallArgs, JobActivateArgs } from './model';
+import { StorageCostUtils } from './utils';
 
-
+// TODO: use enums for storage keys. See:  https://github.com/near/near-sdk-rs/blob/master/HELP.md
 const admins = new PersistentUnorderedMap<string, boolean>('a');
 const tokens = new PersistentUnorderedMap<string, boolean>('b');
 const jobs = new PersistentUnorderedMap<i32,Job>('c');
@@ -12,7 +12,6 @@ const KEY_JOB_BOND: string = "e";
 const KEY_JOB_COUNT: string = "f";
 const KEY_CRONCAT_MANAGER_ADDRESS: string = "g";
 const storageCosts = new StorageCostUtils();
-const contractCallsUtils = new ContractCallUtils();
 const ONE_TGAS: u64 = 1000000000000;
 
 
@@ -129,7 +128,7 @@ function _sequential(schedule: ContractCall[]): void {
 /**
  * following functions can be used in callback:
  * 1- multicall()
- * 2- TODO: job_activate() 
+ * 2- job_activate() 
  * 
  * @param sender_id 
  * @param amount 
@@ -140,35 +139,20 @@ export function ft_on_transfer(sender_id: string, amount: u128, msg: string): u1
   assert(tokens.contains(context.predecessor), `${context.predecessor} not on token whitelist`);
   _is_admin(sender_id);
 
-  // TODO: can we use util.parseFromString instead of assemblyscript-json ?
-  let jsonObj: JSON.Obj = <JSON.Obj>(JSON.parse(msg));
-  let funcToCallOrNull: JSON.Str | null = jsonObj.getString("function");
-  if (funcToCallOrNull != null) {
-    let funcToCall: string = funcToCallOrNull.valueOf();
-    // decode the respective function arguments
-    if (funcToCall == "multicall") {
-      let argsOrNull: JSON.Obj | null = jsonObj.getObj("args");
-      assert(argsOrNull != null, "error parsing multicall arguments");
-      // parse multicall args
-      let multicallArgs: ContractCall[][] = [];
-      let args: JSON.Obj = <JSON.Obj> argsOrNull;
-      let schedulesArrOrNull: JSON.Arr | null = args.getArr("schedules");
-      if (schedulesArrOrNull != null) {
-        let schedulesArr: JSON.Value[] = schedulesArrOrNull.valueOf();
-        for (let i = 0; i < schedulesArr.length; i++) {
-          multicallArgs[i] = [];
-          let currentSchedule: JSON.Value[] = (<JSON.Arr> schedulesArr[i]).valueOf();
-          for (let j = 0; j < currentSchedule.length; j++) {
-            const parsedCallOrNull: ContractCall | null = contractCallsUtils.fromJsonObj(<JSON.Obj> currentSchedule[j]);
-            assert(parsedCallOrNull != null, `could not parse contract call ${j.toString()} of schedule ${i.toString()}`);
-            const parsedCall = <ContractCall> parsedCallOrNull;
-            multicallArgs[i].push(parsedCall);
-          }
-        }
-      }
-      // call multicall
-      _internal_multicall(multicallArgs);
-    }
+  const methodAndArgs: FtOnTransferArgs = util.parseFromString<FtOnTransferArgs>(msg);
+
+  // decode the respective function arguments
+  if (methodAndArgs.function_id == "multicall") {
+    const multicallArgs : MulticallArgs = util.parseFromBytes<MulticallArgs>(base64.decode(methodAndArgs.args));
+    // call multicall
+    _internal_multicall(multicallArgs.schedules);
+  } else if (methodAndArgs.function_id == "job_activate") {
+    const jobActivateArgs: JobActivateArgs = util.parseFromBytes<JobActivateArgs>(base64.decode(methodAndArgs.args));
+    // call job_activate
+    _internal_job_activate(jobActivateArgs.job_id);
+  } else {
+    // invalid action, reimburse full amount
+    return amount;  
   }
   
   return u128.Zero;
@@ -178,12 +162,14 @@ export function ft_on_transfer(sender_id: string, amount: u128, msg: string): u1
  * send $NEAR
  * If amount is 0 then empty all contract funds. 
  * 
+ * TODO: receive array of recipients and amounts
+ * 
  * @param account_id 
  * @param amount 
  */
-export function near_transfer(account_id: string, amount: u128 = u128.Zero): void {
+export function near_transfer(account_id: string, amount: u128 = u128.Max): void {
   _is_admin(context.predecessor);
-  if (amount == u128.Zero) {
+  if (amount == u128.Max) {
     // calculate amount reserved for storage
     const minStorageAmt: u128 = storageCosts.get_min_storage_balance();
     amount = u128.sub(context.accountBalance, minStorageAmt);
@@ -329,6 +315,10 @@ export function job_get_bond (): u128 | null {
 export function job_activate (job_id: i32): void {
   _is_admin(context.predecessor);
 
+  _internal_job_activate(job_id);
+}
+
+function _internal_job_activate (job_id: i32): void {
   let aJobOrNull:Job | null = jobs.get(job_id);
   assert(aJobOrNull != null, `job ${job_id} not found`);
   let aJob:Job = <Job> aJobOrNull;
@@ -382,7 +372,6 @@ export function job_activate (job_id: i32): void {
     // persist bond change
     jobs.set(aJob.id, aJob);
   }
-
 }
 
 export function create_task_callback (job_id: i32): void {

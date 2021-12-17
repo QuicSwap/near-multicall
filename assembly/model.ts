@@ -3,15 +3,27 @@ import { u128 } from 'near-sdk-as';
 export class ContractCall { 
   addr: string;
   func: string; 
-  args: string; // base64 encoded
+  args: string; // base64 encoded JSON args
   gas: u64;
   depo: u128;
 }
 
 @nearBindgen
-export class ftOnTransferMulticallArgs {
-  schedules: ContractCall[][]
+export class FtOnTransferArgs {
+  function_id: string;
+  args: string; // base64 encoded JSON args
 }
+
+@nearBindgen
+export class MulticallArgs {
+  schedules: ContractCall[][];
+}
+
+@nearBindgen
+export class JobActivateArgs {
+  job_id: i32;
+}
+
 
 @nearBindgen
 export class SwapAction {
