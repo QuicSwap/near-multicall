@@ -8,11 +8,11 @@ bundle cross-contract calls for powerful DAO proposals
 2. Install dependencies: `yarn`
 3. Compile: `yarn asc --target release`
 4. Deploy:  
-    ```json
+    ```bash
     near deploy $CONTRACT_ADDRESS build/release/contract.wasm
     ```
 6. Initialize the contract:
-    ```json
+    ```bash
     near call $CONTRACT_ADDRESS init '{"account_ids":["$YOUR_ACCOUNT"],"croncat_manager":"$CRONCAT_MANAGER","job_bond":"100000000000000000000000"}' --amount 0.1 --accountId $YOUR_ADDRESS
     ```
 
@@ -32,7 +32,7 @@ Each `ContractCall` has information for making a cross-contract call: the target
 Contract calls inside one array run one after another, as a promise chain.  
 Different arrays of contract calls run in parallel.  
 Example: `TX_12` waits for `TX_11` and `TX_13` waits for `TX_12`. `TX_22` waits for `TX_21`. The two arrays start executing in the same block.
-    ```json
+    ```
     schedules = {
         [
             [ TX_11, TX_12, TX_13 ],
