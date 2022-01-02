@@ -35,7 +35,7 @@ const workspace = Workspace.init(async ({root}) => {
 /**
  * add admins
  */
-workspace.test('add admins', async (test, {alice, bob, contract, root}) => {
+workspace.test('add admins by non-admin', async (test, {alice, bob, contract, root}) => {
   // bob isn't admin so he can't add admins
   try {
     // try catch bacause contract should panick
@@ -47,12 +47,13 @@ workspace.test('add admins', async (test, {alice, bob, contract, root}) => {
       }
     );
   } catch (error) {}
-  let admins: string[] = await contract.view('get_admins', {})
+  const admins: string[] = await contract.view('get_admins', {})
   test.true(
     admins.includes(alice.accountId) && !admins.includes(bob.accountId)
   );
   test.log(`admins: [${admins}]`);
-
+});
+workspace.test('add admins by admin', async (test, {alice, bob, contract, root}) => {
   // alice is admin so she can add bob
   await alice.call(
     contract.accountId,
@@ -61,7 +62,7 @@ workspace.test('add admins', async (test, {alice, bob, contract, root}) => {
       account_ids: [bob.accountId]
     }
   );
-  admins = await contract.view('get_admins', {})
+  const admins: string[] = await contract.view('get_admins', {})
   test.true(
     admins.includes(alice.accountId) && admins.includes(bob.accountId)
   );
@@ -71,7 +72,7 @@ workspace.test('add admins', async (test, {alice, bob, contract, root}) => {
 /**
  * remove admins
  */
-workspace.test('remove admins', async (test, {alice, bob, contract, root}) => {
+workspace.test('remove admins by non-admin', async (test, {alice, bob, contract, root}) => {
   // bob isn't admin so he can't remove admins
   try {
     // try catch bacause contract should panick
@@ -83,12 +84,13 @@ workspace.test('remove admins', async (test, {alice, bob, contract, root}) => {
       }
     );
   } catch (error) {}
-  let admins: string[] = await contract.view('get_admins', {})
+  const admins: string[] = await contract.view('get_admins', {})
   test.true(
     admins.includes(alice.accountId)
   );
   test.log(`admins: [${admins}]`);
-
+});
+workspace.test('remove admins by admin', async (test, {alice, bob, contract, root}) => {
   // alice is admin so she can remove admins
   await alice.call(
     contract.accountId,
@@ -97,7 +99,7 @@ workspace.test('remove admins', async (test, {alice, bob, contract, root}) => {
       account_ids: [alice.accountId]
     }
   );
-  admins = await contract.view('get_admins', {})
+  const admins: string[] = await contract.view('get_admins', {})
   test.true(
     !admins.includes(alice.accountId)
   );

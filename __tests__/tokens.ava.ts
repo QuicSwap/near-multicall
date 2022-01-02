@@ -47,7 +47,7 @@ const workspace = Workspace.init(async ({root}) => {
 /**
  * add tokens to whitelist
  */
-workspace.test('add tokens to whitelist', async (test, {alice, bob, contract, root}) => {
+workspace.test('add tokens to whitelist by non-admin', async (test, {alice, bob, contract, root}) => {
   // bob isn't admin so he can't modify tokens whitelist
   try {
     // try catch bacause contract should panick
@@ -59,12 +59,13 @@ workspace.test('add tokens to whitelist', async (test, {alice, bob, contract, ro
       }
     );
   } catch (error) {}
-  let tokens: string[] = await contract.view('get_tokens', {})
+  const tokens: string[] = await contract.view('get_tokens', {})
   test.true(
     tokens.includes(ndai_address) && !tokens.includes(nusdc_address)
   );
   test.log(`tokens: [${tokens}]`);
-
+});
+workspace.test('add tokens to whitelist by admin', async (test, {alice, bob, contract, root}) => {
   // alice is admin so she can modify tokens whitelist
   await alice.call(
     contract.accountId,
@@ -73,7 +74,7 @@ workspace.test('add tokens to whitelist', async (test, {alice, bob, contract, ro
       addresses: [nusdc_address]
     }
   );
-  tokens = await contract.view('get_tokens', {})
+  const tokens: string[] = await contract.view('get_tokens', {})
   test.true(
     tokens.includes(ndai_address) && tokens.includes(nusdc_address)
   );
@@ -83,7 +84,7 @@ workspace.test('add tokens to whitelist', async (test, {alice, bob, contract, ro
 /**
  * remove tokens from whitelist
  */
-workspace.test('remove tokens from whitelist', async (test, {alice, bob, contract, root}) => {
+workspace.test('remove tokens from whitelist by non-admin', async (test, {alice, bob, contract, root}) => {
   // bob isn't admin so he can't modify tokens whitelist
   try {
     // try catch bacause contract should panick
@@ -95,12 +96,13 @@ workspace.test('remove tokens from whitelist', async (test, {alice, bob, contrac
       }
     );
   } catch (error) {}
-  let tokens: string[] = await contract.view('get_tokens', {})
+  const tokens: string[] = await contract.view('get_tokens', {})
   test.true(
     tokens.includes(ndai_address)
   );
   test.log(`tokens: [${tokens}]`);
-
+});
+workspace.test('remove tokens from whitelist by admin', async (test, {alice, bob, contract, root}) => {
   // alice is admin so she can modify tokens whitelist
   await alice.call(
     contract.accountId,
@@ -109,7 +111,7 @@ workspace.test('remove tokens from whitelist', async (test, {alice, bob, contrac
       addresses: [ndai_address]
     }
   );
-  tokens = await contract.view('get_tokens', {})
+  const tokens: string[] = await contract.view('get_tokens', {})
   test.true(
     !tokens.includes(ndai_address)
   );

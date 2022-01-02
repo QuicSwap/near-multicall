@@ -3,6 +3,7 @@ set -e
 
 yarn test "**/admins*/" $@ # pass along any CLI flags, such as `--verbose`
 yarn test "**/tokens*/" $@
+yarn test "**/nearAPI*/" $@
 
 
 # To run only one test file:
