@@ -1,9 +1,7 @@
 #!/bin/bash
 set -e
 
-yarn test "**/admins*/" $@ # pass along any CLI flags, such as `--verbose`
-yarn test "**/tokens*/" $@
-yarn test "**/nearAPI*/" $@
+yarn test "**/main*/" $@ # pass along any CLI flags, such as `--verbose`
 
 
 # To run only one test file:
