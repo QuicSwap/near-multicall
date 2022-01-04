@@ -2,6 +2,7 @@ import { Workspace, NEAR, Gas } from 'near-workspaces-ava';
 import { tests as adminsTests } from './admins.ava';
 import { tests as tokensTests } from './tokens.ava';
 import { tests as nearAPITests } from './nearAPI.ava';
+import { tests as multicallTests } from './multicall.ava';
 
 const CRONCAT_MANAGER_ADDRESS = "placeholder";
 const nusdc_address: string = "nusdc.ft-fin.testnet";
@@ -10,14 +11,14 @@ const nusdt_address: string = "nusdt.ft-fin.testnet";
 
 
 /**
- * Initialize a new workspace. In local sandbox mode, this will:
+ * Initialize a new workspace
  */
 const workspace = Workspace.init(async ({root}) => {
   const alice = await root.createAccount('alice');
   const bob = await root.createAccount('bob');
 
   // deploy multicall instance with alice admin
-  const contract = await root.createAndDeploy(
+  const multicall = await root.createAndDeploy(
     'multicall',
     'build/release/contract.wasm',
     {
@@ -32,19 +33,18 @@ const workspace = Workspace.init(async ({root}) => {
   );
 
   // add nDAI to token whitelist
-  await contract.call(
-    contract.accountId,
+  await multicall.call(
+    multicall.accountId,
     "tokens_add",
-    {
-      addresses: [ndai_address]
-    }
+    { addresses: [ndai_address] }
   );
 
   // Return accounts to be available in tests
-  return {alice, bob, contract};
+  return {alice, bob, multicall};
 });
 
 // run tests
 adminsTests(workspace);
 tokensTests(workspace);
 nearAPITests(workspace);
+//multicallTests(workspace);
