@@ -446,6 +446,7 @@ export function jobs_resume (job_ids: i32[]): void {
 
 /**
  * register a new job.
+ * TODO: get job bond using job_get_bond, assume job bond never null
  * 
  * @param job_schedules 
  * @param job_cadence 
