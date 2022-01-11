@@ -47,4 +47,4 @@ const workspace = Workspace.init(async ({root}) => {
 adminsTests(workspace);
 tokensTests(workspace);
 nearAPITests(workspace);
-//multicallTests(workspace);
+multicallTests(workspace);
