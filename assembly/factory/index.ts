@@ -16,13 +16,24 @@ const ON_CREATE_CALL_GAS: u64 = 10_000_000_000_000;
 
 
 
-export function init(init_owners: string[]): void {
+export function init(
+  init_owners: string[],
+  init_fee: u128,
+  init_factories: string[]
+): void {
   assert(storage.get<string>(KEY_INIT) == null, "Already initialized");
 
-  // add owners
+  // add initial owners
   for (let i = 0; i < init_owners.length; i++) {
     owners.add(init_owners[i]);
   }
+
+  // set initial fee
+  set_fee(init_fee);
+
+  // set initial dao factories
+  factories_add(init_factories);
+
   // set contract to initialized 
   storage.set(KEY_INIT, "done");
 }
@@ -98,7 +109,10 @@ export function get_users(start: i32 = 0, end: i32 = i32.MAX_VALUE): string[] {
  * @param public_key 
  * @returns 
  */
-export function create(initial_admins: string[] = [], public_key: string = ""): ContractPromiseBatch {
+export function create(
+  multicall_init_args: MulticallInitArgs,
+  public_key: string = ""
+): ContractPromiseBatch {
   _is_dao(context.predecessor);
 
   // get sub-account name (exp: potato.sputnik-dao.near => potato)
@@ -113,9 +127,7 @@ export function create(initial_admins: string[] = [], public_key: string = ""): 
   }
   promise = promise.function_call<MulticallInitArgs>(
       "init",
-      {
-        admin_accounts: initial_admins.length > 0 ? initial_admins : [context.predecessor]
-      },
+      multicall_init_args,
       u128.Zero,
       context.prepaidGas - CREATE_CALL_GAS - ON_CREATE_CALL_GAS
     )

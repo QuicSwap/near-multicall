@@ -1,11 +1,23 @@
-import { context, ContractPromiseBatch, ContractPromise, storage, PersistentSet, u128, base64, util } from 'near-sdk-as';
-import { ContractCall, FtOnTransferArgs, MulticallArgs } from './model';
+import { context, ContractPromiseBatch, storage, PersistentSet, u128, base64, util } from 'near-sdk-as';
+import { BatchCall, FtOnTransferArgs, MulticallArgs } from './model';
+import { _internal_multicall } from './internal';
+import { Jobs } from './jobs';
 import { StorageCostUtils } from './utils';
 
 const admins = new PersistentSet<string>('a');
 const tokens = new PersistentSet<string>('b');
 const KEY_INIT: string = "c";
-const storageCosts = new StorageCostUtils();
+const KEY_CRONCAT_MANAGER_ADDRESS: string = "d";
+const KEY_JOB_BOND: string = "e";
+const KEY_JOB_MAP: string = "f";
+const KEY_JOB_COUNT: string = "g";
+
+const _jobs = new Jobs(
+  KEY_CRONCAT_MANAGER_ADDRESS,
+  KEY_JOB_BOND,
+  KEY_JOB_MAP,
+  KEY_JOB_COUNT
+);
 
 
 /**
@@ -13,114 +25,11 @@ const storageCosts = new StorageCostUtils();
  * 
  * @param actions 
  */
-export function multicall(actions: ContractCall[][]): void {
+export function multicall(calls: BatchCall[][]): void {
   _is_admin(context.predecessor);
-  _internal_multicall(actions);
-}
+  _assert_deposit();
 
-function _internal_multicall(actions: ContractCall[][]): void {
-  assert(actions.length != 0, "actions array cannot be empty");
-
-  // group parallel actions with same target address into batch calls for gas
-  // efficiency. Ignore actions that have an attached callback
-  const batches = new Map<string, ContractCall[]>();
-
-  // variable to track attached deposits total
-  let totalDeposits = u128.Zero;
-
-  for (let i = actions.length - 1; i >= 0; i--) {
-    // cannot have empty array in actions
-    assert(actions[i].length > 0, `actions[${i}] cannot be empty`);
-
-    totalDeposits = u128.add(totalDeposits, actions[i][0].depo);
-
-    // check for actions that have no attached callback
-    if (actions[i].length == 1) {
-      const curr_call: ContractCall = actions[i][0];
-      // add action to existing batch if possible, otherwise make new batch
-      if (batches.has(curr_call.addr)) {
-        batches.get(curr_call.addr).push(curr_call);
-      } else {
-        batches.set(curr_call.addr, [curr_call])
-      }
-      // actions saved in batches Map are removed from actions[][]
-      actions.splice(i, 1);
-    }
-  }
-
-  // check for sufficient funds (Sum of all first sequential calls <= account balance minus funds reserved for storage)
-  assert(
-    u128.le(totalDeposits, u128.sub(context.accountBalance, storageCosts.get_min_storage_balance())),
-    "funds insufficient for attached deposits"
-  );
-
-  const batchGroups: ContractCall[][] = batches.values();
-
-  // execute batches
-  for (let i = 0; i < batches.size; i++) {
-
-    // batches with only 1 element are returned back to actions[][]
-    if (batchGroups[i].length <= 1) {
-      actions.push(batchGroups[i]);
-      continue;
-    }
-
-    // initial batch promise
-    const last: i32 = batchGroups[i].length - 1;
-    let promise: ContractPromiseBatch = ContractPromiseBatch.create(batchGroups[i][last].addr).function_call(
-      batchGroups[i][last].func,
-      base64.decode(batchGroups[i][last].args),
-      batchGroups[i][last].depo,
-      batchGroups[i][last].gas
-    );
-
-    // iterativly add function calls to the batch
-    for (let j = last - 1; j >= 0; j--) {
-      promise = promise.function_call(
-        batchGroups[i][j].func,
-        base64.decode(batchGroups[i][j].args),
-        batchGroups[i][j].depo,
-        batchGroups[i][j].gas
-      );
-    }
-  }
-
-  // execute calls and promise chains in actions[][]
-  for (let i = 0; i < actions.length; i++) {
-    _sequential(actions[i]);
-  }
-
-}
-
-/**
- * turn an array of contract calls into a promise chain 
- */
-function _sequential(schedule: ContractCall[]): void {
-
-  // initial promise
-  let promise: ContractPromise = ContractPromise.create(
-
-    schedule[0].addr,
-    schedule[0].func,
-    base64.decode(schedule[0].args),
-    schedule[0].gas,
-    schedule[0].depo
-
-  );
-
-  // iterativly add then clause
-  for (let i = 1; i < schedule.length; i++) {
-
-    promise = promise.then(
-
-      schedule[i].addr,
-      schedule[i].func,
-      base64.decode(schedule[i].args),
-      schedule[i].gas,
-      schedule[i].depo
-
-    );
-  }
+  _internal_multicall(calls);
 }
 
 /**
@@ -132,7 +41,7 @@ function _sequential(schedule: ContractCall[]): void {
  * @param msg 
  * @returns 
  */
-export function ft_on_transfer(sender_id: string, amount: u128, msg: string): u128 {
+export function ft_on_transfer(sender_id: string, amount: u128, msg: string): void {
   assert(tokens.has(context.predecessor), `${context.predecessor} not on token whitelist`);
   _is_admin(sender_id);
 
@@ -140,15 +49,15 @@ export function ft_on_transfer(sender_id: string, amount: u128, msg: string): u1
 
   // decode the respective function arguments
   if (methodAndArgs.function_id == "multicall") {
-    const multicallArgs : MulticallArgs = util.parseFromBytes<MulticallArgs>(base64.decode(methodAndArgs.args));
-    // call multicall
-    _internal_multicall(multicallArgs.actions);
-  } else {
-    // invalid action, reimburse full amount
-    return amount;  
+    const multicallArgs : MulticallArgs = util.parseFromBytes<MulticallArgs>(
+      base64.decode(methodAndArgs.args)
+    );
+    // call multicall (returns promise)
+    _internal_multicall(multicallArgs.calls);
   }
-  
-  return u128.Zero;
+
+  // otherwise don't return anything, ft standard reimburses full amount
+
 }
 
 /**
@@ -159,9 +68,11 @@ export function ft_on_transfer(sender_id: string, amount: u128, msg: string): u1
  */
 export function near_transfer(account_id: string, amount: u128 = u128.Max): void {
   _is_admin(context.predecessor);
+  _assert_deposit()
+
   if (amount == u128.Max) {
     // calculate amount reserved for storage
-    const minStorageAmt: u128 = storageCosts.get_min_storage_balance();
+    const minStorageAmt: u128 = StorageCostUtils.get_min_storage_balance();
     amount = u128.sub(context.accountBalance, minStorageAmt);
   }
   ContractPromiseBatch.create(account_id).transfer(amount);
@@ -169,12 +80,16 @@ export function near_transfer(account_id: string, amount: u128 = u128.Max): void
 
 export function admins_add(account_ids: string[]): void {
   _is_admin(context.predecessor);
+  _assert_deposit()
+
   for (let i = 0; i < account_ids.length; i++)
     admins.add(account_ids[i]);
 }
 
 export function admins_remove(account_ids: string[]): void {
   _is_admin(context.predecessor);
+  _assert_deposit()
+
   for (let i = 0; i < account_ids.length; i++)
     admins.delete(account_ids[i]);
 }
@@ -185,12 +100,16 @@ export function get_admins(start: i32 = 0, end: i32 = i32.MAX_VALUE): string[] {
 
 export function tokens_add(addresses: string[]): void {
   _is_admin(context.predecessor);
+  _assert_deposit()
+
   for (let i = 0; i < addresses.length; i++)
     tokens.add(addresses[i]);
 }
 
 export function tokens_remove(addresses: string[]): void {
   _is_admin(context.predecessor);
+  _assert_deposit()
+
   for (let i = 0; i < addresses.length; i++)
     tokens.delete(addresses[i]);
 }
@@ -200,7 +119,11 @@ export function get_tokens(start: i32 = 0, end: i32 = i32.MAX_VALUE): string[] {
 }
 
 // init contract
-export function init(admin_accounts: string[]): void {
+export function init(
+  admin_accounts: string[],
+  croncat_manager: string,
+  job_bond: u128
+): void {
   assert(storage.get<string>(KEY_INIT) == null, "Already initialized");
 
   // add contract address as admin to allow nested calls
@@ -210,14 +133,196 @@ export function init(admin_accounts: string[]): void {
     admins.add(admin_accounts[i]);
   }
 
+  // set croncat manager address
+  _jobs.set_croncat_manager(croncat_manager);
+
+  // set job bond
+  _jobs.set_bond(job_bond);
+
   storage.set(KEY_INIT, "done");
 }
+
+
+
+// Job functions
+// 1 - a job is created, anyone can do this
+// 2 - admin activates the job
+// 3 - jobs can be triggered by CronCat
+
+/**
+ * set smart contract address of croncat manager
+ * croncat manager has privilege to trigger active jobs
+ * 
+ * @param address 
+ */
+ export function set_croncat_manager (address: string): void {
+  _is_admin(context.predecessor);
+  _assert_deposit();
+
+  _jobs.set_croncat_manager(address);
+}
+
+export function get_croncat_manager (): string {
+  return _jobs.get_croncat_manager();
+}
+
+/**
+ * admins can set NEAR amount required to register a job
+ * since anyone is able to submit jobs, bond is necessary to protecc from spam
+ * 
+ * @param amount
+ */
+ export function job_set_bond (amount: u128): void {
+  _is_admin(context.predecessor);
+  _assert_deposit();
+
+  _jobs.set_bond(amount);  
+}
+
+export function job_get_bond (): u128 {
+  return _jobs.get_bond();
+}
+
+/**
+ * register a new job.
+ * 
+ * @param job_calls 
+ * @param job_cadence 
+ * @param job_trigger_gas 
+ * @param job_trigger_deposit 
+ * @param job_total_budget 
+ * @param job_runs_max 
+ * @param job_start_at 
+ * @returns 
+ */
+ export function job_add (
+  job_calls: BatchCall[][],
+  job_cadence: string,
+  job_trigger_gas: u64,
+  job_trigger_deposit: u128,
+  job_total_budget: u128,
+  job_runs_max: u64,
+  job_start_at: u64
+): i32 
+{
+  // anyone can add jobs if they pay required bond
+  return _jobs.add(
+    job_calls,
+    job_cadence,
+    job_trigger_gas,
+    job_trigger_deposit,
+    job_total_budget,
+    job_runs_max,
+    job_start_at
+  );
+}
+
+/**
+ * create a croncat task for a job and set it to active
+ * 
+ * @param job_id 
+ */
+export function job_activate (job_id: i32): void {
+  _is_admin(context.predecessor);
+  _assert_deposit();
+
+  _jobs.activate(job_id, "job_activate_callback");
+}
+
+export function job_activate_callback (job_id: i32): void {
+  _is_private();
+
+  _jobs.activate_callback(job_id);
+}
+
+/**
+ * pause a job so it cannot be triggered
+ * 
+ * @param job_ids  
+ */
+  export function jobs_pause (job_ids: u32[]): void {
+    _is_admin(context.predecessor);
+    _assert_deposit();
+
+    _jobs.pause(job_ids);
+  }
+
+/**
+ * resume a job to be ready for execution
+ * 
+ * @param job_ids 
+ */
+ export function jobs_resume (job_ids: u32[]): void {
+  _is_admin(context.predecessor);
+  _assert_deposit();
+
+  _jobs.resume(job_ids);
+}
+
+/**
+ * edit job params controlled by multicall.
+ * for params controlled by croncat, it's safer
+ * to disable the job and create another one 
+ * 
+ * @param job_id 
+ * @param job_calls 
+ * @param job_total_budget 
+ * @param job_runs_max 
+ * @param job_start_at 
+ * @param job_is_active 
+ */
+export function job_edit (
+  job_id: u32,
+  job_calls: BatchCall[][],
+  job_total_budget: u128,
+  job_runs_max: u64,
+  job_start_at: u64,
+  job_is_active: boolean
+): void {
+  _is_admin(context.predecessor);
+  _assert_deposit();
+
+  _jobs.edit(
+    job_id,
+    job_calls,
+    job_total_budget,
+    job_runs_max,
+    job_start_at,
+    job_is_active
+  );
+}
+
+/**
+ * multicall jobs can take lots of memory, thus locking part of the
+ * contract funds. We can free up space by deleting jobs.
+ * Also delete the job's task on croncat
+ * 
+ * @param job_id 
+ */
+export function job_delete (job_id: u32): void {
+  _is_admin(context.predecessor);
+  _assert_deposit();
+
+  _jobs.delete(job_id);
+}
+
+/**
+ * trigger execution of an active job
+ * 
+ * @param job_id 
+ */
+export function job_trigger (job_id: i32): void {
+  _is_croncat_manager(context.predecessor);
+
+  _jobs.trigger(job_id);
+}
+
 
 
 // access modifiers
 
 /**
- * panick if account_id is not admin
+ * panic if account_id is not admin
  * 
  * @param account_id 
  */
@@ -225,5 +330,39 @@ function _is_admin(account_id: string): void {
   assert(
     admins.has(account_id),
     `${account_id} must be admin to call this function`
+  );
+}
+
+/**
+ * panic if attached deposit is zero.
+ * security in case DAOs add an EOA admin to the contract
+ * 
+ */
+function _assert_deposit(): void {
+  assert(
+    u128.gt( context.attachedDeposit, u128.Zero ),
+    `attached deposit must be more than zero`
+  );
+}
+
+/**
+ * panick if account_id isn't the croncat manager contract
+ * 
+ * @param account_id 
+ */
+ function _is_croncat_manager(account_id: string): void {
+  assert(
+    get_croncat_manager() == account_id,
+    `${account_id} must be croncat manager to call this function`
+  );
+}
+
+/**
+ * panick if caller isn't this contract's address
+ */
+ function _is_private(): void {
+  assert(
+    context.contractName == context.predecessor,
+    `Method is private`
   );
 }

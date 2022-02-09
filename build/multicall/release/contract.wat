@@ -2,25 +2,29 @@
  (type $i32_=>_i32 (func (param i32) (result i32)))
  (type $i32_i32_=>_i32 (func (param i32 i32) (result i32)))
  (type $none_=>_none (func))
- (type $i32_i32_i32_=>_none (func (param i32 i32 i32)))
  (type $i32_i32_=>_none (func (param i32 i32)))
+ (type $i32_i32_i32_=>_none (func (param i32 i32 i32)))
  (type $none_=>_i32 (func (result i32)))
- (type $i32_=>_none (func (param i32)))
  (type $i64_=>_none (func (param i64)))
- (type $i32_i32_i32_=>_i32 (func (param i32 i32 i32) (result i32)))
+ (type $i32_=>_none (func (param i32)))
  (type $i64_i64_=>_none (func (param i64 i64)))
+ (type $i32_i32_i32_=>_i32 (func (param i32 i32 i32) (result i32)))
+ (type $none_=>_i64 (func (result i64)))
  (type $i64_i64_=>_i64 (func (param i64 i64) (result i64)))
  (type $i64_i64_i64_=>_i64 (func (param i64 i64 i64) (result i64)))
+ (type $i64_=>_i32 (func (param i64) (result i32)))
+ (type $i32_=>_i64 (func (param i32) (result i64)))
  (type $i32_i32_i32_i32_=>_none (func (param i32 i32 i32 i32)))
  (type $i32_i64_=>_none (func (param i32 i64)))
+ (type $i32_i64_i32_=>_none (func (param i32 i64 i32)))
  (type $i64_i64_i64_=>_none (func (param i64 i64 i64)))
  (type $i64_i64_i64_i64_i64_i64_i64_=>_none (func (param i64 i64 i64 i64 i64 i64 i64)))
  (type $i32_i32_i32_i32_=>_i32 (func (param i32 i32 i32 i32) (result i32)))
- (type $i32_i32_i32_i32_i64_=>_i32 (func (param i32 i32 i32 i32 i64) (result i32)))
+ (type $i32_i32_i32_i64_i32_=>_i32 (func (param i32 i32 i32 i64 i32) (result i32)))
  (type $i32_i64_i64_=>_i32 (func (param i32 i64 i64) (result i32)))
- (type $none_=>_i64 (func (result i64)))
- (type $i32_=>_i64 (func (param i32) (result i64)))
  (type $i64_=>_i64 (func (param i64) (result i64)))
+ (type $i32_i32_=>_i64 (func (param i32 i32) (result i64)))
+ (type $i32_i32_i64_=>_i64 (func (param i32 i32 i64) (result i64)))
  (type $i64_i64_i64_i64_i64_=>_i64 (func (param i64 i64 i64 i64 i64) (result i64)))
  (type $i64_i64_i64_i64_i64_i64_i64_i64_=>_i64 (func (param i64 i64 i64 i64 i64 i64 i64 i64) (result i64)))
  (type $i64_i64_i64_i64_i64_i64_i64_i64_i64_=>_i64 (func (param i64 i64 i64 i64 i64 i64 i64 i64 i64) (result i64)))
@@ -34,23 +38,33 @@
  (import "env" "predecessor_account_id" (func $~lib/near-sdk-core/env/env/env.predecessor_account_id (param i64)))
  (import "env" "keccak256" (func $~lib/near-sdk-core/env/env/env.keccak256 (param i64 i64 i64)))
  (import "env" "storage_has_key" (func $~lib/near-sdk-core/env/env/env.storage_has_key (param i64 i64) (result i64)))
- (import "env" "account_balance" (func $~lib/near-sdk-core/env/env/env.account_balance (param i64)))
- (import "env" "storage_usage" (func $~lib/near-sdk-core/env/env/env.storage_usage (result i64)))
+ (import "env" "attached_deposit" (func $~lib/near-sdk-core/env/env/env.attached_deposit (param i64)))
  (import "env" "promise_batch_create" (func $~lib/near-sdk-core/env/env/env.promise_batch_create (param i64 i64) (result i64)))
+ (import "env" "promise_batch_then" (func $~lib/near-sdk-core/env/env/env.promise_batch_then (param i64 i64 i64) (result i64)))
  (import "env" "promise_batch_action_function_call" (func $~lib/near-sdk-core/env/env/env.promise_batch_action_function_call (param i64 i64 i64 i64 i64 i64 i64)))
- (import "env" "promise_create" (func $~lib/near-sdk-core/env/env/env.promise_create (param i64 i64 i64 i64 i64 i64 i64 i64) (result i64)))
- (import "env" "promise_then" (func $~lib/near-sdk-core/env/env/env.promise_then (param i64 i64 i64 i64 i64 i64 i64 i64 i64) (result i64)))
- (import "env" "value_return" (func $~lib/near-sdk-core/env/env/env.value_return (param i64 i64)))
+ (import "env" "promise_and" (func $~lib/near-sdk-core/env/env/env.promise_and (param i64 i64) (result i64)))
+ (import "env" "current_account_id" (func $~lib/near-sdk-core/env/env/env.current_account_id (param i64)))
  (import "env" "promise_batch_action_transfer" (func $~lib/near-sdk-core/env/env/env.promise_batch_action_transfer (param i64 i64)))
+ (import "env" "promise_return" (func $~lib/near-sdk-core/env/env/env.promise_return (param i64)))
+ (import "env" "storage_usage" (func $~lib/near-sdk-core/env/env/env.storage_usage (result i64)))
+ (import "env" "account_balance" (func $~lib/near-sdk-core/env/env/env.account_balance (param i64)))
  (import "env" "storage_read" (func $~lib/near-sdk-core/env/env/env.storage_read (param i64 i64 i64) (result i64)))
  (import "env" "storage_write" (func $~lib/near-sdk-core/env/env/env.storage_write (param i64 i64 i64 i64 i64) (result i64)))
  (import "env" "storage_remove" (func $~lib/near-sdk-core/env/env/env.storage_remove (param i64 i64 i64) (result i64)))
- (import "env" "current_account_id" (func $~lib/near-sdk-core/env/env/env.current_account_id (param i64)))
+ (import "env" "value_return" (func $~lib/near-sdk-core/env/env/env.value_return (param i64 i64)))
+ (import "env" "log_utf8" (func $~lib/near-sdk-core/env/env/env.log_utf8 (param i64 i64)))
+ (import "env" "prepaid_gas" (func $~lib/near-sdk-core/env/env/env.prepaid_gas (result i64)))
+ (import "env" "promise_create" (func $~lib/near-sdk-core/env/env/env.promise_create (param i64 i64 i64 i64 i64 i64 i64 i64) (result i64)))
+ (import "env" "promise_then" (func $~lib/near-sdk-core/env/env/env.promise_then (param i64 i64 i64 i64 i64 i64 i64 i64 i64) (result i64)))
+ (import "env" "promise_results_count" (func $~lib/near-sdk-core/env/env/env.promise_results_count (result i64)))
+ (import "env" "promise_result" (func $~lib/near-sdk-core/env/env/env.promise_result (param i64 i64) (result i64)))
+ (import "env" "block_timestamp" (func $~lib/near-sdk-core/env/env/env.block_timestamp (result i64)))
  (global $~lib/rt/stub/offset (mut i32) (i32.const 0))
+ (global $~lib/as-bignum/globals/__res128_hi (mut i64) (i64.const 0))
+ (global $assembly/multicall/utils/StorageCostUtils.STORAGE_PRICE_PER_BYTE (mut i32) (i32.const 0))
  (global $assembly/multicall/index/admins (mut i32) (i32.const 0))
  (global $assembly/multicall/index/tokens (mut i32) (i32.const 0))
- (global $~lib/as-bignum/globals/__res128_hi (mut i64) (i64.const 0))
- (global $assembly/multicall/index/storageCosts (mut i32) (i32.const 0))
+ (global $assembly/multicall/index/_jobs (mut i32) (i32.const 0))
  (global $~lib/assemblyscript-json/JSON/_JSON.handler (mut i32) (i32.const 0))
  (global $~lib/assemblyscript-json/JSON/_JSON.decoder (mut i32) (i32.const 0))
  (global $~argumentsLength (mut i32) (i32.const 0))
@@ -58,332 +72,481 @@
  (global $~lib/assemblyscript-json/JSON/NULL (mut i32) (i32.const 0))
  (global $~lib/near-sdk-core/base64/ALPHAVALUES (mut i32) (i32.const 0))
  (memory $0 1)
- (data (i32.const 1036) "\1c")
- (data (i32.const 1048) "\01\00\00\00\04\00\00\00:\00:")
- (data (i32.const 1068) "\1c")
- (data (i32.const 1080) "\01")
- (data (i32.const 1100) "<")
- (data (i32.const 1112) "\01\00\00\00(\00\00\00A\00l\00l\00o\00c\00a\00t\00i\00o\00n\00 \00t\00o\00o\00 \00l\00a\00r\00g\00e")
- (data (i32.const 1164) "<")
- (data (i32.const 1176) "\01\00\00\00\1e\00\00\00~\00l\00i\00b\00/\00r\00t\00/\00s\00t\00u\00b\00.\00t\00s")
- (data (i32.const 1228) "\1c")
- (data (i32.const 1240) "\01\00\00\00\08\00\00\00_\00m\00a\00p")
- (data (i32.const 1260) "\1c")
- (data (i32.const 1272) "\01\00\00\00\08\00\00\00:\00l\00e\00n")
- (data (i32.const 1292) ",")
- (data (i32.const 1304) "\01\00\00\00\0e\00\00\00_\00v\00e\00c\00t\00o\00r")
- (data (i32.const 1340) "\1c")
- (data (i32.const 1352) "\01\00\00\00\02\00\00\00a")
- (data (i32.const 1372) "\1c")
- (data (i32.const 1384) "\01\00\00\00\02\00\00\00b")
- (data (i32.const 1404) "\1c")
- (data (i32.const 1416) "\01\00\00\00\02\00\00\00c")
- (data (i32.const 1436) "<")
- (data (i32.const 1448) "\01\00\00\00(\00\00\001\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000")
- (data (i32.const 1500) ",")
- (data (i32.const 1512) "\01\00\00\00\1a\00\00\00I\00n\00v\00a\00l\00i\00d\00 \00r\00a\00d\00i\00x")
- (data (i32.const 1548) "L")
- (data (i32.const 1560) "\01\00\00\00.\00\00\00~\00l\00i\00b\00/\00a\00s\00-\00b\00i\00g\00n\00u\00m\00/\00u\00t\00i\00l\00s\00.\00t\00s")
- (data (i32.const 1628) "\\")
- (data (i32.const 1644) "K\00\00\00\00\01\02\03\04\05\06\07\08\t$$$$$$$\n\0b\0c\0d\0e\0f\10\11\12\13\14\15\16\17\18\19\1a\1b\1c\1d\1e\1f !\"#$$$$$$\n\0b\0c\0d\0e\0f\10\11\12\13\14\15\16\17\18\19\1a\1b\1c\1d\1e\1f !\"#")
- (data (i32.const 1724) ",")
- (data (i32.const 1736) "\n\00\00\00\10\00\00\00p\06\00\00p\06\00\00K\00\00\00K")
- (data (i32.const 1772) ",")
- (data (i32.const 1784) "\01\00\00\00\1c\00\00\00I\00n\00v\00a\00l\00i\00d\00 \00l\00e\00n\00g\00t\00h")
- (data (i32.const 1820) "<")
- (data (i32.const 1832) "\01\00\00\00&\00\00\00~\00l\00i\00b\00/\00a\00r\00r\00a\00y\00b\00u\00f\00f\00e\00r\00.\00t\00s")
- (data (i32.const 1884) ",")
- (data (i32.const 1896) "\01\00\00\00\1a\00\00\00~\00l\00i\00b\00/\00a\00r\00r\00a\00y\00.\00t\00s")
- (data (i32.const 1932) "<")
- (data (i32.const 1944) "\01\00\00\00\1e\00\00\00u\00n\00e\00x\00p\00e\00c\00t\00e\00d\00 \00n\00u\00l\00l")
- (data (i32.const 1996) "\\")
- (data (i32.const 2008) "\01\00\00\00F\00\00\00~\00l\00i\00b\00/\00a\00s\00s\00e\00m\00b\00l\00y\00s\00c\00r\00i\00p\00t\00-\00j\00s\00o\00n\00/\00d\00e\00c\00o\00d\00e\00r\00.\00t\00s")
- (data (i32.const 2092) "<")
- (data (i32.const 2104) "\01\00\00\00$\00\00\00I\00n\00d\00e\00x\00 \00o\00u\00t\00 \00o\00f\00 \00r\00a\00n\00g\00e")
- (data (i32.const 2156) "<")
- (data (i32.const 2168) "\01\00\00\00$\00\00\00~\00l\00i\00b\00/\00t\00y\00p\00e\00d\00a\00r\00r\00a\00y\00.\00t\00s")
- (data (i32.const 2220) "<")
- (data (i32.const 2232) "\01\00\00\00(\00\00\00U\00n\00e\00x\00p\00e\00c\00t\00e\00d\00 \00i\00n\00p\00u\00t\00 \00e\00n\00d")
- (data (i32.const 2284) "\1c")
- (data (i32.const 2296) "\01\00\00\00\02\00\00\00{")
- (data (i32.const 2316) "|")
- (data (i32.const 2328) "\01\00\00\00^\00\00\00E\00l\00e\00m\00e\00n\00t\00 \00t\00y\00p\00e\00 \00m\00u\00s\00t\00 \00b\00e\00 \00n\00u\00l\00l\00a\00b\00l\00e\00 \00i\00f\00 \00a\00r\00r\00a\00y\00 \00i\00s\00 \00h\00o\00l\00e\00y")
- (data (i32.const 2444) "<")
- (data (i32.const 2456) "\01\00\00\00\"\00\00\00u\00n\00e\00x\00p\00e\00c\00t\00e\00d\00 \00u\00p\00c\00a\00s\00t")
- (data (i32.const 2508) "\\")
- (data (i32.const 2520) "\01\00\00\00@\00\00\00~\00l\00i\00b\00/\00a\00s\00s\00e\00m\00b\00l\00y\00s\00c\00r\00i\00p\00t\00-\00j\00s\00o\00n\00/\00J\00S\00O\00N\00.\00t\00s")
- (data (i32.const 2604) "\1c")
- (data (i32.const 2616) "\01\00\00\00\02\00\00\00}")
- (data (i32.const 2636) "\1c")
- (data (i32.const 2648) "\01\00\00\00\02\00\00\00,")
- (data (i32.const 2668) ",")
- (data (i32.const 2680) "\01\00\00\00\18\00\00\00E\00x\00p\00e\00c\00t\00e\00d\00 \00\'\00,\00\'")
- (data (i32.const 2716) "\1c")
- (data (i32.const 2728) "\01\00\00\00\02\00\00\00\"")
- (data (i32.const 2748) "L")
- (data (i32.const 2760) "\01\00\00\00:\00\00\00E\00x\00p\00e\00c\00t\00e\00d\00 \00d\00o\00u\00b\00l\00e\00-\00q\00u\00o\00t\00e\00d\00 \00s\00t\00r\00i\00n\00g")
- (data (i32.const 2828) "L")
- (data (i32.const 2840) "\01\00\00\008\00\00\00U\00n\00e\00x\00p\00e\00c\00t\00e\00d\00 \00c\00o\00n\00t\00r\00o\00l\00 \00c\00h\00a\00r\00a\00c\00t\00e\00r")
- (data (i32.const 2908) ",")
- (data (i32.const 2920) "\01\00\00\00\1c\00\00\00~\00l\00i\00b\00/\00s\00t\00r\00i\00n\00g\00.\00t\00s")
- (data (i32.const 2956) "\1c")
- (data (i32.const 2968) "\01\00\00\00\02\00\00\00\\")
- (data (i32.const 2988) "\1c")
- (data (i32.const 3000) "\01\00\00\00\02\00\00\00/")
- (data (i32.const 3020) "\1c")
- (data (i32.const 3032) "\01\00\00\00\02\00\00\00\08")
- (data (i32.const 3052) "\1c")
- (data (i32.const 3064) "\01\00\00\00\02\00\00\00n")
- (data (i32.const 3084) "\1c")
- (data (i32.const 3096) "\01\00\00\00\02\00\00\00\n")
- (data (i32.const 3116) "\1c")
- (data (i32.const 3128) "\01\00\00\00\02\00\00\00r")
- (data (i32.const 3148) "\1c")
- (data (i32.const 3160) "\01\00\00\00\02\00\00\00\0d")
- (data (i32.const 3180) "\1c")
- (data (i32.const 3192) "\01\00\00\00\02\00\00\00t")
- (data (i32.const 3212) "\1c")
- (data (i32.const 3224) "\01\00\00\00\02\00\00\00\t")
- (data (i32.const 3244) "\1c")
- (data (i32.const 3256) "\01\00\00\00\02\00\00\00u")
- (data (i32.const 3276) "<")
- (data (i32.const 3288) "\01\00\00\00&\00\00\00U\00n\00e\00x\00p\00e\00c\00t\00e\00d\00 \00\\\00u\00 \00d\00i\00g\00i\00t")
- (data (i32.const 3340) "L")
- (data (i32.const 3352) "\01\00\00\00<\00\00\00U\00n\00e\00x\00p\00e\00c\00t\00e\00d\00 \00e\00s\00c\00a\00p\00e\00d\00 \00c\00h\00a\00r\00a\00c\00t\00e\00r\00:\00 ")
+ (data (i32.const 1036) "<")
+ (data (i32.const 1048) "\01\00\00\00(\00\00\001\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000")
+ (data (i32.const 1100) ",")
+ (data (i32.const 1112) "\01\00\00\00\1a\00\00\00I\00n\00v\00a\00l\00i\00d\00 \00r\00a\00d\00i\00x")
+ (data (i32.const 1148) "L")
+ (data (i32.const 1160) "\01\00\00\00.\00\00\00~\00l\00i\00b\00/\00a\00s\00-\00b\00i\00g\00n\00u\00m\00/\00u\00t\00i\00l\00s\00.\00t\00s")
+ (data (i32.const 1228) "<")
+ (data (i32.const 1240) "\01\00\00\00(\00\00\00A\00l\00l\00o\00c\00a\00t\00i\00o\00n\00 \00t\00o\00o\00 \00l\00a\00r\00g\00e")
+ (data (i32.const 1292) "<")
+ (data (i32.const 1304) "\01\00\00\00\1e\00\00\00~\00l\00i\00b\00/\00r\00t\00/\00s\00t\00u\00b\00.\00t\00s")
+ (data (i32.const 1356) "\\")
+ (data (i32.const 1372) "K\00\00\00\00\01\02\03\04\05\06\07\08\t$$$$$$$\n\0b\0c\0d\0e\0f\10\11\12\13\14\15\16\17\18\19\1a\1b\1c\1d\1e\1f !\"#$$$$$$\n\0b\0c\0d\0e\0f\10\11\12\13\14\15\16\17\18\19\1a\1b\1c\1d\1e\1f !\"#")
+ (data (i32.const 1452) ",")
+ (data (i32.const 1464) "\05\00\00\00\10\00\00\00`\05\00\00`\05\00\00K\00\00\00K")
+ (data (i32.const 1500) "\1c")
+ (data (i32.const 1512) "\01\00\00\00\04\00\00\00:\00:")
+ (data (i32.const 1532) "\1c")
+ (data (i32.const 1544) "\01")
+ (data (i32.const 1564) "\1c")
+ (data (i32.const 1576) "\01\00\00\00\08\00\00\00_\00m\00a\00p")
+ (data (i32.const 1596) "\1c")
+ (data (i32.const 1608) "\01\00\00\00\08\00\00\00:\00l\00e\00n")
+ (data (i32.const 1628) ",")
+ (data (i32.const 1640) "\01\00\00\00\0e\00\00\00_\00v\00e\00c\00t\00o\00r")
+ (data (i32.const 1676) "\1c")
+ (data (i32.const 1688) "\01\00\00\00\02\00\00\00a")
+ (data (i32.const 1708) "\1c")
+ (data (i32.const 1720) "\01\00\00\00\02\00\00\00b")
+ (data (i32.const 1740) "\1c")
+ (data (i32.const 1752) "\01\00\00\00\02\00\00\00c")
+ (data (i32.const 1772) "\1c")
+ (data (i32.const 1784) "\01\00\00\00\02\00\00\00d")
+ (data (i32.const 1804) "\1c")
+ (data (i32.const 1816) "\01\00\00\00\02\00\00\00e")
+ (data (i32.const 1836) "\1c")
+ (data (i32.const 1848) "\01\00\00\00\02\00\00\00f")
+ (data (i32.const 1868) "\1c")
+ (data (i32.const 1880) "\01\00\00\00\02\00\00\00g")
+ (data (i32.const 1900) "\1c")
+ (data (i32.const 1912) "\01\00\00\00\08\00\00\00:\00m\00a\00p")
+ (data (i32.const 1932) ",")
+ (data (i32.const 1944) "\01\00\00\00\10\00\00\00:\00e\00n\00t\00r\00i\00e\00s")
+ (data (i32.const 1980) ",")
+ (data (i32.const 1992) "\01\00\00\00\1c\00\00\00I\00n\00v\00a\00l\00i\00d\00 \00l\00e\00n\00g\00t\00h")
+ (data (i32.const 2028) "<")
+ (data (i32.const 2040) "\01\00\00\00&\00\00\00~\00l\00i\00b\00/\00a\00r\00r\00a\00y\00b\00u\00f\00f\00e\00r\00.\00t\00s")
+ (data (i32.const 2092) ",")
+ (data (i32.const 2104) "\01\00\00\00\1a\00\00\00~\00l\00i\00b\00/\00a\00r\00r\00a\00y\00.\00t\00s")
+ (data (i32.const 2140) "<")
+ (data (i32.const 2152) "\01\00\00\00\1e\00\00\00u\00n\00e\00x\00p\00e\00c\00t\00e\00d\00 \00n\00u\00l\00l")
+ (data (i32.const 2204) "\\")
+ (data (i32.const 2216) "\01\00\00\00F\00\00\00~\00l\00i\00b\00/\00a\00s\00s\00e\00m\00b\00l\00y\00s\00c\00r\00i\00p\00t\00-\00j\00s\00o\00n\00/\00d\00e\00c\00o\00d\00e\00r\00.\00t\00s")
+ (data (i32.const 2300) "<")
+ (data (i32.const 2312) "\01\00\00\00$\00\00\00I\00n\00d\00e\00x\00 \00o\00u\00t\00 \00o\00f\00 \00r\00a\00n\00g\00e")
+ (data (i32.const 2364) "<")
+ (data (i32.const 2376) "\01\00\00\00$\00\00\00~\00l\00i\00b\00/\00t\00y\00p\00e\00d\00a\00r\00r\00a\00y\00.\00t\00s")
+ (data (i32.const 2428) "<")
+ (data (i32.const 2440) "\01\00\00\00(\00\00\00U\00n\00e\00x\00p\00e\00c\00t\00e\00d\00 \00i\00n\00p\00u\00t\00 \00e\00n\00d")
+ (data (i32.const 2492) "\1c")
+ (data (i32.const 2504) "\01\00\00\00\02\00\00\00{")
+ (data (i32.const 2524) "|")
+ (data (i32.const 2536) "\01\00\00\00^\00\00\00E\00l\00e\00m\00e\00n\00t\00 \00t\00y\00p\00e\00 \00m\00u\00s\00t\00 \00b\00e\00 \00n\00u\00l\00l\00a\00b\00l\00e\00 \00i\00f\00 \00a\00r\00r\00a\00y\00 \00i\00s\00 \00h\00o\00l\00e\00y")
+ (data (i32.const 2652) "<")
+ (data (i32.const 2664) "\01\00\00\00\"\00\00\00u\00n\00e\00x\00p\00e\00c\00t\00e\00d\00 \00u\00p\00c\00a\00s\00t")
+ (data (i32.const 2716) "\\")
+ (data (i32.const 2728) "\01\00\00\00@\00\00\00~\00l\00i\00b\00/\00a\00s\00s\00e\00m\00b\00l\00y\00s\00c\00r\00i\00p\00t\00-\00j\00s\00o\00n\00/\00J\00S\00O\00N\00.\00t\00s")
+ (data (i32.const 2812) "\1c")
+ (data (i32.const 2824) "\01\00\00\00\02\00\00\00}")
+ (data (i32.const 2844) "\1c")
+ (data (i32.const 2856) "\01\00\00\00\02\00\00\00,")
+ (data (i32.const 2876) ",")
+ (data (i32.const 2888) "\01\00\00\00\18\00\00\00E\00x\00p\00e\00c\00t\00e\00d\00 \00\'\00,\00\'")
+ (data (i32.const 2924) "\1c")
+ (data (i32.const 2936) "\01\00\00\00\02\00\00\00\"")
+ (data (i32.const 2956) "L")
+ (data (i32.const 2968) "\01\00\00\00:\00\00\00E\00x\00p\00e\00c\00t\00e\00d\00 \00d\00o\00u\00b\00l\00e\00-\00q\00u\00o\00t\00e\00d\00 \00s\00t\00r\00i\00n\00g")
+ (data (i32.const 3036) "L")
+ (data (i32.const 3048) "\01\00\00\008\00\00\00U\00n\00e\00x\00p\00e\00c\00t\00e\00d\00 \00c\00o\00n\00t\00r\00o\00l\00 \00c\00h\00a\00r\00a\00c\00t\00e\00r")
+ (data (i32.const 3116) ",")
+ (data (i32.const 3128) "\01\00\00\00\1c\00\00\00~\00l\00i\00b\00/\00s\00t\00r\00i\00n\00g\00.\00t\00s")
+ (data (i32.const 3164) "\1c")
+ (data (i32.const 3176) "\01\00\00\00\02\00\00\00\\")
+ (data (i32.const 3196) "\1c")
+ (data (i32.const 3208) "\01\00\00\00\02\00\00\00/")
+ (data (i32.const 3228) "\1c")
+ (data (i32.const 3240) "\01\00\00\00\02\00\00\00\08")
+ (data (i32.const 3260) "\1c")
+ (data (i32.const 3272) "\01\00\00\00\02\00\00\00n")
+ (data (i32.const 3292) "\1c")
+ (data (i32.const 3304) "\01\00\00\00\02\00\00\00\n")
+ (data (i32.const 3324) "\1c")
+ (data (i32.const 3336) "\01\00\00\00\02\00\00\00r")
+ (data (i32.const 3356) "\1c")
+ (data (i32.const 3368) "\01\00\00\00\02\00\00\00\0d")
+ (data (i32.const 3388) "\1c")
+ (data (i32.const 3400) "\01\00\00\00\02\00\00\00t")
  (data (i32.const 3420) "\1c")
- (data (i32.const 3432) "\01\00\00\00\02\00\00\00:")
- (data (i32.const 3452) ",")
- (data (i32.const 3464) "\01\00\00\00\18\00\00\00E\00x\00p\00e\00c\00t\00e\00d\00 \00\'\00:\00\'")
- (data (i32.const 3500) "L")
- (data (i32.const 3512) "\01\00\00\000\00\00\00U\00n\00e\00x\00p\00e\00c\00t\00e\00d\00 \00e\00n\00d\00 \00o\00f\00 \00o\00b\00j\00e\00c\00t")
- (data (i32.const 3580) ",")
- (data (i32.const 3592) "\01\00\00\00\1c\00\00\00A\00r\00r\00a\00y\00 \00i\00s\00 \00e\00m\00p\00t\00y")
+ (data (i32.const 3432) "\01\00\00\00\02\00\00\00\t")
+ (data (i32.const 3452) "\1c")
+ (data (i32.const 3464) "\01\00\00\00\02\00\00\00u")
+ (data (i32.const 3484) "<")
+ (data (i32.const 3496) "\01\00\00\00&\00\00\00U\00n\00e\00x\00p\00e\00c\00t\00e\00d\00 \00\\\00u\00 \00d\00i\00g\00i\00t")
+ (data (i32.const 3548) "L")
+ (data (i32.const 3560) "\01\00\00\00<\00\00\00U\00n\00e\00x\00p\00e\00c\00t\00e\00d\00 \00e\00s\00c\00a\00p\00e\00d\00 \00c\00h\00a\00r\00a\00c\00t\00e\00r\00:\00 ")
  (data (i32.const 3628) "\1c")
- (data (i32.const 3640) "\01\00\00\00\02\00\00\00[")
- (data (i32.const 3660) "\1c")
- (data (i32.const 3672) "\01\00\00\00\02\00\00\00]")
- (data (i32.const 3692) "L")
- (data (i32.const 3704) "\01\00\00\00.\00\00\00U\00n\00e\00x\00p\00e\00c\00t\00e\00d\00 \00e\00n\00d\00 \00o\00f\00 \00a\00r\00r\00a\00y")
- (data (i32.const 3772) "\1c")
- (data (i32.const 3784) "\01\00\00\00\n\00\00\00f\00a\00l\00s\00e")
- (data (i32.const 3804) ",")
- (data (i32.const 3816) "\01\00\00\00\14\00\00\00E\00x\00p\00e\00c\00t\00e\00d\00 \00\'")
- (data (i32.const 3852) "\1c")
- (data (i32.const 3864) "\01\00\00\00\02\00\00\00\'")
- (data (i32.const 3884) "\1c")
- (data (i32.const 3896) "\01\00\00\00\08\00\00\00t\00r\00u\00e")
- (data (i32.const 3916) "\1c")
- (data (i32.const 3928) "\01\00\00\00\04\00\00\00-\000")
- (data (i32.const 3958) "\f0?\00\00\00\00\00\00$@\00\00\00\00\00\00Y@\00\00\00\00\00@\8f@\00\00\00\00\00\88\c3@\00\00\00\00\00j\f8@\00\00\00\00\80\84.A\00\00\00\00\d0\12cA\00\00\00\00\84\d7\97A\00\00\00\00e\cd\cdA\00\00\00 _\a0\02B\00\00\00\e8vH7B\00\00\00\a2\94\1amB\00\00@\e5\9c0\a2B\00\00\90\1e\c4\bc\d6B\00\004&\f5k\0cC\00\80\e07y\c3AC\00\a0\d8\85W4vC\00\c8Ngm\c1\abC\00=\91`\e4X\e1C@\8c\b5x\1d\af\15DP\ef\e2\d6\e4\1aKD\92\d5M\06\cf\f0\80D")
- (data (i32.const 4140) "\1c")
- (data (i32.const 4152) "\01\00\00\00\08\00\00\00n\00u\00l\00l")
- (data (i32.const 4172) "<")
- (data (i32.const 4184) "\01\00\00\00\"\00\00\00C\00a\00n\00n\00o\00t\00 \00p\00a\00r\00s\00e\00 \00J\00S\00O\00N")
- (data (i32.const 4236) "L")
- (data (i32.const 4248) "\01\00\00\00<\00\00\00~\00l\00i\00b\00/\00n\00e\00a\00r\00-\00s\00d\00k\00-\00b\00i\00n\00d\00g\00e\00n\00/\00i\00n\00d\00e\00x\00.\00t\00s")
- (data (i32.const 4316) ",")
- (data (i32.const 4328) "\01\00\00\00\0e\00\00\00a\00c\00t\00i\00o\00n\00s")
- (data (i32.const 4364) "<")
- (data (i32.const 4376) "\01\00\00\00$\00\00\00K\00e\00y\00 \00d\00o\00e\00s\00 \00n\00o\00t\00 \00e\00x\00i\00s\00t")
- (data (i32.const 4428) ",")
- (data (i32.const 4440) "\01\00\00\00\16\00\00\00~\00l\00i\00b\00/\00m\00a\00p\00.\00t\00s")
- (data (i32.const 4476) "\1c")
- (data (i32.const 4488) "\01\00\00\00\n\00\00\00t\00y\00p\00e\00 ")
- (data (i32.const 4508) "\8c")
- (data (i32.const 4520) "\01\00\00\00|\00\00\00A\00r\00r\00a\00y\00<\00~\00l\00i\00b\00/\00a\00r\00r\00a\00y\00/\00A\00r\00r\00a\00y\00<\00a\00s\00s\00e\00m\00b\00l\00y\00/\00m\00u\00l\00t\00i\00c\00a\00l\00l\00/\00m\00o\00d\00e\00l\00/\00C\00o\00n\00t\00r\00a\00c\00t\00C\00a\00l\00l\00>\00>")
- (data (i32.const 4652) "<")
- (data (i32.const 4664) "\01\00\00\00 \00\00\00 \00c\00a\00n\00n\00o\00t\00 \00b\00e\00 \00n\00u\00l\00l\00.")
- (data (i32.const 4716) "\1c")
- (data (i32.const 4728) "\01\00\00\00\n\00\00\00K\00e\00y\00:\00 ")
- (data (i32.const 4748) ",")
- (data (i32.const 4760) "\01\00\00\00\16\00\00\00 \00w\00i\00t\00h\00 \00t\00y\00p\00e\00 ")
- (data (i32.const 4796) "<")
- (data (i32.const 4808) "\01\00\00\00\1e\00\00\00i\00s\00 \00n\00o\00t\00 \00n\00u\00l\00l\00a\00b\00l\00e")
- (data (i32.const 4860) "<")
- (data (i32.const 4872) "\01\00\00\00 \00\00\00V\00a\00l\00u\00e\00 \00w\00i\00t\00h\00 \00K\00e\00y\00:\00 ")
- (data (i32.const 4924) "L")
- (data (i32.const 4936) "\01\00\00\002\00\00\00 \00i\00s\00 \00n\00o\00t\00 \00a\00n\00 \00a\00r\00r\00a\00y\00 \00o\00r\00 \00n\00u\00l\00l\00.")
- (data (i32.const 5004) "l")
- (data (i32.const 5016) "\01\00\00\00X\00\00\00A\00r\00r\00a\00y\00<\00a\00s\00s\00e\00m\00b\00l\00y\00/\00m\00u\00l\00t\00i\00c\00a\00l\00l\00/\00m\00o\00d\00e\00l\00/\00C\00o\00n\00t\00r\00a\00c\00t\00C\00a\00l\00l\00>")
- (data (i32.const 5116) ",")
- (data (i32.const 5128) "\01\00\00\00\18\00\00\00C\00o\00n\00t\00r\00a\00c\00t\00C\00a\00l\00l")
- (data (i32.const 5164) "L")
- (data (i32.const 5176) "\01\00\00\004\00\00\00 \00i\00s\00 \00n\00o\00t\00 \00a\00n\00 \00o\00b\00j\00e\00c\00t\00 \00o\00r\00 \00n\00u\00l\00l\00 ")
- (data (i32.const 5244) "\1c")
- (data (i32.const 5256) "\01\00\00\00\08\00\00\00a\00d\00d\00r")
- (data (i32.const 5276) "\1c")
- (data (i32.const 5288) "\01\00\00\00\0c\00\00\00S\00t\00r\00i\00n\00g")
- (data (i32.const 5308) "L")
- (data (i32.const 5320) "\01\00\00\000\00\00\00 \00i\00s\00 \00n\00o\00t\00 \00a\00 \00s\00t\00r\00i\00n\00g\00 \00o\00r\00 \00n\00u\00l\00l")
- (data (i32.const 5388) "\1c")
- (data (i32.const 5400) "\01\00\00\00\08\00\00\00f\00u\00n\00c")
- (data (i32.const 5420) "\1c")
- (data (i32.const 5432) "\01\00\00\00\08\00\00\00a\00r\00g\00s")
- (data (i32.const 5452) "\1c")
- (data (i32.const 5464) "\01\00\00\00\06\00\00\00g\00a\00s")
+ (data (i32.const 3640) "\01\00\00\00\02\00\00\00:")
+ (data (i32.const 3660) ",")
+ (data (i32.const 3672) "\01\00\00\00\18\00\00\00E\00x\00p\00e\00c\00t\00e\00d\00 \00\'\00:\00\'")
+ (data (i32.const 3708) "L")
+ (data (i32.const 3720) "\01\00\00\000\00\00\00U\00n\00e\00x\00p\00e\00c\00t\00e\00d\00 \00e\00n\00d\00 \00o\00f\00 \00o\00b\00j\00e\00c\00t")
+ (data (i32.const 3788) ",")
+ (data (i32.const 3800) "\01\00\00\00\1c\00\00\00A\00r\00r\00a\00y\00 \00i\00s\00 \00e\00m\00p\00t\00y")
+ (data (i32.const 3836) "\1c")
+ (data (i32.const 3848) "\01\00\00\00\02\00\00\00[")
+ (data (i32.const 3868) "\1c")
+ (data (i32.const 3880) "\01\00\00\00\02\00\00\00]")
+ (data (i32.const 3900) "L")
+ (data (i32.const 3912) "\01\00\00\00.\00\00\00U\00n\00e\00x\00p\00e\00c\00t\00e\00d\00 \00e\00n\00d\00 \00o\00f\00 \00a\00r\00r\00a\00y")
+ (data (i32.const 3980) "\1c")
+ (data (i32.const 3992) "\01\00\00\00\n\00\00\00f\00a\00l\00s\00e")
+ (data (i32.const 4012) ",")
+ (data (i32.const 4024) "\01\00\00\00\14\00\00\00E\00x\00p\00e\00c\00t\00e\00d\00 \00\'")
+ (data (i32.const 4060) "\1c")
+ (data (i32.const 4072) "\01\00\00\00\02\00\00\00\'")
+ (data (i32.const 4092) "\1c")
+ (data (i32.const 4104) "\01\00\00\00\08\00\00\00t\00r\00u\00e")
+ (data (i32.const 4124) "\1c")
+ (data (i32.const 4136) "\01\00\00\00\04\00\00\00-\000")
+ (data (i32.const 4166) "\f0?\00\00\00\00\00\00$@\00\00\00\00\00\00Y@\00\00\00\00\00@\8f@\00\00\00\00\00\88\c3@\00\00\00\00\00j\f8@\00\00\00\00\80\84.A\00\00\00\00\d0\12cA\00\00\00\00\84\d7\97A\00\00\00\00e\cd\cdA\00\00\00 _\a0\02B\00\00\00\e8vH7B\00\00\00\a2\94\1amB\00\00@\e5\9c0\a2B\00\00\90\1e\c4\bc\d6B\00\004&\f5k\0cC\00\80\e07y\c3AC\00\a0\d8\85W4vC\00\c8Ngm\c1\abC\00=\91`\e4X\e1C@\8c\b5x\1d\af\15DP\ef\e2\d6\e4\1aKD\92\d5M\06\cf\f0\80D")
+ (data (i32.const 4348) "\1c")
+ (data (i32.const 4360) "\01\00\00\00\08\00\00\00n\00u\00l\00l")
+ (data (i32.const 4380) "<")
+ (data (i32.const 4392) "\01\00\00\00\"\00\00\00C\00a\00n\00n\00o\00t\00 \00p\00a\00r\00s\00e\00 \00J\00S\00O\00N")
+ (data (i32.const 4444) "L")
+ (data (i32.const 4456) "\01\00\00\00<\00\00\00~\00l\00i\00b\00/\00n\00e\00a\00r\00-\00s\00d\00k\00-\00b\00i\00n\00d\00g\00e\00n\00/\00i\00n\00d\00e\00x\00.\00t\00s")
+ (data (i32.const 4524) "\1c")
+ (data (i32.const 4536) "\01\00\00\00\n\00\00\00c\00a\00l\00l\00s")
+ (data (i32.const 4556) "<")
+ (data (i32.const 4568) "\01\00\00\00$\00\00\00K\00e\00y\00 \00d\00o\00e\00s\00 \00n\00o\00t\00 \00e\00x\00i\00s\00t")
+ (data (i32.const 4620) ",")
+ (data (i32.const 4632) "\01\00\00\00\16\00\00\00~\00l\00i\00b\00/\00m\00a\00p\00.\00t\00s")
+ (data (i32.const 4668) "\1c")
+ (data (i32.const 4680) "\01\00\00\00\n\00\00\00t\00y\00p\00e\00 ")
+ (data (i32.const 4700) "\8c")
+ (data (i32.const 4712) "\01\00\00\00v\00\00\00A\00r\00r\00a\00y\00<\00~\00l\00i\00b\00/\00a\00r\00r\00a\00y\00/\00A\00r\00r\00a\00y\00<\00a\00s\00s\00e\00m\00b\00l\00y\00/\00m\00u\00l\00t\00i\00c\00a\00l\00l\00/\00m\00o\00d\00e\00l\00/\00B\00a\00t\00c\00h\00C\00a\00l\00l\00>\00>")
+ (data (i32.const 4844) "<")
+ (data (i32.const 4856) "\01\00\00\00 \00\00\00 \00c\00a\00n\00n\00o\00t\00 \00b\00e\00 \00n\00u\00l\00l\00.")
+ (data (i32.const 4908) "\1c")
+ (data (i32.const 4920) "\01\00\00\00\n\00\00\00K\00e\00y\00:\00 ")
+ (data (i32.const 4940) ",")
+ (data (i32.const 4952) "\01\00\00\00\16\00\00\00 \00w\00i\00t\00h\00 \00t\00y\00p\00e\00 ")
+ (data (i32.const 4988) "<")
+ (data (i32.const 5000) "\01\00\00\00\1e\00\00\00i\00s\00 \00n\00o\00t\00 \00n\00u\00l\00l\00a\00b\00l\00e")
+ (data (i32.const 5052) "<")
+ (data (i32.const 5064) "\01\00\00\00 \00\00\00V\00a\00l\00u\00e\00 \00w\00i\00t\00h\00 \00K\00e\00y\00:\00 ")
+ (data (i32.const 5116) "L")
+ (data (i32.const 5128) "\01\00\00\002\00\00\00 \00i\00s\00 \00n\00o\00t\00 \00a\00n\00 \00a\00r\00r\00a\00y\00 \00o\00r\00 \00n\00u\00l\00l\00.")
+ (data (i32.const 5196) "l")
+ (data (i32.const 5208) "\01\00\00\00R\00\00\00A\00r\00r\00a\00y\00<\00a\00s\00s\00e\00m\00b\00l\00y\00/\00m\00u\00l\00t\00i\00c\00a\00l\00l\00/\00m\00o\00d\00e\00l\00/\00B\00a\00t\00c\00h\00C\00a\00l\00l\00>")
+ (data (i32.const 5308) ",")
+ (data (i32.const 5320) "\01\00\00\00\12\00\00\00B\00a\00t\00c\00h\00C\00a\00l\00l")
+ (data (i32.const 5356) "L")
+ (data (i32.const 5368) "\01\00\00\004\00\00\00 \00i\00s\00 \00n\00o\00t\00 \00a\00n\00 \00o\00b\00j\00e\00c\00t\00 \00o\00r\00 \00n\00u\00l\00l\00 ")
+ (data (i32.const 5436) ",")
+ (data (i32.const 5448) "\01\00\00\00\0e\00\00\00a\00d\00d\00r\00e\00s\00s")
  (data (i32.const 5484) "\1c")
- (data (i32.const 5496) "\01\00\00\00\06\00\00\00u\006\004")
- (data (i32.const 5516) "\9c")
- (data (i32.const 5528) "\01\00\00\00~\00\00\00 \00i\00s\00 \00a\00n\00 \006\004\00-\00b\00i\00t\00 \00i\00n\00t\00e\00g\00e\00r\00 \00a\00n\00d\00 \00i\00s\00 \00e\00x\00p\00e\00c\00t\00e\00d\00 \00t\00o\00 \00b\00e\00 \00e\00n\00c\00o\00d\00e\00d\00 \00a\00s\00 \00a\00 \00s\00t\00r\00i\00n\00g")
- (data (i32.const 5676) "\1c")
- (data (i32.const 5688) "\01\00\00\00\08\00\00\00d\00e\00p\00o")
- (data (i32.const 5708) "\1c")
- (data (i32.const 5720) "\01\00\00\00\08\00\00\00u\001\002\008")
- (data (i32.const 5740) "l")
- (data (i32.const 5752) "\01\00\00\00Z\00\00\00 \00e\00x\00p\00e\00c\00t\00e\00d\00 \00t\00y\00p\00e\00 \00s\00t\00r\00i\00n\00g\00 \00t\00o\00 \00d\00e\00c\00o\00d\00e\00 \00u\001\002\008\00 \00b\00u\00t\00 \00g\00o\00t\00 ")
- (data (i32.const 5852) "\1c")
- (data (i32.const 5864) "\01\00\00\00\0c\00\00\00s\00t\00r\00i\00n\00g")
- (data (i32.const 5884) ",")
- (data (i32.const 5896) "\01\00\00\00\0e\00\00\00B\00o\00o\00l\00e\00a\00n")
- (data (i32.const 5932) "\1c")
- (data (i32.const 5944) "\01\00\00\00\0c\00\00\00O\00b\00j\00e\00c\00t")
- (data (i32.const 5964) "\1c")
- (data (i32.const 5976) "\01\00\00\00\n\00\00\00A\00r\00r\00a\00y")
- (data (i32.const 5996) "\1c")
- (data (i32.const 6008) "\01\00\00\00\08\00\00\00N\00u\00l\00l")
- (data (i32.const 6028) ",")
- (data (i32.const 6040) "\01\00\00\00\0e\00\00\00I\00n\00t\00e\00g\00e\00r")
- (data (i32.const 6076) "\1c")
- (data (i32.const 6088) "\01\00\00\00\n\00\00\00F\00l\00o\00a\00t")
- (data (i32.const 6108) ",")
- (data (i32.const 6120) "\01\00\00\00\18\00\00\00U\00N\00K\00N\00O\00W\00N\00 \00T\00Y\00P\00E")
- (data (i32.const 6156) ",")
- (data (i32.const 6168) "\01\00\00\00\14\00\00\00P\00a\00r\00a\00m\00e\00t\00e\00r\00 ")
- (data (i32.const 6204) "L")
- (data (i32.const 6216) "\01\00\00\000\00\00\00 \00i\00s\00 \00r\00e\00q\00u\00i\00r\00e\00d\00 \00b\00u\00t\00 \00m\00i\00s\00s\00i\00n\00g")
- (data (i32.const 6284) "L")
- (data (i32.const 6296) "\01\00\00\004\00\00\00~\00l\00i\00b\00/\00n\00e\00a\00r\00-\00s\00d\00k\00-\00c\00o\00r\00e\00/\00u\00t\00i\00l\00.\00t\00s")
- (data (i32.const 6364) "\\")
- (data (i32.const 6376) "\01\00\00\00F\00\00\00~\00l\00i\00b\00/\00a\00s\00s\00e\00m\00b\00l\00y\00s\00c\00r\00i\00p\00t\00-\00j\00s\00o\00n\00/\00e\00n\00c\00o\00d\00e\00r\00.\00t\00s")
- (data (i32.const 6460) "\1c")
- (data (i32.const 6472) "\01\00\00\00\04\00\00\00\\\00\"")
+ (data (i32.const 5496) "\01\00\00\00\0c\00\00\00S\00t\00r\00i\00n\00g")
+ (data (i32.const 5516) "L")
+ (data (i32.const 5528) "\01\00\00\000\00\00\00 \00i\00s\00 \00n\00o\00t\00 \00a\00 \00s\00t\00r\00i\00n\00g\00 \00o\00r\00 \00n\00u\00l\00l")
+ (data (i32.const 5596) ",")
+ (data (i32.const 5608) "\01\00\00\00\0e\00\00\00a\00c\00t\00i\00o\00n\00s")
+ (data (i32.const 5644) "l")
+ (data (i32.const 5656) "\01\00\00\00X\00\00\00A\00r\00r\00a\00y\00<\00a\00s\00s\00e\00m\00b\00l\00y\00/\00m\00u\00l\00t\00i\00c\00a\00l\00l\00/\00m\00o\00d\00e\00l\00/\00F\00u\00n\00c\00t\00i\00o\00n\00C\00a\00l\00l\00>")
+ (data (i32.const 5756) ",")
+ (data (i32.const 5768) "\01\00\00\00\18\00\00\00F\00u\00n\00c\00t\00i\00o\00n\00C\00a\00l\00l")
+ (data (i32.const 5804) "\1c")
+ (data (i32.const 5816) "\01\00\00\00\08\00\00\00f\00u\00n\00c")
+ (data (i32.const 5836) "\1c")
+ (data (i32.const 5848) "\01\00\00\00\08\00\00\00a\00r\00g\00s")
+ (data (i32.const 5868) "\1c")
+ (data (i32.const 5880) "\01\00\00\00\06\00\00\00g\00a\00s")
+ (data (i32.const 5900) "\1c")
+ (data (i32.const 5912) "\01\00\00\00\06\00\00\00u\006\004")
+ (data (i32.const 5932) "\9c")
+ (data (i32.const 5944) "\01\00\00\00~\00\00\00 \00i\00s\00 \00a\00n\00 \006\004\00-\00b\00i\00t\00 \00i\00n\00t\00e\00g\00e\00r\00 \00a\00n\00d\00 \00i\00s\00 \00e\00x\00p\00e\00c\00t\00e\00d\00 \00t\00o\00 \00b\00e\00 \00e\00n\00c\00o\00d\00e\00d\00 \00a\00s\00 \00a\00 \00s\00t\00r\00i\00n\00g")
+ (data (i32.const 6092) "\1c")
+ (data (i32.const 6104) "\01\00\00\00\08\00\00\00d\00e\00p\00o")
+ (data (i32.const 6124) "\1c")
+ (data (i32.const 6136) "\01\00\00\00\08\00\00\00u\001\002\008")
+ (data (i32.const 6156) "l")
+ (data (i32.const 6168) "\01\00\00\00Z\00\00\00 \00e\00x\00p\00e\00c\00t\00e\00d\00 \00t\00y\00p\00e\00 \00s\00t\00r\00i\00n\00g\00 \00t\00o\00 \00d\00e\00c\00o\00d\00e\00 \00u\001\002\008\00 \00b\00u\00t\00 \00g\00o\00t\00 ")
+ (data (i32.const 6268) "\1c")
+ (data (i32.const 6280) "\01\00\00\00\0c\00\00\00s\00t\00r\00i\00n\00g")
+ (data (i32.const 6300) ",")
+ (data (i32.const 6312) "\01\00\00\00\0e\00\00\00B\00o\00o\00l\00e\00a\00n")
+ (data (i32.const 6348) "\1c")
+ (data (i32.const 6360) "\01\00\00\00\0c\00\00\00O\00b\00j\00e\00c\00t")
+ (data (i32.const 6380) "\1c")
+ (data (i32.const 6392) "\01\00\00\00\n\00\00\00A\00r\00r\00a\00y")
+ (data (i32.const 6412) "\1c")
+ (data (i32.const 6424) "\01\00\00\00\08\00\00\00N\00u\00l\00l")
+ (data (i32.const 6444) ",")
+ (data (i32.const 6456) "\01\00\00\00\0e\00\00\00I\00n\00t\00e\00g\00e\00r")
  (data (i32.const 6492) "\1c")
- (data (i32.const 6504) "\01\00\00\00\04\00\00\00\\\00\\")
- (data (i32.const 6524) "\1c")
- (data (i32.const 6536) "\01\00\00\00\04\00\00\00\\\00b")
- (data (i32.const 6556) "\1c")
- (data (i32.const 6568) "\01\00\00\00\04\00\00\00\\\00n")
- (data (i32.const 6588) "\1c")
- (data (i32.const 6600) "\01\00\00\00\04\00\00\00\\\00r")
- (data (i32.const 6620) "\1c")
- (data (i32.const 6632) "\01\00\00\00\04\00\00\00\\\00t")
- (data (i32.const 6652) "\\")
- (data (i32.const 6664) "\01\00\00\00H\00\00\00U\00n\00s\00u\00p\00p\00o\00r\00t\00e\00d\00 \00c\00o\00n\00t\00r\00o\00l\00 \00c\00h\00a\00r\00a\00c\00t\00e\00r\00 \00c\00o\00d\00e\00:\00 ")
- (data (i32.const 6748) "|")
- (data (i32.const 6760) "\01\00\00\00d\00\00\00t\00o\00S\00t\00r\00i\00n\00g\00(\00)\00 \00r\00a\00d\00i\00x\00 \00a\00r\00g\00u\00m\00e\00n\00t\00 \00m\00u\00s\00t\00 \00b\00e\00 \00b\00e\00t\00w\00e\00e\00n\00 \002\00 \00a\00n\00d\00 \003\006")
- (data (i32.const 6876) "<")
- (data (i32.const 6888) "\01\00\00\00&\00\00\00~\00l\00i\00b\00/\00u\00t\00i\00l\00/\00n\00u\00m\00b\00e\00r\00.\00t\00s")
+ (data (i32.const 6504) "\01\00\00\00\n\00\00\00F\00l\00o\00a\00t")
+ (data (i32.const 6524) ",")
+ (data (i32.const 6536) "\01\00\00\00\18\00\00\00U\00N\00K\00N\00O\00W\00N\00 \00T\00Y\00P\00E")
+ (data (i32.const 6572) ",")
+ (data (i32.const 6584) "\01\00\00\00\14\00\00\00P\00a\00r\00a\00m\00e\00t\00e\00r\00 ")
+ (data (i32.const 6620) "L")
+ (data (i32.const 6632) "\01\00\00\000\00\00\00 \00i\00s\00 \00r\00e\00q\00u\00i\00r\00e\00d\00 \00b\00u\00t\00 \00m\00i\00s\00s\00i\00n\00g")
+ (data (i32.const 6700) "L")
+ (data (i32.const 6712) "\01\00\00\004\00\00\00~\00l\00i\00b\00/\00n\00e\00a\00r\00-\00s\00d\00k\00-\00c\00o\00r\00e\00/\00u\00t\00i\00l\00.\00t\00s")
+ (data (i32.const 6780) "\\")
+ (data (i32.const 6792) "\01\00\00\00F\00\00\00~\00l\00i\00b\00/\00a\00s\00s\00e\00m\00b\00l\00y\00s\00c\00r\00i\00p\00t\00-\00j\00s\00o\00n\00/\00e\00n\00c\00o\00d\00e\00r\00.\00t\00s")
+ (data (i32.const 6876) "\1c")
+ (data (i32.const 6888) "\01\00\00\00\04\00\00\00\\\00\"")
+ (data (i32.const 6908) "\1c")
+ (data (i32.const 6920) "\01\00\00\00\04\00\00\00\\\00\\")
  (data (i32.const 6940) "\1c")
- (data (i32.const 6952) "\01\00\00\00\02\00\00\000")
- (data (i32.const 6972) "0\000\000\001\000\002\000\003\000\004\000\005\000\006\000\007\000\008\000\009\001\000\001\001\001\002\001\003\001\004\001\005\001\006\001\007\001\008\001\009\002\000\002\001\002\002\002\003\002\004\002\005\002\006\002\007\002\008\002\009\003\000\003\001\003\002\003\003\003\004\003\005\003\006\003\007\003\008\003\009\004\000\004\001\004\002\004\003\004\004\004\005\004\006\004\007\004\008\004\009\005\000\005\001\005\002\005\003\005\004\005\005\005\006\005\007\005\008\005\009\006\000\006\001\006\002\006\003\006\004\006\005\006\006\006\007\006\008\006\009\007\000\007\001\007\002\007\003\007\004\007\005\007\006\007\007\007\008\007\009\008\000\008\001\008\002\008\003\008\004\008\005\008\006\008\007\008\008\008\009\009\000\009\001\009\002\009\003\009\004\009\005\009\006\009\007\009\008\009\009")
- (data (i32.const 7372) "\1c\04")
- (data (i32.const 7384) "\01\00\00\00\00\04\00\000\000\000\001\000\002\000\003\000\004\000\005\000\006\000\007\000\008\000\009\000\00a\000\00b\000\00c\000\00d\000\00e\000\00f\001\000\001\001\001\002\001\003\001\004\001\005\001\006\001\007\001\008\001\009\001\00a\001\00b\001\00c\001\00d\001\00e\001\00f\002\000\002\001\002\002\002\003\002\004\002\005\002\006\002\007\002\008\002\009\002\00a\002\00b\002\00c\002\00d\002\00e\002\00f\003\000\003\001\003\002\003\003\003\004\003\005\003\006\003\007\003\008\003\009\003\00a\003\00b\003\00c\003\00d\003\00e\003\00f\004\000\004\001\004\002\004\003\004\004\004\005\004\006\004\007\004\008\004\009\004\00a\004\00b\004\00c\004\00d\004\00e\004\00f\005\000\005\001\005\002\005\003\005\004\005\005\005\006\005\007\005\008\005\009\005\00a\005\00b\005\00c\005\00d\005\00e\005\00f\006\000\006\001\006\002\006\003\006\004\006\005\006\006\006\007\006\008\006\009\006\00a\006\00b\006\00c\006\00d\006\00e\006\00f\007\000\007\001\007\002\007\003\007\004\007\005\007\006\007\007\007\008\007\009\007\00a\007\00b\007\00c\007\00d\007\00e\007\00f\008\000\008\001\008\002\008\003\008\004\008\005\008\006\008\007\008\008\008\009\008\00a\008\00b\008\00c\008\00d\008\00e\008\00f\009\000\009\001\009\002\009\003\009\004\009\005\009\006\009\007\009\008\009\009\009\00a\009\00b\009\00c\009\00d\009\00e\009\00f\00a\000\00a\001\00a\002\00a\003\00a\004\00a\005\00a\006\00a\007\00a\008\00a\009\00a\00a\00a\00b\00a\00c\00a\00d\00a\00e\00a\00f\00b\000\00b\001\00b\002\00b\003\00b\004\00b\005\00b\006\00b\007\00b\008\00b\009\00b\00a\00b\00b\00b\00c\00b\00d\00b\00e\00b\00f\00c\000\00c\001\00c\002\00c\003\00c\004\00c\005\00c\006\00c\007\00c\008\00c\009\00c\00a\00c\00b\00c\00c\00c\00d\00c\00e\00c\00f\00d\000\00d\001\00d\002\00d\003\00d\004\00d\005\00d\006\00d\007\00d\008\00d\009\00d\00a\00d\00b\00d\00c\00d\00d\00d\00e\00d\00f\00e\000\00e\001\00e\002\00e\003\00e\004\00e\005\00e\006\00e\007\00e\008\00e\009\00e\00a\00e\00b\00e\00c\00e\00d\00e\00e\00e\00f\00f\000\00f\001\00f\002\00f\003\00f\004\00f\005\00f\006\00f\007\00f\008\00f\009\00f\00a\00f\00b\00f\00c\00f\00d\00f\00e\00f\00f")
- (data (i32.const 8428) "\\")
- (data (i32.const 8440) "\01\00\00\00H\00\00\000\001\002\003\004\005\006\007\008\009\00a\00b\00c\00d\00e\00f\00g\00h\00i\00j\00k\00l\00m\00n\00o\00p\00q\00r\00s\00t\00u\00v\00w\00x\00y\00z")
- (data (i32.const 8524) "\\")
- (data (i32.const 8536) "\01\00\00\00H\00\00\00 \00m\00u\00s\00t\00 \00b\00e\00 \00a\00d\00m\00i\00n\00 \00t\00o\00 \00c\00a\00l\00l\00 \00t\00h\00i\00s\00 \00f\00u\00n\00c\00t\00i\00o\00n")
- (data (i32.const 8620) "\1c")
- (data (i32.const 8632) "!\00\00\00\0c\00\00\00@\04\00\00\00\00\00\00`!")
- (data (i32.const 8652) "L")
- (data (i32.const 8664) "\01\00\00\006\00\00\00a\00s\00s\00e\00m\00b\00l\00y\00/\00m\00u\00l\00t\00i\00c\00a\00l\00l\00/\00i\00n\00d\00e\00x\00.\00t\00s")
- (data (i32.const 8732) "L")
- (data (i32.const 8744) "\01\00\00\00:\00\00\00a\00c\00t\00i\00o\00n\00s\00 \00a\00r\00r\00a\00y\00 \00c\00a\00n\00n\00o\00t\00 \00b\00e\00 \00e\00m\00p\00t\00y")
- (data (i32.const 8812) ",")
- (data (i32.const 8824) "\01\00\00\00\10\00\00\00a\00c\00t\00i\00o\00n\00s\00[")
- (data (i32.const 8860) "<")
- (data (i32.const 8872) "\01\00\00\00\"\00\00\00]\00 \00c\00a\00n\00n\00o\00t\00 \00b\00e\00 \00e\00m\00p\00t\00y")
- (data (i32.const 8924) "\1c")
- (data (i32.const 8936) "!\00\00\00\0c\00\00\00\80\"\00\00\00\00\00\00\b0\"")
- (data (i32.const 8956) "L")
- (data (i32.const 8968) "\01\00\00\000\00\00\00O\00v\00e\00r\00f\00l\00o\00w\00 \00d\00u\00r\00i\00n\00g\00 \00a\00d\00d\00i\00s\00i\00o\00n")
- (data (i32.const 9036) "\\")
- (data (i32.const 9048) "\01\00\00\00F\00\00\00~\00l\00i\00b\00/\00a\00s\00-\00b\00i\00g\00n\00u\00m\00/\00i\00n\00t\00e\00g\00e\00r\00/\00s\00a\00f\00e\00/\00u\001\002\008\00.\00t\00s")
- (data (i32.const 9132) "L")
- (data (i32.const 9144) "\01\00\00\00<\00\00\00~\00l\00i\00b\00/\00a\00s\00-\00b\00i\00g\00n\00u\00m\00/\00i\00n\00t\00e\00g\00e\00r\00/\00u\001\002\008\00.\00t\00s")
- (data (i32.const 9212) "L")
- (data (i32.const 9224) "\01\00\00\00<\00\00\00O\00v\00e\00r\00f\00l\00o\00w\00 \00d\00u\00r\00i\00n\00g\00 \00m\00u\00l\00t\00i\00p\00l\00i\00c\00a\00t\00i\00o\00n")
- (data (i32.const 9292) "L")
- (data (i32.const 9304) "\01\00\00\00:\00\00\00U\00n\00d\00e\00r\00f\00l\00o\00w\00 \00d\00u\00r\00i\00n\00g\00 \00s\00u\00b\00s\00t\00r\00a\00c\00t\00i\00o\00n")
- (data (i32.const 9372) "l")
- (data (i32.const 9384) "\01\00\00\00P\00\00\00f\00u\00n\00d\00s\00 \00i\00n\00s\00u\00f\00f\00i\00c\00i\00e\00n\00t\00 \00f\00o\00r\00 \00a\00t\00t\00a\00c\00h\00e\00d\00 \00d\00e\00p\00o\00s\00i\00t\00s")
- (data (i32.const 9484) "\1c")
- (data (i32.const 9496) "\01\00\00\00\02\00\00\00=")
- (data (i32.const 9516) "\9c")
- (data (i32.const 9532) "\80")
- (data (i32.const 9579) ">\00\00\00?456789:;<=\00\00\00\00\00\00\00\00\01\02\03\04\05\06\07\08\t\n\0b\0c\0d\0e\0f\10\11\12\13\14\15\16\17\18\19\00\00\00\00\00\00\1a\1b\1c\1d\1e\1f !\"#$%&\'()*+,-./0123")
- (data (i32.const 9676) "<")
- (data (i32.const 9688) "\01\00\00\00&\00\00\00~\00l\00i\00b\00/\00s\00t\00a\00t\00i\00c\00a\00r\00r\00a\00y\00.\00t\00s")
- (data (i32.const 9740) ",")
- (data (i32.const 9752) "\01\00\00\00\12\00\00\00s\00e\00n\00d\00e\00r\00_\00i\00d")
+ (data (i32.const 6952) "\01\00\00\00\04\00\00\00\\\00b")
+ (data (i32.const 6972) "\1c")
+ (data (i32.const 6984) "\01\00\00\00\04\00\00\00\\\00n")
+ (data (i32.const 7004) "\1c")
+ (data (i32.const 7016) "\01\00\00\00\04\00\00\00\\\00r")
+ (data (i32.const 7036) "\1c")
+ (data (i32.const 7048) "\01\00\00\00\04\00\00\00\\\00t")
+ (data (i32.const 7068) "\\")
+ (data (i32.const 7080) "\01\00\00\00H\00\00\00U\00n\00s\00u\00p\00p\00o\00r\00t\00e\00d\00 \00c\00o\00n\00t\00r\00o\00l\00 \00c\00h\00a\00r\00a\00c\00t\00e\00r\00 \00c\00o\00d\00e\00:\00 ")
+ (data (i32.const 7164) "|")
+ (data (i32.const 7176) "\01\00\00\00d\00\00\00t\00o\00S\00t\00r\00i\00n\00g\00(\00)\00 \00r\00a\00d\00i\00x\00 \00a\00r\00g\00u\00m\00e\00n\00t\00 \00m\00u\00s\00t\00 \00b\00e\00 \00b\00e\00t\00w\00e\00e\00n\00 \002\00 \00a\00n\00d\00 \003\006")
+ (data (i32.const 7292) "<")
+ (data (i32.const 7304) "\01\00\00\00&\00\00\00~\00l\00i\00b\00/\00u\00t\00i\00l\00/\00n\00u\00m\00b\00e\00r\00.\00t\00s")
+ (data (i32.const 7356) "\1c")
+ (data (i32.const 7368) "\01\00\00\00\02\00\00\000")
+ (data (i32.const 7388) "0\000\000\001\000\002\000\003\000\004\000\005\000\006\000\007\000\008\000\009\001\000\001\001\001\002\001\003\001\004\001\005\001\006\001\007\001\008\001\009\002\000\002\001\002\002\002\003\002\004\002\005\002\006\002\007\002\008\002\009\003\000\003\001\003\002\003\003\003\004\003\005\003\006\003\007\003\008\003\009\004\000\004\001\004\002\004\003\004\004\004\005\004\006\004\007\004\008\004\009\005\000\005\001\005\002\005\003\005\004\005\005\005\006\005\007\005\008\005\009\006\000\006\001\006\002\006\003\006\004\006\005\006\006\006\007\006\008\006\009\007\000\007\001\007\002\007\003\007\004\007\005\007\006\007\007\007\008\007\009\008\000\008\001\008\002\008\003\008\004\008\005\008\006\008\007\008\008\008\009\009\000\009\001\009\002\009\003\009\004\009\005\009\006\009\007\009\008\009\009")
+ (data (i32.const 7788) "\1c\04")
+ (data (i32.const 7800) "\01\00\00\00\00\04\00\000\000\000\001\000\002\000\003\000\004\000\005\000\006\000\007\000\008\000\009\000\00a\000\00b\000\00c\000\00d\000\00e\000\00f\001\000\001\001\001\002\001\003\001\004\001\005\001\006\001\007\001\008\001\009\001\00a\001\00b\001\00c\001\00d\001\00e\001\00f\002\000\002\001\002\002\002\003\002\004\002\005\002\006\002\007\002\008\002\009\002\00a\002\00b\002\00c\002\00d\002\00e\002\00f\003\000\003\001\003\002\003\003\003\004\003\005\003\006\003\007\003\008\003\009\003\00a\003\00b\003\00c\003\00d\003\00e\003\00f\004\000\004\001\004\002\004\003\004\004\004\005\004\006\004\007\004\008\004\009\004\00a\004\00b\004\00c\004\00d\004\00e\004\00f\005\000\005\001\005\002\005\003\005\004\005\005\005\006\005\007\005\008\005\009\005\00a\005\00b\005\00c\005\00d\005\00e\005\00f\006\000\006\001\006\002\006\003\006\004\006\005\006\006\006\007\006\008\006\009\006\00a\006\00b\006\00c\006\00d\006\00e\006\00f\007\000\007\001\007\002\007\003\007\004\007\005\007\006\007\007\007\008\007\009\007\00a\007\00b\007\00c\007\00d\007\00e\007\00f\008\000\008\001\008\002\008\003\008\004\008\005\008\006\008\007\008\008\008\009\008\00a\008\00b\008\00c\008\00d\008\00e\008\00f\009\000\009\001\009\002\009\003\009\004\009\005\009\006\009\007\009\008\009\009\009\00a\009\00b\009\00c\009\00d\009\00e\009\00f\00a\000\00a\001\00a\002\00a\003\00a\004\00a\005\00a\006\00a\007\00a\008\00a\009\00a\00a\00a\00b\00a\00c\00a\00d\00a\00e\00a\00f\00b\000\00b\001\00b\002\00b\003\00b\004\00b\005\00b\006\00b\007\00b\008\00b\009\00b\00a\00b\00b\00b\00c\00b\00d\00b\00e\00b\00f\00c\000\00c\001\00c\002\00c\003\00c\004\00c\005\00c\006\00c\007\00c\008\00c\009\00c\00a\00c\00b\00c\00c\00c\00d\00c\00e\00c\00f\00d\000\00d\001\00d\002\00d\003\00d\004\00d\005\00d\006\00d\007\00d\008\00d\009\00d\00a\00d\00b\00d\00c\00d\00d\00d\00e\00d\00f\00e\000\00e\001\00e\002\00e\003\00e\004\00e\005\00e\006\00e\007\00e\008\00e\009\00e\00a\00e\00b\00e\00c\00e\00d\00e\00e\00e\00f\00f\000\00f\001\00f\002\00f\003\00f\004\00f\005\00f\006\00f\007\00f\008\00f\009\00f\00a\00f\00b\00f\00c\00f\00d\00f\00e\00f\00f")
+ (data (i32.const 8844) "\\")
+ (data (i32.const 8856) "\01\00\00\00H\00\00\000\001\002\003\004\005\006\007\008\009\00a\00b\00c\00d\00e\00f\00g\00h\00i\00j\00k\00l\00m\00n\00o\00p\00q\00r\00s\00t\00u\00v\00w\00x\00y\00z")
+ (data (i32.const 8940) "\\")
+ (data (i32.const 8952) "\01\00\00\00H\00\00\00 \00m\00u\00s\00t\00 \00b\00e\00 \00a\00d\00m\00i\00n\00 \00t\00o\00 \00c\00a\00l\00l\00 \00t\00h\00i\00s\00 \00f\00u\00n\00c\00t\00i\00o\00n")
+ (data (i32.const 9036) "\1c")
+ (data (i32.const 9048) ")\00\00\00\0c\00\00\00\10\06\00\00\00\00\00\00\00#")
+ (data (i32.const 9068) "L")
+ (data (i32.const 9080) "\01\00\00\006\00\00\00a\00s\00s\00e\00m\00b\00l\00y\00/\00m\00u\00l\00t\00i\00c\00a\00l\00l\00/\00i\00n\00d\00e\00x\00.\00t\00s")
+ (data (i32.const 9148) "L")
+ (data (i32.const 9160) "\01\00\00\00<\00\00\00~\00l\00i\00b\00/\00a\00s\00-\00b\00i\00g\00n\00u\00m\00/\00i\00n\00t\00e\00g\00e\00r\00/\00u\001\002\008\00.\00t\00s")
+ (data (i32.const 9228) "l")
+ (data (i32.const 9240) "\01\00\00\00N\00\00\00a\00t\00t\00a\00c\00h\00e\00d\00 \00d\00e\00p\00o\00s\00i\00t\00 \00m\00u\00s\00t\00 \00b\00e\00 \00m\00o\00r\00e\00 \00t\00h\00a\00n\00 \00z\00e\00r\00o")
+ (data (i32.const 9340) "\1c")
+ (data (i32.const 9352) "\01\00\00\00\02\00\00\00=")
+ (data (i32.const 9372) "\9c")
+ (data (i32.const 9388) "\80")
+ (data (i32.const 9435) ">\00\00\00?456789:;<=\00\00\00\00\00\00\00\00\01\02\03\04\05\06\07\08\t\n\0b\0c\0d\0e\0f\10\11\12\13\14\15\16\17\18\19\00\00\00\00\00\00\1a\1b\1c\1d\1e\1f !\"#$%&\'()*+,-./0123")
+ (data (i32.const 9532) "<")
+ (data (i32.const 9544) "\01\00\00\00&\00\00\00~\00l\00i\00b\00/\00s\00t\00a\00t\00i\00c\00a\00r\00r\00a\00y\00.\00t\00s")
+ (data (i32.const 9596) ",")
+ (data (i32.const 9608) "\01\00\00\00\12\00\00\00s\00e\00n\00d\00e\00r\00_\00i\00d")
+ (data (i32.const 9644) "\1c")
+ (data (i32.const 9656) "\01\00\00\00\0c\00\00\00a\00m\00o\00u\00n\00t")
+ (data (i32.const 9676) "\1c")
+ (data (i32.const 9688) "\01\00\00\00\06\00\00\00m\00s\00g")
+ (data (i32.const 9708) "L")
+ (data (i32.const 9720) "\01\00\00\00.\00\00\00 \00n\00o\00t\00 \00o\00n\00 \00t\00o\00k\00e\00n\00 \00w\00h\00i\00t\00e\00l\00i\00s\00t")
  (data (i32.const 9788) "\1c")
- (data (i32.const 9800) "\01\00\00\00\0c\00\00\00a\00m\00o\00u\00n\00t")
- (data (i32.const 9820) "\1c")
- (data (i32.const 9832) "\01\00\00\00\06\00\00\00m\00s\00g")
- (data (i32.const 9852) "L")
- (data (i32.const 9864) "\01\00\00\00.\00\00\00 \00n\00o\00t\00 \00o\00n\00 \00t\00o\00k\00e\00n\00 \00w\00h\00i\00t\00e\00l\00i\00s\00t")
- (data (i32.const 9932) "\1c")
- (data (i32.const 9944) "!\00\00\00\0c\00\00\00@\04\00\00\00\00\00\00\90&")
- (data (i32.const 9964) "<")
- (data (i32.const 9976) "\01\00\00\00 \00\00\00F\00t\00O\00n\00T\00r\00a\00n\00s\00f\00e\00r\00A\00r\00g\00s")
+ (data (i32.const 9800) ")\00\00\00\0c\00\00\00\10\06\00\00\00\00\00\00\00&")
+ (data (i32.const 9820) "<")
+ (data (i32.const 9832) "\01\00\00\00 \00\00\00F\00t\00O\00n\00T\00r\00a\00n\00s\00f\00e\00r\00A\00r\00g\00s")
+ (data (i32.const 9884) ",")
+ (data (i32.const 9896) "\01\00\00\00\16\00\00\00f\00u\00n\00c\00t\00i\00o\00n\00_\00i\00d")
+ (data (i32.const 9932) ",")
+ (data (i32.const 9944) "\01\00\00\00\12\00\00\00m\00u\00l\00t\00i\00c\00a\00l\00l")
+ (data (i32.const 9980) ",")
+ (data (i32.const 9992) "\01\00\00\00\1a\00\00\00M\00u\00l\00t\00i\00c\00a\00l\00l\00A\00r\00g\00s")
  (data (i32.const 10028) ",")
- (data (i32.const 10040) "\01\00\00\00\16\00\00\00f\00u\00n\00c\00t\00i\00o\00n\00_\00i\00d")
- (data (i32.const 10076) ",")
- (data (i32.const 10088) "\01\00\00\00\12\00\00\00m\00u\00l\00t\00i\00c\00a\00l\00l")
- (data (i32.const 10124) ",")
- (data (i32.const 10136) "\01\00\00\00\1a\00\00\00M\00u\00l\00t\00i\00c\00a\00l\00l\00A\00r\00g\00s")
- (data (i32.const 10172) "l")
- (data (i32.const 10184) "\01\00\00\00N\00\00\00r\00a\00d\00i\00x\00 \00a\00r\00g\00u\00m\00e\00n\00t\00 \00m\00u\00s\00t\00 \00b\00e\00 \00b\00e\00t\00w\00e\00e\00n\00 \001\000\00 \00o\00r\00 \001\006")
- (data (i32.const 10284) "<")
- (data (i32.const 10296) "\01\00\00\00 \00\00\000\001\002\003\004\005\006\007\008\009\00a\00b\00c\00d\00e\00f")
- (data (i32.const 10348) ",")
- (data (i32.const 10360) "\01\00\00\00\14\00\00\00a\00c\00c\00o\00u\00n\00t\00_\00i\00d")
- (data (i32.const 10396) ",")
- (data (i32.const 10408) "\01\00\00\00\16\00\00\00a\00c\00c\00o\00u\00n\00t\00_\00i\00d\00s")
- (data (i32.const 10444) "L")
- (data (i32.const 10456) "\01\00\00\002\00\00\00A\00r\00r\00a\00y\00<\00~\00l\00i\00b\00/\00s\00t\00r\00i\00n\00g\00/\00S\00t\00r\00i\00n\00g\00>")
- (data (i32.const 10524) "L")
- (data (i32.const 10536) "\01\00\00\00:\00\00\00~\00l\00i\00b\00/\00n\00e\00a\00r\00-\00s\00d\00k\00-\00c\00o\00r\00e\00/\00s\00t\00o\00r\00a\00g\00e\00.\00t\00s")
- (data (i32.const 10604) "\\")
- (data (i32.const 10616) "\01\00\00\00B\00\00\00T\00h\00e\00 \00i\00t\00e\00m\00 \00w\00a\00s\00 \00n\00o\00t\00 \00f\00o\00u\00n\00d\00 \00i\00n\00 \00t\00h\00e\00 \00s\00e\00t")
- (data (i32.const 10700) "|")
- (data (i32.const 10712) "\01\00\00\00^\00\00\00~\00l\00i\00b\00/\00n\00e\00a\00r\00-\00s\00d\00k\00-\00c\00o\00r\00e\00/\00c\00o\00l\00l\00e\00c\00t\00i\00o\00n\00s\00/\00p\00e\00r\00s\00i\00s\00t\00e\00n\00t\00S\00e\00t\00.\00t\00s")
- (data (i32.const 10828) "<")
- (data (i32.const 10840) "\01\00\00\00\1e\00\00\00V\00e\00c\00t\00o\00r\00 \00i\00s\00 \00e\00m\00p\00t\00y")
- (data (i32.const 10892) "|")
- (data (i32.const 10904) "\01\00\00\00d\00\00\00~\00l\00i\00b\00/\00n\00e\00a\00r\00-\00s\00d\00k\00-\00c\00o\00r\00e\00/\00c\00o\00l\00l\00e\00c\00t\00i\00o\00n\00s\00/\00p\00e\00r\00s\00i\00s\00t\00e\00n\00t\00V\00e\00c\00t\00o\00r\00.\00t\00s")
- (data (i32.const 11020) "\1c")
- (data (i32.const 11032) "\01\00\00\00\n\00\00\00K\00e\00y\00 \00\'")
- (data (i32.const 11052) "\\")
- (data (i32.const 11064) "\01\00\00\00>\00\00\00\'\00 \00i\00s\00 \00n\00o\00t\00 \00p\00r\00e\00s\00e\00n\00t\00 \00i\00n\00 \00t\00h\00e\00 \00s\00t\00o\00r\00a\00g\00e")
- (data (i32.const 11148) "<")
- (data (i32.const 11160) "\01\00\00\00&\00\00\00I\00n\00d\00e\00x\00 \00o\00u\00t\00 \00o\00f\00 \00b\00o\00u\00n\00d\00s")
- (data (i32.const 11212) "\1c")
- (data (i32.const 11224) "\01\00\00\00\n\00\00\00s\00t\00a\00r\00t")
- (data (i32.const 11244) "\1c")
- (data (i32.const 11256) "\01\00\00\00\06\00\00\00i\003\002")
- (data (i32.const 11276) "<")
- (data (i32.const 11288) "\01\00\00\00$\00\00\00 \00i\00s\00 \00n\00o\00t\00 \00a\00n\00 \00I\00n\00t\00e\00g\00e\00r")
- (data (i32.const 11340) "\1c")
- (data (i32.const 11352) "\01\00\00\00\06\00\00\00e\00n\00d")
- (data (i32.const 11372) ",")
- (data (i32.const 11384) "\01\00\00\00\12\00\00\00a\00d\00d\00r\00e\00s\00s\00e\00s")
- (data (i32.const 11420) ",")
- (data (i32.const 11432) "\01\00\00\00\1c\00\00\00a\00d\00m\00i\00n\00_\00a\00c\00c\00o\00u\00n\00t\00s")
- (data (i32.const 11468) "<")
- (data (i32.const 11480) "\01\00\00\00&\00\00\00A\00l\00r\00e\00a\00d\00y\00 \00i\00n\00i\00t\00i\00a\00l\00i\00z\00e\00d")
- (data (i32.const 11532) "\1c")
- (data (i32.const 11544) "\01\00\00\00\08\00\00\00d\00o\00n\00e")
- (data (i32.const 11568) ")\00\00\00 \00\00\00\00\00\00\00 ")
- (data (i32.const 11604) "A\00\00\00\02")
- (data (i32.const 11636) " \00\00\00\t\00\00\00 \00\00\00\00\00\00\00B")
- (data (i32.const 11664) "\0c\00\00\00 \00\00\00\00\00\00\00\10A\82")
- (data (i32.const 11688) "\0f\00\00\00 \00\00\00\00\00\00\00\02A")
- (data (i32.const 11728) "\0c\00\00\00\02A")
- (data (i32.const 11744) "\0c\00\00\00 \00\00\00\0c\00\00\00 \00\00\00\18\00\00\00 \00\00\00\0c\00\00\00 \00\00\00\0c\00\00\00 \00\00\00\0c")
- (data (i32.const 11796) "\02A\00\00\00\00\00\00\02A")
- (data (i32.const 11816) "\1f")
- (data (i32.const 11828) "\02\t\00\00\00\00\00\00\04A\00\00\00\00\00\00\10A\82\00\00\00\00\00 \00\00\00\00\00\00\00d\00\00\00\00\00\00\00 ")
- (data (i32.const 11892) "A\08\00\00\02")
+ (data (i32.const 10040) "\01\00\00\00\14\00\00\00a\00c\00c\00o\00u\00n\00t\00_\00i\00d")
+ (data (i32.const 10076) "L")
+ (data (i32.const 10088) "\01\00\00\00<\00\00\00O\00v\00e\00r\00f\00l\00o\00w\00 \00d\00u\00r\00i\00n\00g\00 \00m\00u\00l\00t\00i\00p\00l\00i\00c\00a\00t\00i\00o\00n")
+ (data (i32.const 10156) "\\")
+ (data (i32.const 10168) "\01\00\00\00F\00\00\00~\00l\00i\00b\00/\00a\00s\00-\00b\00i\00g\00n\00u\00m\00/\00i\00n\00t\00e\00g\00e\00r\00/\00s\00a\00f\00e\00/\00u\001\002\008\00.\00t\00s")
+ (data (i32.const 10252) "L")
+ (data (i32.const 10264) "\01\00\00\00:\00\00\00U\00n\00d\00e\00r\00f\00l\00o\00w\00 \00d\00u\00r\00i\00n\00g\00 \00s\00u\00b\00s\00t\00r\00a\00c\00t\00i\00o\00n")
+ (data (i32.const 10332) ",")
+ (data (i32.const 10344) "\01\00\00\00\16\00\00\00a\00c\00c\00o\00u\00n\00t\00_\00i\00d\00s")
+ (data (i32.const 10380) "L")
+ (data (i32.const 10392) "\01\00\00\002\00\00\00A\00r\00r\00a\00y\00<\00~\00l\00i\00b\00/\00s\00t\00r\00i\00n\00g\00/\00S\00t\00r\00i\00n\00g\00>")
+ (data (i32.const 10460) "L")
+ (data (i32.const 10472) "\01\00\00\00:\00\00\00~\00l\00i\00b\00/\00n\00e\00a\00r\00-\00s\00d\00k\00-\00c\00o\00r\00e\00/\00s\00t\00o\00r\00a\00g\00e\00.\00t\00s")
+ (data (i32.const 10540) "\\")
+ (data (i32.const 10552) "\01\00\00\00B\00\00\00T\00h\00e\00 \00i\00t\00e\00m\00 \00w\00a\00s\00 \00n\00o\00t\00 \00f\00o\00u\00n\00d\00 \00i\00n\00 \00t\00h\00e\00 \00s\00e\00t")
+ (data (i32.const 10636) "|")
+ (data (i32.const 10648) "\01\00\00\00^\00\00\00~\00l\00i\00b\00/\00n\00e\00a\00r\00-\00s\00d\00k\00-\00c\00o\00r\00e\00/\00c\00o\00l\00l\00e\00c\00t\00i\00o\00n\00s\00/\00p\00e\00r\00s\00i\00s\00t\00e\00n\00t\00S\00e\00t\00.\00t\00s")
+ (data (i32.const 10764) "<")
+ (data (i32.const 10776) "\01\00\00\00\1e\00\00\00V\00e\00c\00t\00o\00r\00 \00i\00s\00 \00e\00m\00p\00t\00y")
+ (data (i32.const 10828) "|")
+ (data (i32.const 10840) "\01\00\00\00d\00\00\00~\00l\00i\00b\00/\00n\00e\00a\00r\00-\00s\00d\00k\00-\00c\00o\00r\00e\00/\00c\00o\00l\00l\00e\00c\00t\00i\00o\00n\00s\00/\00p\00e\00r\00s\00i\00s\00t\00e\00n\00t\00V\00e\00c\00t\00o\00r\00.\00t\00s")
+ (data (i32.const 10956) "\1c")
+ (data (i32.const 10968) "\01\00\00\00\n\00\00\00K\00e\00y\00 \00\'")
+ (data (i32.const 10988) "\\")
+ (data (i32.const 11000) "\01\00\00\00>\00\00\00\'\00 \00i\00s\00 \00n\00o\00t\00 \00p\00r\00e\00s\00e\00n\00t\00 \00i\00n\00 \00t\00h\00e\00 \00s\00t\00o\00r\00a\00g\00e")
+ (data (i32.const 11084) "<")
+ (data (i32.const 11096) "\01\00\00\00&\00\00\00I\00n\00d\00e\00x\00 \00o\00u\00t\00 \00o\00f\00 \00b\00o\00u\00n\00d\00s")
+ (data (i32.const 11148) "\1c")
+ (data (i32.const 11160) "\01\00\00\00\n\00\00\00s\00t\00a\00r\00t")
+ (data (i32.const 11180) "\1c")
+ (data (i32.const 11192) "\01\00\00\00\06\00\00\00i\003\002")
+ (data (i32.const 11212) "<")
+ (data (i32.const 11224) "\01\00\00\00$\00\00\00 \00i\00s\00 \00n\00o\00t\00 \00a\00n\00 \00I\00n\00t\00e\00g\00e\00r")
+ (data (i32.const 11276) "\1c")
+ (data (i32.const 11288) "\01\00\00\00\06\00\00\00e\00n\00d")
+ (data (i32.const 11308) ",")
+ (data (i32.const 11320) "\01\00\00\00\12\00\00\00a\00d\00d\00r\00e\00s\00s\00e\00s")
+ (data (i32.const 11356) ",")
+ (data (i32.const 11368) "\01\00\00\00\1c\00\00\00a\00d\00m\00i\00n\00_\00a\00c\00c\00o\00u\00n\00t\00s")
+ (data (i32.const 11404) "<")
+ (data (i32.const 11416) "\01\00\00\00\1e\00\00\00c\00r\00o\00n\00c\00a\00t\00_\00m\00a\00n\00a\00g\00e\00r")
+ (data (i32.const 11468) ",")
+ (data (i32.const 11480) "\01\00\00\00\10\00\00\00j\00o\00b\00_\00b\00o\00n\00d")
+ (data (i32.const 11516) "<")
+ (data (i32.const 11528) "\01\00\00\00&\00\00\00A\00l\00r\00e\00a\00d\00y\00 \00i\00n\00i\00t\00i\00a\00l\00i\00z\00e\00d")
+ (data (i32.const 11580) "l")
+ (data (i32.const 11592) "\01\00\00\00N\00\00\00r\00a\00d\00i\00x\00 \00a\00r\00g\00u\00m\00e\00n\00t\00 \00m\00u\00s\00t\00 \00b\00e\00 \00b\00e\00t\00w\00e\00e\00n\00 \001\000\00 \00o\00r\00 \001\006")
+ (data (i32.const 11692) "<")
+ (data (i32.const 11704) "\01\00\00\00 \00\00\000\001\002\003\004\005\006\007\008\009\00a\00b\00c\00d\00e\00f")
+ (data (i32.const 11756) "\1c")
+ (data (i32.const 11768) "\01\00\00\00\08\00\00\00d\00o\00n\00e")
+ (data (i32.const 11788) ",")
+ (data (i32.const 11800) "\01\00\00\00\12\00\00\00j\00o\00b\00_\00c\00a\00l\00l\00s")
+ (data (i32.const 11836) ",")
+ (data (i32.const 11848) "\01\00\00\00\16\00\00\00j\00o\00b\00_\00c\00a\00d\00e\00n\00c\00e")
+ (data (i32.const 11884) "<")
+ (data (i32.const 11896) "\01\00\00\00\1e\00\00\00j\00o\00b\00_\00t\00r\00i\00g\00g\00e\00r\00_\00g\00a\00s")
+ (data (i32.const 11948) "<")
+ (data (i32.const 11960) "\01\00\00\00&\00\00\00j\00o\00b\00_\00t\00r\00i\00g\00g\00e\00r\00_\00d\00e\00p\00o\00s\00i\00t")
+ (data (i32.const 12012) "<")
+ (data (i32.const 12024) "\01\00\00\00 \00\00\00j\00o\00b\00_\00t\00o\00t\00a\00l\00_\00b\00u\00d\00g\00e\00t")
+ (data (i32.const 12076) ",")
+ (data (i32.const 12088) "\01\00\00\00\18\00\00\00j\00o\00b\00_\00r\00u\00n\00s\00_\00m\00a\00x")
+ (data (i32.const 12124) ",")
+ (data (i32.const 12136) "\01\00\00\00\18\00\00\00j\00o\00b\00_\00s\00t\00a\00r\00t\00_\00a\00t")
+ (data (i32.const 12172) "\9c")
+ (data (i32.const 12184) "\01\00\00\00\80\00\00\00a\00t\00t\00a\00c\00h\00e\00d\00 \00d\00e\00p\00o\00s\00i\00t\00 \00m\00u\00s\00t\00 \00b\00e\00 \00g\00r\00e\00a\00t\00e\00r\00 \00o\00r\00 \00e\00q\00u\00a\00l\00 \00t\00h\00a\00n\00 \00t\00h\00e\00 \00r\00e\00q\00u\00i\00r\00e\00d\00 \00b\00o\00n\00d")
+ (data (i32.const 12332) "L")
+ (data (i32.const 12344) "\01\00\00\004\00\00\00a\00s\00s\00e\00m\00b\00l\00y\00/\00m\00u\00l\00t\00i\00c\00a\00l\00l\00/\00j\00o\00b\00s\00.\00t\00s")
+ (data (i32.const 12412) "\1c")
+ (data (i32.const 12424) "\01\00\00\00\06\00\00\00k\00e\00y")
+ (data (i32.const 12444) "\1c")
+ (data (i32.const 12456) "\01\00\00\00\n\00\00\00v\00a\00l\00u\00e")
+ (data (i32.const 12476) "\1c")
+ (data (i32.const 12488) "\01\00\00\00\04\00\00\00i\00d")
+ (data (i32.const 12508) ",")
+ (data (i32.const 12520) "\01\00\00\00\18\00\00\00c\00r\00o\00n\00c\00a\00t\00_\00h\00a\00s\00h")
+ (data (i32.const 12556) ",")
+ (data (i32.const 12568) "\01\00\00\00\0e\00\00\00c\00r\00e\00a\00t\00o\00r")
+ (data (i32.const 12604) "\1c")
+ (data (i32.const 12616) "\01\00\00\00\08\00\00\00b\00o\00n\00d")
+ (data (i32.const 12636) ",")
+ (data (i32.const 12648) "\01\00\00\00\0e\00\00\00c\00a\00d\00e\00n\00c\00e")
+ (data (i32.const 12684) ",")
+ (data (i32.const 12696) "\01\00\00\00\16\00\00\00t\00r\00i\00g\00g\00e\00r\00_\00g\00a\00s")
+ (data (i32.const 12732) "<")
+ (data (i32.const 12744) "\01\00\00\00\1e\00\00\00t\00r\00i\00g\00g\00e\00r\00_\00d\00e\00p\00o\00s\00i\00t")
+ (data (i32.const 12796) ",")
+ (data (i32.const 12808) "\01\00\00\00\1c\00\00\00c\00r\00o\00n\00c\00a\00t\00_\00b\00u\00d\00g\00e\00t")
+ (data (i32.const 12844) ",")
+ (data (i32.const 12856) "\01\00\00\00\10\00\00\00s\00t\00a\00r\00t\00_\00a\00t")
+ (data (i32.const 12892) ",")
+ (data (i32.const 12904) "\01\00\00\00\10\00\00\00r\00u\00n\00s\00_\00m\00a\00x")
+ (data (i32.const 12940) ",")
+ (data (i32.const 12952) "\01\00\00\00\18\00\00\00r\00u\00n\00s\00_\00c\00u\00r\00r\00e\00n\00t")
+ (data (i32.const 12988) ",")
+ (data (i32.const 13000) "\01\00\00\00\12\00\00\00i\00s\00_\00a\00c\00t\00i\00v\00e")
+ (data (i32.const 13036) "\1c")
+ (data (i32.const 13048) "\01\00\00\00\0c\00\00\00j\00o\00b\00_\00i\00d")
+ (data (i32.const 13068) "<")
+ (data (i32.const 13080) "\01\00\00\00*\00\00\00j\00o\00b\00_\00a\00c\00t\00i\00v\00a\00t\00e\00_\00c\00a\00l\00l\00b\00a\00c\00k")
+ (data (i32.const 13132) "|")
+ (data (i32.const 13144) "\01\00\00\00`\00\00\00M\00a\00p\00E\00n\00t\00r\00y\00<\00u\003\002\00,\00a\00s\00s\00e\00m\00b\00l\00y\00/\00m\00u\00l\00t\00i\00c\00a\00l\00l\00/\00m\00o\00d\00e\00l\00/\00J\00o\00b\00S\00c\00h\00e\00m\00a\00>")
+ (data (i32.const 13260) "\1c")
+ (data (i32.const 13272) "\01\00\00\00\06\00\00\00u\003\002")
+ (data (i32.const 13292) ",")
+ (data (i32.const 13304) "\01\00\00\00\12\00\00\00J\00o\00b\00S\00c\00h\00e\00m\00a")
+ (data (i32.const 13340) "\1c")
+ (data (i32.const 13352) "\01\00\00\00\08\00\00\00b\00o\00o\00l")
+ (data (i32.const 13372) "<")
+ (data (i32.const 13384) "\01\00\00\00 \00\00\00 \00i\00s\00 \00n\00o\00t\00 \00a\00 \00s\00t\00r\00i\00n\00g")
+ (data (i32.const 13436) "\1c")
+ (data (i32.const 13448) "\01\00\00\00\08\00\00\00j\00o\00b\00 ")
+ (data (i32.const 13468) "<")
+ (data (i32.const 13480) "\01\00\00\00\1e\00\00\00 \00a\00l\00r\00e\00a\00d\00y\00 \00a\00c\00t\00i\00v\00e")
+ (data (i32.const 13532) "\1c")
+ (data (i32.const 13544) ")\00\00\00\0c\00\00\00\904\00\00\00\00\00\00\b04")
+ (data (i32.const 13564) "L")
+ (data (i32.const 13576) "\01\00\00\004\00\00\00 \00a\00l\00r\00e\00a\00d\00y\00 \00h\00a\00s\00 \00c\00r\00o\00n\00c\00a\00t\00 \00t\00a\00s\00k\00 ")
+ (data (i32.const 13644) ",")
+ (data (i32.const 13656) ")\00\00\00\14\00\00\00\904\00\00\00\00\00\00\105\00\00\00\00\00\00\10\06")
+ (data (i32.const 13692) ",")
+ (data (i32.const 13704) "\01\00\00\00\14\00\00\00{\00\"\00j\00o\00b\00_\00i\00d\00\"\00:")
+ (data (i32.const 13740) "\1c")
+ (data (i32.const 13752) ")\00\00\00\0c\00\00\00\905\00\00\00\00\00\00\10\0b")
+ (data (i32.const 13772) ",")
+ (data (i32.const 13784) "\01\00\00\00\16\00\00\00j\00o\00b\00_\00t\00r\00i\00g\00g\00e\00r")
+ (data (i32.const 13820) "\9c")
+ (data (i32.const 13832) "\01\00\00\00\80\00\00\00A\00B\00C\00D\00E\00F\00G\00H\00I\00J\00K\00L\00M\00N\00O\00P\00Q\00R\00S\00T\00U\00V\00W\00X\00Y\00Z\00a\00b\00c\00d\00e\00f\00g\00h\00i\00j\00k\00l\00m\00n\00o\00p\00q\00r\00s\00t\00u\00v\00w\00x\00y\00z\000\001\002\003\004\005\006\007\008\009\00+\00/")
+ (data (i32.const 13980) ",")
+ (data (i32.const 13992) "\01\00\00\00\16\00\00\00c\00r\00e\00a\00t\00e\00_\00t\00a\00s\00k")
+ (data (i32.const 14028) ",")
+ (data (i32.const 14040) "\01\00\00\00\16\00\00\00c\00o\00n\00t\00r\00a\00c\00t\00_\00i\00d")
+ (data (i32.const 14076) ",")
+ (data (i32.const 14088) "\01\00\00\00\12\00\00\00r\00e\00c\00u\00r\00r\00i\00n\00g")
+ (data (i32.const 14124) ",")
+ (data (i32.const 14136) "\01\00\00\00\0e\00\00\00d\00e\00p\00o\00s\00i\00t")
+ (data (i32.const 14172) ",")
+ (data (i32.const 14184) "\01\00\00\00\12\00\00\00a\00r\00g\00u\00m\00e\00n\00t\00s")
+ (data (i32.const 14220) "<")
+ (data (i32.const 14232) "\01\00\00\00\"\00\00\00M\00e\00t\00h\00o\00d\00 \00i\00s\00 \00p\00r\00i\00v\00a\00t\00e")
+ (data (i32.const 14284) ",")
+ (data (i32.const 14296) "\01\00\00\00\0e\00\00\00j\00o\00b\00_\00i\00d\00s")
+ (data (i32.const 14332) ",")
+ (data (i32.const 14344) "\01\00\00\00\14\00\00\00A\00r\00r\00a\00y\00<\00u\003\002\00>")
+ (data (i32.const 14380) "<")
+ (data (i32.const 14392) "\01\00\00\00&\00\00\00 \00a\00l\00r\00e\00a\00d\00y\00 \00n\00o\00t\00 \00a\00c\00t\00i\00v\00e")
+ (data (i32.const 14444) "\1c")
+ (data (i32.const 14456) ")\00\00\00\0c\00\00\00\904\00\00\00\00\00\00@8")
+ (data (i32.const 14476) ",")
+ (data (i32.const 14488) "\01\00\00\00\14\00\00\00 \00n\00o\00t\00 \00f\00o\00u\00n\00d")
+ (data (i32.const 14524) "\1c")
+ (data (i32.const 14536) ")\00\00\00\0c\00\00\00\904\00\00\00\00\00\00\a08")
+ (data (i32.const 14556) "\1c")
+ (data (i32.const 14568) ")\00\00\00\0c\00\00\00\904\00\00\00\00\00\00\b04")
+ (data (i32.const 14588) "\1c")
+ (data (i32.const 14600) ")\00\00\00\0c\00\00\00\904\00\00\00\00\00\00\a08")
+ (data (i32.const 14620) ",")
+ (data (i32.const 14632) "\01\00\00\00\1a\00\00\00j\00o\00b\00_\00i\00s\00_\00a\00c\00t\00i\00v\00e")
+ (data (i32.const 14668) ",")
+ (data (i32.const 14680) "\01\00\00\00\1c\00\00\00r\00e\00f\00i\00l\00l\00_\00b\00a\00l\00a\00n\00c\00e")
+ (data (i32.const 14716) ",")
+ (data (i32.const 14728) "\01\00\00\00\12\00\00\00t\00a\00s\00k\00_\00h\00a\00s\00h")
+ (data (i32.const 14764) ",")
+ (data (i32.const 14776) "\01\00\00\00\16\00\00\00r\00e\00m\00o\00v\00e\00_\00t\00a\00s\00k")
+ (data (i32.const 14812) "l")
+ (data (i32.const 14824) "\01\00\00\00\\\00\00\00 \00m\00u\00s\00t\00 \00b\00e\00 \00c\00r\00o\00n\00c\00a\00t\00 \00m\00a\00n\00a\00g\00e\00r\00 \00t\00o\00 \00c\00a\00l\00l\00 \00t\00h\00i\00s\00 \00f\00u\00n\00c\00t\00i\00o\00n")
+ (data (i32.const 14924) "\1c")
+ (data (i32.const 14936) ")\00\00\00\0c\00\00\00\10\06\00\00\00\00\00\00\f09")
+ (data (i32.const 14956) "<")
+ (data (i32.const 14968) "\01\00\00\00\1e\00\00\00 \00m\00u\00s\00t\00 \00b\00e\00 \00a\00c\00t\00i\00v\00e")
+ (data (i32.const 15020) "\1c")
+ (data (i32.const 15032) ")\00\00\00\0c\00\00\00\904\00\00\00\00\00\00\80:")
+ (data (i32.const 15052) "L")
+ (data (i32.const 15064) "\01\00\00\00<\00\00\00p\00l\00e\00a\00s\00e\00 \00w\00a\00i\00t\00 \00f\00o\00r\00 \00j\00o\00b\00 \00s\00t\00a\00r\00t\00 \00t\00i\00m\00e")
+ (data (i32.const 15132) ",")
+ (data (i32.const 15144) "\01\00\00\00\1a\00\00\00r\00e\00t\00i\00r\00i\00n\00g\00 \00j\00o\00b\00 ")
+ (data (i32.const 15180) "<")
+ (data (i32.const 15192) "\01\00\00\00$\00\00\00,\00 \00m\00a\00x\00 \00r\00u\00n\00s\00 \00r\00e\00a\00c\00h\00e\00d")
+ (data (i32.const 15244) "\1c")
+ (data (i32.const 15256) ")\00\00\00\0c\00\00\000;\00\00\00\00\00\00`;")
+ (data (i32.const 15276) ",")
+ (data (i32.const 15288) "\01\00\00\00\16\00\00\00 \00r\00u\00n\00s\00 \00m\00a\00x\00:\00 ")
+ (data (i32.const 15324) "<")
+ (data (i32.const 15336) "\01\00\00\00\1e\00\00\00 \00r\00u\00n\00s\00 \00c\00u\00r\00r\00e\00n\00t\00:\00 ")
+ (data (i32.const 15388) ",")
+ (data (i32.const 15400) ")\00\00\00\1c\00\00\00\904\00\00\00\00\00\00\c0;\00\00\00\00\00\00\f0;\00\00\00\00\00\00\10\06")
+ (data (i32.const 15440) "7\00\00\00 \00\00\00\00\00\00\00 ")
+ (data (i32.const 15468) " \00\00\00\04\00\00\00 \00\00\00\00\00\00\00B")
+ (data (i32.const 15500) "A\00\00\00\02")
+ (data (i32.const 15564) "\02A\00\00\00\00\00\00\02A\00\00\00\00\00\00\02A")
+ (data (i32.const 15624) "\17\00\00\00 \00\00\00\00\00\00\00\10A\82")
+ (data (i32.const 15648) "\1a\00\00\00 \00\00\00\00\00\00\00\02A")
+ (data (i32.const 15688) "\17\00\00\00\02A")
+ (data (i32.const 15704) "\17\00\00\00 \00\00\00\17\00\00\00 \00\00\00#\00\00\00 \00\00\00\17\00\00\00 \00\00\00\17\00\00\00 \00\00\00\17\00\00\00\00\00\00\00\'")
+ (data (i32.const 15764) "\02\t\00\00\00\00\00\00\04A\00\00\00\00\00\00\02\02\00\00\00\00\00\00 \00\00\00\00\00\00\00d")
+ (data (i32.const 15820) "A\08\00\00\02")
+ (data (i32.const 15836) " ")
+ (data (i32.const 15852) "\02A\00\00\00\00\00\00\02\01")
  (export "multicall" (func $assembly/multicall/index/__wrapper_multicall))
  (export "ft_on_transfer" (func $assembly/multicall/index/__wrapper_ft_on_transfer))
  (export "near_transfer" (func $assembly/multicall/index/__wrapper_near_transfer))
@@ -394,6 +557,18 @@
  (export "tokens_remove" (func $assembly/multicall/index/__wrapper_tokens_remove))
  (export "get_tokens" (func $assembly/multicall/index/__wrapper_get_tokens))
  (export "init" (func $assembly/multicall/index/__wrapper_init))
+ (export "set_croncat_manager" (func $assembly/multicall/index/__wrapper_set_croncat_manager))
+ (export "get_croncat_manager" (func $assembly/multicall/index/__wrapper_get_croncat_manager))
+ (export "job_set_bond" (func $assembly/multicall/index/__wrapper_job_set_bond))
+ (export "job_get_bond" (func $assembly/multicall/index/__wrapper_job_get_bond))
+ (export "job_add" (func $assembly/multicall/index/__wrapper_job_add))
+ (export "job_activate" (func $assembly/multicall/index/__wrapper_job_activate))
+ (export "job_activate_callback" (func $assembly/multicall/index/__wrapper_job_activate_callback))
+ (export "jobs_pause" (func $assembly/multicall/index/__wrapper_jobs_pause))
+ (export "jobs_resume" (func $assembly/multicall/index/__wrapper_jobs_resume))
+ (export "job_edit" (func $assembly/multicall/index/__wrapper_job_edit))
+ (export "job_delete" (func $assembly/multicall/index/__wrapper_job_delete))
+ (export "job_trigger" (func $assembly/multicall/index/__wrapper_job_trigger))
  (export "memory" (memory $0))
  (start $~start)
  (func $~lib/rt/stub/__alloc (param $0 i32) (result i32)
@@ -406,8 +581,8 @@
   i32.const 1073741820
   i32.gt_u
   if
-   i32.const 1120
-   i32.const 1184
+   i32.const 1248
+   i32.const 1312
    i32.const 33
    i32.const 29
    call $~lib/builtins/abort
@@ -481,8 +656,8 @@
   i32.const 1073741804
   i32.gt_u
   if
-   i32.const 1120
-   i32.const 1184
+   i32.const 1248
+   i32.const 1312
    i32.const 86
    i32.const 30
    call $~lib/builtins/abort
@@ -510,6 +685,654 @@
   local.get $3
   i32.const 16
   i32.add
+ )
+ (func $~lib/as-bignum/integer/u128/u128#constructor (param $0 i32) (param $1 i64) (param $2 i64) (result i32)
+  local.get $0
+  i32.eqz
+  if
+   i32.const 16
+   i32.const 4
+   call $~lib/rt/stub/__new
+   local.set $0
+  end
+  local.get $0
+  local.get $1
+  i64.store
+  local.get $0
+  local.get $2
+  i64.store offset=8
+  local.get $0
+ )
+ (func $~lib/as-bignum/utils/atou128 (param $0 i32) (result i32)
+  (local $1 i32)
+  (local $2 i32)
+  (local $3 i32)
+  (local $4 i64)
+  (local $5 i32)
+  (local $6 i64)
+  (local $7 i32)
+  (local $8 i32)
+  (local $9 i64)
+  (local $10 i64)
+  (local $11 i64)
+  (local $12 i32)
+  (local $13 i32)
+  (local $14 i64)
+  (local $15 i64)
+  block $folding-inner0
+   local.get $0
+   i32.const 20
+   i32.sub
+   i32.load offset=16
+   i32.const 1
+   i32.shr_u
+   local.tee $8
+   i32.eqz
+   br_if $folding-inner0
+   block $__inlined_func$~lib/string/String#charCodeAt (result i32)
+    i32.const -1
+    local.get $0
+    i32.const 20
+    i32.sub
+    i32.load offset=16
+    i32.const 1
+    i32.shr_u
+    i32.eqz
+    br_if $__inlined_func$~lib/string/String#charCodeAt
+    drop
+    local.get $0
+    i32.load16_u
+   end
+   local.tee $2
+   i32.const 48
+   i32.eq
+   i32.const 0
+   local.get $8
+   i32.const 1
+   i32.eq
+   select
+   br_if $folding-inner0
+   block $__inlined_func$~lib/string/String#charCodeAt1 (result i32)
+    i32.const -1
+    local.get $2
+    i32.const 45
+    i32.eq
+    local.tee $12
+    local.get $2
+    i32.const 43
+    i32.eq
+    i32.or
+    local.tee $3
+    local.get $0
+    i32.const 20
+    i32.sub
+    i32.load offset=16
+    i32.const 1
+    i32.shr_u
+    i32.ge_u
+    br_if $__inlined_func$~lib/string/String#charCodeAt1
+    drop
+    local.get $0
+    local.get $3
+    i32.const 1
+    i32.shl
+    i32.add
+    i32.load16_u
+   end
+   i32.const 48
+   i32.eq
+   if (result i32)
+    i32.const 1
+    block $__inlined_func$~lib/string/String#charCodeAt3 (result i32)
+     i32.const -1
+     local.get $3
+     i32.const 1
+     i32.add
+     local.tee $3
+     local.get $0
+     i32.const 20
+     i32.sub
+     i32.load offset=16
+     i32.const 1
+     i32.shr_u
+     i32.ge_u
+     br_if $__inlined_func$~lib/string/String#charCodeAt3
+     drop
+     local.get $0
+     local.get $3
+     i32.const 1
+     i32.shl
+     i32.add
+     i32.load16_u
+    end
+    local.tee $2
+    i32.const 88
+    i32.eq
+    local.get $2
+    i32.const 120
+    i32.eq
+    select
+    if (result i32)
+     local.get $3
+     i32.const 1
+     i32.add
+     local.set $3
+     i32.const 16
+    else
+     i32.const 1
+     local.get $2
+     i32.const 79
+     i32.eq
+     local.get $2
+     i32.const 111
+     i32.eq
+     select
+     if (result i32)
+      local.get $3
+      i32.const 1
+      i32.add
+      local.set $3
+      i32.const 8
+     else
+      i32.const 1
+      local.get $2
+      i32.const 66
+      i32.eq
+      local.get $2
+      i32.const 98
+      i32.eq
+      select
+      if (result i32)
+       local.get $3
+       i32.const 1
+       i32.add
+       local.set $3
+       i32.const 2
+      else
+       i32.const 10
+      end
+     end
+    end
+   else
+    i32.const 10
+   end
+   local.set $2
+   i32.const 0
+   i64.const 0
+   i64.const 0
+   call $~lib/as-bignum/integer/u128/u128#constructor
+   local.set $1
+   block $break|0
+    block $case3|0
+     block $case2|0
+      block $case1|0
+       local.get $2
+       i32.const 2
+       i32.ne
+       if
+        local.get $2
+        i32.const 10
+        i32.eq
+        br_if $case1|0
+        local.get $2
+        i32.const 16
+        i32.eq
+        br_if $case2|0
+        br $case3|0
+       end
+       local.get $0
+       i32.const 20
+       i32.sub
+       local.set $7
+       loop $do-continue|1
+        block $__inlined_func$~lib/string/String#charCodeAt5 (result i32)
+         i32.const -1
+         local.get $3
+         local.get $7
+         i32.load offset=16
+         i32.const 1
+         i32.shr_u
+         i32.ge_u
+         br_if $__inlined_func$~lib/string/String#charCodeAt5
+         drop
+         local.get $0
+         local.get $3
+         i32.const 1
+         i32.shl
+         i32.add
+         i32.load16_u
+        end
+        i32.const 48
+        i32.sub
+        local.tee $5
+        i32.const 2
+        i32.lt_u
+        if
+         i32.const 0
+         local.get $1
+         i64.load
+         local.tee $4
+         i64.const 1
+         i64.shl
+         local.get $1
+         i64.load offset=8
+         i64.const 1
+         i64.shl
+         local.get $4
+         i64.const 63
+         i64.shr_u
+         i64.or
+         call $~lib/as-bignum/integer/u128/u128#constructor
+         local.set $2
+         i32.const 0
+         local.get $5
+         i64.extend_i32_u
+         i64.const 0
+         call $~lib/as-bignum/integer/u128/u128#constructor
+         local.set $1
+         i32.const 0
+         local.get $2
+         i64.load
+         local.get $1
+         i64.load
+         i64.or
+         local.get $2
+         i64.load offset=8
+         local.get $1
+         i64.load offset=8
+         i64.or
+         call $~lib/as-bignum/integer/u128/u128#constructor
+         local.set $1
+         local.get $3
+         i32.const 1
+         i32.add
+         local.tee $3
+         local.get $8
+         i32.lt_s
+         br_if $do-continue|1
+        end
+       end
+       br $break|0
+      end
+      local.get $0
+      i32.const 20
+      i32.sub
+      local.set $7
+      loop $do-continue|2
+       block $__inlined_func$~lib/string/String#charCodeAt7 (result i32)
+        i32.const -1
+        local.get $3
+        local.get $7
+        i32.load offset=16
+        i32.const 1
+        i32.shr_u
+        i32.ge_u
+        br_if $__inlined_func$~lib/string/String#charCodeAt7
+        drop
+        local.get $0
+        local.get $3
+        i32.const 1
+        i32.shl
+        i32.add
+        i32.load16_u
+       end
+       i32.const 48
+       i32.sub
+       local.tee $5
+       i32.const 10
+       i32.lt_u
+       if
+        i32.const 0
+        local.get $1
+        i64.load
+        local.tee $4
+        i64.const 3
+        i64.shl
+        local.get $1
+        i64.load offset=8
+        i64.const 3
+        i64.shl
+        local.get $4
+        i64.const 61
+        i64.shr_u
+        i64.or
+        call $~lib/as-bignum/integer/u128/u128#constructor
+        local.set $2
+        i32.const 0
+        local.get $1
+        i64.load
+        local.tee $4
+        i64.const 1
+        i64.shl
+        local.get $1
+        i64.load offset=8
+        i64.const 1
+        i64.shl
+        local.get $4
+        i64.const 63
+        i64.shr_u
+        i64.or
+        call $~lib/as-bignum/integer/u128/u128#constructor
+        local.set $1
+        i32.const 0
+        local.get $2
+        i64.load
+        local.tee $4
+        local.get $1
+        i64.load
+        i64.add
+        local.tee $6
+        local.get $4
+        local.get $6
+        i64.gt_u
+        i64.extend_i32_u
+        local.get $2
+        i64.load offset=8
+        local.get $1
+        i64.load offset=8
+        i64.add
+        i64.add
+        call $~lib/as-bignum/integer/u128/u128#constructor
+        local.set $2
+        i32.const 0
+        local.get $5
+        i64.extend_i32_u
+        i64.const 0
+        call $~lib/as-bignum/integer/u128/u128#constructor
+        local.set $1
+        i32.const 0
+        local.get $2
+        i64.load
+        local.tee $4
+        local.get $1
+        i64.load
+        i64.add
+        local.tee $6
+        local.get $4
+        local.get $6
+        i64.gt_u
+        i64.extend_i32_u
+        local.get $2
+        i64.load offset=8
+        local.get $1
+        i64.load offset=8
+        i64.add
+        i64.add
+        call $~lib/as-bignum/integer/u128/u128#constructor
+        local.set $1
+        local.get $3
+        i32.const 1
+        i32.add
+        local.tee $3
+        local.get $8
+        i32.lt_s
+        br_if $do-continue|2
+       end
+      end
+      br $break|0
+     end
+     local.get $0
+     i32.const 20
+     i32.sub
+     local.set $7
+     loop $do-continue|3
+      block $do-break|3
+       block $__inlined_func$~lib/string/String#charCodeAt9 (result i32)
+        i32.const -1
+        local.get $3
+        local.get $7
+        i32.load offset=16
+        i32.const 1
+        i32.shr_u
+        i32.ge_u
+        br_if $__inlined_func$~lib/string/String#charCodeAt9
+        drop
+        local.get $0
+        local.get $3
+        i32.const 1
+        i32.shl
+        i32.add
+        i32.load16_u
+       end
+       i32.const 48
+       i32.sub
+       local.tee $2
+       i32.const 74
+       i32.gt_u
+       br_if $do-break|3
+       local.get $2
+       i32.const 1476
+       i32.load
+       i32.add
+       i32.load8_u
+       local.tee $5
+       i32.const 16
+       i32.ge_u
+       br_if $do-break|3
+       i32.const 0
+       local.get $1
+       i64.load
+       local.tee $4
+       i64.const 4
+       i64.shl
+       local.get $1
+       i64.load offset=8
+       i64.const 4
+       i64.shl
+       local.get $4
+       i64.const 60
+       i64.shr_u
+       i64.or
+       call $~lib/as-bignum/integer/u128/u128#constructor
+       local.set $2
+       i32.const 0
+       local.get $5
+       i64.extend_i32_u
+       i64.const 0
+       call $~lib/as-bignum/integer/u128/u128#constructor
+       local.set $1
+       i32.const 0
+       local.get $2
+       i64.load
+       local.get $1
+       i64.load
+       i64.or
+       local.get $2
+       i64.load offset=8
+       local.get $1
+       i64.load offset=8
+       i64.or
+       call $~lib/as-bignum/integer/u128/u128#constructor
+       local.set $1
+       local.get $3
+       i32.const 1
+       i32.add
+       local.tee $3
+       local.get $8
+       i32.lt_s
+       br_if $do-continue|3
+      end
+     end
+     br $break|0
+    end
+    i32.const 0
+    local.get $2
+    i64.extend_i32_s
+    i64.const 0
+    call $~lib/as-bignum/integer/u128/u128#constructor
+    local.set $7
+    local.get $0
+    i32.const 20
+    i32.sub
+    local.set $13
+    loop $do-continue|4
+     block $do-break|4
+      block $__inlined_func$~lib/string/String#charCodeAt11 (result i32)
+       i32.const -1
+       local.get $3
+       local.get $13
+       i32.load offset=16
+       i32.const 1
+       i32.shr_u
+       i32.ge_u
+       br_if $__inlined_func$~lib/string/String#charCodeAt11
+       drop
+       local.get $0
+       local.get $3
+       i32.const 1
+       i32.shl
+       i32.add
+       i32.load16_u
+      end
+      i32.const 48
+      i32.sub
+      local.tee $5
+      i32.const 74
+      i32.gt_u
+      br_if $do-break|4
+      local.get $2
+      local.get $5
+      i32.const 1476
+      i32.load
+      i32.add
+      i32.load8_u
+      local.tee $5
+      i32.le_u
+      br_if $do-break|4
+      local.get $7
+      i64.load
+      local.tee $4
+      i64.const 4294967295
+      i64.and
+      local.tee $9
+      local.get $1
+      i64.load
+      local.tee $6
+      i64.const 4294967295
+      i64.and
+      local.tee $10
+      i64.mul
+      local.set $11
+      local.get $10
+      local.get $4
+      i64.const 32
+      i64.shr_u
+      local.tee $10
+      i64.mul
+      local.get $9
+      local.get $6
+      i64.const 32
+      i64.shr_u
+      local.tee $14
+      i64.mul
+      local.get $11
+      i64.const 32
+      i64.shr_u
+      i64.add
+      local.tee $15
+      i64.const 4294967295
+      i64.and
+      i64.add
+      local.set $9
+      local.get $10
+      local.get $14
+      i64.mul
+      local.get $15
+      i64.const 32
+      i64.shr_u
+      i64.add
+      local.get $4
+      local.get $1
+      i64.load offset=8
+      i64.mul
+      i64.add
+      local.get $6
+      local.get $7
+      i64.load offset=8
+      i64.mul
+      i64.add
+      local.get $9
+      i64.const 32
+      i64.shr_u
+      i64.add
+      global.set $~lib/as-bignum/globals/__res128_hi
+      i32.const 0
+      local.get $11
+      i64.const 4294967295
+      i64.and
+      local.get $9
+      i64.const 32
+      i64.shl
+      i64.or
+      global.get $~lib/as-bignum/globals/__res128_hi
+      call $~lib/as-bignum/integer/u128/u128#constructor
+      local.set $1
+      i32.const 0
+      local.get $5
+      i64.extend_i32_u
+      i64.const 0
+      call $~lib/as-bignum/integer/u128/u128#constructor
+      local.set $5
+      i32.const 0
+      local.get $1
+      i64.load
+      local.tee $4
+      local.get $5
+      i64.load
+      i64.add
+      local.tee $6
+      local.get $4
+      local.get $6
+      i64.gt_u
+      i64.extend_i32_u
+      local.get $1
+      i64.load offset=8
+      local.get $5
+      i64.load offset=8
+      i64.add
+      i64.add
+      call $~lib/as-bignum/integer/u128/u128#constructor
+      local.set $1
+      local.get $3
+      i32.const 1
+      i32.add
+      local.tee $3
+      local.get $8
+      i32.lt_s
+      br_if $do-continue|4
+     end
+    end
+   end
+   local.get $12
+   if (result i32)
+    i32.const 0
+    local.get $1
+    i64.load
+    i64.const -1
+    i64.xor
+    local.tee $4
+    i64.const 1
+    i64.add
+    local.tee $6
+    local.get $4
+    local.get $6
+    i64.gt_u
+    i64.extend_i32_u
+    local.get $1
+    i64.load offset=8
+    i64.const -1
+    i64.xor
+    i64.add
+    call $~lib/as-bignum/integer/u128/u128#constructor
+   else
+    local.get $1
+   end
+   return
+  end
+  i32.const 0
+  i64.const 0
+  i64.const 0
+  call $~lib/as-bignum/integer/u128/u128#constructor
  )
  (func $~lib/util/memory/memcpy (param $0 i32) (param $1 i32) (param $2 i32)
   (local $3 i32)
@@ -1475,7 +2298,7 @@
   local.tee $2
   i32.eqz
   if
-   i32.const 1088
+   i32.const 1552
    return
   end
   local.get $2
@@ -1498,7 +2321,7 @@
   (local $2 i32)
   (local $3 i32)
   i32.const 8
-  i32.const 3
+  i32.const 6
   call $~lib/rt/stub/__new
   local.tee $2
   i32.const 0
@@ -1506,30 +2329,30 @@
   local.get $2
   i32.const 0
   i32.store offset=4
-  i32.const 1248
+  i32.const 1584
   local.get $0
   call $~lib/string/String#concat
   local.set $3
   i32.const 4
-  i32.const 5
+  i32.const 8
   call $~lib/rt/stub/__new
   local.tee $1
   i32.const 0
   i32.store
   local.get $1
   local.get $3
-  i32.const 1056
+  i32.const 1520
   call $~lib/string/String#concat
   i32.store
   local.get $2
   local.get $1
   i32.store
-  i32.const 1312
+  i32.const 1648
   local.get $0
   call $~lib/string/String#concat
   local.set $1
   i32.const 12
-  i32.const 6
+  i32.const 9
   call $~lib/rt/stub/__new
   local.tee $0
   i32.const 0
@@ -1542,12 +2365,12 @@
   i32.store offset=8
   local.get $0
   local.get $1
-  i32.const 1280
+  i32.const 1616
   call $~lib/string/String#concat
   i32.store offset=4
   local.get $0
   local.get $1
-  i32.const 1056
+  i32.const 1520
   call $~lib/string/String#concat
   i32.store
   local.get $0
@@ -1557,654 +2380,6 @@
   local.get $0
   i32.store offset=4
   local.get $2
- )
- (func $~lib/as-bignum/integer/u128/u128#constructor (param $0 i32) (param $1 i64) (param $2 i64) (result i32)
-  local.get $0
-  i32.eqz
-  if
-   i32.const 16
-   i32.const 9
-   call $~lib/rt/stub/__new
-   local.set $0
-  end
-  local.get $0
-  local.get $1
-  i64.store
-  local.get $0
-  local.get $2
-  i64.store offset=8
-  local.get $0
- )
- (func $~lib/as-bignum/utils/atou128 (param $0 i32) (result i32)
-  (local $1 i32)
-  (local $2 i32)
-  (local $3 i32)
-  (local $4 i64)
-  (local $5 i32)
-  (local $6 i64)
-  (local $7 i32)
-  (local $8 i32)
-  (local $9 i64)
-  (local $10 i64)
-  (local $11 i64)
-  (local $12 i32)
-  (local $13 i32)
-  (local $14 i64)
-  (local $15 i64)
-  block $folding-inner0
-   local.get $0
-   i32.const 20
-   i32.sub
-   i32.load offset=16
-   i32.const 1
-   i32.shr_u
-   local.tee $8
-   i32.eqz
-   br_if $folding-inner0
-   block $__inlined_func$~lib/string/String#charCodeAt (result i32)
-    i32.const -1
-    local.get $0
-    i32.const 20
-    i32.sub
-    i32.load offset=16
-    i32.const 1
-    i32.shr_u
-    i32.eqz
-    br_if $__inlined_func$~lib/string/String#charCodeAt
-    drop
-    local.get $0
-    i32.load16_u
-   end
-   local.tee $2
-   i32.const 48
-   i32.eq
-   i32.const 0
-   local.get $8
-   i32.const 1
-   i32.eq
-   select
-   br_if $folding-inner0
-   block $__inlined_func$~lib/string/String#charCodeAt1 (result i32)
-    i32.const -1
-    local.get $2
-    i32.const 45
-    i32.eq
-    local.tee $12
-    local.get $2
-    i32.const 43
-    i32.eq
-    i32.or
-    local.tee $3
-    local.get $0
-    i32.const 20
-    i32.sub
-    i32.load offset=16
-    i32.const 1
-    i32.shr_u
-    i32.ge_u
-    br_if $__inlined_func$~lib/string/String#charCodeAt1
-    drop
-    local.get $0
-    local.get $3
-    i32.const 1
-    i32.shl
-    i32.add
-    i32.load16_u
-   end
-   i32.const 48
-   i32.eq
-   if (result i32)
-    i32.const 1
-    block $__inlined_func$~lib/string/String#charCodeAt3 (result i32)
-     i32.const -1
-     local.get $3
-     i32.const 1
-     i32.add
-     local.tee $3
-     local.get $0
-     i32.const 20
-     i32.sub
-     i32.load offset=16
-     i32.const 1
-     i32.shr_u
-     i32.ge_u
-     br_if $__inlined_func$~lib/string/String#charCodeAt3
-     drop
-     local.get $0
-     local.get $3
-     i32.const 1
-     i32.shl
-     i32.add
-     i32.load16_u
-    end
-    local.tee $2
-    i32.const 88
-    i32.eq
-    local.get $2
-    i32.const 120
-    i32.eq
-    select
-    if (result i32)
-     local.get $3
-     i32.const 1
-     i32.add
-     local.set $3
-     i32.const 16
-    else
-     i32.const 1
-     local.get $2
-     i32.const 79
-     i32.eq
-     local.get $2
-     i32.const 111
-     i32.eq
-     select
-     if (result i32)
-      local.get $3
-      i32.const 1
-      i32.add
-      local.set $3
-      i32.const 8
-     else
-      i32.const 1
-      local.get $2
-      i32.const 66
-      i32.eq
-      local.get $2
-      i32.const 98
-      i32.eq
-      select
-      if (result i32)
-       local.get $3
-       i32.const 1
-       i32.add
-       local.set $3
-       i32.const 2
-      else
-       i32.const 10
-      end
-     end
-    end
-   else
-    i32.const 10
-   end
-   local.set $2
-   i32.const 0
-   i64.const 0
-   i64.const 0
-   call $~lib/as-bignum/integer/u128/u128#constructor
-   local.set $1
-   block $break|0
-    block $case3|0
-     block $case2|0
-      block $case1|0
-       local.get $2
-       i32.const 2
-       i32.ne
-       if
-        local.get $2
-        i32.const 10
-        i32.eq
-        br_if $case1|0
-        local.get $2
-        i32.const 16
-        i32.eq
-        br_if $case2|0
-        br $case3|0
-       end
-       local.get $0
-       i32.const 20
-       i32.sub
-       local.set $7
-       loop $do-continue|1
-        block $__inlined_func$~lib/string/String#charCodeAt5 (result i32)
-         i32.const -1
-         local.get $3
-         local.get $7
-         i32.load offset=16
-         i32.const 1
-         i32.shr_u
-         i32.ge_u
-         br_if $__inlined_func$~lib/string/String#charCodeAt5
-         drop
-         local.get $0
-         local.get $3
-         i32.const 1
-         i32.shl
-         i32.add
-         i32.load16_u
-        end
-        i32.const 48
-        i32.sub
-        local.tee $5
-        i32.const 2
-        i32.lt_u
-        if
-         i32.const 0
-         local.get $1
-         i64.load
-         local.tee $4
-         i64.const 1
-         i64.shl
-         local.get $1
-         i64.load offset=8
-         i64.const 1
-         i64.shl
-         local.get $4
-         i64.const 63
-         i64.shr_u
-         i64.or
-         call $~lib/as-bignum/integer/u128/u128#constructor
-         local.set $2
-         i32.const 0
-         local.get $5
-         i64.extend_i32_u
-         i64.const 0
-         call $~lib/as-bignum/integer/u128/u128#constructor
-         local.set $1
-         i32.const 0
-         local.get $2
-         i64.load
-         local.get $1
-         i64.load
-         i64.or
-         local.get $2
-         i64.load offset=8
-         local.get $1
-         i64.load offset=8
-         i64.or
-         call $~lib/as-bignum/integer/u128/u128#constructor
-         local.set $1
-         local.get $3
-         i32.const 1
-         i32.add
-         local.tee $3
-         local.get $8
-         i32.lt_s
-         br_if $do-continue|1
-        end
-       end
-       br $break|0
-      end
-      local.get $0
-      i32.const 20
-      i32.sub
-      local.set $7
-      loop $do-continue|2
-       block $__inlined_func$~lib/string/String#charCodeAt7 (result i32)
-        i32.const -1
-        local.get $3
-        local.get $7
-        i32.load offset=16
-        i32.const 1
-        i32.shr_u
-        i32.ge_u
-        br_if $__inlined_func$~lib/string/String#charCodeAt7
-        drop
-        local.get $0
-        local.get $3
-        i32.const 1
-        i32.shl
-        i32.add
-        i32.load16_u
-       end
-       i32.const 48
-       i32.sub
-       local.tee $5
-       i32.const 10
-       i32.lt_u
-       if
-        i32.const 0
-        local.get $1
-        i64.load
-        local.tee $4
-        i64.const 3
-        i64.shl
-        local.get $1
-        i64.load offset=8
-        i64.const 3
-        i64.shl
-        local.get $4
-        i64.const 61
-        i64.shr_u
-        i64.or
-        call $~lib/as-bignum/integer/u128/u128#constructor
-        local.set $2
-        i32.const 0
-        local.get $1
-        i64.load
-        local.tee $4
-        i64.const 1
-        i64.shl
-        local.get $1
-        i64.load offset=8
-        i64.const 1
-        i64.shl
-        local.get $4
-        i64.const 63
-        i64.shr_u
-        i64.or
-        call $~lib/as-bignum/integer/u128/u128#constructor
-        local.set $1
-        i32.const 0
-        local.get $2
-        i64.load
-        local.tee $4
-        local.get $1
-        i64.load
-        i64.add
-        local.tee $6
-        local.get $4
-        local.get $6
-        i64.gt_u
-        i64.extend_i32_u
-        local.get $2
-        i64.load offset=8
-        local.get $1
-        i64.load offset=8
-        i64.add
-        i64.add
-        call $~lib/as-bignum/integer/u128/u128#constructor
-        local.set $2
-        i32.const 0
-        local.get $5
-        i64.extend_i32_u
-        i64.const 0
-        call $~lib/as-bignum/integer/u128/u128#constructor
-        local.set $1
-        i32.const 0
-        local.get $2
-        i64.load
-        local.tee $4
-        local.get $1
-        i64.load
-        i64.add
-        local.tee $6
-        local.get $4
-        local.get $6
-        i64.gt_u
-        i64.extend_i32_u
-        local.get $2
-        i64.load offset=8
-        local.get $1
-        i64.load offset=8
-        i64.add
-        i64.add
-        call $~lib/as-bignum/integer/u128/u128#constructor
-        local.set $1
-        local.get $3
-        i32.const 1
-        i32.add
-        local.tee $3
-        local.get $8
-        i32.lt_s
-        br_if $do-continue|2
-       end
-      end
-      br $break|0
-     end
-     local.get $0
-     i32.const 20
-     i32.sub
-     local.set $7
-     loop $do-continue|3
-      block $do-break|3
-       block $__inlined_func$~lib/string/String#charCodeAt9 (result i32)
-        i32.const -1
-        local.get $3
-        local.get $7
-        i32.load offset=16
-        i32.const 1
-        i32.shr_u
-        i32.ge_u
-        br_if $__inlined_func$~lib/string/String#charCodeAt9
-        drop
-        local.get $0
-        local.get $3
-        i32.const 1
-        i32.shl
-        i32.add
-        i32.load16_u
-       end
-       i32.const 48
-       i32.sub
-       local.tee $2
-       i32.const 74
-       i32.gt_u
-       br_if $do-break|3
-       local.get $2
-       i32.const 1748
-       i32.load
-       i32.add
-       i32.load8_u
-       local.tee $5
-       i32.const 16
-       i32.ge_u
-       br_if $do-break|3
-       i32.const 0
-       local.get $1
-       i64.load
-       local.tee $4
-       i64.const 4
-       i64.shl
-       local.get $1
-       i64.load offset=8
-       i64.const 4
-       i64.shl
-       local.get $4
-       i64.const 60
-       i64.shr_u
-       i64.or
-       call $~lib/as-bignum/integer/u128/u128#constructor
-       local.set $2
-       i32.const 0
-       local.get $5
-       i64.extend_i32_u
-       i64.const 0
-       call $~lib/as-bignum/integer/u128/u128#constructor
-       local.set $1
-       i32.const 0
-       local.get $2
-       i64.load
-       local.get $1
-       i64.load
-       i64.or
-       local.get $2
-       i64.load offset=8
-       local.get $1
-       i64.load offset=8
-       i64.or
-       call $~lib/as-bignum/integer/u128/u128#constructor
-       local.set $1
-       local.get $3
-       i32.const 1
-       i32.add
-       local.tee $3
-       local.get $8
-       i32.lt_s
-       br_if $do-continue|3
-      end
-     end
-     br $break|0
-    end
-    i32.const 0
-    local.get $2
-    i64.extend_i32_s
-    i64.const 0
-    call $~lib/as-bignum/integer/u128/u128#constructor
-    local.set $7
-    local.get $0
-    i32.const 20
-    i32.sub
-    local.set $13
-    loop $do-continue|4
-     block $do-break|4
-      block $__inlined_func$~lib/string/String#charCodeAt11 (result i32)
-       i32.const -1
-       local.get $3
-       local.get $13
-       i32.load offset=16
-       i32.const 1
-       i32.shr_u
-       i32.ge_u
-       br_if $__inlined_func$~lib/string/String#charCodeAt11
-       drop
-       local.get $0
-       local.get $3
-       i32.const 1
-       i32.shl
-       i32.add
-       i32.load16_u
-      end
-      i32.const 48
-      i32.sub
-      local.tee $5
-      i32.const 74
-      i32.gt_u
-      br_if $do-break|4
-      local.get $2
-      local.get $5
-      i32.const 1748
-      i32.load
-      i32.add
-      i32.load8_u
-      local.tee $5
-      i32.le_u
-      br_if $do-break|4
-      local.get $7
-      i64.load
-      local.tee $4
-      i64.const 4294967295
-      i64.and
-      local.tee $9
-      local.get $1
-      i64.load
-      local.tee $6
-      i64.const 4294967295
-      i64.and
-      local.tee $10
-      i64.mul
-      local.set $11
-      local.get $10
-      local.get $4
-      i64.const 32
-      i64.shr_u
-      local.tee $10
-      i64.mul
-      local.get $9
-      local.get $6
-      i64.const 32
-      i64.shr_u
-      local.tee $14
-      i64.mul
-      local.get $11
-      i64.const 32
-      i64.shr_u
-      i64.add
-      local.tee $15
-      i64.const 4294967295
-      i64.and
-      i64.add
-      local.set $9
-      local.get $10
-      local.get $14
-      i64.mul
-      local.get $15
-      i64.const 32
-      i64.shr_u
-      i64.add
-      local.get $4
-      local.get $1
-      i64.load offset=8
-      i64.mul
-      i64.add
-      local.get $6
-      local.get $7
-      i64.load offset=8
-      i64.mul
-      i64.add
-      local.get $9
-      i64.const 32
-      i64.shr_u
-      i64.add
-      global.set $~lib/as-bignum/globals/__res128_hi
-      i32.const 0
-      local.get $11
-      i64.const 4294967295
-      i64.and
-      local.get $9
-      i64.const 32
-      i64.shl
-      i64.or
-      global.get $~lib/as-bignum/globals/__res128_hi
-      call $~lib/as-bignum/integer/u128/u128#constructor
-      local.set $1
-      i32.const 0
-      local.get $5
-      i64.extend_i32_u
-      i64.const 0
-      call $~lib/as-bignum/integer/u128/u128#constructor
-      local.set $5
-      i32.const 0
-      local.get $1
-      i64.load
-      local.tee $4
-      local.get $5
-      i64.load
-      i64.add
-      local.tee $6
-      local.get $4
-      local.get $6
-      i64.gt_u
-      i64.extend_i32_u
-      local.get $1
-      i64.load offset=8
-      local.get $5
-      i64.load offset=8
-      i64.add
-      i64.add
-      call $~lib/as-bignum/integer/u128/u128#constructor
-      local.set $1
-      local.get $3
-      i32.const 1
-      i32.add
-      local.tee $3
-      local.get $8
-      i32.lt_s
-      br_if $do-continue|4
-     end
-    end
-   end
-   local.get $12
-   if (result i32)
-    i32.const 0
-    local.get $1
-    i64.load
-    i64.const -1
-    i64.xor
-    local.tee $4
-    i64.const 1
-    i64.add
-    local.tee $6
-    local.get $4
-    local.get $6
-    i64.gt_u
-    i64.extend_i32_u
-    local.get $1
-    i64.load offset=8
-    i64.const -1
-    i64.xor
-    i64.add
-    call $~lib/as-bignum/integer/u128/u128#constructor
-   else
-    local.get $1
-   end
-   return
-  end
-  i32.const 0
-  i64.const 0
-  i64.const 0
-  call $~lib/as-bignum/integer/u128/u128#constructor
  )
  (func $~lib/memory/memory.fill (param $0 i32) (param $1 i32)
   (local $2 i32)
@@ -2405,8 +2580,8 @@
   i32.const 1073741820
   i32.gt_u
   if
-   i32.const 1792
-   i32.const 1840
+   i32.const 2000
+   i32.const 2048
    i32.const 18
    i32.const 57
    call $~lib/builtins/abort
@@ -2433,7 +2608,7 @@
   (local $0 i32)
   (local $1 i32)
   i32.const 16
-  i32.const 16
+  i32.const 27
   call $~lib/rt/stub/__new
   local.tee $0
   i32.const 0
@@ -2473,8 +2648,8 @@
   local.tee $0
   i32.eqz
   if
-   i32.const 1952
-   i32.const 2016
+   i32.const 2160
+   i32.const 2224
    i32.const 127
    i32.const 26
    call $~lib/builtins/abort
@@ -2488,8 +2663,8 @@
   i32.load offset=8
   i32.ge_u
   if
-   i32.const 2112
-   i32.const 2176
+   i32.const 2320
+   i32.const 2384
    i32.const 159
    i32.const 45
    call $~lib/builtins/abort
@@ -2533,8 +2708,8 @@
   i32.load offset=8
   i32.ge_s
   if
-   i32.const 2240
-   i32.const 2016
+   i32.const 2448
+   i32.const 2224
    i32.const 156
    i32.const 5
    call $~lib/builtins/abort
@@ -2592,8 +2767,8 @@
   i32.const 1073741820
   i32.gt_u
   if
-   i32.const 1792
-   i32.const 1840
+   i32.const 2000
+   i32.const 2048
    i32.const 49
    i32.const 43
    call $~lib/builtins/abort
@@ -2617,8 +2792,8 @@
   i32.const 1073741804
   i32.gt_u
   if
-   i32.const 1120
-   i32.const 1184
+   i32.const 1248
+   i32.const 1312
    i32.const 99
    i32.const 30
    call $~lib/builtins/abort
@@ -2641,7 +2816,7 @@
   i32.eqz
   if
    i32.const 0
-   i32.const 1184
+   i32.const 1312
    i32.const 45
    i32.const 3
    call $~lib/builtins/abort
@@ -2676,8 +2851,8 @@
     i32.const 1073741820
     i32.gt_u
     if
-     i32.const 1120
-     i32.const 1184
+     i32.const 1248
+     i32.const 1312
      i32.const 52
      i32.const 33
      call $~lib/builtins/abort
@@ -2773,78 +2948,76 @@
  (func $~lib/array/ensureCapacity (param $0 i32) (param $1 i32) (param $2 i32)
   (local $3 i32)
   (local $4 i32)
+  (local $5 i32)
   local.get $1
   local.get $0
   i32.load offset=8
   local.tee $3
-  i32.const 2
+  local.get $2
   i32.shr_u
   i32.gt_u
   if
    local.get $1
-   i32.const 268435455
+   i32.const 1073741820
+   local.get $2
+   i32.shr_u
    i32.gt_u
    if
-    i32.const 1792
-    i32.const 1904
+    i32.const 2000
+    i32.const 2112
     i32.const 17
     i32.const 48
     call $~lib/builtins/abort
     unreachable
    end
+   local.get $3
+   local.get $0
+   i32.load
+   local.tee $5
+   local.get $3
+   i32.const 1
+   i32.shl
+   local.tee $4
+   i32.const 1073741820
+   local.get $4
+   i32.const 1073741820
+   i32.lt_u
+   select
+   local.tee $4
    local.get $1
    i32.const 8
    local.get $1
    i32.const 8
    i32.gt_u
    select
-   i32.const 2
-   i32.shl
-   local.set $1
-   local.get $3
-   local.get $0
-   i32.load
-   local.tee $4
    local.get $2
-   if
-    local.get $3
-    i32.const 1
-    i32.shl
-    local.tee $2
-    i32.const 1073741820
-    local.get $2
-    i32.const 1073741820
-    i32.lt_u
-    select
-    local.tee $2
-    local.get $1
-    local.get $1
-    local.get $2
-    i32.lt_u
-    select
-    local.set $1
-   end
+   i32.shl
+   local.tee $1
    local.get $1
-   call $~lib/rt/stub/__renew
+   local.get $4
+   i32.lt_u
+   select
    local.tee $2
+   call $~lib/rt/stub/__renew
+   local.tee $1
    i32.add
-   local.get $1
+   local.get $2
    local.get $3
    i32.sub
    call $~lib/memory/memory.fill
-   local.get $2
-   local.get $4
+   local.get $1
+   local.get $5
    i32.ne
    if
     local.get $0
-    local.get $2
+    local.get $1
     i32.store
     local.get $0
-    local.get $2
+    local.get $1
     i32.store offset=4
    end
    local.get $0
-   local.get $1
+   local.get $2
    i32.store offset=8
   end
  )
@@ -2858,7 +3031,7 @@
   i32.const 1
   i32.add
   local.tee $3
-  i32.const 1
+  i32.const 2
   call $~lib/array/ensureCapacity
   local.get $0
   i32.load offset=4
@@ -2878,8 +3051,8 @@
   i32.load offset=12
   i32.ge_u
   if
+   i32.const 2320
    i32.const 2112
-   i32.const 1904
    i32.const 99
    i32.const 42
    call $~lib/builtins/abort
@@ -2895,8 +3068,8 @@
   local.tee $0
   i32.eqz
   if
-   i32.const 2336
-   i32.const 1904
+   i32.const 2544
+   i32.const 2112
    i32.const 103
    i32.const 40
    call $~lib/builtins/abort
@@ -3257,7 +3430,7 @@
   end
   i32.const 0
  )
- (func $~lib/map/Map<~lib/string/String,~lib/assemblyscript-json/JSON/Value>#set (param $0 i32) (param $1 i32) (param $2 i32)
+ (func $~lib/assemblyscript-json/JSON/Handler#addValue (param $0 i32) (param $1 i32) (param $2 i32)
   (local $3 i32)
   (local $4 i32)
   (local $5 i32)
@@ -3267,183 +3440,6 @@
   (local $9 i32)
   (local $10 i32)
   (local $11 i32)
-  local.get $0
-  local.get $1
-  local.get $1
-  call $~lib/util/hash/HASH<~lib/string/String>
-  local.tee $7
-  call $~lib/map/Map<~lib/string/String,~lib/assemblyscript-json/JSON/Value>#find
-  local.tee $4
-  if
-   local.get $4
-   local.get $2
-   i32.store offset=4
-  else
-   local.get $0
-   i32.load offset=16
-   local.get $0
-   i32.load offset=12
-   i32.eq
-   if
-    local.get $0
-    i32.load offset=20
-    local.get $0
-    i32.load offset=12
-    i32.const 3
-    i32.mul
-    i32.const 4
-    i32.div_s
-    i32.lt_s
-    if (result i32)
-     local.get $0
-     i32.load offset=4
-    else
-     local.get $0
-     i32.load offset=4
-     i32.const 1
-     i32.shl
-     i32.const 1
-     i32.or
-    end
-    local.tee $10
-    i32.const 1
-    i32.add
-    local.tee $4
-    i32.const 2
-    i32.shl
-    call $~lib/arraybuffer/ArrayBuffer#constructor
-    local.set $8
-    local.get $4
-    i32.const 3
-    i32.shl
-    i32.const 3
-    i32.div_s
-    local.tee $6
-    i32.const 12
-    i32.mul
-    call $~lib/arraybuffer/ArrayBuffer#constructor
-    local.set $4
-    local.get $0
-    i32.load offset=8
-    local.tee $11
-    local.get $0
-    i32.load offset=16
-    i32.const 12
-    i32.mul
-    i32.add
-    local.set $5
-    local.get $4
-    local.set $3
-    loop $while-continue|0
-     local.get $5
-     local.get $11
-     i32.ne
-     if
-      local.get $11
-      i32.load offset=8
-      i32.const 1
-      i32.and
-      i32.eqz
-      if
-       local.get $3
-       local.get $11
-       i32.load
-       local.tee $9
-       i32.store
-       local.get $3
-       local.get $11
-       i32.load offset=4
-       i32.store offset=4
-       local.get $3
-       local.get $8
-       local.get $9
-       call $~lib/util/hash/HASH<~lib/string/String>
-       local.get $10
-       i32.and
-       i32.const 2
-       i32.shl
-       i32.add
-       local.tee $9
-       i32.load
-       i32.store offset=8
-       local.get $9
-       local.get $3
-       i32.store
-       local.get $3
-       i32.const 12
-       i32.add
-       local.set $3
-      end
-      local.get $11
-      i32.const 12
-      i32.add
-      local.set $11
-      br $while-continue|0
-     end
-    end
-    local.get $0
-    local.get $8
-    i32.store
-    local.get $0
-    local.get $10
-    i32.store offset=4
-    local.get $0
-    local.get $4
-    i32.store offset=8
-    local.get $0
-    local.get $6
-    i32.store offset=12
-    local.get $0
-    local.get $0
-    i32.load offset=20
-    i32.store offset=16
-   end
-   local.get $0
-   i32.load offset=8
-   local.get $0
-   local.get $0
-   i32.load offset=16
-   local.tee $4
-   i32.const 1
-   i32.add
-   i32.store offset=16
-   local.get $4
-   i32.const 12
-   i32.mul
-   i32.add
-   local.tee $4
-   local.get $1
-   i32.store
-   local.get $4
-   local.get $2
-   i32.store offset=4
-   local.get $0
-   local.get $0
-   i32.load offset=20
-   i32.const 1
-   i32.add
-   i32.store offset=20
-   local.get $4
-   local.get $0
-   i32.load
-   local.get $7
-   local.get $0
-   i32.load offset=4
-   i32.and
-   i32.const 2
-   i32.shl
-   i32.add
-   local.tee $0
-   i32.load
-   i32.store offset=8
-   local.get $0
-   local.get $4
-   i32.store
-  end
- )
- (func $~lib/assemblyscript-json/JSON/Handler#addValue (param $0 i32) (param $1 i32) (param $2 i32)
-  (local $3 i32)
-  (local $4 i32)
   local.get $1
   i32.const 20
   i32.sub
@@ -3483,21 +3479,21 @@
     i32.sub
     i32.load offset=12
     local.tee $3
-    i32.const 11568
+    i32.const 15440
     i32.load
     i32.le_u
     if
      loop $do-continue|0
       i32.const 1
       local.get $3
-      i32.const 11
+      i32.const 22
       i32.eq
       br_if $__inlined_func$~lib/rt/__instanceof
       drop
       local.get $3
       i32.const 3
       i32.shl
-      i32.const 11572
+      i32.const 15444
       i32.add
       i32.load offset=4
       local.tee $3
@@ -3526,21 +3522,21 @@
     i32.sub
     i32.load offset=12
     local.tee $3
-    i32.const 11568
+    i32.const 15440
     i32.load
     i32.le_u
     if
      loop $do-continue|01
       i32.const 1
       local.get $3
-      i32.const 11
+      i32.const 22
       i32.eq
       br_if $__inlined_func$~lib/rt/__instanceof0
       drop
       local.get $3
       i32.const 3
       i32.shl
-      i32.const 11572
+      i32.const 15444
       i32.add
       i32.load offset=4
       local.tee $3
@@ -3551,8 +3547,8 @@
    end
    i32.eqz
    if
-    i32.const 2464
-    i32.const 2528
+    i32.const 2672
+    i32.const 2736
     i32.const 78
     i32.const 8
     call $~lib/builtins/abort
@@ -3560,9 +3556,180 @@
    end
    local.get $4
    i32.load
+   local.tee $5
    local.get $1
-   local.get $2
-   call $~lib/map/Map<~lib/string/String,~lib/assemblyscript-json/JSON/Value>#set
+   local.tee $3
+   local.get $1
+   call $~lib/util/hash/HASH<~lib/string/String>
+   local.tee $9
+   call $~lib/map/Map<~lib/string/String,~lib/assemblyscript-json/JSON/Value>#find
+   local.tee $0
+   if
+    local.get $0
+    local.get $2
+    i32.store offset=4
+   else
+    local.get $5
+    i32.load offset=16
+    local.get $5
+    i32.load offset=12
+    i32.eq
+    if
+     local.get $5
+     i32.load offset=20
+     local.get $5
+     i32.load offset=12
+     i32.const 3
+     i32.mul
+     i32.const 4
+     i32.div_s
+     i32.lt_s
+     if (result i32)
+      local.get $5
+      i32.load offset=4
+     else
+      local.get $5
+      i32.load offset=4
+      i32.const 1
+      i32.shl
+      i32.const 1
+      i32.or
+     end
+     local.tee $1
+     i32.const 1
+     i32.add
+     local.tee $0
+     i32.const 2
+     i32.shl
+     call $~lib/arraybuffer/ArrayBuffer#constructor
+     local.set $8
+     local.get $0
+     i32.const 3
+     i32.shl
+     i32.const 3
+     i32.div_s
+     local.tee $10
+     i32.const 12
+     i32.mul
+     call $~lib/arraybuffer/ArrayBuffer#constructor
+     local.set $4
+     local.get $5
+     i32.load offset=8
+     local.tee $6
+     local.get $5
+     i32.load offset=16
+     i32.const 12
+     i32.mul
+     i32.add
+     local.set $11
+     local.get $4
+     local.set $0
+     loop $while-continue|0
+      local.get $6
+      local.get $11
+      i32.ne
+      if
+       local.get $6
+       i32.load offset=8
+       i32.const 1
+       i32.and
+       i32.eqz
+       if
+        local.get $0
+        local.get $6
+        i32.load
+        local.tee $7
+        i32.store
+        local.get $0
+        local.get $6
+        i32.load offset=4
+        i32.store offset=4
+        local.get $0
+        local.get $8
+        local.get $7
+        call $~lib/util/hash/HASH<~lib/string/String>
+        local.get $1
+        i32.and
+        i32.const 2
+        i32.shl
+        i32.add
+        local.tee $7
+        i32.load
+        i32.store offset=8
+        local.get $7
+        local.get $0
+        i32.store
+        local.get $0
+        i32.const 12
+        i32.add
+        local.set $0
+       end
+       local.get $6
+       i32.const 12
+       i32.add
+       local.set $6
+       br $while-continue|0
+      end
+     end
+     local.get $5
+     local.get $8
+     i32.store
+     local.get $5
+     local.get $1
+     i32.store offset=4
+     local.get $5
+     local.get $4
+     i32.store offset=8
+     local.get $5
+     local.get $10
+     i32.store offset=12
+     local.get $5
+     local.get $5
+     i32.load offset=20
+     i32.store offset=16
+    end
+    local.get $5
+    i32.load offset=8
+    local.get $5
+    local.get $5
+    i32.load offset=16
+    local.tee $1
+    i32.const 1
+    i32.add
+    i32.store offset=16
+    local.get $1
+    i32.const 12
+    i32.mul
+    i32.add
+    local.tee $0
+    local.get $3
+    i32.store
+    local.get $0
+    local.get $2
+    i32.store offset=4
+    local.get $5
+    local.get $5
+    i32.load offset=20
+    i32.const 1
+    i32.add
+    i32.store offset=20
+    local.get $0
+    local.get $5
+    i32.load
+    local.get $9
+    local.get $5
+    i32.load offset=4
+    i32.and
+    i32.const 2
+    i32.shl
+    i32.add
+    local.tee $1
+    i32.load
+    i32.store offset=8
+    local.get $1
+    local.get $0
+    i32.store
+   end
   else
    local.get $0
    i32.load
@@ -3582,21 +3749,21 @@
      i32.sub
      i32.load offset=12
      local.tee $1
-     i32.const 11568
+     i32.const 15440
      i32.load
      i32.le_u
      if
       loop $do-continue|03
        i32.const 1
        local.get $1
-       i32.const 19
+       i32.const 30
        i32.eq
        br_if $__inlined_func$~lib/rt/__instanceof2
        drop
        local.get $1
        i32.const 3
        i32.shl
-       i32.const 11572
+       i32.const 15444
        i32.add
        i32.load offset=4
        local.tee $1
@@ -3625,21 +3792,21 @@
      i32.sub
      i32.load offset=12
      local.tee $1
-     i32.const 11568
+     i32.const 15440
      i32.load
      i32.le_u
      if
       loop $do-continue|05
        i32.const 1
        local.get $1
-       i32.const 19
+       i32.const 30
        i32.eq
        br_if $__inlined_func$~lib/rt/__instanceof4
        drop
        local.get $1
        i32.const 3
        i32.shl
-       i32.const 11572
+       i32.const 15444
        i32.add
        i32.load offset=4
        local.tee $1
@@ -3650,8 +3817,8 @@
     end
     i32.eqz
     if
-     i32.const 2464
-     i32.const 2528
+     i32.const 2672
+     i32.const 2736
      i32.const 80
      i32.const 13
      call $~lib/builtins/abort
@@ -3668,7 +3835,7 @@
   (local $0 i32)
   (local $1 i32)
   i32.const 16
-  i32.const 20
+  i32.const 31
   call $~lib/rt/stub/__new
   local.tee $0
   i32.const 0
@@ -3716,7 +3883,7 @@
   i32.gt_u
   if
    i32.const 0
-   i32.const 2928
+   i32.const 3136
    i32.const 749
    i32.const 7
    call $~lib/builtins/abort
@@ -3940,7 +4107,7 @@
   i32.const 0
   i32.lt_s
   if
-   i32.const 1088
+   i32.const 1552
    return
   end
   local.get $6
@@ -3952,7 +4119,7 @@
    if (result i32)
     local.get $0
    else
-    i32.const 1088
+    i32.const 1552
    end
    return
   end
@@ -3988,7 +4155,7 @@
   end
   local.get $3
   local.get $6
-  i32.const 1084
+  i32.const 1548
   i32.load
   i32.const 1
   i32.shr_u
@@ -4043,7 +4210,7 @@
      i32.const 1
      i32.shl
      i32.add
-     i32.const 1088
+     i32.const 1552
      local.get $3
      i32.const 1
      i32.shl
@@ -4125,8 +4292,8 @@
   select
   i32.eqz
   if
-   i32.const 3296
-   i32.const 2016
+   i32.const 3504
+   i32.const 2224
    i32.const 319
    i32.const 5
    call $~lib/builtins/abort
@@ -4178,139 +4345,139 @@
   local.tee $1
   block $__inlined_func$~lib/string/String#charCodeAt (result i32)
    i32.const -1
-   i32.const 2732
+   i32.const 2940
    i32.load
    i32.const 1
    i32.shr_u
    i32.eqz
    br_if $__inlined_func$~lib/string/String#charCodeAt
    drop
-   i32.const 2736
+   i32.const 2944
    i32.load16_u
   end
   i32.eq
   if
-   i32.const 2736
+   i32.const 2944
    return
   end
   block $__inlined_func$~lib/string/String#charCodeAt0 (result i32)
    i32.const -1
-   i32.const 2972
+   i32.const 3180
    i32.load
    i32.const 1
    i32.shr_u
    i32.eqz
    br_if $__inlined_func$~lib/string/String#charCodeAt0
    drop
-   i32.const 2976
+   i32.const 3184
    i32.load16_u
   end
   local.get $1
   i32.eq
   if
-   i32.const 2976
+   i32.const 3184
    return
   end
   block $__inlined_func$~lib/string/String#charCodeAt2 (result i32)
    i32.const -1
-   i32.const 3004
+   i32.const 3212
    i32.load
    i32.const 1
    i32.shr_u
    i32.eqz
    br_if $__inlined_func$~lib/string/String#charCodeAt2
    drop
-   i32.const 3008
+   i32.const 3216
    i32.load16_u
   end
   local.get $1
   i32.eq
   if
-   i32.const 3008
+   i32.const 3216
    return
   end
   block $__inlined_func$~lib/string/String#charCodeAt4 (result i32)
    i32.const -1
-   i32.const 1388
+   i32.const 1724
    i32.load
    i32.const 1
    i32.shr_u
    i32.eqz
    br_if $__inlined_func$~lib/string/String#charCodeAt4
    drop
-   i32.const 1392
+   i32.const 1728
    i32.load16_u
   end
   local.get $1
   i32.eq
   if
-   i32.const 3040
+   i32.const 3248
    return
   end
   block $__inlined_func$~lib/string/String#charCodeAt6 (result i32)
    i32.const -1
-   i32.const 3068
+   i32.const 3276
    i32.load
    i32.const 1
    i32.shr_u
    i32.eqz
    br_if $__inlined_func$~lib/string/String#charCodeAt6
    drop
-   i32.const 3072
+   i32.const 3280
    i32.load16_u
   end
   local.get $1
   i32.eq
   if
-   i32.const 3104
+   i32.const 3312
    return
   end
   block $__inlined_func$~lib/string/String#charCodeAt8 (result i32)
    i32.const -1
-   i32.const 3132
+   i32.const 3340
    i32.load
    i32.const 1
    i32.shr_u
    i32.eqz
    br_if $__inlined_func$~lib/string/String#charCodeAt8
    drop
-   i32.const 3136
+   i32.const 3344
    i32.load16_u
   end
   local.get $1
   i32.eq
   if
-   i32.const 3168
+   i32.const 3376
    return
   end
   block $__inlined_func$~lib/string/String#charCodeAt10 (result i32)
    i32.const -1
-   i32.const 3196
+   i32.const 3404
    i32.load
    i32.const 1
    i32.shr_u
    i32.eqz
    br_if $__inlined_func$~lib/string/String#charCodeAt10
    drop
-   i32.const 3200
+   i32.const 3408
    i32.load16_u
   end
   local.get $1
   i32.eq
   if
-   i32.const 3232
+   i32.const 3440
    return
   end
   block $__inlined_func$~lib/string/String#charCodeAt12 (result i32)
    i32.const -1
-   i32.const 3260
+   i32.const 3468
    i32.load
    i32.const 1
    i32.shr_u
    i32.eqz
    br_if $__inlined_func$~lib/string/String#charCodeAt12
    drop
-   i32.const 3264
+   i32.const 3472
    i32.load16_u
   end
   local.get $1
@@ -4349,7 +4516,7 @@
     i32.gt_u
     if
      i32.const 0
-     i32.const 2928
+     i32.const 3136
      i32.const 39
      i32.const 7
      call $~lib/builtins/abort
@@ -4383,11 +4550,11 @@
   end
   i32.const 1
   global.set $~argumentsLength
-  i32.const 3360
+  i32.const 3568
   local.get $1
   call $~lib/string/String.fromCharCode@varargs
   call $~lib/string/String#concat
-  i32.const 2016
+  i32.const 2224
   i32.const 306
   i32.const 5
   call $~lib/builtins/abort
@@ -4402,21 +4569,21 @@
   local.set $1
   block $__inlined_func$~lib/string/String#charCodeAt (result i32)
    i32.const -1
-   i32.const 2732
+   i32.const 2940
    i32.load
    i32.const 1
    i32.shr_u
    i32.eqz
    br_if $__inlined_func$~lib/string/String#charCodeAt
    drop
-   i32.const 2736
+   i32.const 2944
    i32.load16_u
   end
   local.get $1
   i32.ne
   if
-   i32.const 2768
-   i32.const 2016
+   i32.const 2976
+   i32.const 2224
    i32.const 245
    i32.const 5
    call $~lib/builtins/abort
@@ -4435,8 +4602,8 @@
    i32.const 32
    i32.lt_s
    if
-    i32.const 2848
-    i32.const 2016
+    i32.const 3056
+    i32.const 2224
     i32.const 254
     i32.const 7
     call $~lib/builtins/abort
@@ -4444,14 +4611,14 @@
    end
    block $__inlined_func$~lib/string/String#charCodeAt0 (result i32)
     i32.const -1
-    i32.const 2732
+    i32.const 2940
     i32.load
     i32.const 1
     i32.shr_u
     i32.eqz
     br_if $__inlined_func$~lib/string/String#charCodeAt0
     drop
-    i32.const 2736
+    i32.const 2944
     i32.load16_u
    end
    local.get $3
@@ -4482,14 +4649,14 @@
    else
     block $__inlined_func$~lib/string/String#charCodeAt2 (result i32)
      i32.const -1
-     i32.const 2972
+     i32.const 3180
      i32.load
      i32.const 1
      i32.shr_u
      i32.eqz
      br_if $__inlined_func$~lib/string/String#charCodeAt2
      drop
-     i32.const 2976
+     i32.const 3184
      i32.load16_u
     end
     local.get $3
@@ -4535,8 +4702,8 @@
   i32.const 1
   i32.lt_s
   if
-   i32.const 3600
-   i32.const 1904
+   i32.const 3808
+   i32.const 2112
    i32.const 276
    i32.const 21
    call $~lib/builtins/abort
@@ -4595,12 +4762,12 @@
     call $~lib/assemblyscript-json/decoder/JSONDecoder<~lib/assemblyscript-json/JSON/Handler>#readChar
     i32.ne
     if
-     i32.const 3824
+     i32.const 4032
      local.get $1
      call $~lib/string/String#concat
-     i32.const 3872
+     i32.const 4080
      call $~lib/string/String#concat
-     i32.const 2016
+     i32.const 2224
      i32.const 396
      i32.const 7
      call $~lib/builtins/abort
@@ -4617,7 +4784,7 @@
  (func $~lib/assemblyscript-json/JSON/Handler#setBoolean (param $0 i32) (param $1 i32) (param $2 i32)
   (local $3 i32)
   i32.const 1
-  i32.const 22
+  i32.const 33
   call $~lib/rt/stub/__new
   local.tee $3
   local.get $2
@@ -4629,7 +4796,7 @@
    local.get $3
   else
    i32.const 0
-   i32.const 12
+   i32.const 23
    call $~lib/rt/stub/__new
   end
   call $~lib/assemblyscript-json/JSON/Handler#addValue
@@ -5404,7 +5571,7 @@
      local.get $0
      i32.const 3
      i32.shl
-     i32.const 3776
+     i32.const 3984
      i32.add
      f64.load
      f64.mul
@@ -5438,7 +5605,7 @@
       local.get $0
       i32.const 3
       i32.shl
-      i32.const 3952
+      i32.const 4160
       i32.add
       f64.load
       f64.mul
@@ -5450,7 +5617,7 @@
      i32.sub
      i32.const 3
      i32.shl
-     i32.const 3952
+     i32.const 4160
      i32.add
      f64.load
      f64.div
@@ -5693,14 +5860,14 @@
    i32.const 0
    block $__inlined_func$~lib/string/String#charCodeAt (result i32)
     i32.const -1
-    i32.const 2300
+    i32.const 2508
     i32.load
     i32.const 1
     i32.shr_u
     i32.eqz
     br_if $__inlined_func$~lib/string/String#charCodeAt
     drop
-    i32.const 2304
+    i32.const 2512
     i32.load16_u
    end
    local.get $4
@@ -5713,13 +5880,13 @@
    local.set $0
    local.get $3
    call $~lib/assemblyscript-json/decoder/JSONDecoder<~lib/assemblyscript-json/JSON/Handler>#get:state
-   i32.const 1088
+   i32.const 1552
    i32.store
    local.get $3
    i32.load
    local.set $4
    i32.const 4
-   i32.const 11
+   i32.const 22
    call $~lib/rt/stub/__new
    local.tee $1
    i32.const 0
@@ -5728,12 +5895,12 @@
    i32.eqz
    if
     i32.const 0
-    i32.const 12
+    i32.const 23
     call $~lib/rt/stub/__new
     local.set $1
    end
    i32.const 24
-   i32.const 13
+   i32.const 24
    call $~lib/rt/stub/__new
    local.tee $5
    i32.const 16
@@ -5779,14 +5946,14 @@
     local.set $4
     block $__inlined_func$~lib/string/String#charCodeAt0 (result i32)
      i32.const -1
-     i32.const 2620
+     i32.const 2828
      i32.load
      i32.const 1
      i32.shr_u
      i32.eqz
      br_if $__inlined_func$~lib/string/String#charCodeAt0
      drop
-     i32.const 2624
+     i32.const 2832
      i32.load16_u
     end
     local.get $4
@@ -5802,21 +5969,21 @@
       local.set $4
       block $__inlined_func$~lib/string/String#charCodeAt2 (result i32)
        i32.const -1
-       i32.const 2652
+       i32.const 2860
        i32.load
        i32.const 1
        i32.shr_u
        i32.eqz
        br_if $__inlined_func$~lib/string/String#charCodeAt2
        drop
-       i32.const 2656
+       i32.const 2864
        i32.load16_u
       end
       local.get $4
       i32.ne
       if
-       i32.const 2688
-       i32.const 2016
+       i32.const 2896
+       i32.const 2224
        i32.const 190
        i32.const 11
        call $~lib/builtins/abort
@@ -5837,21 +6004,21 @@
      local.set $4
      block $__inlined_func$~lib/string/String#charCodeAt6 (result i32)
       i32.const -1
-      i32.const 3436
+      i32.const 3644
       i32.load
       i32.const 1
       i32.shr_u
       i32.eqz
       br_if $__inlined_func$~lib/string/String#charCodeAt6
       drop
-      i32.const 3440
+      i32.const 3648
       i32.load16_u
      end
      local.get $4
      i32.ne
      if
-      i32.const 3472
-      i32.const 2016
+      i32.const 3680
+      i32.const 2224
       i32.const 207
       i32.const 5
       call $~lib/builtins/abort
@@ -5868,21 +6035,21 @@
    local.set $0
    block $__inlined_func$~lib/string/String#charCodeAt8 (result i32)
     i32.const -1
-    i32.const 2620
+    i32.const 2828
     i32.load
     i32.const 1
     i32.shr_u
     i32.eqz
     br_if $__inlined_func$~lib/string/String#charCodeAt8
     drop
-    i32.const 2624
+    i32.const 2832
     i32.load16_u
    end
    local.get $0
    i32.ne
    if
-    i32.const 3520
-    i32.const 2016
+    i32.const 3728
+    i32.const 2224
     i32.const 197
     i32.const 7
     call $~lib/builtins/abort
@@ -5912,14 +6079,14 @@
     i32.const 0
     block $__inlined_func$~lib/string/String#charCodeAt1 (result i32)
      i32.const -1
-     i32.const 3644
+     i32.const 3852
      i32.load
      i32.const 1
      i32.shr_u
      i32.eqz
      br_if $__inlined_func$~lib/string/String#charCodeAt1
      drop
-     i32.const 3648
+     i32.const 3856
      i32.load16_u
     end
     local.get $4
@@ -5932,13 +6099,13 @@
     local.set $4
     local.get $3
     call $~lib/assemblyscript-json/decoder/JSONDecoder<~lib/assemblyscript-json/JSON/Handler>#get:state
-    i32.const 1088
+    i32.const 1552
     i32.store
     local.get $3
     i32.load
     local.set $1
     i32.const 4
-    i32.const 19
+    i32.const 30
     call $~lib/rt/stub/__new
     local.tee $0
     i32.const 0
@@ -5947,7 +6114,7 @@
     i32.eqz
     if
      i32.const 0
-     i32.const 12
+     i32.const 23
      call $~lib/rt/stub/__new
      local.set $0
     end
@@ -5980,14 +6147,14 @@
      local.set $4
      block $__inlined_func$~lib/string/String#charCodeAt03 (result i32)
       i32.const -1
-      i32.const 3676
+      i32.const 3884
       i32.load
       i32.const 1
       i32.shr_u
       i32.eqz
       br_if $__inlined_func$~lib/string/String#charCodeAt03
       drop
-      i32.const 3680
+      i32.const 3888
       i32.load16_u
      end
      local.get $4
@@ -6003,21 +6170,21 @@
        local.set $4
        block $__inlined_func$~lib/string/String#charCodeAt24 (result i32)
         i32.const -1
-        i32.const 2652
+        i32.const 2860
         i32.load
         i32.const 1
         i32.shr_u
         i32.eqz
         br_if $__inlined_func$~lib/string/String#charCodeAt24
         drop
-        i32.const 2656
+        i32.const 2864
         i32.load16_u
        end
        local.get $4
        i32.ne
        if
-        i32.const 2688
-        i32.const 2016
+        i32.const 2896
+        i32.const 2224
         i32.const 224
         i32.const 11
         call $~lib/builtins/abort
@@ -6035,21 +6202,21 @@
     local.set $0
     block $__inlined_func$~lib/string/String#charCodeAt4 (result i32)
      i32.const -1
-     i32.const 3676
+     i32.const 3884
      i32.load
      i32.const 1
      i32.shr_u
      i32.eqz
      br_if $__inlined_func$~lib/string/String#charCodeAt4
      drop
-     i32.const 3680
+     i32.const 3888
      i32.load16_u
     end
     local.get $0
     i32.ne
     if
-     i32.const 3712
-     i32.const 2016
+     i32.const 3920
+     i32.const 2224
      i32.const 230
      i32.const 7
      call $~lib/builtins/abort
@@ -6081,14 +6248,14 @@
     i32.const 0
     block $__inlined_func$~lib/string/String#charCodeAt15 (result i32)
      i32.const -1
-     i32.const 2732
+     i32.const 2940
      i32.load
      i32.const 1
      i32.shr_u
      i32.eqz
      br_if $__inlined_func$~lib/string/String#charCodeAt15
      drop
-     i32.const 2736
+     i32.const 2944
      i32.load16_u
     end
     local.get $4
@@ -6104,7 +6271,7 @@
     call $~lib/assemblyscript-json/decoder/JSONDecoder<~lib/assemblyscript-json/JSON/Handler>#readString
     local.set $5
     i32.const 4
-    i32.const 21
+    i32.const 32
     call $~lib/rt/stub/__new
     local.tee $1
     local.get $5
@@ -6114,7 +6281,7 @@
      local.get $1
     else
      i32.const 0
-     i32.const 12
+     i32.const 23
      call $~lib/rt/stub/__new
     end
     call $~lib/assemblyscript-json/JSON/Handler#addValue
@@ -6131,21 +6298,21 @@
     local.set $0
     block $__inlined_func$~lib/string/String#charCodeAt66 (result i32)
      i32.const -1
-     i32.const 3788
+     i32.const 3996
      i32.load
      i32.const 1
      i32.shr_u
      i32.eqz
      br_if $__inlined_func$~lib/string/String#charCodeAt66
      drop
-     i32.const 3792
+     i32.const 4000
      i32.load16_u
     end
     local.get $0
     i32.eq
     if
      local.get $3
-     i32.const 3792
+     i32.const 4000
      call $~lib/assemblyscript-json/decoder/JSONDecoder<~lib/assemblyscript-json/JSON/Handler>#readAndAssert
      local.get $3
      i32.load
@@ -6162,21 +6329,21 @@
     local.set $0
     block $__inlined_func$~lib/string/String#charCodeAt87 (result i32)
      i32.const -1
-     i32.const 3900
+     i32.const 4108
      i32.load
      i32.const 1
      i32.shr_u
      i32.eqz
      br_if $__inlined_func$~lib/string/String#charCodeAt87
      drop
-     i32.const 3904
+     i32.const 4112
      i32.load16_u
     end
     local.get $0
     i32.eq
     if
      local.get $3
-     i32.const 3904
+     i32.const 4112
      call $~lib/assemblyscript-json/decoder/JSONDecoder<~lib/assemblyscript-json/JSON/Handler>#readAndAssert
      local.get $3
      i32.load
@@ -6214,12 +6381,12 @@
      global.set $~argumentsLength
      f64.const -1
      local.set $6
-     i32.const 1088
+     i32.const 1552
      local.get $0
      call $~lib/string/String.fromCharCode@varargs
      call $~lib/string/String#concat
     else
-     i32.const 1088
+     i32.const 1552
     end
     local.set $0
     loop $while-continue|028
@@ -6343,7 +6510,7 @@
       i32.const 1
      else
       local.get $0
-      i32.const 3936
+      i32.const 4144
       call $~lib/string/String.__eq
      end
      if
@@ -6358,13 +6525,13 @@
       call $~lib/util/string/strtod
       local.set $2
       i32.const 8
-      i32.const 23
+      i32.const 34
       call $~lib/rt/stub/__new
       local.tee $0
       i32.eqz
       if
        i32.const 8
-       i32.const 24
+       i32.const 35
        call $~lib/rt/stub/__new
        local.set $0
       end
@@ -6385,7 +6552,7 @@
       i64.trunc_f64_s
       local.set $7
       i32.const 8
-      i32.const 25
+      i32.const 36
       call $~lib/rt/stub/__new
       local.tee $0
       local.get $7
@@ -6398,7 +6565,7 @@
       local.get $0
      else
       i32.const 0
-      i32.const 12
+      i32.const 23
       call $~lib/rt/stub/__new
      end
      call $~lib/assemblyscript-json/JSON/Handler#addValue
@@ -6418,21 +6585,21 @@
     local.set $0
     block $__inlined_func$~lib/string/String#charCodeAt10 (result i32)
      i32.const -1
-     i32.const 4156
+     i32.const 4364
      i32.load
      i32.const 1
      i32.shr_u
      i32.eqz
      br_if $__inlined_func$~lib/string/String#charCodeAt10
      drop
-     i32.const 4160
+     i32.const 4368
      i32.load16_u
     end
     local.get $0
     i32.eq
     if
      local.get $3
-     i32.const 4160
+     i32.const 4368
      call $~lib/assemblyscript-json/decoder/JSONDecoder<~lib/assemblyscript-json/JSON/Handler>#readAndAssert
      local.get $3
      i32.load
@@ -6458,10 +6625,10 @@
   global.get $~lib/assemblyscript-json/JSON/_JSON.decoder
   local.set $2
   i32.const 12
-  i32.const 18
+  i32.const 29
   call $~lib/rt/stub/__new
   local.tee $1
-  i32.const 1088
+  i32.const 1552
   i32.store
   local.get $1
   i32.const 0
@@ -6476,8 +6643,8 @@
   call $~lib/assemblyscript-json/decoder/JSONDecoder<~lib/assemblyscript-json/JSON/Handler>#parseValue
   i32.eqz
   if
-   i32.const 4192
-   i32.const 2016
+   i32.const 4400
+   i32.const 2224
    i32.const 144
    i32.const 5
    call $~lib/builtins/abort
@@ -6526,7 +6693,7 @@
   end
   i64.const 0
   i32.const 12
-  i32.const 4
+  i32.const 7
   call $~lib/rt/stub/__new
   local.get $1
   i32.wrap_i64
@@ -6543,21 +6710,21 @@
    i32.sub
    i32.load offset=12
    local.tee $0
-   i32.const 11568
+   i32.const 15440
    i32.load
    i32.le_u
    if
     loop $do-continue|0
      i32.const 1
      local.get $0
-     i32.const 11
+     i32.const 22
      i32.eq
      br_if $__inlined_func$~lib/rt/__instanceof
      drop
      local.get $0
      i32.const 3
      i32.shl
-     i32.const 11572
+     i32.const 15444
      i32.add
      i32.load offset=4
      local.tee $0
@@ -6568,33 +6735,14 @@
   end
   i32.eqz
   if
-   i32.const 2464
-   i32.const 4256
+   i32.const 2672
+   i32.const 4464
    i32.const 96
    i32.const 20
    call $~lib/builtins/abort
    unreachable
   end
   local.get $2
- )
- (func $~lib/map/Map<~lib/string/String,~lib/assemblyscript-json/JSON/Value>#get (param $0 i32) (param $1 i32) (result i32)
-  local.get $0
-  local.get $1
-  local.get $1
-  call $~lib/util/hash/HASH<~lib/string/String>
-  call $~lib/map/Map<~lib/string/String,~lib/assemblyscript-json/JSON/Value>#find
-  local.tee $0
-  i32.eqz
-  if
-   i32.const 4384
-   i32.const 4448
-   i32.const 105
-   i32.const 17
-   call $~lib/builtins/abort
-   unreachable
-  end
-  local.get $0
-  i32.load offset=4
  )
  (func $~lib/assemblyscript-json/JSON/Obj#get (param $0 i32) (param $1 i32) (result i32)
   local.get $0
@@ -6611,65 +6759,21 @@
   local.get $0
   i32.load
   local.get $1
-  call $~lib/map/Map<~lib/string/String,~lib/assemblyscript-json/JSON/Value>#get
- )
- (func $~lib/array/Array<~lib/array/Array<assembly/multicall/model/ContractCall>>#constructor (param $0 i32) (result i32)
-  (local $1 i32)
-  (local $2 i32)
-  (local $3 i32)
-  i32.const 16
-  i32.const 29
-  call $~lib/rt/stub/__new
-  local.tee $1
-  i32.const 0
-  i32.store
   local.get $1
-  i32.const 0
-  i32.store offset=4
-  local.get $1
-  i32.const 0
-  i32.store offset=8
-  local.get $1
-  i32.const 0
-  i32.store offset=12
-  local.get $0
-  i32.const 268435455
-  i32.gt_u
+  call $~lib/util/hash/HASH<~lib/string/String>
+  call $~lib/map/Map<~lib/string/String,~lib/assemblyscript-json/JSON/Value>#find
+  local.tee $0
+  i32.eqz
   if
-   i32.const 1792
-   i32.const 1904
-   i32.const 64
-   i32.const 60
+   i32.const 4576
+   i32.const 4640
+   i32.const 105
+   i32.const 17
    call $~lib/builtins/abort
    unreachable
   end
   local.get $0
-  i32.const 8
-  local.get $0
-  i32.const 8
-  i32.gt_u
-  select
-  i32.const 2
-  i32.shl
-  local.tee $2
-  i32.const 0
-  call $~lib/rt/stub/__new
-  local.tee $3
-  local.get $2
-  call $~lib/memory/memory.fill
-  local.get $1
-  local.get $3
-  i32.store
-  local.get $1
-  local.get $3
-  i32.store offset=4
-  local.get $1
-  local.get $2
-  i32.store offset=8
-  local.get $1
-  local.get $0
-  i32.store offset=12
-  local.get $1
+  i32.load offset=4
  )
  (func $~lib/near-sdk-bindgen/index/decode<~lib/string/String,~lib/assemblyscript-json/JSON/Obj> (param $0 i32) (param $1 i32) (result i32)
   (local $2 i32)
@@ -6681,21 +6785,21 @@
     i32.sub
     i32.load offset=12
     local.tee $2
-    i32.const 11568
+    i32.const 15440
     i32.load
     i32.le_u
     if
      loop $do-continue|0
       i32.const 1
       local.get $2
-      i32.const 11
+      i32.const 22
       i32.eq
       br_if $__inlined_func$~lib/rt/__instanceof
       drop
       local.get $2
       i32.const 3
       i32.shl
-      i32.const 11572
+      i32.const 15444
       i32.add
       i32.load offset=4
       local.tee $2
@@ -6709,7 +6813,7 @@
   end
   if (result i32)
    local.get $1
-   i32.const 1088
+   i32.const 1552
    call $~lib/string/String.__eq
    i32.eqz
   else
@@ -6722,21 +6826,21 @@
     i32.sub
     i32.load offset=12
     local.tee $2
-    i32.const 11568
+    i32.const 15440
     i32.load
     i32.le_u
     if
      loop $do-continue|01
       i32.const 1
       local.get $2
-      i32.const 11
+      i32.const 22
       i32.eq
       br_if $__inlined_func$~lib/rt/__instanceof0
       drop
       local.get $2
       i32.const 3
       i32.shl
-      i32.const 11572
+      i32.const 15444
       i32.add
       i32.load offset=4
       local.tee $2
@@ -6747,8 +6851,8 @@
    end
    i32.eqz
    if
-    i32.const 2464
-    i32.const 4256
+    i32.const 2672
+    i32.const 4464
     i32.const 310
     i32.const 37
     call $~lib/builtins/abort
@@ -6772,21 +6876,21 @@
     i32.sub
     i32.load offset=12
     local.tee $2
-    i32.const 11568
+    i32.const 15440
     i32.load
     i32.le_u
     if
      loop $do-continue|04
       i32.const 1
       local.get $2
-      i32.const 26
+      i32.const 37
       i32.eq
       br_if $__inlined_func$~lib/rt/__instanceof3
       drop
       local.get $2
       i32.const 3
       i32.shl
-      i32.const 11572
+      i32.const 15444
       i32.add
       i32.load offset=4
       local.tee $2
@@ -6810,21 +6914,21 @@
     i32.sub
     i32.load offset=12
     local.tee $2
-    i32.const 11568
+    i32.const 15440
     i32.load
     i32.le_u
     if
      loop $do-continue|011
       i32.const 1
       local.get $2
-      i32.const 21
+      i32.const 32
       i32.eq
       br_if $__inlined_func$~lib/rt/__instanceof10
       drop
       local.get $2
       i32.const 3
       i32.shl
-      i32.const 11572
+      i32.const 15444
       i32.add
       i32.load offset=4
       local.tee $2
@@ -6838,12 +6942,12 @@
   end
   i32.eqz
   if
-   i32.const 4880
+   i32.const 5072
    local.get $1
    call $~lib/string/String#concat
-   i32.const 5328
+   i32.const 5536
    call $~lib/string/String#concat
-   i32.const 4256
+   i32.const 4464
    i32.const 218
    i32.const 3
    call $~lib/builtins/abort
@@ -6855,21 +6959,21 @@
    i32.sub
    i32.load offset=12
    local.tee $1
-   i32.const 11568
+   i32.const 15440
    i32.load
    i32.le_u
    if
     loop $do-continue|015
      i32.const 1
      local.get $1
-     i32.const 21
+     i32.const 32
      i32.eq
      br_if $__inlined_func$~lib/rt/__instanceof14
      drop
      local.get $1
      i32.const 3
      i32.shl
-     i32.const 11572
+     i32.const 15444
      i32.add
      i32.load offset=4
      local.tee $1
@@ -6880,8 +6984,8 @@
   end
   i32.eqz
   if
-   i32.const 2464
-   i32.const 4256
+   i32.const 2672
+   i32.const 4464
    i32.const 222
    i32.const 21
    call $~lib/builtins/abort
@@ -7168,6 +7272,200 @@
   local.get $4
   i64.mul
  )
+ (func $~lib/near-sdk-bindgen/index/decode<u64,~lib/assemblyscript-json/JSON/Obj> (param $0 i32) (param $1 i32) (result i64)
+  (local $2 i32)
+  local.get $0
+  if (result i32)
+   block $__inlined_func$~lib/rt/__instanceof (result i32)
+    local.get $0
+    i32.const 20
+    i32.sub
+    i32.load offset=12
+    local.tee $2
+    i32.const 15440
+    i32.load
+    i32.le_u
+    if
+     loop $do-continue|0
+      i32.const 1
+      local.get $2
+      i32.const 22
+      i32.eq
+      br_if $__inlined_func$~lib/rt/__instanceof
+      drop
+      local.get $2
+      i32.const 3
+      i32.shl
+      i32.const 15444
+      i32.add
+      i32.load offset=4
+      local.tee $2
+      br_if $do-continue|0
+     end
+    end
+    i32.const 0
+   end
+  else
+   i32.const 0
+  end
+  if (result i32)
+   local.get $1
+   i32.const 1552
+   call $~lib/string/String.__eq
+   i32.eqz
+  else
+   i32.const 0
+  end
+  if
+   block $__inlined_func$~lib/rt/__instanceof0 (result i32)
+    local.get $0
+    i32.const 20
+    i32.sub
+    i32.load offset=12
+    local.tee $2
+    i32.const 15440
+    i32.load
+    i32.le_u
+    if
+     loop $do-continue|01
+      i32.const 1
+      local.get $2
+      i32.const 22
+      i32.eq
+      br_if $__inlined_func$~lib/rt/__instanceof0
+      drop
+      local.get $2
+      i32.const 3
+      i32.shl
+      i32.const 15444
+      i32.add
+      i32.load offset=4
+      local.tee $2
+      br_if $do-continue|01
+     end
+    end
+    i32.const 0
+   end
+   i32.eqz
+   if
+    i32.const 2672
+    i32.const 4464
+    i32.const 310
+    i32.const 37
+    call $~lib/builtins/abort
+    unreachable
+   end
+   local.get $0
+   local.get $1
+   call $~lib/assemblyscript-json/JSON/Obj#get
+   local.tee $0
+   i32.eqz
+   if
+    i32.const 4688
+    i32.const 5920
+    call $~lib/string/String#concat
+    i32.const 4864
+    call $~lib/string/String#concat
+    i32.const 4464
+    i32.const 323
+    i32.const 9
+    call $~lib/builtins/abort
+    unreachable
+   end
+  end
+  local.get $0
+  if (result i32)
+   block $__inlined_func$~lib/rt/__instanceof5 (result i32)
+    local.get $0
+    i32.const 20
+    i32.sub
+    i32.load offset=12
+    local.tee $2
+    i32.const 15440
+    i32.load
+    i32.le_u
+    if
+     loop $do-continue|06
+      i32.const 1
+      local.get $2
+      i32.const 32
+      i32.eq
+      br_if $__inlined_func$~lib/rt/__instanceof5
+      drop
+      local.get $2
+      i32.const 3
+      i32.shl
+      i32.const 15444
+      i32.add
+      i32.load offset=4
+      local.tee $2
+      br_if $do-continue|06
+     end
+    end
+    i32.const 0
+   end
+  else
+   i32.const 0
+  end
+  i32.eqz
+  if
+   i32.const 5072
+   local.get $1
+   call $~lib/string/String#concat
+   i32.const 4960
+   call $~lib/string/String#concat
+   i32.const 5920
+   call $~lib/string/String#concat
+   i32.const 5952
+   call $~lib/string/String#concat
+   i32.const 4464
+   i32.const 346
+   i32.const 7
+   call $~lib/builtins/abort
+   unreachable
+  end
+  block $__inlined_func$~lib/rt/__instanceof11 (result i32)
+   local.get $0
+   i32.const 20
+   i32.sub
+   i32.load offset=12
+   local.tee $1
+   i32.const 15440
+   i32.load
+   i32.le_u
+   if
+    loop $do-continue|012
+     i32.const 1
+     local.get $1
+     i32.const 32
+     i32.eq
+     br_if $__inlined_func$~lib/rt/__instanceof11
+     drop
+     local.get $1
+     i32.const 3
+     i32.shl
+     i32.const 15444
+     i32.add
+     i32.load offset=4
+     local.tee $1
+     br_if $do-continue|012
+    end
+   end
+   i32.const 0
+  end
+  i32.eqz
+  if
+   i32.const 2672
+   i32.const 4464
+   i32.const 354
+   i32.const 28
+   call $~lib/builtins/abort
+   unreachable
+  end
+  local.get $0
+  i32.load
+  call $~lib/util/string/strtol<i64>
+ )
  (func $~lib/near-sdk-bindgen/index/JSONTypeToString<~lib/assemblyscript-json/JSON/Value> (param $0 i32) (result i32)
   (local $1 i32)
   local.get $0
@@ -7178,21 +7476,21 @@
     i32.sub
     i32.load offset=12
     local.tee $1
-    i32.const 11568
+    i32.const 15440
     i32.load
     i32.le_u
     if
      loop $do-continue|0
       i32.const 1
       local.get $1
-      i32.const 21
+      i32.const 32
       i32.eq
       br_if $__inlined_func$~lib/rt/__instanceof
       drop
       local.get $1
       i32.const 3
       i32.shl
-      i32.const 11572
+      i32.const 15444
       i32.add
       i32.load offset=4
       local.tee $1
@@ -7205,7 +7503,7 @@
    i32.const 0
   end
   if
-   i32.const 5872
+   i32.const 6288
    return
   end
   local.get $0
@@ -7216,21 +7514,21 @@
     i32.sub
     i32.load offset=12
     local.tee $1
-    i32.const 11568
+    i32.const 15440
     i32.load
     i32.le_u
     if
      loop $do-continue|01
       i32.const 1
       local.get $1
-      i32.const 22
+      i32.const 33
       i32.eq
       br_if $__inlined_func$~lib/rt/__instanceof0
       drop
       local.get $1
       i32.const 3
       i32.shl
-      i32.const 11572
+      i32.const 15444
       i32.add
       i32.load offset=4
       local.tee $1
@@ -7243,7 +7541,7 @@
    i32.const 0
   end
   if
-   i32.const 5904
+   i32.const 6320
    return
   end
   local.get $0
@@ -7254,21 +7552,21 @@
     i32.sub
     i32.load offset=12
     local.tee $1
-    i32.const 11568
+    i32.const 15440
     i32.load
     i32.le_u
     if
      loop $do-continue|03
       i32.const 1
       local.get $1
-      i32.const 11
+      i32.const 22
       i32.eq
       br_if $__inlined_func$~lib/rt/__instanceof2
       drop
       local.get $1
       i32.const 3
       i32.shl
-      i32.const 11572
+      i32.const 15444
       i32.add
       i32.load offset=4
       local.tee $1
@@ -7281,7 +7579,7 @@
    i32.const 0
   end
   if
-   i32.const 5952
+   i32.const 6368
    return
   end
   local.get $0
@@ -7292,21 +7590,21 @@
     i32.sub
     i32.load offset=12
     local.tee $1
-    i32.const 11568
+    i32.const 15440
     i32.load
     i32.le_u
     if
      loop $do-continue|05
       i32.const 1
       local.get $1
-      i32.const 19
+      i32.const 30
       i32.eq
       br_if $__inlined_func$~lib/rt/__instanceof4
       drop
       local.get $1
       i32.const 3
       i32.shl
-      i32.const 11572
+      i32.const 15444
       i32.add
       i32.load offset=4
       local.tee $1
@@ -7319,7 +7617,7 @@
    i32.const 0
   end
   if
-   i32.const 5984
+   i32.const 6400
    return
   end
   local.get $0
@@ -7330,21 +7628,21 @@
     i32.sub
     i32.load offset=12
     local.tee $1
-    i32.const 11568
+    i32.const 15440
     i32.load
     i32.le_u
     if
      loop $do-continue|07
       i32.const 1
       local.get $1
-      i32.const 26
+      i32.const 37
       i32.eq
       br_if $__inlined_func$~lib/rt/__instanceof6
       drop
       local.get $1
       i32.const 3
       i32.shl
-      i32.const 11572
+      i32.const 15444
       i32.add
       i32.load offset=4
       local.tee $1
@@ -7357,7 +7655,7 @@
    i32.const 0
   end
   if
-   i32.const 6016
+   i32.const 6432
    return
   end
   local.get $0
@@ -7368,21 +7666,21 @@
     i32.sub
     i32.load offset=12
     local.tee $1
-    i32.const 11568
+    i32.const 15440
     i32.load
     i32.le_u
     if
      loop $do-continue|09
       i32.const 1
       local.get $1
-      i32.const 25
+      i32.const 36
       i32.eq
       br_if $__inlined_func$~lib/rt/__instanceof8
       drop
       local.get $1
       i32.const 3
       i32.shl
-      i32.const 11572
+      i32.const 15444
       i32.add
       i32.load offset=4
       local.tee $1
@@ -7395,7 +7693,7 @@
    i32.const 0
   end
   if
-   i32.const 6048
+   i32.const 6464
    return
   end
   local.get $0
@@ -7406,21 +7704,21 @@
     i32.sub
     i32.load offset=12
     local.tee $0
-    i32.const 11568
+    i32.const 15440
     i32.load
     i32.le_u
     if
      loop $do-continue|011
       i32.const 1
       local.get $0
-      i32.const 23
+      i32.const 34
       i32.eq
       br_if $__inlined_func$~lib/rt/__instanceof10
       drop
       local.get $0
       i32.const 3
       i32.shl
-      i32.const 11572
+      i32.const 15444
       i32.add
       i32.load offset=4
       local.tee $0
@@ -7433,10 +7731,10 @@
    i32.const 0
   end
   if
-   i32.const 6096
+   i32.const 6512
    return
   end
-  i32.const 6128
+  i32.const 6544
  )
  (func $~lib/near-sdk-bindgen/index/decode<~lib/as-bignum/integer/safe/u128/u128,~lib/assemblyscript-json/JSON/Obj> (param $0 i32) (param $1 i32) (result i32)
   (local $2 i32)
@@ -7449,21 +7747,21 @@
     i32.sub
     i32.load offset=12
     local.tee $3
-    i32.const 11568
+    i32.const 15440
     i32.load
     i32.le_u
     if
      loop $do-continue|0
       i32.const 1
       local.get $3
-      i32.const 11
+      i32.const 22
       i32.eq
       br_if $__inlined_func$~lib/rt/__instanceof
       drop
       local.get $3
       i32.const 3
       i32.shl
-      i32.const 11572
+      i32.const 15444
       i32.add
       i32.load offset=4
       local.tee $3
@@ -7477,7 +7775,7 @@
   end
   if (result i32)
    local.get $1
-   i32.const 1088
+   i32.const 1552
    call $~lib/string/String.__eq
    i32.eqz
   else
@@ -7490,21 +7788,21 @@
     i32.sub
     i32.load offset=12
     local.tee $3
-    i32.const 11568
+    i32.const 15440
     i32.load
     i32.le_u
     if
      loop $do-continue|01
       i32.const 1
       local.get $3
-      i32.const 11
+      i32.const 22
       i32.eq
       br_if $__inlined_func$~lib/rt/__instanceof0
       drop
       local.get $3
       i32.const 3
       i32.shl
-      i32.const 11572
+      i32.const 15444
       i32.add
       i32.load offset=4
       local.tee $3
@@ -7515,8 +7813,8 @@
    end
    i32.eqz
    if
-    i32.const 2464
-    i32.const 4256
+    i32.const 2672
+    i32.const 4464
     i32.const 310
     i32.const 37
     call $~lib/builtins/abort
@@ -7541,21 +7839,21 @@
     i32.sub
     i32.load offset=12
     local.tee $0
-    i32.const 11568
+    i32.const 15440
     i32.load
     i32.le_u
     if
      loop $do-continue|04
       i32.const 1
       local.get $0
-      i32.const 26
+      i32.const 37
       i32.eq
       br_if $__inlined_func$~lib/rt/__instanceof3
       drop
       local.get $0
       i32.const 3
       i32.shl
-      i32.const 11572
+      i32.const 15444
       i32.add
       i32.load offset=4
       local.tee $0
@@ -7579,21 +7877,21 @@
     i32.sub
     i32.load offset=12
     local.tee $0
-    i32.const 11568
+    i32.const 15440
     i32.load
     i32.le_u
     if
      loop $do-continue|011
       i32.const 1
       local.get $0
-      i32.const 21
+      i32.const 32
       i32.eq
       br_if $__inlined_func$~lib/rt/__instanceof10
       drop
       local.get $0
       i32.const 3
       i32.shl
-      i32.const 11572
+      i32.const 15444
       i32.add
       i32.load offset=4
       local.tee $0
@@ -7607,15 +7905,15 @@
   end
   i32.eqz
   if
-   i32.const 4880
+   i32.const 5072
    local.get $1
    call $~lib/string/String#concat
-   i32.const 5760
+   i32.const 6176
    call $~lib/string/String#concat
    local.get $2
    call $~lib/near-sdk-bindgen/index/JSONTypeToString<~lib/assemblyscript-json/JSON/Value>
    call $~lib/string/String#concat
-   i32.const 4256
+   i32.const 4464
    i32.const 468
    i32.const 5
    call $~lib/builtins/abort
@@ -7629,21 +7927,21 @@
     i32.sub
     i32.load offset=12
     local.tee $3
-    i32.const 11568
+    i32.const 15440
     i32.load
     i32.le_u
     if
      loop $do-continue|016
       i32.const 1
       local.get $3
-      i32.const 21
+      i32.const 32
       i32.eq
       br_if $__inlined_func$~lib/rt/__instanceof15
       drop
       local.get $3
       i32.const 3
       i32.shl
-      i32.const 11572
+      i32.const 15444
       i32.add
       i32.load offset=4
       local.tee $3
@@ -7657,12 +7955,12 @@
   end
   i32.eqz
   if
-   i32.const 4880
+   i32.const 5072
    local.get $1
    call $~lib/string/String#concat
-   i32.const 5328
+   i32.const 5536
    call $~lib/string/String#concat
-   i32.const 4256
+   i32.const 4464
    i32.const 218
    i32.const 3
    call $~lib/builtins/abort
@@ -7674,21 +7972,21 @@
    i32.sub
    i32.load offset=12
    local.tee $1
-   i32.const 11568
+   i32.const 15440
    i32.load
    i32.le_u
    if
     loop $do-continue|020
      i32.const 1
      local.get $1
-     i32.const 21
+     i32.const 32
      i32.eq
      br_if $__inlined_func$~lib/rt/__instanceof19
      drop
      local.get $1
      i32.const 3
      i32.shl
-     i32.const 11572
+     i32.const 15444
      i32.add
      i32.load offset=4
      local.tee $1
@@ -7699,8 +7997,8 @@
   end
   i32.eqz
   if
-   i32.const 2464
-   i32.const 4256
+   i32.const 2672
+   i32.const 4464
    i32.const 222
    i32.const 21
    call $~lib/builtins/abort
@@ -7710,573 +8008,9 @@
   i32.load
   call $~lib/as-bignum/utils/atou128
  )
- (func $~lib/near-sdk-bindgen/index/decode<assembly/multicall/model/ContractCall,~lib/assemblyscript-json/JSON/Value> (param $0 i32) (result i32)
+ (func $~lib/near-sdk-bindgen/index/decode<assembly/multicall/model/FunctionCall,~lib/assemblyscript-json/JSON/Value> (param $0 i32) (result i32)
   (local $1 i32)
   (local $2 i32)
-  (local $3 i32)
-  block $folding-inner0
-   local.get $0
-   if (result i32)
-    block $__inlined_func$~lib/rt/__instanceof (result i32)
-     local.get $0
-     i32.const 20
-     i32.sub
-     i32.load offset=12
-     local.tee $1
-     i32.const 11568
-     i32.load
-     i32.le_u
-     if
-      loop $do-continue|0
-       i32.const 1
-       local.get $1
-       i32.const 11
-       i32.eq
-       br_if $__inlined_func$~lib/rt/__instanceof
-       drop
-       local.get $1
-       i32.const 3
-       i32.shl
-       i32.const 11572
-       i32.add
-       i32.load offset=4
-       local.tee $1
-       br_if $do-continue|0
-      end
-     end
-     i32.const 0
-    end
-   else
-    i32.const 0
-   end
-   if (result i32)
-    i32.const 1088
-    i32.const 1088
-    call $~lib/string/String.__eq
-    i32.eqz
-   else
-    i32.const 0
-   end
-   if
-    block $__inlined_func$~lib/rt/__instanceof0 (result i32)
-     local.get $0
-     i32.const 20
-     i32.sub
-     i32.load offset=12
-     local.tee $1
-     i32.const 11568
-     i32.load
-     i32.le_u
-     if
-      loop $do-continue|01
-       i32.const 1
-       local.get $1
-       i32.const 11
-       i32.eq
-       br_if $__inlined_func$~lib/rt/__instanceof0
-       drop
-       local.get $1
-       i32.const 3
-       i32.shl
-       i32.const 11572
-       i32.add
-       i32.load offset=4
-       local.tee $1
-       br_if $do-continue|01
-      end
-     end
-     i32.const 0
-    end
-    i32.eqz
-    br_if $folding-inner0
-    local.get $0
-    i32.const 1088
-    call $~lib/assemblyscript-json/JSON/Obj#get
-    local.tee $0
-    i32.eqz
-    if
-     local.get $0
-     return
-    end
-   end
-   local.get $0
-   if (result i32)
-    block $__inlined_func$~lib/rt/__instanceof3 (result i32)
-     local.get $0
-     i32.const 20
-     i32.sub
-     i32.load offset=12
-     local.tee $1
-     i32.const 11568
-     i32.load
-     i32.le_u
-     if
-      loop $do-continue|04
-       i32.const 1
-       local.get $1
-       i32.const 26
-       i32.eq
-       br_if $__inlined_func$~lib/rt/__instanceof3
-       drop
-       local.get $1
-       i32.const 3
-       i32.shl
-       i32.const 11572
-       i32.add
-       i32.load offset=4
-       local.tee $1
-       br_if $do-continue|04
-      end
-     end
-     i32.const 0
-    end
-   else
-    i32.const 0
-   end
-   if
-    i32.const 0
-    return
-   end
-   local.get $0
-   if (result i32)
-    block $__inlined_func$~lib/rt/__instanceof10 (result i32)
-     local.get $0
-     i32.const 20
-     i32.sub
-     i32.load offset=12
-     local.tee $1
-     i32.const 11568
-     i32.load
-     i32.le_u
-     if
-      loop $do-continue|011
-       i32.const 1
-       local.get $1
-       i32.const 11
-       i32.eq
-       br_if $__inlined_func$~lib/rt/__instanceof10
-       drop
-       local.get $1
-       i32.const 3
-       i32.shl
-       i32.const 11572
-       i32.add
-       i32.load offset=4
-       local.tee $1
-       br_if $do-continue|011
-      end
-     end
-     i32.const 0
-    end
-   else
-    i32.const 0
-   end
-   if (result i32)
-    i32.const 1
-   else
-    local.get $0
-    if (result i32)
-     block $__inlined_func$~lib/rt/__instanceof12 (result i32)
-      local.get $0
-      i32.const 20
-      i32.sub
-      i32.load offset=12
-      local.tee $1
-      i32.const 11568
-      i32.load
-      i32.le_u
-      if
-       loop $do-continue|013
-        i32.const 1
-        local.get $1
-        i32.const 11
-        i32.eq
-        br_if $__inlined_func$~lib/rt/__instanceof12
-        drop
-        local.get $1
-        i32.const 3
-        i32.shl
-        i32.const 11572
-        i32.add
-        i32.load offset=4
-        local.tee $1
-        br_if $do-continue|013
-       end
-      end
-      i32.const 0
-     end
-    else
-     i32.const 0
-    end
-   end
-   i32.eqz
-   if
-    i32.const 4880
-    i32.const 1088
-    call $~lib/string/String#concat
-    i32.const 4768
-    call $~lib/string/String#concat
-    i32.const 5136
-    call $~lib/string/String#concat
-    i32.const 5184
-    call $~lib/string/String#concat
-    i32.const 3904
-    i32.const 3792
-    local.get $0
-    if (result i32)
-     block $__inlined_func$~lib/rt/__instanceof18 (result i32)
-      local.get $0
-      i32.const 20
-      i32.sub
-      i32.load offset=12
-      local.tee $1
-      i32.const 11568
-      i32.load
-      i32.le_u
-      if
-       loop $do-continue|019
-        i32.const 1
-        local.get $1
-        i32.const 11
-        i32.eq
-        br_if $__inlined_func$~lib/rt/__instanceof18
-        drop
-        local.get $1
-        i32.const 3
-        i32.shl
-        i32.const 11572
-        i32.add
-        i32.load offset=4
-        local.tee $1
-        br_if $do-continue|019
-       end
-      end
-      i32.const 0
-     end
-    else
-     i32.const 0
-    end
-    select
-    call $~lib/string/String#concat
-    i32.const 4256
-    i32.const 401
-    i32.const 5
-    call $~lib/builtins/abort
-    unreachable
-   end
-   i32.const 28
-   i32.const 27
-   call $~lib/rt/stub/__new
-   block $__inlined_func$~lib/rt/__instanceof21 (result i32)
-    local.get $0
-    local.tee $2
-    i32.const 20
-    i32.sub
-    i32.load offset=12
-    local.tee $0
-    i32.const 11568
-    i32.load
-    i32.le_u
-    if
-     loop $do-continue|022
-      i32.const 1
-      local.get $0
-      i32.const 11
-      i32.eq
-      br_if $__inlined_func$~lib/rt/__instanceof21
-      drop
-      local.get $0
-      i32.const 3
-      i32.shl
-      i32.const 11572
-      i32.add
-      i32.load offset=4
-      local.tee $0
-      br_if $do-continue|022
-     end
-    end
-    i32.const 0
-   end
-   i32.eqz
-   if
-    i32.const 2464
-    i32.const 4256
-    i32.const 418
-    i32.const 47
-    call $~lib/builtins/abort
-    unreachable
-   end
-   local.tee $0
-   local.get $2
-   i32.load
-   i32.const 5264
-   i32.const 5264
-   call $~lib/util/hash/HASH<~lib/string/String>
-   call $~lib/map/Map<~lib/string/String,~lib/assemblyscript-json/JSON/Value>#find
-   if (result i32)
-    local.get $2
-    i32.const 5264
-    call $~lib/near-sdk-bindgen/index/decode<~lib/string/String,~lib/assemblyscript-json/JSON/Obj>
-   else
-    i32.const 0
-   end
-   i32.store
-   local.get $0
-   local.get $2
-   i32.load
-   i32.const 5408
-   i32.const 5408
-   call $~lib/util/hash/HASH<~lib/string/String>
-   call $~lib/map/Map<~lib/string/String,~lib/assemblyscript-json/JSON/Value>#find
-   if (result i32)
-    local.get $2
-    i32.const 5408
-    call $~lib/near-sdk-bindgen/index/decode<~lib/string/String,~lib/assemblyscript-json/JSON/Obj>
-   else
-    i32.const 0
-   end
-   i32.store offset=4
-   local.get $0
-   local.get $2
-   i32.load
-   i32.const 5440
-   i32.const 5440
-   call $~lib/util/hash/HASH<~lib/string/String>
-   call $~lib/map/Map<~lib/string/String,~lib/assemblyscript-json/JSON/Value>#find
-   if (result i32)
-    local.get $2
-    i32.const 5440
-    call $~lib/near-sdk-bindgen/index/decode<~lib/string/String,~lib/assemblyscript-json/JSON/Obj>
-   else
-    i32.const 0
-   end
-   i32.store offset=8
-   local.get $0
-   local.get $2
-   i32.load
-   i32.const 5472
-   i32.const 5472
-   call $~lib/util/hash/HASH<~lib/string/String>
-   call $~lib/map/Map<~lib/string/String,~lib/assemblyscript-json/JSON/Value>#find
-   if (result i64)
-    local.get $2
-    local.tee $1
-    if (result i32)
-     block $__inlined_func$~lib/rt/__instanceof4 (result i32)
-      local.get $1
-      i32.const 20
-      i32.sub
-      i32.load offset=12
-      local.tee $3
-      i32.const 11568
-      i32.load
-      i32.le_u
-      if
-       loop $do-continue|05
-        i32.const 1
-        local.get $3
-        i32.const 11
-        i32.eq
-        br_if $__inlined_func$~lib/rt/__instanceof4
-        drop
-        local.get $3
-        i32.const 3
-        i32.shl
-        i32.const 11572
-        i32.add
-        i32.load offset=4
-        local.tee $3
-        br_if $do-continue|05
-       end
-      end
-      i32.const 0
-     end
-    else
-     i32.const 0
-    end
-    if (result i32)
-     i32.const 5472
-     i32.const 1088
-     call $~lib/string/String.__eq
-     i32.eqz
-    else
-     i32.const 0
-    end
-    if
-     block $__inlined_func$~lib/rt/__instanceof06 (result i32)
-      local.get $1
-      i32.const 20
-      i32.sub
-      i32.load offset=12
-      local.tee $3
-      i32.const 11568
-      i32.load
-      i32.le_u
-      if
-       loop $do-continue|017
-        i32.const 1
-        local.get $3
-        i32.const 11
-        i32.eq
-        br_if $__inlined_func$~lib/rt/__instanceof06
-        drop
-        local.get $3
-        i32.const 3
-        i32.shl
-        i32.const 11572
-        i32.add
-        i32.load offset=4
-        local.tee $3
-        br_if $do-continue|017
-       end
-      end
-      i32.const 0
-     end
-     i32.eqz
-     br_if $folding-inner0
-     local.get $1
-     i32.const 5472
-     call $~lib/assemblyscript-json/JSON/Obj#get
-     local.tee $1
-     i32.eqz
-     if
-      i32.const 4496
-      i32.const 5504
-      call $~lib/string/String#concat
-      i32.const 4672
-      call $~lib/string/String#concat
-      i32.const 4256
-      i32.const 323
-      i32.const 9
-      call $~lib/builtins/abort
-      unreachable
-     end
-    end
-    local.get $1
-    if (result i32)
-     block $__inlined_func$~lib/rt/__instanceof5 (result i32)
-      local.get $1
-      i32.const 20
-      i32.sub
-      i32.load offset=12
-      local.tee $3
-      i32.const 11568
-      i32.load
-      i32.le_u
-      if
-       loop $do-continue|06
-        i32.const 1
-        local.get $3
-        i32.const 21
-        i32.eq
-        br_if $__inlined_func$~lib/rt/__instanceof5
-        drop
-        local.get $3
-        i32.const 3
-        i32.shl
-        i32.const 11572
-        i32.add
-        i32.load offset=4
-        local.tee $3
-        br_if $do-continue|06
-       end
-      end
-      i32.const 0
-     end
-    else
-     i32.const 0
-    end
-    i32.eqz
-    if
-     i32.const 4880
-     i32.const 5472
-     call $~lib/string/String#concat
-     i32.const 4768
-     call $~lib/string/String#concat
-     i32.const 5504
-     call $~lib/string/String#concat
-     i32.const 5536
-     call $~lib/string/String#concat
-     i32.const 4256
-     i32.const 346
-     i32.const 7
-     call $~lib/builtins/abort
-     unreachable
-    end
-    block $__inlined_func$~lib/rt/__instanceof11 (result i32)
-     local.get $1
-     i32.const 20
-     i32.sub
-     i32.load offset=12
-     local.tee $3
-     i32.const 11568
-     i32.load
-     i32.le_u
-     if
-      loop $do-continue|012
-       i32.const 1
-       local.get $3
-       i32.const 21
-       i32.eq
-       br_if $__inlined_func$~lib/rt/__instanceof11
-       drop
-       local.get $3
-       i32.const 3
-       i32.shl
-       i32.const 11572
-       i32.add
-       i32.load offset=4
-       local.tee $3
-       br_if $do-continue|012
-      end
-     end
-     i32.const 0
-    end
-    i32.eqz
-    if
-     i32.const 2464
-     i32.const 4256
-     i32.const 354
-     i32.const 28
-     call $~lib/builtins/abort
-     unreachable
-    end
-    local.get $1
-    i32.load
-    call $~lib/util/string/strtol<i64>
-   else
-    i64.const 0
-   end
-   i64.store offset=16
-   local.get $0
-   local.get $2
-   i32.load
-   i32.const 5696
-   i32.const 5696
-   call $~lib/util/hash/HASH<~lib/string/String>
-   call $~lib/map/Map<~lib/string/String,~lib/assemblyscript-json/JSON/Value>#find
-   if (result i32)
-    local.get $2
-    i32.const 5696
-    call $~lib/near-sdk-bindgen/index/decode<~lib/as-bignum/integer/safe/u128/u128,~lib/assemblyscript-json/JSON/Obj>
-   else
-    i32.const 0
-   end
-   i32.store offset=24
-   local.get $0
-   return
-  end
-  i32.const 2464
-  i32.const 4256
-  i32.const 310
-  i32.const 37
-  call $~lib/builtins/abort
-  unreachable
- )
- (func $~lib/near-sdk-bindgen/index/decode<~lib/array/Array<assembly/multicall/model/ContractCall>,~lib/assemblyscript-json/JSON/Value> (param $0 i32) (result i32)
-  (local $1 i32)
-  (local $2 i32)
-  (local $3 i32)
   local.get $0
   if (result i32)
    block $__inlined_func$~lib/rt/__instanceof (result i32)
@@ -8285,21 +8019,21 @@
     i32.sub
     i32.load offset=12
     local.tee $1
-    i32.const 11568
+    i32.const 15440
     i32.load
     i32.le_u
     if
      loop $do-continue|0
       i32.const 1
       local.get $1
-      i32.const 11
+      i32.const 22
       i32.eq
       br_if $__inlined_func$~lib/rt/__instanceof
       drop
       local.get $1
       i32.const 3
       i32.shl
-      i32.const 11572
+      i32.const 15444
       i32.add
       i32.load offset=4
       local.tee $1
@@ -8312,8 +8046,8 @@
    i32.const 0
   end
   if (result i32)
-   i32.const 1088
-   i32.const 1088
+   i32.const 1552
+   i32.const 1552
    call $~lib/string/String.__eq
    i32.eqz
   else
@@ -8326,21 +8060,21 @@
     i32.sub
     i32.load offset=12
     local.tee $1
-    i32.const 11568
+    i32.const 15440
     i32.load
     i32.le_u
     if
      loop $do-continue|01
       i32.const 1
       local.get $1
-      i32.const 11
+      i32.const 22
       i32.eq
       br_if $__inlined_func$~lib/rt/__instanceof0
       drop
       local.get $1
       i32.const 3
       i32.shl
-      i32.const 11572
+      i32.const 15444
       i32.add
       i32.load offset=4
       local.tee $1
@@ -8351,15 +8085,15 @@
    end
    i32.eqz
    if
-    i32.const 2464
-    i32.const 4256
+    i32.const 2672
+    i32.const 4464
     i32.const 310
     i32.const 37
     call $~lib/builtins/abort
     unreachable
    end
    local.get $0
-   i32.const 1088
+   i32.const 1552
    call $~lib/assemblyscript-json/JSON/Obj#get
    local.tee $0
    i32.eqz
@@ -8376,21 +8110,385 @@
     i32.sub
     i32.load offset=12
     local.tee $1
-    i32.const 11568
+    i32.const 15440
     i32.load
     i32.le_u
     if
      loop $do-continue|04
       i32.const 1
       local.get $1
-      i32.const 26
+      i32.const 37
       i32.eq
       br_if $__inlined_func$~lib/rt/__instanceof3
       drop
       local.get $1
       i32.const 3
       i32.shl
-      i32.const 11572
+      i32.const 15444
+      i32.add
+      i32.load offset=4
+      local.tee $1
+      br_if $do-continue|04
+     end
+    end
+    i32.const 0
+   end
+  else
+   i32.const 0
+  end
+  if
+   i32.const 0
+   return
+  end
+  local.get $0
+  if (result i32)
+   block $__inlined_func$~lib/rt/__instanceof10 (result i32)
+    local.get $0
+    i32.const 20
+    i32.sub
+    i32.load offset=12
+    local.tee $1
+    i32.const 15440
+    i32.load
+    i32.le_u
+    if
+     loop $do-continue|011
+      i32.const 1
+      local.get $1
+      i32.const 22
+      i32.eq
+      br_if $__inlined_func$~lib/rt/__instanceof10
+      drop
+      local.get $1
+      i32.const 3
+      i32.shl
+      i32.const 15444
+      i32.add
+      i32.load offset=4
+      local.tee $1
+      br_if $do-continue|011
+     end
+    end
+    i32.const 0
+   end
+  else
+   i32.const 0
+  end
+  if (result i32)
+   i32.const 1
+  else
+   local.get $0
+   if (result i32)
+    block $__inlined_func$~lib/rt/__instanceof12 (result i32)
+     local.get $0
+     i32.const 20
+     i32.sub
+     i32.load offset=12
+     local.tee $1
+     i32.const 15440
+     i32.load
+     i32.le_u
+     if
+      loop $do-continue|013
+       i32.const 1
+       local.get $1
+       i32.const 22
+       i32.eq
+       br_if $__inlined_func$~lib/rt/__instanceof12
+       drop
+       local.get $1
+       i32.const 3
+       i32.shl
+       i32.const 15444
+       i32.add
+       i32.load offset=4
+       local.tee $1
+       br_if $do-continue|013
+      end
+     end
+     i32.const 0
+    end
+   else
+    i32.const 0
+   end
+  end
+  i32.eqz
+  if
+   i32.const 5072
+   i32.const 1552
+   call $~lib/string/String#concat
+   i32.const 4960
+   call $~lib/string/String#concat
+   i32.const 5776
+   call $~lib/string/String#concat
+   i32.const 5376
+   call $~lib/string/String#concat
+   i32.const 4112
+   i32.const 4000
+   local.get $0
+   if (result i32)
+    block $__inlined_func$~lib/rt/__instanceof18 (result i32)
+     local.get $0
+     i32.const 20
+     i32.sub
+     i32.load offset=12
+     local.tee $1
+     i32.const 15440
+     i32.load
+     i32.le_u
+     if
+      loop $do-continue|019
+       i32.const 1
+       local.get $1
+       i32.const 22
+       i32.eq
+       br_if $__inlined_func$~lib/rt/__instanceof18
+       drop
+       local.get $1
+       i32.const 3
+       i32.shl
+       i32.const 15444
+       i32.add
+       i32.load offset=4
+       local.tee $1
+       br_if $do-continue|019
+      end
+     end
+     i32.const 0
+    end
+   else
+    i32.const 0
+   end
+   select
+   call $~lib/string/String#concat
+   i32.const 4464
+   i32.const 401
+   i32.const 5
+   call $~lib/builtins/abort
+   unreachable
+  end
+  i32.const 20
+  i32.const 14
+  call $~lib/rt/stub/__new
+  block $__inlined_func$~lib/rt/__instanceof21 (result i32)
+   local.get $0
+   local.tee $2
+   i32.const 20
+   i32.sub
+   i32.load offset=12
+   local.tee $0
+   i32.const 15440
+   i32.load
+   i32.le_u
+   if
+    loop $do-continue|022
+     i32.const 1
+     local.get $0
+     i32.const 22
+     i32.eq
+     br_if $__inlined_func$~lib/rt/__instanceof21
+     drop
+     local.get $0
+     i32.const 3
+     i32.shl
+     i32.const 15444
+     i32.add
+     i32.load offset=4
+     local.tee $0
+     br_if $do-continue|022
+    end
+   end
+   i32.const 0
+  end
+  i32.eqz
+  if
+   i32.const 2672
+   i32.const 4464
+   i32.const 418
+   i32.const 47
+   call $~lib/builtins/abort
+   unreachable
+  end
+  local.tee $0
+  local.get $2
+  i32.load
+  i32.const 5824
+  i32.const 5824
+  call $~lib/util/hash/HASH<~lib/string/String>
+  call $~lib/map/Map<~lib/string/String,~lib/assemblyscript-json/JSON/Value>#find
+  if (result i32)
+   local.get $2
+   i32.const 5824
+   call $~lib/near-sdk-bindgen/index/decode<~lib/string/String,~lib/assemblyscript-json/JSON/Obj>
+  else
+   i32.const 0
+  end
+  i32.store
+  local.get $0
+  local.get $2
+  i32.load
+  i32.const 5856
+  i32.const 5856
+  call $~lib/util/hash/HASH<~lib/string/String>
+  call $~lib/map/Map<~lib/string/String,~lib/assemblyscript-json/JSON/Value>#find
+  if (result i32)
+   local.get $2
+   i32.const 5856
+   call $~lib/near-sdk-bindgen/index/decode<~lib/string/String,~lib/assemblyscript-json/JSON/Obj>
+  else
+   i32.const 0
+  end
+  i32.store offset=4
+  local.get $0
+  local.get $2
+  i32.load
+  i32.const 5888
+  i32.const 5888
+  call $~lib/util/hash/HASH<~lib/string/String>
+  call $~lib/map/Map<~lib/string/String,~lib/assemblyscript-json/JSON/Value>#find
+  if (result i64)
+   local.get $2
+   i32.const 5888
+   call $~lib/near-sdk-bindgen/index/decode<u64,~lib/assemblyscript-json/JSON/Obj>
+  else
+   i64.const 0
+  end
+  i64.store offset=8
+  local.get $0
+  local.get $2
+  i32.load
+  i32.const 6112
+  i32.const 6112
+  call $~lib/util/hash/HASH<~lib/string/String>
+  call $~lib/map/Map<~lib/string/String,~lib/assemblyscript-json/JSON/Value>#find
+  if (result i32)
+   local.get $2
+   i32.const 6112
+   call $~lib/near-sdk-bindgen/index/decode<~lib/as-bignum/integer/safe/u128/u128,~lib/assemblyscript-json/JSON/Obj>
+  else
+   i32.const 0
+  end
+  i32.store offset=16
+  local.get $0
+ )
+ (func $~lib/near-sdk-bindgen/index/decode<~lib/array/Array<assembly/multicall/model/FunctionCall>,~lib/assemblyscript-json/JSON/Obj> (param $0 i32) (result i32)
+  (local $1 i32)
+  (local $2 i32)
+  (local $3 i32)
+  local.get $0
+  if (result i32)
+   block $__inlined_func$~lib/rt/__instanceof (result i32)
+    local.get $0
+    i32.const 20
+    i32.sub
+    i32.load offset=12
+    local.tee $1
+    i32.const 15440
+    i32.load
+    i32.le_u
+    if
+     loop $do-continue|0
+      i32.const 1
+      local.get $1
+      i32.const 22
+      i32.eq
+      br_if $__inlined_func$~lib/rt/__instanceof
+      drop
+      local.get $1
+      i32.const 3
+      i32.shl
+      i32.const 15444
+      i32.add
+      i32.load offset=4
+      local.tee $1
+      br_if $do-continue|0
+     end
+    end
+    i32.const 0
+   end
+  else
+   i32.const 0
+  end
+  if (result i32)
+   i32.const 5616
+   i32.const 1552
+   call $~lib/string/String.__eq
+   i32.eqz
+  else
+   i32.const 0
+  end
+  if
+   block $__inlined_func$~lib/rt/__instanceof0 (result i32)
+    local.get $0
+    i32.const 20
+    i32.sub
+    i32.load offset=12
+    local.tee $1
+    i32.const 15440
+    i32.load
+    i32.le_u
+    if
+     loop $do-continue|01
+      i32.const 1
+      local.get $1
+      i32.const 22
+      i32.eq
+      br_if $__inlined_func$~lib/rt/__instanceof0
+      drop
+      local.get $1
+      i32.const 3
+      i32.shl
+      i32.const 15444
+      i32.add
+      i32.load offset=4
+      local.tee $1
+      br_if $do-continue|01
+     end
+    end
+    i32.const 0
+   end
+   i32.eqz
+   if
+    i32.const 2672
+    i32.const 4464
+    i32.const 310
+    i32.const 37
+    call $~lib/builtins/abort
+    unreachable
+   end
+   local.get $0
+   i32.const 5616
+   call $~lib/assemblyscript-json/JSON/Obj#get
+   local.tee $0
+   i32.eqz
+   if
+    local.get $0
+    return
+   end
+  end
+  local.get $0
+  if (result i32)
+   block $__inlined_func$~lib/rt/__instanceof3 (result i32)
+    local.get $0
+    i32.const 20
+    i32.sub
+    i32.load offset=12
+    local.tee $1
+    i32.const 15440
+    i32.load
+    i32.le_u
+    if
+     loop $do-continue|04
+      i32.const 1
+      local.get $1
+      i32.const 37
+      i32.eq
+      br_if $__inlined_func$~lib/rt/__instanceof3
+      drop
+      local.get $1
+      i32.const 3
+      i32.shl
+      i32.const 15444
       i32.add
       i32.load offset=4
       local.tee $1
@@ -8416,21 +8514,21 @@
     i32.sub
     i32.load offset=12
     local.tee $2
-    i32.const 11568
+    i32.const 15440
     i32.load
     i32.le_u
     if
      loop $do-continue|02
       i32.const 1
       local.get $2
-      i32.const 19
+      i32.const 30
       i32.eq
       br_if $__inlined_func$~lib/rt/__instanceof1
       drop
       local.get $2
       i32.const 3
       i32.shl
-      i32.const 11572
+      i32.const 15444
       i32.add
       i32.load offset=4
       local.tee $2
@@ -8444,19 +8542,19 @@
   end
   i32.eqz
   if
-   i32.const 4880
-   i32.const 1088
+   i32.const 5072
+   i32.const 5616
    call $~lib/string/String#concat
-   i32.const 4944
+   i32.const 5136
    call $~lib/string/String#concat
-   i32.const 4256
+   i32.const 4464
    i32.const 226
    i32.const 3
    call $~lib/builtins/abort
    unreachable
   end
   i32.const 16
-  i32.const 28
+  i32.const 15
   call $~lib/rt/stub/__new
   local.tee $3
   i32.const 0
@@ -8494,21 +8592,21 @@
    i32.sub
    i32.load offset=12
    local.tee $2
-   i32.const 11568
+   i32.const 15440
    i32.load
    i32.le_u
    if
     loop $do-continue|024
      i32.const 1
      local.get $2
-     i32.const 19
+     i32.const 30
      i32.eq
      br_if $__inlined_func$~lib/rt/__instanceof13
      drop
      local.get $2
      i32.const 3
      i32.shl
-     i32.const 11572
+     i32.const 15444
      i32.add
      i32.load offset=4
      local.tee $2
@@ -8519,8 +8617,8 @@
   end
   i32.eqz
   if
-   i32.const 2464
-   i32.const 4256
+   i32.const 2672
+   i32.const 4464
    i32.const 231
    i32.const 26
    call $~lib/builtins/abort
@@ -8539,7 +8637,7 @@
     local.get $0
     local.get $1
     call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#__get
-    call $~lib/near-sdk-bindgen/index/decode<assembly/multicall/model/ContractCall,~lib/assemblyscript-json/JSON/Value>
+    call $~lib/near-sdk-bindgen/index/decode<assembly/multicall/model/FunctionCall,~lib/assemblyscript-json/JSON/Value>
     call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#push
     local.get $1
     i32.const 1
@@ -8550,10 +8648,9 @@
   end
   local.get $3
  )
- (func $~lib/near-sdk-bindgen/index/decode<~lib/array/Array<~lib/array/Array<assembly/multicall/model/ContractCall>>,~lib/assemblyscript-json/JSON/Obj> (param $0 i32) (result i32)
+ (func $~lib/near-sdk-bindgen/index/decode<assembly/multicall/model/BatchCall,~lib/assemblyscript-json/JSON/Value> (param $0 i32) (result i32)
   (local $1 i32)
   (local $2 i32)
-  (local $3 i32)
   local.get $0
   if (result i32)
    block $__inlined_func$~lib/rt/__instanceof (result i32)
@@ -8562,21 +8659,21 @@
     i32.sub
     i32.load offset=12
     local.tee $1
-    i32.const 11568
+    i32.const 15440
     i32.load
     i32.le_u
     if
      loop $do-continue|0
       i32.const 1
       local.get $1
-      i32.const 11
+      i32.const 22
       i32.eq
       br_if $__inlined_func$~lib/rt/__instanceof
       drop
       local.get $1
       i32.const 3
       i32.shl
-      i32.const 11572
+      i32.const 15444
       i32.add
       i32.load offset=4
       local.tee $1
@@ -8589,8 +8686,8 @@
    i32.const 0
   end
   if (result i32)
-   i32.const 4336
-   i32.const 1088
+   i32.const 1552
+   i32.const 1552
    call $~lib/string/String.__eq
    i32.eqz
   else
@@ -8603,21 +8700,21 @@
     i32.sub
     i32.load offset=12
     local.tee $1
-    i32.const 11568
+    i32.const 15440
     i32.load
     i32.le_u
     if
      loop $do-continue|01
       i32.const 1
       local.get $1
-      i32.const 11
+      i32.const 22
       i32.eq
       br_if $__inlined_func$~lib/rt/__instanceof0
       drop
       local.get $1
       i32.const 3
       i32.shl
-      i32.const 11572
+      i32.const 15444
       i32.add
       i32.load offset=4
       local.tee $1
@@ -8628,15 +8725,15 @@
    end
    i32.eqz
    if
-    i32.const 2464
-    i32.const 4256
+    i32.const 2672
+    i32.const 4464
     i32.const 310
     i32.const 37
     call $~lib/builtins/abort
     unreachable
    end
    local.get $0
-   i32.const 4336
+   i32.const 1552
    call $~lib/assemblyscript-json/JSON/Obj#get
    local.tee $0
    i32.eqz
@@ -8653,21 +8750,354 @@
     i32.sub
     i32.load offset=12
     local.tee $1
-    i32.const 11568
+    i32.const 15440
     i32.load
     i32.le_u
     if
      loop $do-continue|04
       i32.const 1
       local.get $1
-      i32.const 26
+      i32.const 37
       i32.eq
       br_if $__inlined_func$~lib/rt/__instanceof3
       drop
       local.get $1
       i32.const 3
       i32.shl
-      i32.const 11572
+      i32.const 15444
+      i32.add
+      i32.load offset=4
+      local.tee $1
+      br_if $do-continue|04
+     end
+    end
+    i32.const 0
+   end
+  else
+   i32.const 0
+  end
+  if
+   i32.const 0
+   return
+  end
+  local.get $0
+  if (result i32)
+   block $__inlined_func$~lib/rt/__instanceof10 (result i32)
+    local.get $0
+    i32.const 20
+    i32.sub
+    i32.load offset=12
+    local.tee $1
+    i32.const 15440
+    i32.load
+    i32.le_u
+    if
+     loop $do-continue|011
+      i32.const 1
+      local.get $1
+      i32.const 22
+      i32.eq
+      br_if $__inlined_func$~lib/rt/__instanceof10
+      drop
+      local.get $1
+      i32.const 3
+      i32.shl
+      i32.const 15444
+      i32.add
+      i32.load offset=4
+      local.tee $1
+      br_if $do-continue|011
+     end
+    end
+    i32.const 0
+   end
+  else
+   i32.const 0
+  end
+  if (result i32)
+   i32.const 1
+  else
+   local.get $0
+   if (result i32)
+    block $__inlined_func$~lib/rt/__instanceof12 (result i32)
+     local.get $0
+     i32.const 20
+     i32.sub
+     i32.load offset=12
+     local.tee $1
+     i32.const 15440
+     i32.load
+     i32.le_u
+     if
+      loop $do-continue|013
+       i32.const 1
+       local.get $1
+       i32.const 22
+       i32.eq
+       br_if $__inlined_func$~lib/rt/__instanceof12
+       drop
+       local.get $1
+       i32.const 3
+       i32.shl
+       i32.const 15444
+       i32.add
+       i32.load offset=4
+       local.tee $1
+       br_if $do-continue|013
+      end
+     end
+     i32.const 0
+    end
+   else
+    i32.const 0
+   end
+  end
+  i32.eqz
+  if
+   i32.const 5072
+   i32.const 1552
+   call $~lib/string/String#concat
+   i32.const 4960
+   call $~lib/string/String#concat
+   i32.const 5328
+   call $~lib/string/String#concat
+   i32.const 5376
+   call $~lib/string/String#concat
+   i32.const 4112
+   i32.const 4000
+   local.get $0
+   if (result i32)
+    block $__inlined_func$~lib/rt/__instanceof18 (result i32)
+     local.get $0
+     i32.const 20
+     i32.sub
+     i32.load offset=12
+     local.tee $2
+     i32.const 15440
+     i32.load
+     i32.le_u
+     if
+      loop $do-continue|019
+       i32.const 1
+       local.get $2
+       i32.const 22
+       i32.eq
+       br_if $__inlined_func$~lib/rt/__instanceof18
+       drop
+       local.get $2
+       i32.const 3
+       i32.shl
+       i32.const 15444
+       i32.add
+       i32.load offset=4
+       local.tee $2
+       br_if $do-continue|019
+      end
+     end
+     i32.const 0
+    end
+   else
+    i32.const 0
+   end
+   select
+   call $~lib/string/String#concat
+   i32.const 4464
+   i32.const 401
+   i32.const 5
+   call $~lib/builtins/abort
+   unreachable
+  end
+  i32.const 8
+  i32.const 13
+  call $~lib/rt/stub/__new
+  block $__inlined_func$~lib/rt/__instanceof21 (result i32)
+   local.get $0
+   local.tee $2
+   i32.const 20
+   i32.sub
+   i32.load offset=12
+   local.tee $0
+   i32.const 15440
+   i32.load
+   i32.le_u
+   if
+    loop $do-continue|022
+     i32.const 1
+     local.get $0
+     i32.const 22
+     i32.eq
+     br_if $__inlined_func$~lib/rt/__instanceof21
+     drop
+     local.get $0
+     i32.const 3
+     i32.shl
+     i32.const 15444
+     i32.add
+     i32.load offset=4
+     local.tee $0
+     br_if $do-continue|022
+    end
+   end
+   i32.const 0
+  end
+  i32.eqz
+  if
+   i32.const 2672
+   i32.const 4464
+   i32.const 418
+   i32.const 47
+   call $~lib/builtins/abort
+   unreachable
+  end
+  local.tee $0
+  local.get $2
+  i32.load
+  i32.const 5456
+  i32.const 5456
+  call $~lib/util/hash/HASH<~lib/string/String>
+  call $~lib/map/Map<~lib/string/String,~lib/assemblyscript-json/JSON/Value>#find
+  if (result i32)
+   local.get $2
+   i32.const 5456
+   call $~lib/near-sdk-bindgen/index/decode<~lib/string/String,~lib/assemblyscript-json/JSON/Obj>
+  else
+   i32.const 0
+  end
+  i32.store
+  local.get $0
+  local.get $2
+  i32.load
+  i32.const 5616
+  i32.const 5616
+  call $~lib/util/hash/HASH<~lib/string/String>
+  call $~lib/map/Map<~lib/string/String,~lib/assemblyscript-json/JSON/Value>#find
+  if (result i32)
+   local.get $2
+   call $~lib/near-sdk-bindgen/index/decode<~lib/array/Array<assembly/multicall/model/FunctionCall>,~lib/assemblyscript-json/JSON/Obj>
+  else
+   i32.const 0
+  end
+  i32.store offset=4
+  local.get $0
+ )
+ (func $~lib/near-sdk-bindgen/index/decode<~lib/array/Array<assembly/multicall/model/BatchCall>,~lib/assemblyscript-json/JSON/Value> (param $0 i32) (result i32)
+  (local $1 i32)
+  (local $2 i32)
+  (local $3 i32)
+  local.get $0
+  if (result i32)
+   block $__inlined_func$~lib/rt/__instanceof (result i32)
+    local.get $0
+    i32.const 20
+    i32.sub
+    i32.load offset=12
+    local.tee $1
+    i32.const 15440
+    i32.load
+    i32.le_u
+    if
+     loop $do-continue|0
+      i32.const 1
+      local.get $1
+      i32.const 22
+      i32.eq
+      br_if $__inlined_func$~lib/rt/__instanceof
+      drop
+      local.get $1
+      i32.const 3
+      i32.shl
+      i32.const 15444
+      i32.add
+      i32.load offset=4
+      local.tee $1
+      br_if $do-continue|0
+     end
+    end
+    i32.const 0
+   end
+  else
+   i32.const 0
+  end
+  if (result i32)
+   i32.const 1552
+   i32.const 1552
+   call $~lib/string/String.__eq
+   i32.eqz
+  else
+   i32.const 0
+  end
+  if
+   block $__inlined_func$~lib/rt/__instanceof0 (result i32)
+    local.get $0
+    i32.const 20
+    i32.sub
+    i32.load offset=12
+    local.tee $1
+    i32.const 15440
+    i32.load
+    i32.le_u
+    if
+     loop $do-continue|01
+      i32.const 1
+      local.get $1
+      i32.const 22
+      i32.eq
+      br_if $__inlined_func$~lib/rt/__instanceof0
+      drop
+      local.get $1
+      i32.const 3
+      i32.shl
+      i32.const 15444
+      i32.add
+      i32.load offset=4
+      local.tee $1
+      br_if $do-continue|01
+     end
+    end
+    i32.const 0
+   end
+   i32.eqz
+   if
+    i32.const 2672
+    i32.const 4464
+    i32.const 310
+    i32.const 37
+    call $~lib/builtins/abort
+    unreachable
+   end
+   local.get $0
+   i32.const 1552
+   call $~lib/assemblyscript-json/JSON/Obj#get
+   local.tee $0
+   i32.eqz
+   if
+    local.get $0
+    return
+   end
+  end
+  local.get $0
+  if (result i32)
+   block $__inlined_func$~lib/rt/__instanceof3 (result i32)
+    local.get $0
+    i32.const 20
+    i32.sub
+    i32.load offset=12
+    local.tee $1
+    i32.const 15440
+    i32.load
+    i32.le_u
+    if
+     loop $do-continue|04
+      i32.const 1
+      local.get $1
+      i32.const 37
+      i32.eq
+      br_if $__inlined_func$~lib/rt/__instanceof3
+      drop
+      local.get $1
+      i32.const 3
+      i32.shl
+      i32.const 15444
       i32.add
       i32.load offset=4
       local.tee $1
@@ -8693,21 +9123,21 @@
     i32.sub
     i32.load offset=12
     local.tee $2
-    i32.const 11568
+    i32.const 15440
     i32.load
     i32.le_u
     if
      loop $do-continue|02
       i32.const 1
       local.get $2
-      i32.const 19
+      i32.const 30
       i32.eq
       br_if $__inlined_func$~lib/rt/__instanceof1
       drop
       local.get $2
       i32.const 3
       i32.shl
-      i32.const 11572
+      i32.const 15444
       i32.add
       i32.load offset=4
       local.tee $2
@@ -8721,44 +9151,74 @@
   end
   i32.eqz
   if
-   i32.const 4880
-   i32.const 4336
+   i32.const 5072
+   i32.const 1552
    call $~lib/string/String#concat
-   i32.const 4944
+   i32.const 5136
    call $~lib/string/String#concat
-   i32.const 4256
+   i32.const 4464
    i32.const 226
    i32.const 3
    call $~lib/builtins/abort
    unreachable
   end
+  i32.const 16
+  i32.const 16
+  call $~lib/rt/stub/__new
+  local.tee $3
   i32.const 0
-  call $~lib/array/Array<~lib/array/Array<assembly/multicall/model/ContractCall>>#constructor
-  local.set $2
+  i32.store
+  local.get $3
+  i32.const 0
+  i32.store offset=4
+  local.get $3
+  i32.const 0
+  i32.store offset=8
+  local.get $3
+  i32.const 0
+  i32.store offset=12
+  i32.const 32
+  i32.const 0
+  call $~lib/rt/stub/__new
+  local.tee $2
+  i32.const 32
+  call $~lib/memory/memory.fill
+  local.get $3
+  local.get $2
+  i32.store
+  local.get $3
+  local.get $2
+  i32.store offset=4
+  local.get $3
+  i32.const 32
+  i32.store offset=8
+  local.get $3
+  i32.const 0
+  i32.store offset=12
   block $__inlined_func$~lib/rt/__instanceof13 (result i32)
    local.get $0
    i32.const 20
    i32.sub
    i32.load offset=12
-   local.tee $3
-   i32.const 11568
+   local.tee $2
+   i32.const 15440
    i32.load
    i32.le_u
    if
     loop $do-continue|024
      i32.const 1
-     local.get $3
-     i32.const 19
+     local.get $2
+     i32.const 30
      i32.eq
      br_if $__inlined_func$~lib/rt/__instanceof13
      drop
-     local.get $3
+     local.get $2
      i32.const 3
      i32.shl
-     i32.const 11572
+     i32.const 15444
      i32.add
      i32.load offset=4
-     local.tee $3
+     local.tee $2
      br_if $do-continue|024
     end
    end
@@ -8766,8 +9226,8 @@
   end
   i32.eqz
   if
-   i32.const 2464
-   i32.const 4256
+   i32.const 2672
+   i32.const 4464
    i32.const 231
    i32.const 26
    call $~lib/builtins/abort
@@ -8782,11 +9242,11 @@
    i32.load offset=12
    i32.lt_s
    if
-    local.get $2
+    local.get $3
     local.get $0
     local.get $1
     call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#__get
-    call $~lib/near-sdk-bindgen/index/decode<~lib/array/Array<assembly/multicall/model/ContractCall>,~lib/assemblyscript-json/JSON/Value>
+    call $~lib/near-sdk-bindgen/index/decode<assembly/multicall/model/BatchCall,~lib/assemblyscript-json/JSON/Value>
     call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#push
     local.get $1
     i32.const 1
@@ -8795,7 +9255,297 @@
     br $for-loop|0
    end
   end
+  local.get $3
+ )
+ (func $~lib/near-sdk-bindgen/index/decode<~lib/array/Array<~lib/array/Array<assembly/multicall/model/BatchCall>>,~lib/assemblyscript-json/JSON/Obj> (param $0 i32) (param $1 i32) (result i32)
+  (local $2 i32)
+  (local $3 i32)
+  local.get $0
+  if (result i32)
+   block $__inlined_func$~lib/rt/__instanceof (result i32)
+    local.get $0
+    i32.const 20
+    i32.sub
+    i32.load offset=12
+    local.tee $2
+    i32.const 15440
+    i32.load
+    i32.le_u
+    if
+     loop $do-continue|0
+      i32.const 1
+      local.get $2
+      i32.const 22
+      i32.eq
+      br_if $__inlined_func$~lib/rt/__instanceof
+      drop
+      local.get $2
+      i32.const 3
+      i32.shl
+      i32.const 15444
+      i32.add
+      i32.load offset=4
+      local.tee $2
+      br_if $do-continue|0
+     end
+    end
+    i32.const 0
+   end
+  else
+   i32.const 0
+  end
+  if (result i32)
+   local.get $1
+   i32.const 1552
+   call $~lib/string/String.__eq
+   i32.eqz
+  else
+   i32.const 0
+  end
+  if
+   block $__inlined_func$~lib/rt/__instanceof0 (result i32)
+    local.get $0
+    i32.const 20
+    i32.sub
+    i32.load offset=12
+    local.tee $2
+    i32.const 15440
+    i32.load
+    i32.le_u
+    if
+     loop $do-continue|01
+      i32.const 1
+      local.get $2
+      i32.const 22
+      i32.eq
+      br_if $__inlined_func$~lib/rt/__instanceof0
+      drop
+      local.get $2
+      i32.const 3
+      i32.shl
+      i32.const 15444
+      i32.add
+      i32.load offset=4
+      local.tee $2
+      br_if $do-continue|01
+     end
+    end
+    i32.const 0
+   end
+   i32.eqz
+   if
+    i32.const 2672
+    i32.const 4464
+    i32.const 310
+    i32.const 37
+    call $~lib/builtins/abort
+    unreachable
+   end
+   local.get $0
+   local.get $1
+   call $~lib/assemblyscript-json/JSON/Obj#get
+   local.tee $0
+   i32.eqz
+   if
+    local.get $0
+    return
+   end
+  end
+  local.get $0
+  if (result i32)
+   block $__inlined_func$~lib/rt/__instanceof3 (result i32)
+    local.get $0
+    i32.const 20
+    i32.sub
+    i32.load offset=12
+    local.tee $2
+    i32.const 15440
+    i32.load
+    i32.le_u
+    if
+     loop $do-continue|04
+      i32.const 1
+      local.get $2
+      i32.const 37
+      i32.eq
+      br_if $__inlined_func$~lib/rt/__instanceof3
+      drop
+      local.get $2
+      i32.const 3
+      i32.shl
+      i32.const 15444
+      i32.add
+      i32.load offset=4
+      local.tee $2
+      br_if $do-continue|04
+     end
+    end
+    i32.const 0
+   end
+  else
+   i32.const 0
+  end
+  if
+   i32.const 0
+   return
+  end
+  local.get $0
+  if (result i32)
+   block $__inlined_func$~lib/rt/__instanceof1 (result i32)
+    local.get $0
+    i32.const 20
+    i32.sub
+    i32.load offset=12
+    local.tee $2
+    i32.const 15440
+    i32.load
+    i32.le_u
+    if
+     loop $do-continue|02
+      i32.const 1
+      local.get $2
+      i32.const 30
+      i32.eq
+      br_if $__inlined_func$~lib/rt/__instanceof1
+      drop
+      local.get $2
+      i32.const 3
+      i32.shl
+      i32.const 15444
+      i32.add
+      i32.load offset=4
+      local.tee $2
+      br_if $do-continue|02
+     end
+    end
+    i32.const 0
+   end
+  else
+   i32.const 0
+  end
+  i32.eqz
+  if
+   i32.const 5072
+   local.get $1
+   call $~lib/string/String#concat
+   i32.const 5136
+   call $~lib/string/String#concat
+   i32.const 4464
+   i32.const 226
+   i32.const 3
+   call $~lib/builtins/abort
+   unreachable
+  end
+  i32.const 16
+  i32.const 17
+  call $~lib/rt/stub/__new
+  local.tee $2
+  i32.const 0
+  i32.store
   local.get $2
+  i32.const 0
+  i32.store offset=4
+  local.get $2
+  i32.const 0
+  i32.store offset=8
+  local.get $2
+  i32.const 0
+  i32.store offset=12
+  i32.const 32
+  i32.const 0
+  call $~lib/rt/stub/__new
+  local.tee $1
+  i32.const 32
+  call $~lib/memory/memory.fill
+  local.get $2
+  local.get $1
+  i32.store
+  local.get $2
+  local.get $1
+  i32.store offset=4
+  local.get $2
+  i32.const 32
+  i32.store offset=8
+  local.get $2
+  i32.const 0
+  i32.store offset=12
+  block $__inlined_func$~lib/rt/__instanceof13 (result i32)
+   local.get $0
+   i32.const 20
+   i32.sub
+   i32.load offset=12
+   local.tee $1
+   i32.const 15440
+   i32.load
+   i32.le_u
+   if
+    loop $do-continue|024
+     i32.const 1
+     local.get $1
+     i32.const 30
+     i32.eq
+     br_if $__inlined_func$~lib/rt/__instanceof13
+     drop
+     local.get $1
+     i32.const 3
+     i32.shl
+     i32.const 15444
+     i32.add
+     i32.load offset=4
+     local.tee $1
+     br_if $do-continue|024
+    end
+   end
+   i32.const 0
+  end
+  i32.eqz
+  if
+   i32.const 2672
+   i32.const 4464
+   i32.const 231
+   i32.const 26
+   call $~lib/builtins/abort
+   unreachable
+  end
+  local.get $0
+  i32.load
+  local.set $0
+  loop $for-loop|0
+   local.get $3
+   local.get $0
+   i32.load offset=12
+   i32.lt_s
+   if
+    local.get $2
+    local.get $0
+    local.get $3
+    call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#__get
+    call $~lib/near-sdk-bindgen/index/decode<~lib/array/Array<assembly/multicall/model/BatchCall>,~lib/assemblyscript-json/JSON/Value>
+    call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#push
+    local.get $3
+    i32.const 1
+    i32.add
+    local.set $3
+    br $for-loop|0
+   end
+  end
+  local.get $2
+ )
+ (func $~lib/near-sdk-bindgen/index/requireParameter<~lib/array/Array<~lib/array/Array<assembly/multicall/model/BatchCall>>> (param $0 i32) (result i32)
+  i32.const 6592
+  local.get $0
+  call $~lib/string/String#concat
+  i32.const 4960
+  call $~lib/string/String#concat
+  i32.const 4720
+  call $~lib/string/String#concat
+  i32.const 6640
+  call $~lib/string/String#concat
+  i32.const 4464
+  i32.const 33
+  i32.const 3
+  call $~lib/builtins/abort
+  unreachable
  )
  (func $~lib/near-sdk-core/util/util.read_register (result i32)
   (local $0 i32)
@@ -8805,7 +9555,7 @@
   local.set $0
   i64.const 0
   i32.const 12
-  i32.const 4
+  i32.const 7
   call $~lib/rt/stub/__new
   local.get $0
   call $~lib/arraybuffer/ArrayBufferView#constructor
@@ -8922,14 +9672,14 @@
   i32.const 0
   call $~lib/string/String.__eq
   if
-   i32.const 1088
+   i32.const 1552
    local.set $0
   else
    local.get $0
    i32.eqz
    if
-    i32.const 1952
-    i32.const 6304
+    i32.const 2160
+    i32.const 6720
     i32.const 93
     i32.const 34
     call $~lib/builtins/abort
@@ -8993,7 +9743,7 @@
   local.tee $3
   i32.eqz
   if
-   i32.const 1088
+   i32.const 1552
    return
   end
   i32.const 0
@@ -9047,7 +9797,7 @@
     i32.div_u
     i32.const 2
     i32.shl
-    i32.const 6972
+    i32.const 7388
     i32.add
     i64.load32_u
     local.get $3
@@ -9055,7 +9805,7 @@
     i32.rem_u
     i32.const 2
     i32.shl
-    i32.const 6972
+    i32.const 7388
     i32.add
     i64.load32_u
     i64.const 32
@@ -9082,7 +9832,7 @@
    i32.rem_u
    i32.const 2
    i32.shl
-   i32.const 6972
+   i32.const 7388
    i32.add
    i32.load
    i32.store
@@ -9105,7 +9855,7 @@
    local.get $1
    i32.const 2
    i32.shl
-   i32.const 6972
+   i32.const 7388
    i32.add
    i32.load
    i32.store
@@ -9130,7 +9880,7 @@
   local.get $0
   i32.eqz
   if
-   i32.const 6960
+   i32.const 7376
    return
   end
   i32.const 0
@@ -9215,7 +9965,7 @@
   (local $6 i32)
   local.get $0
   i32.load offset=4
-  i32.const 2736
+  i32.const 2944
   call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#push
   local.get $1
   i32.const 20
@@ -9256,14 +10006,14 @@
     if
      block $__inlined_func$~lib/string/String#charCodeAt1 (result i32)
       i32.const -1
-      i32.const 2732
+      i32.const 2940
       i32.load
       i32.const 1
       i32.shr_u
       i32.eqz
       br_if $__inlined_func$~lib/string/String#charCodeAt1
       drop
-      i32.const 2736
+      i32.const 2944
       i32.load16_u
      end
      local.get $3
@@ -9276,14 +10026,14 @@
     else
      block $__inlined_func$~lib/string/String#charCodeAt3 (result i32)
       i32.const -1
-      i32.const 2972
+      i32.const 3180
       i32.load
       i32.const 1
       i32.shr_u
       i32.eqz
       br_if $__inlined_func$~lib/string/String#charCodeAt3
       drop
-      i32.const 2976
+      i32.const 3184
       i32.load16_u
      end
      local.get $3
@@ -9305,14 +10055,14 @@
      local.set $5
      block $__inlined_func$~lib/string/String#charCodeAt5 (result i32)
       i32.const -1
-      i32.const 2732
+      i32.const 2940
       i32.load
       i32.const 1
       i32.shr_u
       i32.eqz
       br_if $__inlined_func$~lib/string/String#charCodeAt5
       drop
-      i32.const 2736
+      i32.const 2944
       i32.load16_u
      end
      local.get $3
@@ -9320,19 +10070,19 @@
      if
       local.get $0
       i32.load offset=4
-      i32.const 6480
+      i32.const 6896
       call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#push
      else
       block $__inlined_func$~lib/string/String#charCodeAt7 (result i32)
        i32.const -1
-       i32.const 2972
+       i32.const 3180
        i32.load
        i32.const 1
        i32.shr_u
        i32.eqz
        br_if $__inlined_func$~lib/string/String#charCodeAt7
        drop
-       i32.const 2976
+       i32.const 3184
        i32.load16_u
       end
       local.get $3
@@ -9340,19 +10090,19 @@
       if
        local.get $0
        i32.load offset=4
-       i32.const 6512
+       i32.const 6928
        call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#push
       else
        block $__inlined_func$~lib/string/String#charCodeAt9 (result i32)
         i32.const -1
-        i32.const 3036
+        i32.const 3244
         i32.load
         i32.const 1
         i32.shr_u
         i32.eqz
         br_if $__inlined_func$~lib/string/String#charCodeAt9
         drop
-        i32.const 3040
+        i32.const 3248
         i32.load16_u
        end
        local.get $3
@@ -9360,19 +10110,19 @@
        if
         local.get $0
         i32.load offset=4
-        i32.const 6544
+        i32.const 6960
         call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#push
        else
         block $__inlined_func$~lib/string/String#charCodeAt11 (result i32)
          i32.const -1
-         i32.const 3100
+         i32.const 3308
          i32.load
          i32.const 1
          i32.shr_u
          i32.eqz
          br_if $__inlined_func$~lib/string/String#charCodeAt11
          drop
-         i32.const 3104
+         i32.const 3312
          i32.load16_u
         end
         local.get $3
@@ -9380,19 +10130,19 @@
         if
          local.get $0
          i32.load offset=4
-         i32.const 6576
+         i32.const 6992
          call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#push
         else
          block $__inlined_func$~lib/string/String#charCodeAt13 (result i32)
           i32.const -1
-          i32.const 3164
+          i32.const 3372
           i32.load
           i32.const 1
           i32.shr_u
           i32.eqz
           br_if $__inlined_func$~lib/string/String#charCodeAt13
           drop
-          i32.const 3168
+          i32.const 3376
           i32.load16_u
          end
          local.get $3
@@ -9400,19 +10150,19 @@
          if
           local.get $0
           i32.load offset=4
-          i32.const 6608
+          i32.const 7024
           call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#push
          else
           block $__inlined_func$~lib/string/String#charCodeAt15 (result i32)
            i32.const -1
-           i32.const 3228
+           i32.const 3436
            i32.load
            i32.const 1
            i32.shr_u
            i32.eqz
            br_if $__inlined_func$~lib/string/String#charCodeAt15
            drop
-           i32.const 3232
+           i32.const 3440
            i32.load16_u
           end
           local.get $3
@@ -9420,14 +10170,14 @@
           if
            local.get $0
            i32.load offset=4
-           i32.const 6640
+           i32.const 7056
            call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#push
           else
-           i32.const 6672
+           i32.const 7088
            local.get $3
            call $~lib/util/number/itoa32
            call $~lib/string/String#concat
-           i32.const 6384
+           i32.const 6800
            i32.const 112
            i32.const 11
            call $~lib/builtins/abort
@@ -9462,7 +10212,7 @@
   call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#push
   local.get $0
   i32.load offset=4
-  i32.const 2736
+  i32.const 2944
   call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#push
  )
  (func $~lib/assemblyscript-json/encoder/JSONEncoder#writeKey (param $0 i32) (param $1 i32)
@@ -9481,8 +10231,8 @@
   i32.load offset=12
   i32.ge_u
   if
+   i32.const 2320
    i32.const 2112
-   i32.const 1904
    i32.const 99
    i32.const 42
    call $~lib/builtins/abort
@@ -9512,8 +10262,8 @@
     i32.const 0
     i32.lt_s
     if
+     i32.const 2320
      i32.const 2112
-     i32.const 1904
      i32.const 115
      i32.const 22
      call $~lib/builtins/abort
@@ -9524,7 +10274,7 @@
     i32.const 1
     i32.add
     local.tee $4
-    i32.const 1
+    i32.const 2
     call $~lib/array/ensureCapacity
     local.get $3
     local.get $4
@@ -9541,7 +10291,7 @@
   else
    local.get $0
    i32.load offset=4
-   i32.const 2656
+   i32.const 2864
    call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#push
   end
   local.get $1
@@ -9553,8 +10303,8 @@
    local.get $1
    i32.eqz
    if
-    i32.const 1952
-    i32.const 6384
+    i32.const 2160
+    i32.const 6800
     i32.const 81
     i32.const 33
     call $~lib/builtins/abort
@@ -9571,8 +10321,8 @@
    local.get $1
    i32.eqz
    if
-    i32.const 1952
-    i32.const 6384
+    i32.const 2160
+    i32.const 6800
     i32.const 82
     i32.const 24
     call $~lib/builtins/abort
@@ -9583,7 +10333,7 @@
    call $~lib/assemblyscript-json/encoder/JSONEncoder#writeString
    local.get $0
    i32.load offset=4
-   i32.const 3440
+   i32.const 3648
    call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#push
   end
  )
@@ -9881,7 +10631,7 @@
    i32.eqz
    if
     i32.const 12
-    i32.const 4
+    i32.const 7
     call $~lib/rt/stub/__new
     i32.const 0
     call $~lib/arraybuffer/ArrayBufferView#constructor
@@ -9896,7 +10646,7 @@
    i32.load offset=16
    local.set $2
    i32.const 12
-   i32.const 4
+   i32.const 7
    call $~lib/rt/stub/__new
    local.tee $0
    local.get $1
@@ -9910,42 +10660,18 @@
   end
   local.get $0
  )
- (func $~lib/array/Array<i32>#push (param $0 i32)
-  (local $1 i32)
-  (local $2 i32)
-  local.get $0
-  local.get $0
-  i32.load offset=12
-  local.tee $1
-  i32.const 1
-  i32.add
-  local.tee $2
-  i32.const 1
-  call $~lib/array/ensureCapacity
-  local.get $0
-  i32.load offset=4
-  local.get $1
-  i32.const 2
-  i32.shl
-  i32.add
-  i32.const 1
-  i32.store
-  local.get $0
-  local.get $2
-  i32.store offset=12
- )
  (func $~lib/near-sdk-bindgen/index/JSONEncoder#constructor (result i32)
   (local $0 i32)
   (local $1 i32)
   (local $2 i32)
   i32.const 8
-  i32.const 30
+  i32.const 38
   call $~lib/rt/stub/__new
   local.tee $0
   i32.eqz
   if
    i32.const 8
-   i32.const 31
+   i32.const 39
    call $~lib/rt/stub/__new
    local.set $0
   end
@@ -9956,7 +10682,7 @@
   i32.const 0
   i32.store offset=4
   i32.const 16
-  i32.const 32
+  i32.const 40
   call $~lib/rt/stub/__new
   local.tee $1
   i32.const 0
@@ -9996,34 +10722,50 @@
   i32.store offset=4
   local.get $0
   i32.load
-  call $~lib/array/Array<i32>#push
+  i32.const 1
+  call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#push
   local.get $0
  )
- (func $~lib/near-sdk-core/collections/persistentSet/PersistentSet<~lib/string/String>#_hashedItem (param $0 i32) (result i32)
+ (func $~lib/near-sdk-bindgen/index/encode<~lib/string/String,~lib/typedarray/Uint8Array>@varargs (param $0 i32) (result i32)
   (local $1 i32)
-  i32.const 1
-  global.set $~argumentsLength
-  call $~lib/near-sdk-bindgen/index/JSONEncoder#constructor
-  local.set $1
+  block $2of2
+   block $1of2
+    block $outOfRange
+     global.get $~argumentsLength
+     i32.const 1
+     i32.sub
+     br_table $1of2 $1of2 $2of2 $outOfRange
+    end
+    unreachable
+   end
+   call $~lib/near-sdk-bindgen/index/JSONEncoder#constructor
+   local.set $1
+  end
   local.get $0
   if
    local.get $1
-   i32.const 1088
+   i32.const 1552
    call $~lib/assemblyscript-json/encoder/JSONEncoder#writeKey
    local.get $1
    local.get $0
    call $~lib/assemblyscript-json/encoder/JSONEncoder#writeString
   else
    local.get $1
-   i32.const 1088
+   i32.const 1552
    call $~lib/assemblyscript-json/encoder/JSONEncoder#writeKey
    local.get $1
    i32.load offset=4
-   i32.const 4160
+   i32.const 4368
    call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#push
   end
   local.get $1
   call $~lib/assemblyscript-json/encoder/JSONEncoder#serialize
+ )
+ (func $~lib/near-sdk-core/collections/persistentSet/PersistentSet<~lib/string/String>#_hashedItem (param $0 i32) (result i32)
+  i32.const 1
+  global.set $~argumentsLength
+  local.get $0
+  call $~lib/near-sdk-bindgen/index/encode<~lib/string/String,~lib/typedarray/Uint8Array>@varargs
   local.tee $0
   i32.load offset=8
   i64.extend_i32_s
@@ -10038,7 +10780,7 @@
   local.set $0
   i64.const 0
   i32.const 12
-  i32.const 4
+  i32.const 7
   call $~lib/rt/stub/__new
   local.get $0
   call $~lib/arraybuffer/ArrayBufferView#constructor
@@ -10047,6 +10789,73 @@
   i64.extend_i32_u
   call $~lib/near-sdk-core/env/env/env.read_register
   local.get $0
+ )
+ (func $~lib/util/number/utoa32 (param $0 i32) (result i32)
+  (local $1 i32)
+  (local $2 i32)
+  local.get $0
+  i32.eqz
+  if
+   i32.const 7376
+   return
+  end
+  local.get $0
+  local.tee $1
+  i32.const 100000
+  i32.lt_u
+  if (result i32)
+   local.get $1
+   i32.const 100
+   i32.lt_u
+   if (result i32)
+    local.get $1
+    i32.const 10
+    i32.ge_u
+    i32.const 1
+    i32.add
+   else
+    local.get $1
+    i32.const 10000
+    i32.ge_u
+    i32.const 3
+    i32.add
+    local.get $1
+    i32.const 1000
+    i32.ge_u
+    i32.add
+   end
+  else
+   local.get $1
+   i32.const 10000000
+   i32.lt_u
+   if (result i32)
+    local.get $1
+    i32.const 1000000
+    i32.ge_u
+    i32.const 6
+    i32.add
+   else
+    local.get $1
+    i32.const 1000000000
+    i32.ge_u
+    i32.const 8
+    i32.add
+    local.get $1
+    i32.const 100000000
+    i32.ge_u
+    i32.add
+   end
+  end
+  local.tee $0
+  i32.const 1
+  i32.shl
+  i32.const 1
+  call $~lib/rt/stub/__new
+  local.tee $2
+  local.get $1
+  local.get $0
+  call $~lib/util/number/utoa32_dec_lut
+  local.get $2
  )
  (func $~lib/util/number/itoa_buffered<u8> (param $0 i32) (param $1 i32) (result i32)
   (local $2 i32)
@@ -10122,172 +10931,120 @@
   call $~lib/util/number/utoa32_dec_lut
   local.get $1
  )
- (func $~lib/util/string/joinIntegerArray<u8> (param $0 i32) (param $1 i32) (result i32)
+ (func $~lib/near-sdk-core/collections/persistentMap/PersistentMap<~lib/typedarray/Uint8Array,i32>#_key (param $0 i32) (param $1 i32) (result i32)
   (local $2 i32)
   (local $3 i32)
   (local $4 i32)
   (local $5 i32)
   (local $6 i32)
   local.get $1
-  i32.const 1
-  i32.sub
-  local.tee $3
-  i32.const 0
-  i32.lt_s
-  if
-   i32.const 1088
-   return
-  end
-  local.get $3
-  i32.eqz
-  if
-   i32.const 6960
-   local.set $1
-   local.get $0
-   i32.load8_u
-   local.tee $2
+  i32.load offset=4
+  local.set $3
+  local.get $0
+  i32.load
+  block $__inlined_func$~lib/util/string/joinIntegerArray<u8> (result i32)
+   i32.const 1552
+   local.get $1
+   i32.load offset=8
+   i32.const 1
+   i32.sub
+   local.tee $1
+   i32.const 0
+   i32.lt_s
+   br_if $__inlined_func$~lib/util/string/joinIntegerArray<u8>
+   drop
+   local.get $1
+   i32.eqz
    if
-    local.get $2
-    i32.const 100000
-    i32.lt_u
-    if (result i32)
-     local.get $2
-     i32.const 100
-     i32.lt_u
-     if (result i32)
-      local.get $2
-      i32.const 10
-      i32.ge_u
-      i32.const 1
-      i32.add
-     else
-      local.get $2
-      i32.const 10000
-      i32.ge_u
-      i32.const 3
-      i32.add
-      local.get $2
-      i32.const 1000
-      i32.ge_u
-      i32.add
-     end
-    else
-     local.get $2
-     i32.const 10000000
-     i32.lt_u
-     if (result i32)
-      local.get $2
-      i32.const 1000000
-      i32.ge_u
-      i32.const 6
-      i32.add
-     else
-      local.get $2
-      i32.const 1000000000
-      i32.ge_u
-      i32.const 8
-      i32.add
-      local.get $2
-      i32.const 100000000
-      i32.ge_u
-      i32.add
-     end
-    end
-    local.tee $0
-    i32.const 1
-    i32.shl
-    i32.const 1
-    call $~lib/rt/stub/__new
-    local.tee $1
-    local.get $2
-    local.get $0
-    call $~lib/util/number/utoa32_dec_lut
+    local.get $3
+    i32.load8_u
+    call $~lib/util/number/utoa32
+    br $__inlined_func$~lib/util/string/joinIntegerArray<u8>
    end
    local.get $1
-   return
-  end
-  local.get $3
-  i32.const 2652
-  i32.load
-  i32.const 1
-  i32.shr_u
-  local.tee $4
-  i32.const 10
-  i32.add
-  i32.mul
-  i32.const 10
-  i32.add
-  local.tee $6
-  i32.const 1
-  i32.shl
-  i32.const 1
-  call $~lib/rt/stub/__new
-  local.set $1
-  loop $for-loop|0
-   local.get $3
-   local.get $5
-   i32.gt_s
-   if
+   i32.const 2860
+   i32.load
+   i32.const 1
+   i32.shr_u
+   local.tee $4
+   i32.const 10
+   i32.add
+   i32.mul
+   i32.const 10
+   i32.add
+   local.tee $6
+   i32.const 1
+   i32.shl
+   i32.const 1
+   call $~lib/rt/stub/__new
+   local.set $0
+   loop $for-loop|0
     local.get $1
-    local.get $2
-    i32.const 1
-    i32.shl
-    i32.add
-    local.get $0
     local.get $5
-    i32.add
-    i32.load8_u
-    call $~lib/util/number/itoa_buffered<u8>
-    local.get $2
-    i32.add
-    local.set $2
-    local.get $4
+    i32.gt_s
     if
-     local.get $1
+     local.get $0
      local.get $2
      i32.const 1
      i32.shl
      i32.add
-     i32.const 2656
-     local.get $4
-     i32.const 1
-     i32.shl
-     call $~lib/memory/memory.copy
+     local.get $3
+     local.get $5
+     i32.add
+     i32.load8_u
+     call $~lib/util/number/itoa_buffered<u8>
      local.get $2
-     local.get $4
      i32.add
      local.set $2
+     local.get $4
+     if
+      local.get $0
+      local.get $2
+      i32.const 1
+      i32.shl
+      i32.add
+      i32.const 2864
+      local.get $4
+      i32.const 1
+      i32.shl
+      call $~lib/memory/memory.copy
+      local.get $2
+      local.get $4
+      i32.add
+      local.set $2
+     end
+     local.get $5
+     i32.const 1
+     i32.add
+     local.set $5
+     br $for-loop|0
     end
-    local.get $5
-    i32.const 1
-    i32.add
-    local.set $5
-    br $for-loop|0
+   end
+   local.get $6
+   local.get $0
+   local.get $2
+   i32.const 1
+   i32.shl
+   i32.add
+   local.get $1
+   local.get $3
+   i32.add
+   i32.load8_u
+   call $~lib/util/number/itoa_buffered<u8>
+   local.get $2
+   i32.add
+   local.tee $1
+   i32.gt_s
+   if (result i32)
+    local.get $0
+    i32.const 0
+    local.get $1
+    call $~lib/string/String#substring
+   else
+    local.get $0
    end
   end
-  local.get $6
-  local.get $1
-  local.get $2
-  i32.const 1
-  i32.shl
-  i32.add
-  local.get $0
-  local.get $3
-  i32.add
-  i32.load8_u
-  call $~lib/util/number/itoa_buffered<u8>
-  local.get $2
-  i32.add
-  local.tee $0
-  i32.gt_s
-  if
-   local.get $1
-   i32.const 0
-   local.get $0
-   call $~lib/string/String#substring
-   return
-  end
-  local.get $1
+  call $~lib/string/String#concat
  )
  (func $~lib/near-sdk-core/util/util.stringToBytes (param $0 i32) (result i32)
   (local $1 i32)
@@ -10299,7 +11056,7 @@
   i32.sub
   local.set $1
   i32.const 12
-  i32.const 4
+  i32.const 7
   call $~lib/rt/stub/__new
   local.get $1
   call $~lib/arraybuffer/ArrayBufferView#constructor
@@ -10313,13 +11070,8 @@
  )
  (func $~lib/near-sdk-core/collections/persistentMap/PersistentMap<~lib/typedarray/Uint8Array,i32>#contains (param $0 i32) (param $1 i32) (result i32)
   local.get $0
-  i32.load
   local.get $1
-  i32.load offset=4
-  local.get $1
-  i32.load offset=8
-  call $~lib/util/string/joinIntegerArray<u8>
-  call $~lib/string/String#concat
+  call $~lib/near-sdk-core/collections/persistentMap/PersistentMap<~lib/typedarray/Uint8Array,i32>#_key
   call $~lib/near-sdk-core/util/util.stringToBytes
   local.tee $0
   i32.load offset=8
@@ -10339,21 +11091,181 @@
   call $~lib/near-sdk-core/collections/persistentMap/PersistentMap<~lib/typedarray/Uint8Array,i32>#contains
   i32.eqz
   if
-   i32.const 8644
+   i32.const 9060
    local.get $0
    i32.store
-   i32.const 8640
-   i32.const 8636
+   i32.const 9056
+   i32.const 9052
    i32.load
    i32.const 2
    i32.shr_u
    call $~lib/util/string/joinStringArray
-   i32.const 8672
-   i32.const 118
+   i32.const 9088
+   i32.const 144
    i32.const 3
    call $~lib/builtins/abort
    unreachable
   end
+ )
+ (func $~lib/near-sdk-core/contract/Context.get:attachedDeposit (result i32)
+  (local $0 i32)
+  i32.const 12
+  i32.const 7
+  call $~lib/rt/stub/__new
+  i32.const 16
+  call $~lib/arraybuffer/ArrayBufferView#constructor
+  local.tee $0
+  i32.load offset=4
+  i64.extend_i32_u
+  call $~lib/near-sdk-core/env/env/env.attached_deposit
+  local.get $0
+  i32.load offset=8
+  if (result i32)
+   local.get $0
+   i32.load offset=8
+   i32.const 15
+   i32.and
+   i32.eqz
+  else
+   i32.const 0
+  end
+  i32.eqz
+  if
+   i32.const 0
+   i32.const 9168
+   i32.const 132
+   i32.const 5
+   call $~lib/builtins/abort
+   unreachable
+  end
+  i32.const 0
+  local.get $0
+  i32.load offset=4
+  local.tee $0
+  i64.load
+  local.get $0
+  i64.load offset=8
+  call $~lib/as-bignum/integer/u128/u128#constructor
+ )
+ (func $assembly/multicall/index/_assert_deposit
+  (local $0 i32)
+  (local $1 i32)
+  (local $2 i32)
+  (local $3 i64)
+  (local $4 i64)
+  call $~lib/near-sdk-core/contract/Context.get:attachedDeposit
+  local.set $0
+  i32.const 16
+  i32.const 3
+  call $~lib/rt/stub/__new
+  i64.const 0
+  i64.const 0
+  call $~lib/as-bignum/integer/u128/u128#constructor
+  local.tee $1
+  local.set $2
+  local.get $0
+  i64.load offset=8
+  local.tee $3
+  local.get $1
+  i64.load offset=8
+  local.tee $4
+  i64.eq
+  if (result i32)
+   local.get $0
+   i64.load
+   local.get $2
+   i64.load
+   i64.gt_u
+  else
+   local.get $3
+   local.get $4
+   i64.gt_u
+  end
+  i32.eqz
+  if
+   i32.const 9248
+   i32.const 9088
+   i32.const 147
+   i32.const 3
+   call $~lib/builtins/abort
+   unreachable
+  end
+ )
+ (func $~lib/near-sdk-core/promise/ContractPromiseBatch.create (param $0 i32) (result i32)
+  (local $1 i64)
+  local.get $0
+  call $~lib/near-sdk-core/util/util.stringToBytes
+  local.tee $0
+  i32.load offset=8
+  i64.extend_i32_s
+  local.get $0
+  i32.load offset=4
+  i64.extend_i32_u
+  call $~lib/near-sdk-core/env/env/env.promise_batch_create
+  local.set $1
+  i32.const 8
+  i32.const 43
+  call $~lib/rt/stub/__new
+  local.tee $0
+  i64.const 0
+  i64.store
+  local.get $0
+  local.get $1
+  i64.store
+  local.get $0
+ )
+ (func $~lib/near-sdk-core/promise/ContractPromiseBatch#then (param $0 i32) (param $1 i32) (result i32)
+  (local $2 i64)
+  local.get $1
+  call $~lib/near-sdk-core/util/util.stringToBytes
+  local.set $1
+  local.get $0
+  i64.load
+  local.get $1
+  i32.load offset=8
+  i64.extend_i32_s
+  local.get $1
+  i32.load offset=4
+  i64.extend_i32_u
+  call $~lib/near-sdk-core/env/env/env.promise_batch_then
+  local.set $2
+  i32.const 8
+  i32.const 43
+  call $~lib/rt/stub/__new
+  local.tee $0
+  i64.const 0
+  i64.store
+  local.get $0
+  local.get $2
+  i64.store
+  local.get $0
+ )
+ (func $~lib/string/String#charAt (param $0 i32) (param $1 i32) (result i32)
+  (local $2 i32)
+  local.get $1
+  local.get $0
+  i32.const 20
+  i32.sub
+  i32.load offset=16
+  i32.const 1
+  i32.shr_u
+  i32.ge_u
+  if
+   i32.const 1552
+   return
+  end
+  i32.const 2
+  i32.const 1
+  call $~lib/rt/stub/__new
+  local.tee $2
+  local.get $0
+  local.get $1
+  i32.const 1
+  i32.shl
+  i32.add
+  i32.load16_u
+  i32.store16
+  local.get $2
  )
  (func $~lib/rt/__newArray (param $0 i32) (param $1 i32) (param $2 i32) (param $3 i32) (result i32)
   (local $4 i32)
@@ -10388,481 +11300,6 @@
   i32.store offset=12
   local.get $2
  )
- (func $~lib/near-sdk-core/contract/Context.get:accountBalance (result i32)
-  (local $0 i32)
-  i32.const 12
-  i32.const 4
-  call $~lib/rt/stub/__new
-  i32.const 16
-  call $~lib/arraybuffer/ArrayBufferView#constructor
-  local.tee $0
-  i32.load offset=4
-  i64.extend_i32_u
-  call $~lib/near-sdk-core/env/env/env.account_balance
-  local.get $0
-  i32.load offset=8
-  if (result i32)
-   local.get $0
-   i32.load offset=8
-   i32.const 15
-   i32.and
-   i32.eqz
-  else
-   i32.const 0
-  end
-  i32.eqz
-  if
-   i32.const 0
-   i32.const 9152
-   i32.const 132
-   i32.const 5
-   call $~lib/builtins/abort
-   unreachable
-  end
-  i32.const 0
-  local.get $0
-  i32.load offset=4
-  local.tee $0
-  i64.load
-  local.get $0
-  i64.load offset=8
-  call $~lib/as-bignum/integer/u128/u128#constructor
- )
- (func $~lib/as-bignum/integer/safe/u128/u128.mul (param $0 i32) (param $1 i32) (result i32)
-  (local $2 i64)
-  (local $3 i64)
-  (local $4 i64)
-  (local $5 i32)
-  (local $6 i64)
-  (local $7 i64)
-  (local $8 i64)
-  (local $9 i64)
-  local.get $0
-  i64.load
-  local.get $0
-  i64.load offset=8
-  i64.or
-  i64.eqz
-  if (result i32)
-   i32.const 1
-  else
-   local.get $1
-   i64.load
-   local.get $1
-   i64.load offset=8
-   i64.or
-   i64.eqz
-  end
-  if
-   i32.const 16
-   i32.const 8
-   call $~lib/rt/stub/__new
-   i64.const 0
-   i64.const 0
-   call $~lib/as-bignum/integer/u128/u128#constructor
-   return
-  end
-  local.get $0
-  i64.load offset=8
-  local.tee $6
-  local.get $6
-  i64.const 1
-  i64.sub
-  i64.xor
-  i64.const 63
-  i64.shr_s
-  local.tee $2
-  i64.const -1
-  i64.xor
-  local.get $6
-  i64.and
-  local.get $2
-  local.get $0
-  i64.load
-  i64.and
-  i64.or
-  i64.clz
-  i32.wrap_i64
-  local.get $2
-  i32.wrap_i64
-  i32.const 64
-  i32.and
-  i32.add
-  local.get $1
-  i64.load offset=8
-  local.tee $4
-  local.get $4
-  i64.const 1
-  i64.sub
-  i64.xor
-  i64.const 63
-  i64.shr_s
-  local.tee $3
-  i64.const -1
-  i64.xor
-  local.get $4
-  i64.and
-  local.get $3
-  local.get $1
-  i64.load
-  i64.and
-  i64.or
-  i64.clz
-  i32.wrap_i64
-  local.get $3
-  i32.wrap_i64
-  i32.const 64
-  i32.and
-  i32.add
-  i32.add
-  local.tee $5
-  i32.const 127
-  i32.lt_u
-  if
-   i32.const 9232
-   i32.const 9056
-   i32.const 252
-   i32.const 7
-   call $~lib/builtins/abort
-   unreachable
-  end
-  local.get $5
-  i32.const 127
-  i32.eq
-  if
-   i32.const 0
-   local.get $1
-   i64.load offset=8
-   local.tee $2
-   i64.const 63
-   i64.shl
-   local.get $1
-   i64.load
-   i64.const 1
-   i64.shr_u
-   i64.or
-   local.get $2
-   i64.const 1
-   i64.shr_u
-   call $~lib/as-bignum/integer/u128/u128#constructor
-   local.tee $5
-   i64.load
-   local.tee $2
-   i64.const 4294967295
-   i64.and
-   local.tee $4
-   local.get $0
-   i64.load
-   local.tee $3
-   i64.const 4294967295
-   i64.and
-   local.tee $7
-   i64.mul
-   local.set $6
-   local.get $7
-   local.get $2
-   i64.const 32
-   i64.shr_u
-   local.tee $7
-   i64.mul
-   local.get $4
-   local.get $3
-   i64.const 32
-   i64.shr_u
-   local.tee $8
-   i64.mul
-   local.get $6
-   i64.const 32
-   i64.shr_u
-   i64.add
-   local.tee $9
-   i64.const 4294967295
-   i64.and
-   i64.add
-   local.set $4
-   local.get $7
-   local.get $8
-   i64.mul
-   local.get $9
-   i64.const 32
-   i64.shr_u
-   i64.add
-   local.get $2
-   local.get $0
-   i64.load offset=8
-   i64.mul
-   i64.add
-   local.get $3
-   local.get $5
-   i64.load offset=8
-   i64.mul
-   i64.add
-   local.get $4
-   i64.const 32
-   i64.shr_u
-   i64.add
-   global.set $~lib/as-bignum/globals/__res128_hi
-   i32.const 0
-   local.get $6
-   i64.const 4294967295
-   i64.and
-   local.get $4
-   i64.const 32
-   i64.shl
-   i64.or
-   global.get $~lib/as-bignum/globals/__res128_hi
-   call $~lib/as-bignum/integer/u128/u128#constructor
-   local.tee $5
-   i64.load offset=8
-   i64.const 63
-   i64.shr_u
-   i32.wrap_i64
-   if
-    i32.const 9232
-    i32.const 9056
-    i32.const 260
-    i32.const 9
-    call $~lib/builtins/abort
-    unreachable
-   end
-   i32.const 0
-   local.get $5
-   i64.load
-   local.tee $2
-   i64.const 1
-   i64.shl
-   local.get $5
-   i64.load offset=8
-   i64.const 1
-   i64.shl
-   local.get $2
-   i64.const 63
-   i64.shr_u
-   i64.or
-   call $~lib/as-bignum/integer/u128/u128#constructor
-   local.set $5
-   local.get $1
-   i64.load
-   i64.const 1
-   i64.and
-   i32.wrap_i64
-   if
-    i32.const 0
-    local.get $5
-    i64.load
-    local.tee $2
-    local.get $0
-    i64.load
-    i64.add
-    local.tee $3
-    local.get $2
-    local.get $3
-    i64.gt_u
-    i64.extend_i32_u
-    local.get $5
-    i64.load offset=8
-    local.get $0
-    i64.load offset=8
-    i64.add
-    i64.add
-    call $~lib/as-bignum/integer/u128/u128#constructor
-    local.tee $5
-    i64.load offset=8
-    local.tee $2
-    local.get $0
-    i64.load offset=8
-    local.tee $3
-    i64.eq
-    if (result i32)
-     local.get $5
-     i64.load
-     local.get $0
-     i64.load
-     i64.lt_u
-    else
-     local.get $2
-     local.get $3
-     i64.lt_u
-    end
-    if
-     i32.const 9232
-     i32.const 9056
-     i32.const 269
-     i32.const 11
-     call $~lib/builtins/abort
-     unreachable
-    end
-   end
-   local.get $5
-   return
-  end
-  local.get $1
-  i64.load
-  local.tee $2
-  i64.const 4294967295
-  i64.and
-  local.tee $4
-  local.get $0
-  i64.load
-  local.tee $3
-  i64.const 4294967295
-  i64.and
-  local.tee $7
-  i64.mul
-  local.set $6
-  local.get $7
-  local.get $2
-  i64.const 32
-  i64.shr_u
-  local.tee $7
-  i64.mul
-  local.get $4
-  local.get $3
-  i64.const 32
-  i64.shr_u
-  local.tee $8
-  i64.mul
-  local.get $6
-  i64.const 32
-  i64.shr_u
-  i64.add
-  local.tee $9
-  i64.const 4294967295
-  i64.and
-  i64.add
-  local.set $4
-  local.get $7
-  local.get $8
-  i64.mul
-  local.get $9
-  i64.const 32
-  i64.shr_u
-  i64.add
-  local.get $2
-  local.get $0
-  i64.load offset=8
-  i64.mul
-  i64.add
-  local.get $3
-  local.get $1
-  i64.load offset=8
-  i64.mul
-  i64.add
-  local.get $4
-  i64.const 32
-  i64.shr_u
-  i64.add
-  global.set $~lib/as-bignum/globals/__res128_hi
-  i32.const 0
-  local.get $6
-  i64.const 4294967295
-  i64.and
-  local.get $4
-  i64.const 32
-  i64.shl
-  i64.or
-  global.get $~lib/as-bignum/globals/__res128_hi
-  call $~lib/as-bignum/integer/u128/u128#constructor
- )
- (func $~lib/as-bignum/integer/safe/u128/u128.sub (param $0 i32) (param $1 i32) (result i32)
-  (local $2 i64)
-  (local $3 i64)
-  local.get $0
-  i64.load offset=8
-  local.tee $2
-  local.get $1
-  i64.load offset=8
-  local.tee $3
-  i64.eq
-  if (result i32)
-   local.get $0
-   i64.load
-   local.get $1
-   i64.load
-   i64.lt_u
-  else
-   local.get $2
-   local.get $3
-   i64.lt_u
-  end
-  if
-   i32.const 9312
-   i32.const 9056
-   i32.const 239
-   i32.const 16
-   call $~lib/builtins/abort
-   unreachable
-  end
-  i32.const 0
-  local.get $0
-  i64.load
-  local.tee $2
-  local.get $1
-  i64.load
-  i64.sub
-  local.tee $3
-  local.get $0
-  i64.load offset=8
-  local.get $1
-  i64.load offset=8
-  i64.sub
-  local.get $2
-  local.get $3
-  i64.lt_u
-  i64.extend_i32_u
-  i64.sub
-  call $~lib/as-bignum/integer/u128/u128#constructor
- )
- (func $~lib/near-sdk-core/promise/ContractPromiseBatch.create (param $0 i32) (result i32)
-  (local $1 i64)
-  local.get $0
-  call $~lib/near-sdk-core/util/util.stringToBytes
-  local.tee $0
-  i32.load offset=8
-  i64.extend_i32_s
-  local.get $0
-  i32.load offset=4
-  i64.extend_i32_u
-  call $~lib/near-sdk-core/env/env/env.promise_batch_create
-  local.set $1
-  i32.const 8
-  i32.const 35
-  call $~lib/rt/stub/__new
-  local.tee $0
-  i64.const 0
-  i64.store
-  local.get $0
-  local.get $1
-  i64.store
-  local.get $0
- )
- (func $~lib/string/String#charAt (param $0 i32) (param $1 i32) (result i32)
-  (local $2 i32)
-  local.get $1
-  local.get $0
-  i32.const 20
-  i32.sub
-  i32.load offset=16
-  i32.const 1
-  i32.shr_u
-  i32.ge_u
-  if
-   i32.const 1088
-   return
-  end
-  i32.const 2
-  i32.const 1
-  call $~lib/rt/stub/__new
-  local.tee $2
-  local.get $0
-  local.get $1
-  i32.const 1
-  i32.shl
-  i32.add
-  i32.load16_u
-  i32.store16
-  local.get $2
- )
  (func $~lib/staticarray/StaticArray<u8>#__get (param $0 i32) (param $1 i32) (result i32)
   local.get $1
   local.get $0
@@ -10871,8 +11308,8 @@
   i32.load offset=16
   i32.ge_u
   if
-   i32.const 2112
-   i32.const 9696
+   i32.const 2320
+   i32.const 9552
    i32.const 113
    i32.const 41
    call $~lib/builtins/abort
@@ -10889,8 +11326,8 @@
   i32.load offset=8
   i32.ge_u
   if
-   i32.const 2112
-   i32.const 2176
+   i32.const 2320
+   i32.const 2384
    i32.const 170
    i32.const 45
    call $~lib/builtins/abort
@@ -10921,7 +11358,7 @@
   i32.eqz
   if
    i32.const 12
-   i32.const 4
+   i32.const 7
    call $~lib/rt/stub/__new
    i32.const 0
    call $~lib/arraybuffer/ArrayBufferView#constructor
@@ -10932,7 +11369,7 @@
   i32.const 1
   i32.sub
   call $~lib/string/String#charAt
-  i32.const 9504
+  i32.const 9360
   call $~lib/string/String.__eq
   if
    i32.const 2
@@ -10942,7 +11379,7 @@
    i32.const 2
    i32.sub
    call $~lib/string/String#charAt
-   i32.const 9504
+   i32.const 9360
    call $~lib/string/String.__eq
    select
    local.set $6
@@ -10971,7 +11408,7 @@
   end
   local.set $3
   i32.const 12
-  i32.const 4
+  i32.const 7
   call $~lib/rt/stub/__new
   local.get $3
   i32.const 3
@@ -11292,798 +11729,364 @@
   end
   local.get $3
  )
- (func $~lib/near-sdk-core/promise/ContractPromiseBatch#function_call<~lib/typedarray/Uint8Array> (param $0 i32) (param $1 i32) (param $2 i32) (param $3 i32) (param $4 i64) (result i32)
+ (func $assembly/multicall/internal/make_batch (param $0 i32) (param $1 i32) (param $2 i64) (result i64)
+  (local $3 i32)
+  (local $4 i32)
   (local $5 i32)
   (local $6 i32)
-  local.get $1
-  call $~lib/near-sdk-core/util/util.stringToBytes
-  local.set $1
-  i32.const 12
-  i32.const 4
-  call $~lib/rt/stub/__new
-  i32.const 16
-  call $~lib/arraybuffer/ArrayBufferView#constructor
-  local.tee $5
-  i32.load offset=4
-  local.tee $6
-  local.get $3
-  i64.load
-  i64.store
-  local.get $6
-  local.get $3
-  i64.load offset=8
-  i64.store offset=8
-  local.get $0
-  i64.load
-  local.get $1
-  i32.load offset=8
-  i64.extend_i32_s
-  local.get $1
-  i32.load offset=4
-  i64.extend_i32_u
-  local.get $2
-  i32.load offset=8
-  i64.extend_i32_s
-  local.get $2
-  i32.load offset=4
-  i64.extend_i32_u
-  local.get $5
-  i32.load offset=4
-  i64.extend_i32_u
-  local.get $4
-  call $~lib/near-sdk-core/env/env/env.promise_batch_action_function_call
-  local.get $0
- )
- (func $assembly/multicall/index/_internal_multicall (param $0 i32)
-  (local $1 i32)
-  (local $2 i32)
-  (local $3 i32)
-  (local $4 i64)
-  (local $5 i64)
-  (local $6 i64)
-  (local $7 i64)
+  (local $7 i32)
   (local $8 i32)
-  (local $9 i32)
-  (local $10 i64)
-  (local $11 i32)
-  (local $12 i32)
-  (local $13 i32)
-  (local $14 i32)
-  (local $15 i32)
-  local.get $0
-  i32.load offset=12
-  i32.eqz
-  if
-   i32.const 8752
-   i32.const 8672
-   i32.const 28
-   i32.const 3
-   call $~lib/builtins/abort
-   unreachable
-  end
-  i32.const 24
-  i32.const 34
-  call $~lib/rt/stub/__new
-  local.tee $12
-  i32.const 16
-  call $~lib/arraybuffer/ArrayBuffer#constructor
-  i32.store
-  local.get $12
-  i32.const 3
-  i32.store offset=4
-  local.get $12
-  i32.const 48
-  call $~lib/arraybuffer/ArrayBuffer#constructor
-  i32.store offset=8
-  local.get $12
-  i32.const 4
-  i32.store offset=12
-  local.get $12
-  i32.const 0
-  i32.store offset=16
-  local.get $12
-  i32.const 0
-  i32.store offset=20
-  i32.const 16
-  i32.const 8
-  call $~lib/rt/stub/__new
-  i64.const 0
-  i64.const 0
-  call $~lib/as-bignum/integer/u128/u128#constructor
-  local.set $14
-  local.get $0
-  i32.load offset=12
-  i32.const 1
-  i32.sub
-  local.set $1
-  loop $for-loop|0
-   local.get $1
-   i32.const 0
-   i32.ge_s
-   if
-    local.get $0
-    local.get $1
-    call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#__get
-    i32.load offset=12
-    i32.const 0
-    i32.le_s
-    if
-     i32.const 8948
-     local.get $1
-     call $~lib/util/number/itoa32
-     i32.store
-     i32.const 8944
-     i32.const 8940
-     i32.load
-     i32.const 2
-     i32.shr_u
-     call $~lib/util/string/joinStringArray
-     i32.const 8672
-     i32.const 32
-     i32.const 5
-     call $~lib/builtins/abort
-     unreachable
-    end
-    local.get $0
-    local.get $1
-    call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#__get
-    i32.const 0
-    call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#__get
-    i32.load offset=24
-    local.tee $2
-    i64.load
-    local.tee $10
-    local.get $14
-    i64.load
-    i64.add
-    local.set $7
-    local.get $7
-    local.get $10
-    i64.lt_u
-    i64.extend_i32_u
-    local.tee $6
-    local.get $14
-    i64.load offset=8
-    local.tee $5
-    local.get $2
-    i64.load offset=8
-    local.tee $4
-    i64.add
-    i64.add
-    local.tee $10
-    local.get $5
-    i64.xor
-    local.get $4
-    local.get $10
-    i64.xor
-    i64.and
-    local.get $6
-    i64.lt_u
-    if
-     i32.const 8976
-     i32.const 9056
-     i32.const 232
-     i32.const 7
-     call $~lib/builtins/abort
-     unreachable
-    end
-    i32.const 16
-    i32.const 8
-    call $~lib/rt/stub/__new
-    local.get $7
-    local.get $10
-    call $~lib/as-bignum/integer/u128/u128#constructor
-    local.set $14
-    local.get $0
-    local.get $1
-    call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#__get
-    i32.load offset=12
-    i32.const 1
-    i32.eq
-    if
-     local.get $12
-     local.get $0
-     local.get $1
-     call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#__get
-     i32.const 0
-     call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#__get
-     local.tee $2
-     i32.load
-     local.tee $15
-     local.get $15
-     call $~lib/util/hash/HASH<~lib/string/String>
-     call $~lib/map/Map<~lib/string/String,~lib/assemblyscript-json/JSON/Value>#find
-     if
-      local.get $12
-      local.get $2
-      i32.load
-      call $~lib/map/Map<~lib/string/String,~lib/assemblyscript-json/JSON/Value>#get
-      local.get $2
-      call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#push
-     else
-      local.get $2
-      i32.load
-      local.set $11
-      i32.const 1
-      i32.const 2
-      i32.const 28
-      i32.const 0
-      call $~lib/rt/__newArray
-      local.tee $15
-      i32.load offset=4
-      drop
-      local.get $15
-      i32.load offset=4
-      local.get $2
-      i32.store
-      local.get $12
-      local.get $11
-      local.get $15
-      call $~lib/map/Map<~lib/string/String,~lib/assemblyscript-json/JSON/Value>#set
-     end
-     i32.const 1
-     local.get $0
-     i32.load offset=12
-     local.tee $15
-     local.get $1
-     i32.const 0
-     i32.lt_s
-     if (result i32)
-      local.get $1
-      local.get $15
-      i32.add
-      local.tee $2
-      i32.const 0
-      local.get $2
-      i32.const 0
-      i32.gt_s
-      select
-     else
-      local.get $1
-      local.get $15
-      local.get $1
-      local.get $15
-      i32.lt_s
-      select
-     end
-     local.tee $2
-     i32.sub
-     local.tee $11
-     local.get $11
-     i32.const 1
-     i32.gt_s
-     select
-     local.tee $11
-     i32.const 0
-     local.get $11
-     i32.const 0
-     i32.gt_s
-     select
-     local.tee $11
-     i32.const 2
-     i32.const 29
-     i32.const 0
-     call $~lib/rt/__newArray
-     i32.load offset=4
-     local.get $0
-     i32.load offset=4
-     local.tee $9
-     local.get $2
-     i32.const 2
-     i32.shl
-     i32.add
-     local.tee $8
-     local.get $11
-     i32.const 2
-     i32.shl
-     call $~lib/memory/memory.copy
-     local.get $15
-     local.get $2
-     local.get $11
-     i32.add
-     local.tee $2
-     i32.ne
-     if
-      local.get $8
-      local.get $9
-      local.get $2
-      i32.const 2
-      i32.shl
-      i32.add
-      local.get $15
-      local.get $2
-      i32.sub
-      i32.const 2
-      i32.shl
-      call $~lib/memory/memory.copy
-     end
-     local.get $0
-     local.get $15
-     local.get $11
-     i32.sub
-     i32.store offset=12
-    end
-    local.get $1
-    i32.const 1
-    i32.sub
-    local.set $1
-    br $for-loop|0
-   end
-  end
-  call $~lib/near-sdk-core/contract/Context.get:accountBalance
-  global.get $assembly/multicall/index/storageCosts
-  i32.load
-  i32.const 0
-  call $~lib/near-sdk-core/env/env/env.storage_usage
-  i64.const 0
-  call $~lib/as-bignum/integer/u128/u128#constructor
-  call $~lib/as-bignum/integer/safe/u128/u128.mul
-  call $~lib/as-bignum/integer/safe/u128/u128.sub
-  local.tee $1
-  local.set $2
-  local.get $14
-  i64.load offset=8
-  local.tee $10
   local.get $1
-  i64.load offset=8
-  local.tee $7
-  i64.eq
   if (result i32)
-   local.get $14
-   i64.load
-   local.get $2
-   i64.load
-   i64.gt_u
+   local.get $0
+   i32.load
+   call $~lib/near-sdk-core/promise/ContractPromiseBatch.create
   else
-   local.get $7
-   local.get $10
-   i64.lt_u
+   i32.const 8
+   i32.const 43
+   call $~lib/rt/stub/__new
+   local.tee $1
+   i64.const 0
+   i64.store
+   local.get $1
+   local.get $2
+   i64.store
+   local.get $1
+   local.get $0
+   i32.load
+   call $~lib/near-sdk-core/promise/ContractPromiseBatch#then
   end
-  if
-   i32.const 9392
-   i32.const 8672
-   i32.const 44
-   i32.const 3
-   call $~lib/builtins/abort
-   unreachable
-  end
-  i32.const 0
   local.set $1
-  local.get $12
-  i32.load offset=8
-  local.set $14
-  local.get $12
-  i32.load offset=16
-  local.tee $11
-  call $~lib/array/Array<~lib/array/Array<assembly/multicall/model/ContractCall>>#constructor
-  local.set $15
-  loop $for-loop|03
-   local.get $11
-   local.get $13
-   i32.gt_s
-   if
-    local.get $14
-    local.get $13
-    i32.const 12
-    i32.mul
-    i32.add
-    local.tee $9
-    i32.load offset=8
-    i32.const 1
-    i32.and
-    i32.eqz
-    if
-     local.get $1
-     local.tee $2
-     i32.const 1
-     i32.add
-     local.set $1
-     local.get $9
-     i32.load offset=4
-     local.set $9
-     local.get $2
-     local.get $15
-     i32.load offset=12
-     i32.ge_u
-     if
-      local.get $2
-      i32.const 0
-      i32.lt_s
-      if
-       i32.const 2112
-       i32.const 1904
-       i32.const 115
-       i32.const 22
-       call $~lib/builtins/abort
-       unreachable
-      end
-      local.get $15
-      local.get $2
-      i32.const 1
-      i32.add
-      local.tee $8
-      i32.const 1
-      call $~lib/array/ensureCapacity
-      local.get $15
-      local.get $8
-      i32.store offset=12
-     end
-     local.get $15
-     i32.load offset=4
-     local.get $2
-     i32.const 2
-     i32.shl
-     i32.add
-     local.get $9
-     i32.store
-    end
-    local.get $13
-    i32.const 1
-    i32.add
-    local.set $13
-    br $for-loop|03
-   end
-  end
-  local.get $15
-  local.get $1
-  i32.const 0
-  call $~lib/array/ensureCapacity
-  local.get $15
-  local.get $1
-  i32.store offset=12
-  i32.const 0
-  local.set $14
-  loop $for-loop|1
-   local.get $14
-   local.get $12
-   i32.load offset=20
-   i32.lt_s
-   if
-    block $for-continue|1
-     local.get $15
-     local.get $14
-     call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#__get
-     i32.load offset=12
-     i32.const 1
-     i32.le_s
-     if
-      local.get $0
-      local.get $15
-      local.get $14
-      call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#__get
-      call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#push
-      br $for-continue|1
-     end
-     local.get $15
-     local.get $14
-     call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#__get
-     i32.load offset=12
-     i32.const 1
-     i32.sub
-     local.set $2
-     local.get $15
-     local.get $14
-     call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#__get
-     local.get $2
-     call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#__get
-     i32.load
-     call $~lib/near-sdk-core/promise/ContractPromiseBatch.create
-     local.get $15
-     local.get $14
-     call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#__get
-     local.get $2
-     call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#__get
-     i32.load offset=4
-     local.get $15
-     local.get $14
-     call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#__get
-     local.get $2
-     call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#__get
-     i32.load offset=8
-     call $~lib/near-sdk-core/base64/base64.decode
-     local.get $15
-     local.get $14
-     call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#__get
-     local.get $2
-     call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#__get
-     i32.load offset=24
-     local.get $15
-     local.get $14
-     call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#__get
-     local.get $2
-     call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#__get
-     i64.load offset=16
-     call $~lib/near-sdk-core/promise/ContractPromiseBatch#function_call<~lib/typedarray/Uint8Array>
-     local.set $1
-     local.get $2
-     i32.const 1
-     i32.sub
-     local.set $13
-     loop $for-loop|2
-      local.get $13
-      i32.const 0
-      i32.ge_s
-      if
-       local.get $1
-       local.get $15
-       local.get $14
-       call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#__get
-       local.get $13
-       call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#__get
-       i32.load offset=4
-       local.get $15
-       local.get $14
-       call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#__get
-       local.get $13
-       call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#__get
-       i32.load offset=8
-       call $~lib/near-sdk-core/base64/base64.decode
-       local.get $15
-       local.get $14
-       call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#__get
-       local.get $13
-       call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#__get
-       i32.load offset=24
-       local.get $15
-       local.get $14
-       call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#__get
-       local.get $13
-       call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#__get
-       i64.load offset=16
-       call $~lib/near-sdk-core/promise/ContractPromiseBatch#function_call<~lib/typedarray/Uint8Array>
-       local.set $1
-       local.get $13
-       i32.const 1
-       i32.sub
-       local.set $13
-       br $for-loop|2
-      end
-     end
-    end
-    local.get $14
-    i32.const 1
-    i32.add
-    local.set $14
-    br $for-loop|1
-   end
-  end
-  i32.const 0
-  local.set $14
-  loop $for-loop|3
-   local.get $14
+  local.get $0
+  i32.load offset=4
+  local.set $0
+  loop $for-loop|0
+   local.get $3
    local.get $0
    i32.load offset=12
    i32.lt_s
    if
     local.get $0
-    local.get $14
-    call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#__get
-    local.tee $1
-    i32.const 0
+    local.get $3
     call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#__get
     i32.load
-    local.get $1
-    i32.const 0
+    local.get $0
+    local.get $3
     call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#__get
     i32.load offset=4
-    local.set $12
-    local.get $1
-    i32.const 0
-    call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#__get
-    i32.load offset=8
     call $~lib/near-sdk-core/base64/base64.decode
+    local.set $5
+    local.get $0
+    local.get $3
+    call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#__get
+    i32.load offset=16
+    local.set $6
+    local.get $0
+    local.get $3
+    call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#__get
+    i64.load offset=8
     local.set $2
-    local.get $1
-    i32.const 0
-    call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#__get
-    i64.load offset=16
-    local.set $10
-    local.get $1
-    i32.const 0
-    call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#__get
-    i32.load offset=24
-    local.set $13
     call $~lib/near-sdk-core/util/util.stringToBytes
-    local.set $15
-    local.get $12
-    call $~lib/near-sdk-core/util/util.stringToBytes
-    local.set $12
+    local.set $4
     i32.const 12
-    i32.const 4
+    i32.const 7
     call $~lib/rt/stub/__new
     i32.const 16
     call $~lib/arraybuffer/ArrayBufferView#constructor
-    local.tee $11
+    local.tee $7
     i32.load offset=4
-    local.tee $9
-    local.get $13
+    local.tee $8
+    local.get $6
     i64.load
     i64.store
-    local.get $9
-    local.get $13
+    local.get $8
+    local.get $6
     i64.load offset=8
     i64.store offset=8
-    local.get $15
+    local.get $1
+    i64.load
+    local.get $4
     i32.load offset=8
     i64.extend_i32_s
-    local.get $15
+    local.get $4
     i32.load offset=4
     i64.extend_i32_u
-    local.get $12
+    local.get $5
     i32.load offset=8
     i64.extend_i32_s
-    local.get $12
+    local.get $5
+    i32.load offset=4
+    i64.extend_i32_u
+    local.get $7
     i32.load offset=4
     i64.extend_i32_u
     local.get $2
-    i32.load offset=8
-    i64.extend_i32_s
-    local.get $2
-    i32.load offset=4
-    i64.extend_i32_u
-    local.get $11
-    i32.load offset=4
-    i64.extend_i32_u
-    local.get $10
-    call $~lib/near-sdk-core/env/env/env.promise_create
-    local.set $10
-    i32.const 8
-    i32.const 37
-    call $~lib/rt/stub/__new
-    local.tee $2
-    i64.const 0
-    i64.store
-    local.get $2
-    local.get $10
-    i64.store
+    call $~lib/near-sdk-core/env/env/env.promise_batch_action_function_call
+    local.get $3
     i32.const 1
-    local.set $13
-    loop $for-loop|00
-     local.get $13
+    i32.add
+    local.set $3
+    br $for-loop|0
+   end
+  end
+  local.get $1
+  i64.load
+ )
+ (func $~lib/near-sdk-core/promise/ContractPromiseBatch#transfer (param $0 i32) (param $1 i32) (result i32)
+  (local $2 i32)
+  (local $3 i32)
+  i32.const 12
+  i32.const 7
+  call $~lib/rt/stub/__new
+  i32.const 16
+  call $~lib/arraybuffer/ArrayBufferView#constructor
+  local.tee $2
+  i32.load offset=4
+  local.tee $3
+  local.get $1
+  i64.load
+  i64.store
+  local.get $3
+  local.get $1
+  i64.load offset=8
+  i64.store offset=8
+  local.get $0
+  i64.load
+  local.get $2
+  i32.load offset=4
+  i64.extend_i32_u
+  call $~lib/near-sdk-core/env/env/env.promise_batch_action_transfer
+  local.get $0
+ )
+ (func $assembly/multicall/internal/_internal_multicall (param $0 i32)
+  (local $1 i32)
+  (local $2 i32)
+  (local $3 i32)
+  (local $4 i32)
+  (local $5 i32)
+  (local $6 i64)
+  local.get $0
+  i32.load offset=12
+  local.set $1
+  i32.const 16
+  i32.const 42
+  call $~lib/rt/stub/__new
+  local.tee $2
+  i32.const 0
+  i32.store
+  local.get $2
+  i32.const 0
+  i32.store offset=4
+  local.get $2
+  i32.const 0
+  i32.store offset=8
+  local.get $2
+  i32.const 0
+  i32.store offset=12
+  local.get $1
+  i32.const 134217727
+  i32.gt_u
+  if
+   i32.const 2000
+   i32.const 2112
+   i32.const 64
+   i32.const 60
+   call $~lib/builtins/abort
+   unreachable
+  end
+  local.get $1
+  i32.const 8
+  local.get $1
+  i32.const 8
+  i32.gt_u
+  select
+  i32.const 3
+  i32.shl
+  local.tee $4
+  i32.const 0
+  call $~lib/rt/stub/__new
+  local.tee $5
+  local.get $4
+  call $~lib/memory/memory.fill
+  local.get $2
+  local.get $5
+  i32.store
+  local.get $2
+  local.get $5
+  i32.store offset=4
+  local.get $2
+  local.get $4
+  i32.store offset=8
+  local.get $2
+  local.get $1
+  i32.store offset=12
+  loop $for-loop|0
+   local.get $3
+   local.get $0
+   i32.load offset=12
+   i32.lt_s
+   if
+    local.get $0
+    local.get $3
+    call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#__get
+    local.set $4
+    i32.const 0
+    local.set $1
+    loop $for-loop|1
      local.get $1
+     local.get $4
      i32.load offset=12
      i32.lt_s
      if
       local.get $1
-      local.get $13
-      call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#__get
-      i32.load
+      i32.const 0
+      i32.gt_s
+      if (result i64)
+       local.get $4
+       local.get $1
+       call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#__get
+       i32.const 0
+       local.get $6
+       call $assembly/multicall/internal/make_batch
+      else
+       local.get $4
+       local.get $1
+       call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#__get
+       i32.const 1
+       i64.const 0
+       call $assembly/multicall/internal/make_batch
+      end
+      local.set $6
       local.get $1
-      local.get $13
-      call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#__get
-      i32.load offset=4
-      local.set $9
-      local.get $1
-      local.get $13
-      call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#__get
-      i32.load offset=8
-      call $~lib/near-sdk-core/base64/base64.decode
-      local.set $15
-      local.get $1
-      local.get $13
-      call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#__get
-      i64.load offset=16
-      local.set $10
-      local.get $1
-      local.get $13
-      call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#__get
-      i32.load offset=24
-      local.set $12
-      call $~lib/near-sdk-core/util/util.stringToBytes
-      local.set $11
-      local.get $9
-      call $~lib/near-sdk-core/util/util.stringToBytes
-      local.set $9
-      i32.const 12
-      i32.const 4
-      call $~lib/rt/stub/__new
-      i32.const 16
-      call $~lib/arraybuffer/ArrayBufferView#constructor
-      local.tee $8
-      i32.load offset=4
-      local.tee $3
-      local.get $12
-      i64.load
-      i64.store
-      local.get $3
-      local.get $12
-      i64.load offset=8
-      i64.store offset=8
-      local.get $2
-      i64.load
-      local.get $11
-      i32.load offset=8
-      i64.extend_i32_s
-      local.get $11
-      i32.load offset=4
-      i64.extend_i32_u
-      local.get $9
-      i32.load offset=8
-      i64.extend_i32_s
-      local.get $9
-      i32.load offset=4
-      i64.extend_i32_u
-      local.get $15
-      i32.load offset=8
-      i64.extend_i32_s
-      local.get $15
-      i32.load offset=4
-      i64.extend_i32_u
-      local.get $8
-      i32.load offset=4
-      i64.extend_i32_u
-      local.get $10
-      call $~lib/near-sdk-core/env/env/env.promise_then
-      local.set $10
-      i32.const 8
-      i32.const 37
-      call $~lib/rt/stub/__new
-      local.tee $2
-      i64.const 0
-      i64.store
-      local.get $2
-      local.get $10
-      i64.store
-      local.get $13
       i32.const 1
       i32.add
-      local.set $13
-      br $for-loop|00
+      local.set $1
+      br $for-loop|1
      end
     end
-    local.get $14
+    local.get $3
+    local.get $2
+    i32.load offset=12
+    i32.ge_u
+    if
+     local.get $3
+     i32.const 0
+     i32.lt_s
+     if
+      i32.const 2320
+      i32.const 2112
+      i32.const 115
+      i32.const 22
+      call $~lib/builtins/abort
+      unreachable
+     end
+     local.get $2
+     local.get $3
+     i32.const 1
+     i32.add
+     local.tee $1
+     i32.const 3
+     call $~lib/array/ensureCapacity
+     local.get $2
+     local.get $1
+     i32.store offset=12
+    end
+    local.get $2
+    i32.load offset=4
+    local.get $3
+    i32.const 3
+    i32.shl
+    i32.add
+    local.get $6
+    i64.store
+    local.get $3
     i32.const 1
     i32.add
-    local.set $14
-    br $for-loop|3
+    local.set $3
+    br $for-loop|0
    end
   end
+  i32.const 8
+  i32.const 43
+  call $~lib/rt/stub/__new
+  local.tee $0
+  i64.const 0
+  i64.store
+  local.get $0
+  local.get $2
+  i32.load offset=4
+  i64.extend_i32_u
+  local.get $2
+  i32.load offset=12
+  i64.extend_i32_s
+  call $~lib/near-sdk-core/env/env/env.promise_and
+  i64.store
+  i64.const 0
+  call $~lib/near-sdk-core/env/env/env.current_account_id
+  local.get $0
+  call $~lib/near-sdk-core/util/util.read_register_string
+  call $~lib/near-sdk-core/promise/ContractPromiseBatch#then
+  i32.const 16
+  i32.const 3
+  call $~lib/rt/stub/__new
+  i64.const 0
+  i64.const 0
+  call $~lib/as-bignum/integer/u128/u128#constructor
+  call $~lib/near-sdk-core/promise/ContractPromiseBatch#transfer
+  i64.load
+  call $~lib/near-sdk-core/env/env/env.promise_return
  )
  (func $assembly/multicall/index/__wrapper_multicall
   (local $0 i32)
   call $~lib/near-sdk-bindgen/index/getInput
   local.tee $0
   i32.load
-  i32.const 4336
-  i32.const 4336
+  i32.const 4544
+  i32.const 4544
   call $~lib/util/hash/HASH<~lib/string/String>
   call $~lib/map/Map<~lib/string/String,~lib/assemblyscript-json/JSON/Value>#find
   if (result i32)
    local.get $0
-   call $~lib/near-sdk-bindgen/index/decode<~lib/array/Array<~lib/array/Array<assembly/multicall/model/ContractCall>>,~lib/assemblyscript-json/JSON/Obj>
+   i32.const 4544
+   call $~lib/near-sdk-bindgen/index/decode<~lib/array/Array<~lib/array/Array<assembly/multicall/model/BatchCall>>,~lib/assemblyscript-json/JSON/Obj>
   else
-   i32.const 6176
-   i32.const 4336
-   call $~lib/string/String#concat
-   i32.const 4768
-   call $~lib/string/String#concat
-   i32.const 4528
-   call $~lib/string/String#concat
-   i32.const 6224
-   call $~lib/string/String#concat
-   i32.const 4256
-   i32.const 33
-   i32.const 3
-   call $~lib/builtins/abort
-   unreachable
+   i32.const 4544
+   call $~lib/near-sdk-bindgen/index/requireParameter<~lib/array/Array<~lib/array/Array<assembly/multicall/model/BatchCall>>>
   end
   i64.const 0
   call $~lib/near-sdk-core/env/env/env.predecessor_account_id
   call $~lib/near-sdk-core/util/util.read_register_string
   call $assembly/multicall/index/_is_admin
-  call $assembly/multicall/index/_internal_multicall
+  call $assembly/multicall/index/_assert_deposit
+  call $assembly/multicall/internal/_internal_multicall
  )
  (func $~lib/near-sdk-bindgen/index/requireParameter<~lib/string/String> (param $0 i32) (result i32)
-  i32.const 6176
+  i32.const 6592
   local.get $0
   call $~lib/string/String#concat
-  i32.const 4768
+  i32.const 4960
   call $~lib/string/String#concat
-  i32.const 5296
+  i32.const 5504
   call $~lib/string/String#concat
-  i32.const 6224
+  i32.const 6640
   call $~lib/string/String#concat
-  i32.const 4256
+  i32.const 4464
+  i32.const 33
+  i32.const 3
+  call $~lib/builtins/abort
+  unreachable
+ )
+ (func $~lib/near-sdk-bindgen/index/requireParameter<~lib/as-bignum/integer/safe/u128/u128> (param $0 i32) (result i32)
+  i32.const 6592
+  local.get $0
+  call $~lib/string/String#concat
+  i32.const 4960
+  call $~lib/string/String#concat
+  i32.const 6144
+  call $~lib/string/String#concat
+  i32.const 6640
+  call $~lib/string/String#concat
+  i32.const 4464
   i32.const 33
   i32.const 3
   call $~lib/builtins/abort
@@ -12102,21 +12105,21 @@
     i32.sub
     i32.load offset=12
     local.tee $1
-    i32.const 11568
+    i32.const 15440
     i32.load
     i32.le_u
     if
      loop $do-continue|0
       i32.const 1
       local.get $1
-      i32.const 11
+      i32.const 22
       i32.eq
       br_if $__inlined_func$~lib/rt/__instanceof
       drop
       local.get $1
       i32.const 3
       i32.shl
-      i32.const 11572
+      i32.const 15444
       i32.add
       i32.load offset=4
       local.tee $1
@@ -12129,8 +12132,8 @@
    i32.const 0
   end
   if (result i32)
-   i32.const 1088
-   i32.const 1088
+   i32.const 1552
+   i32.const 1552
    call $~lib/string/String.__eq
    i32.eqz
   else
@@ -12143,21 +12146,21 @@
     i32.sub
     i32.load offset=12
     local.tee $1
-    i32.const 11568
+    i32.const 15440
     i32.load
     i32.le_u
     if
      loop $do-continue|01
       i32.const 1
       local.get $1
-      i32.const 11
+      i32.const 22
       i32.eq
       br_if $__inlined_func$~lib/rt/__instanceof0
       drop
       local.get $1
       i32.const 3
       i32.shl
-      i32.const 11572
+      i32.const 15444
       i32.add
       i32.load offset=4
       local.tee $1
@@ -12168,15 +12171,15 @@
    end
    i32.eqz
    if
-    i32.const 2464
-    i32.const 4256
+    i32.const 2672
+    i32.const 4464
     i32.const 310
     i32.const 37
     call $~lib/builtins/abort
     unreachable
    end
    local.get $0
-   i32.const 1088
+   i32.const 1552
    call $~lib/assemblyscript-json/JSON/Obj#get
    local.tee $0
    i32.eqz
@@ -12193,21 +12196,21 @@
     i32.sub
     i32.load offset=12
     local.tee $1
-    i32.const 11568
+    i32.const 15440
     i32.load
     i32.le_u
     if
      loop $do-continue|04
       i32.const 1
       local.get $1
-      i32.const 26
+      i32.const 37
       i32.eq
       br_if $__inlined_func$~lib/rt/__instanceof3
       drop
       local.get $1
       i32.const 3
       i32.shl
-      i32.const 11572
+      i32.const 15444
       i32.add
       i32.load offset=4
       local.tee $1
@@ -12231,21 +12234,21 @@
     i32.sub
     i32.load offset=12
     local.tee $1
-    i32.const 11568
+    i32.const 15440
     i32.load
     i32.le_u
     if
      loop $do-continue|011
       i32.const 1
       local.get $1
-      i32.const 11
+      i32.const 22
       i32.eq
       br_if $__inlined_func$~lib/rt/__instanceof10
       drop
       local.get $1
       i32.const 3
       i32.shl
-      i32.const 11572
+      i32.const 15444
       i32.add
       i32.load offset=4
       local.tee $1
@@ -12268,21 +12271,21 @@
      i32.sub
      i32.load offset=12
      local.tee $1
-     i32.const 11568
+     i32.const 15440
      i32.load
      i32.le_u
      if
       loop $do-continue|013
        i32.const 1
        local.get $1
-       i32.const 11
+       i32.const 22
        i32.eq
        br_if $__inlined_func$~lib/rt/__instanceof12
        drop
        local.get $1
        i32.const 3
        i32.shl
-       i32.const 11572
+       i32.const 15444
        i32.add
        i32.load offset=4
        local.tee $1
@@ -12297,17 +12300,17 @@
   end
   i32.eqz
   if
-   i32.const 4880
-   i32.const 1088
+   i32.const 5072
+   i32.const 1552
    call $~lib/string/String#concat
-   i32.const 4768
+   i32.const 4960
    call $~lib/string/String#concat
-   i32.const 9984
+   i32.const 9840
    call $~lib/string/String#concat
-   i32.const 5184
+   i32.const 5376
    call $~lib/string/String#concat
-   i32.const 3904
-   i32.const 3792
+   i32.const 4112
+   i32.const 4000
    local.get $0
    if (result i32)
     block $__inlined_func$~lib/rt/__instanceof18 (result i32)
@@ -12316,21 +12319,21 @@
      i32.sub
      i32.load offset=12
      local.tee $2
-     i32.const 11568
+     i32.const 15440
      i32.load
      i32.le_u
      if
       loop $do-continue|019
        i32.const 1
        local.get $2
-       i32.const 11
+       i32.const 22
        i32.eq
        br_if $__inlined_func$~lib/rt/__instanceof18
        drop
        local.get $2
        i32.const 3
        i32.shl
-       i32.const 11572
+       i32.const 15444
        i32.add
        i32.load offset=4
        local.tee $2
@@ -12344,14 +12347,14 @@
    end
    select
    call $~lib/string/String#concat
-   i32.const 4256
+   i32.const 4464
    i32.const 401
    i32.const 5
    call $~lib/builtins/abort
    unreachable
   end
   i32.const 8
-  i32.const 38
+  i32.const 45
   call $~lib/rt/stub/__new
   block $__inlined_func$~lib/rt/__instanceof21 (result i32)
    local.get $0
@@ -12360,21 +12363,21 @@
    i32.sub
    i32.load offset=12
    local.tee $0
-   i32.const 11568
+   i32.const 15440
    i32.load
    i32.le_u
    if
     loop $do-continue|022
      i32.const 1
      local.get $0
-     i32.const 11
+     i32.const 22
      i32.eq
      br_if $__inlined_func$~lib/rt/__instanceof21
      drop
      local.get $0
      i32.const 3
      i32.shl
-     i32.const 11572
+     i32.const 15444
      i32.add
      i32.load offset=4
      local.tee $0
@@ -12385,8 +12388,8 @@
   end
   i32.eqz
   if
-   i32.const 2464
-   i32.const 4256
+   i32.const 2672
+   i32.const 4464
    i32.const 418
    i32.const 47
    call $~lib/builtins/abort
@@ -12395,13 +12398,13 @@
   local.tee $0
   local.get $2
   i32.load
-  i32.const 10048
-  i32.const 10048
+  i32.const 9904
+  i32.const 9904
   call $~lib/util/hash/HASH<~lib/string/String>
   call $~lib/map/Map<~lib/string/String,~lib/assemblyscript-json/JSON/Value>#find
   if (result i32)
    local.get $2
-   i32.const 10048
+   i32.const 9904
    call $~lib/near-sdk-bindgen/index/decode<~lib/string/String,~lib/assemblyscript-json/JSON/Obj>
   else
    i32.const 0
@@ -12410,13 +12413,13 @@
   local.get $0
   local.get $2
   i32.load
-  i32.const 5440
-  i32.const 5440
+  i32.const 5856
+  i32.const 5856
   call $~lib/util/hash/HASH<~lib/string/String>
   call $~lib/map/Map<~lib/string/String,~lib/assemblyscript-json/JSON/Value>#find
   if (result i32)
    local.get $2
-   i32.const 5440
+   i32.const 5856
    call $~lib/near-sdk-bindgen/index/decode<~lib/string/String,~lib/assemblyscript-json/JSON/Obj>
   else
    i32.const 0
@@ -12437,21 +12440,21 @@
     i32.sub
     i32.load offset=12
     local.tee $1
-    i32.const 11568
+    i32.const 15440
     i32.load
     i32.le_u
     if
      loop $do-continue|0
       i32.const 1
       local.get $1
-      i32.const 11
+      i32.const 22
       i32.eq
       br_if $__inlined_func$~lib/rt/__instanceof
       drop
       local.get $1
       i32.const 3
       i32.shl
-      i32.const 11572
+      i32.const 15444
       i32.add
       i32.load offset=4
       local.tee $1
@@ -12464,8 +12467,8 @@
    i32.const 0
   end
   if (result i32)
-   i32.const 1088
-   i32.const 1088
+   i32.const 1552
+   i32.const 1552
    call $~lib/string/String.__eq
    i32.eqz
   else
@@ -12478,21 +12481,21 @@
     i32.sub
     i32.load offset=12
     local.tee $1
-    i32.const 11568
+    i32.const 15440
     i32.load
     i32.le_u
     if
      loop $do-continue|01
       i32.const 1
       local.get $1
-      i32.const 11
+      i32.const 22
       i32.eq
       br_if $__inlined_func$~lib/rt/__instanceof0
       drop
       local.get $1
       i32.const 3
       i32.shl
-      i32.const 11572
+      i32.const 15444
       i32.add
       i32.load offset=4
       local.tee $1
@@ -12503,15 +12506,15 @@
    end
    i32.eqz
    if
-    i32.const 2464
-    i32.const 4256
+    i32.const 2672
+    i32.const 4464
     i32.const 310
     i32.const 37
     call $~lib/builtins/abort
     unreachable
    end
    local.get $0
-   i32.const 1088
+   i32.const 1552
    call $~lib/assemblyscript-json/JSON/Obj#get
    local.tee $0
    i32.eqz
@@ -12528,21 +12531,21 @@
     i32.sub
     i32.load offset=12
     local.tee $1
-    i32.const 11568
+    i32.const 15440
     i32.load
     i32.le_u
     if
      loop $do-continue|04
       i32.const 1
       local.get $1
-      i32.const 26
+      i32.const 37
       i32.eq
       br_if $__inlined_func$~lib/rt/__instanceof3
       drop
       local.get $1
       i32.const 3
       i32.shl
-      i32.const 11572
+      i32.const 15444
       i32.add
       i32.load offset=4
       local.tee $1
@@ -12566,21 +12569,21 @@
     i32.sub
     i32.load offset=12
     local.tee $1
-    i32.const 11568
+    i32.const 15440
     i32.load
     i32.le_u
     if
      loop $do-continue|011
       i32.const 1
       local.get $1
-      i32.const 11
+      i32.const 22
       i32.eq
       br_if $__inlined_func$~lib/rt/__instanceof10
       drop
       local.get $1
       i32.const 3
       i32.shl
-      i32.const 11572
+      i32.const 15444
       i32.add
       i32.load offset=4
       local.tee $1
@@ -12603,21 +12606,21 @@
      i32.sub
      i32.load offset=12
      local.tee $1
-     i32.const 11568
+     i32.const 15440
      i32.load
      i32.le_u
      if
       loop $do-continue|013
        i32.const 1
        local.get $1
-       i32.const 11
+       i32.const 22
        i32.eq
        br_if $__inlined_func$~lib/rt/__instanceof12
        drop
        local.get $1
        i32.const 3
        i32.shl
-       i32.const 11572
+       i32.const 15444
        i32.add
        i32.load offset=4
        local.tee $1
@@ -12632,17 +12635,17 @@
   end
   i32.eqz
   if
-   i32.const 4880
-   i32.const 1088
+   i32.const 5072
+   i32.const 1552
    call $~lib/string/String#concat
-   i32.const 4768
+   i32.const 4960
    call $~lib/string/String#concat
-   i32.const 10144
+   i32.const 10000
    call $~lib/string/String#concat
-   i32.const 5184
+   i32.const 5376
    call $~lib/string/String#concat
-   i32.const 3904
-   i32.const 3792
+   i32.const 4112
+   i32.const 4000
    local.get $0
    if (result i32)
     block $__inlined_func$~lib/rt/__instanceof18 (result i32)
@@ -12651,21 +12654,21 @@
      i32.sub
      i32.load offset=12
      local.tee $1
-     i32.const 11568
+     i32.const 15440
      i32.load
      i32.le_u
      if
       loop $do-continue|019
        i32.const 1
        local.get $1
-       i32.const 11
+       i32.const 22
        i32.eq
        br_if $__inlined_func$~lib/rt/__instanceof18
        drop
        local.get $1
        i32.const 3
        i32.shl
-       i32.const 11572
+       i32.const 15444
        i32.add
        i32.load offset=4
        local.tee $1
@@ -12679,14 +12682,14 @@
    end
    select
    call $~lib/string/String#concat
-   i32.const 4256
+   i32.const 4464
    i32.const 401
    i32.const 5
    call $~lib/builtins/abort
    unreachable
   end
   i32.const 4
-  i32.const 39
+  i32.const 46
   call $~lib/rt/stub/__new
   local.set $2
   block $__inlined_func$~lib/rt/__instanceof21 (result i32)
@@ -12696,21 +12699,21 @@
    i32.sub
    i32.load offset=12
    local.tee $0
-   i32.const 11568
+   i32.const 15440
    i32.load
    i32.le_u
    if
     loop $do-continue|022
      i32.const 1
      local.get $0
-     i32.const 11
+     i32.const 22
      i32.eq
      br_if $__inlined_func$~lib/rt/__instanceof21
      drop
      local.get $0
      i32.const 3
      i32.shl
-     i32.const 11572
+     i32.const 15444
      i32.add
      i32.load offset=4
      local.tee $0
@@ -12721,8 +12724,8 @@
   end
   i32.eqz
   if
-   i32.const 2464
-   i32.const 4256
+   i32.const 2672
+   i32.const 4464
    i32.const 418
    i32.const 47
    call $~lib/builtins/abort
@@ -12731,18 +12734,2033 @@
   local.get $2
   local.get $1
   i32.load
-  i32.const 4336
-  i32.const 4336
+  i32.const 4544
+  i32.const 4544
   call $~lib/util/hash/HASH<~lib/string/String>
   call $~lib/map/Map<~lib/string/String,~lib/assemblyscript-json/JSON/Value>#find
   if (result i32)
    local.get $1
-   call $~lib/near-sdk-bindgen/index/decode<~lib/array/Array<~lib/array/Array<assembly/multicall/model/ContractCall>>,~lib/assemblyscript-json/JSON/Obj>
+   i32.const 4544
+   call $~lib/near-sdk-bindgen/index/decode<~lib/array/Array<~lib/array/Array<assembly/multicall/model/BatchCall>>,~lib/assemblyscript-json/JSON/Obj>
   else
    i32.const 0
   end
   i32.store
   local.get $2
+ )
+ (func $assembly/multicall/index/__wrapper_ft_on_transfer
+  (local $0 i32)
+  (local $1 i32)
+  (local $2 i32)
+  (local $3 i32)
+  call $~lib/near-sdk-bindgen/index/getInput
+  local.tee $0
+  i32.load
+  i32.const 9616
+  i32.const 9616
+  call $~lib/util/hash/HASH<~lib/string/String>
+  call $~lib/map/Map<~lib/string/String,~lib/assemblyscript-json/JSON/Value>#find
+  if (result i32)
+   local.get $0
+   i32.const 9616
+   call $~lib/near-sdk-bindgen/index/decode<~lib/string/String,~lib/assemblyscript-json/JSON/Obj>
+  else
+   i32.const 9616
+   call $~lib/near-sdk-bindgen/index/requireParameter<~lib/string/String>
+  end
+  local.get $0
+  i32.load
+  i32.const 9664
+  i32.const 9664
+  call $~lib/util/hash/HASH<~lib/string/String>
+  call $~lib/map/Map<~lib/string/String,~lib/assemblyscript-json/JSON/Value>#find
+  if (result i32)
+   local.get $0
+   i32.const 9664
+   call $~lib/near-sdk-bindgen/index/decode<~lib/as-bignum/integer/safe/u128/u128,~lib/assemblyscript-json/JSON/Obj>
+  else
+   i32.const 9664
+   call $~lib/near-sdk-bindgen/index/requireParameter<~lib/as-bignum/integer/safe/u128/u128>
+  end
+  drop
+  local.get $0
+  i32.load
+  i32.const 9696
+  i32.const 9696
+  call $~lib/util/hash/HASH<~lib/string/String>
+  call $~lib/map/Map<~lib/string/String,~lib/assemblyscript-json/JSON/Value>#find
+  if (result i32)
+   local.get $0
+   i32.const 9696
+   call $~lib/near-sdk-bindgen/index/decode<~lib/string/String,~lib/assemblyscript-json/JSON/Obj>
+  else
+   i32.const 9696
+   call $~lib/near-sdk-bindgen/index/requireParameter<~lib/string/String>
+  end
+  local.set $0
+  global.get $assembly/multicall/index/tokens
+  i64.const 0
+  call $~lib/near-sdk-core/env/env/env.predecessor_account_id
+  call $~lib/near-sdk-core/util/util.read_register_string
+  local.set $3
+  i32.load
+  local.get $3
+  call $~lib/near-sdk-core/collections/persistentSet/PersistentSet<~lib/string/String>#_hashedItem
+  call $~lib/near-sdk-core/collections/persistentMap/PersistentMap<~lib/typedarray/Uint8Array,i32>#contains
+  i32.eqz
+  if
+   i64.const 0
+   call $~lib/near-sdk-core/env/env/env.predecessor_account_id
+   i32.const 9812
+   call $~lib/near-sdk-core/util/util.read_register_string
+   i32.store
+   i32.const 9808
+   i32.const 9804
+   i32.load
+   i32.const 2
+   i32.shr_u
+   call $~lib/util/string/joinStringArray
+   i32.const 9088
+   i32.const 38
+   i32.const 3
+   call $~lib/builtins/abort
+   unreachable
+  end
+  call $assembly/multicall/index/_is_admin
+  local.get $0
+  call $~lib/near-sdk-core/util/util.stringToBytes
+  call $~lib/near-sdk-bindgen/index/decode<assembly/multicall/model/FtOnTransferArgs,~lib/typedarray/Uint8Array>
+  local.tee $0
+  i32.load
+  i32.const 9952
+  call $~lib/string/String.__eq
+  if
+   local.get $0
+   i32.load offset=4
+   call $~lib/near-sdk-core/base64/base64.decode
+   call $~lib/near-sdk-bindgen/index/decode<assembly/multicall/model/MulticallArgs,~lib/typedarray/Uint8Array>
+   i32.load
+   call $assembly/multicall/internal/_internal_multicall
+  end
+ )
+ (func $~lib/as-bignum/integer/safe/u128/u128.mul (param $0 i32) (param $1 i32) (result i32)
+  (local $2 i64)
+  (local $3 i64)
+  (local $4 i64)
+  (local $5 i32)
+  (local $6 i64)
+  (local $7 i64)
+  (local $8 i64)
+  (local $9 i64)
+  local.get $0
+  i64.load
+  local.get $0
+  i64.load offset=8
+  i64.or
+  i64.eqz
+  if (result i32)
+   i32.const 1
+  else
+   local.get $1
+   i64.load
+   local.get $1
+   i64.load offset=8
+   i64.or
+   i64.eqz
+  end
+  if
+   i32.const 16
+   i32.const 3
+   call $~lib/rt/stub/__new
+   i64.const 0
+   i64.const 0
+   call $~lib/as-bignum/integer/u128/u128#constructor
+   return
+  end
+  local.get $0
+  i64.load offset=8
+  local.tee $6
+  local.get $6
+  i64.const 1
+  i64.sub
+  i64.xor
+  i64.const 63
+  i64.shr_s
+  local.tee $2
+  i64.const -1
+  i64.xor
+  local.get $6
+  i64.and
+  local.get $2
+  local.get $0
+  i64.load
+  i64.and
+  i64.or
+  i64.clz
+  i32.wrap_i64
+  local.get $2
+  i32.wrap_i64
+  i32.const 64
+  i32.and
+  i32.add
+  local.get $1
+  i64.load offset=8
+  local.tee $4
+  local.get $4
+  i64.const 1
+  i64.sub
+  i64.xor
+  i64.const 63
+  i64.shr_s
+  local.tee $3
+  i64.const -1
+  i64.xor
+  local.get $4
+  i64.and
+  local.get $3
+  local.get $1
+  i64.load
+  i64.and
+  i64.or
+  i64.clz
+  i32.wrap_i64
+  local.get $3
+  i32.wrap_i64
+  i32.const 64
+  i32.and
+  i32.add
+  i32.add
+  local.tee $5
+  i32.const 127
+  i32.lt_u
+  if
+   i32.const 10096
+   i32.const 10176
+   i32.const 252
+   i32.const 7
+   call $~lib/builtins/abort
+   unreachable
+  end
+  local.get $5
+  i32.const 127
+  i32.eq
+  if
+   i32.const 0
+   local.get $1
+   i64.load offset=8
+   local.tee $2
+   i64.const 63
+   i64.shl
+   local.get $1
+   i64.load
+   i64.const 1
+   i64.shr_u
+   i64.or
+   local.get $2
+   i64.const 1
+   i64.shr_u
+   call $~lib/as-bignum/integer/u128/u128#constructor
+   local.tee $5
+   i64.load
+   local.tee $2
+   i64.const 4294967295
+   i64.and
+   local.tee $4
+   local.get $0
+   i64.load
+   local.tee $3
+   i64.const 4294967295
+   i64.and
+   local.tee $7
+   i64.mul
+   local.set $6
+   local.get $7
+   local.get $2
+   i64.const 32
+   i64.shr_u
+   local.tee $7
+   i64.mul
+   local.get $4
+   local.get $3
+   i64.const 32
+   i64.shr_u
+   local.tee $8
+   i64.mul
+   local.get $6
+   i64.const 32
+   i64.shr_u
+   i64.add
+   local.tee $9
+   i64.const 4294967295
+   i64.and
+   i64.add
+   local.set $4
+   local.get $7
+   local.get $8
+   i64.mul
+   local.get $9
+   i64.const 32
+   i64.shr_u
+   i64.add
+   local.get $2
+   local.get $0
+   i64.load offset=8
+   i64.mul
+   i64.add
+   local.get $3
+   local.get $5
+   i64.load offset=8
+   i64.mul
+   i64.add
+   local.get $4
+   i64.const 32
+   i64.shr_u
+   i64.add
+   global.set $~lib/as-bignum/globals/__res128_hi
+   i32.const 0
+   local.get $6
+   i64.const 4294967295
+   i64.and
+   local.get $4
+   i64.const 32
+   i64.shl
+   i64.or
+   global.get $~lib/as-bignum/globals/__res128_hi
+   call $~lib/as-bignum/integer/u128/u128#constructor
+   local.tee $5
+   i64.load offset=8
+   i64.const 63
+   i64.shr_u
+   i32.wrap_i64
+   if
+    i32.const 10096
+    i32.const 10176
+    i32.const 260
+    i32.const 9
+    call $~lib/builtins/abort
+    unreachable
+   end
+   i32.const 0
+   local.get $5
+   i64.load
+   local.tee $2
+   i64.const 1
+   i64.shl
+   local.get $5
+   i64.load offset=8
+   i64.const 1
+   i64.shl
+   local.get $2
+   i64.const 63
+   i64.shr_u
+   i64.or
+   call $~lib/as-bignum/integer/u128/u128#constructor
+   local.set $5
+   local.get $1
+   i64.load
+   i64.const 1
+   i64.and
+   i32.wrap_i64
+   if
+    i32.const 0
+    local.get $5
+    i64.load
+    local.tee $2
+    local.get $0
+    i64.load
+    i64.add
+    local.tee $3
+    local.get $2
+    local.get $3
+    i64.gt_u
+    i64.extend_i32_u
+    local.get $5
+    i64.load offset=8
+    local.get $0
+    i64.load offset=8
+    i64.add
+    i64.add
+    call $~lib/as-bignum/integer/u128/u128#constructor
+    local.tee $5
+    i64.load offset=8
+    local.tee $2
+    local.get $0
+    i64.load offset=8
+    local.tee $3
+    i64.eq
+    if (result i32)
+     local.get $5
+     i64.load
+     local.get $0
+     i64.load
+     i64.lt_u
+    else
+     local.get $2
+     local.get $3
+     i64.lt_u
+    end
+    if
+     i32.const 10096
+     i32.const 10176
+     i32.const 269
+     i32.const 11
+     call $~lib/builtins/abort
+     unreachable
+    end
+   end
+   local.get $5
+   return
+  end
+  local.get $1
+  i64.load
+  local.tee $2
+  i64.const 4294967295
+  i64.and
+  local.tee $4
+  local.get $0
+  i64.load
+  local.tee $3
+  i64.const 4294967295
+  i64.and
+  local.tee $7
+  i64.mul
+  local.set $6
+  local.get $7
+  local.get $2
+  i64.const 32
+  i64.shr_u
+  local.tee $7
+  i64.mul
+  local.get $4
+  local.get $3
+  i64.const 32
+  i64.shr_u
+  local.tee $8
+  i64.mul
+  local.get $6
+  i64.const 32
+  i64.shr_u
+  i64.add
+  local.tee $9
+  i64.const 4294967295
+  i64.and
+  i64.add
+  local.set $4
+  local.get $7
+  local.get $8
+  i64.mul
+  local.get $9
+  i64.const 32
+  i64.shr_u
+  i64.add
+  local.get $2
+  local.get $0
+  i64.load offset=8
+  i64.mul
+  i64.add
+  local.get $3
+  local.get $1
+  i64.load offset=8
+  i64.mul
+  i64.add
+  local.get $4
+  i64.const 32
+  i64.shr_u
+  i64.add
+  global.set $~lib/as-bignum/globals/__res128_hi
+  i32.const 0
+  local.get $6
+  i64.const 4294967295
+  i64.and
+  local.get $4
+  i64.const 32
+  i64.shl
+  i64.or
+  global.get $~lib/as-bignum/globals/__res128_hi
+  call $~lib/as-bignum/integer/u128/u128#constructor
+ )
+ (func $~lib/as-bignum/integer/safe/u128/u128.sub (param $0 i32) (param $1 i32) (result i32)
+  (local $2 i64)
+  (local $3 i64)
+  local.get $0
+  i64.load offset=8
+  local.tee $2
+  local.get $1
+  i64.load offset=8
+  local.tee $3
+  i64.eq
+  if (result i32)
+   local.get $0
+   i64.load
+   local.get $1
+   i64.load
+   i64.lt_u
+  else
+   local.get $2
+   local.get $3
+   i64.lt_u
+  end
+  if
+   i32.const 10272
+   i32.const 10176
+   i32.const 239
+   i32.const 16
+   call $~lib/builtins/abort
+   unreachable
+  end
+  i32.const 0
+  local.get $0
+  i64.load
+  local.tee $2
+  local.get $1
+  i64.load
+  i64.sub
+  local.tee $3
+  local.get $0
+  i64.load offset=8
+  local.get $1
+  i64.load offset=8
+  i64.sub
+  local.get $2
+  local.get $3
+  i64.lt_u
+  i64.extend_i32_u
+  i64.sub
+  call $~lib/as-bignum/integer/u128/u128#constructor
+ )
+ (func $assembly/multicall/index/__wrapper_near_transfer
+  (local $0 i32)
+  (local $1 i32)
+  (local $2 i32)
+  (local $3 i32)
+  call $~lib/near-sdk-bindgen/index/getInput
+  local.tee $0
+  i32.load
+  i32.const 10048
+  i32.const 10048
+  call $~lib/util/hash/HASH<~lib/string/String>
+  call $~lib/map/Map<~lib/string/String,~lib/assemblyscript-json/JSON/Value>#find
+  if (result i32)
+   local.get $0
+   i32.const 10048
+   call $~lib/near-sdk-bindgen/index/decode<~lib/string/String,~lib/assemblyscript-json/JSON/Obj>
+  else
+   i32.const 10048
+   call $~lib/near-sdk-bindgen/index/requireParameter<~lib/string/String>
+  end
+  local.get $0
+  i32.load
+  i32.const 9664
+  i32.const 9664
+  call $~lib/util/hash/HASH<~lib/string/String>
+  call $~lib/map/Map<~lib/string/String,~lib/assemblyscript-json/JSON/Value>#find
+  if (result i32)
+   local.get $0
+   i32.const 9664
+   call $~lib/near-sdk-bindgen/index/decode<~lib/as-bignum/integer/safe/u128/u128,~lib/assemblyscript-json/JSON/Obj>
+  else
+   i32.const 16
+   i32.const 3
+   call $~lib/rt/stub/__new
+   i64.const -1
+   i64.const -1
+   call $~lib/as-bignum/integer/u128/u128#constructor
+  end
+  local.set $0
+  i64.const 0
+  call $~lib/near-sdk-core/env/env/env.predecessor_account_id
+  call $~lib/near-sdk-core/util/util.read_register_string
+  call $assembly/multicall/index/_is_admin
+  call $assembly/multicall/index/_assert_deposit
+  i32.const 16
+  i32.const 3
+  call $~lib/rt/stub/__new
+  i64.const -1
+  i64.const -1
+  call $~lib/as-bignum/integer/u128/u128#constructor
+  local.tee $1
+  local.set $2
+  local.get $0
+  i64.load offset=8
+  local.get $1
+  i64.load offset=8
+  i64.eq
+  if (result i32)
+   local.get $0
+   i64.load
+   local.get $2
+   i64.load
+   i64.eq
+  else
+   i32.const 0
+  end
+  if
+   global.get $assembly/multicall/utils/StorageCostUtils.STORAGE_PRICE_PER_BYTE
+   i32.const 0
+   call $~lib/near-sdk-core/env/env/env.storage_usage
+   i64.const 0
+   call $~lib/as-bignum/integer/u128/u128#constructor
+   call $~lib/as-bignum/integer/safe/u128/u128.mul
+   local.set $2
+   i32.const 12
+   i32.const 7
+   call $~lib/rt/stub/__new
+   i32.const 16
+   call $~lib/arraybuffer/ArrayBufferView#constructor
+   local.tee $1
+   i32.load offset=4
+   i64.extend_i32_u
+   call $~lib/near-sdk-core/env/env/env.account_balance
+   local.get $1
+   i32.load offset=8
+   if (result i32)
+    local.get $1
+    i32.load offset=8
+    i32.const 15
+    i32.and
+    i32.eqz
+   else
+    i32.const 0
+   end
+   i32.eqz
+   if
+    i32.const 0
+    i32.const 9168
+    i32.const 132
+    i32.const 5
+    call $~lib/builtins/abort
+    unreachable
+   end
+   i32.const 0
+   local.get $1
+   i32.load offset=4
+   local.tee $0
+   i64.load
+   local.get $0
+   i64.load offset=8
+   call $~lib/as-bignum/integer/u128/u128#constructor
+   local.get $2
+   call $~lib/as-bignum/integer/safe/u128/u128.sub
+   local.set $0
+  end
+  call $~lib/near-sdk-core/promise/ContractPromiseBatch.create
+  local.get $0
+  call $~lib/near-sdk-core/promise/ContractPromiseBatch#transfer
+  drop
+ )
+ (func $~lib/near-sdk-bindgen/index/decode<~lib/array/Array<~lib/string/String>,~lib/assemblyscript-json/JSON/Obj> (param $0 i32) (param $1 i32) (result i32)
+  (local $2 i32)
+  (local $3 i32)
+  local.get $0
+  if (result i32)
+   block $__inlined_func$~lib/rt/__instanceof (result i32)
+    local.get $0
+    i32.const 20
+    i32.sub
+    i32.load offset=12
+    local.tee $2
+    i32.const 15440
+    i32.load
+    i32.le_u
+    if
+     loop $do-continue|0
+      i32.const 1
+      local.get $2
+      i32.const 22
+      i32.eq
+      br_if $__inlined_func$~lib/rt/__instanceof
+      drop
+      local.get $2
+      i32.const 3
+      i32.shl
+      i32.const 15444
+      i32.add
+      i32.load offset=4
+      local.tee $2
+      br_if $do-continue|0
+     end
+    end
+    i32.const 0
+   end
+  else
+   i32.const 0
+  end
+  if (result i32)
+   local.get $1
+   i32.const 1552
+   call $~lib/string/String.__eq
+   i32.eqz
+  else
+   i32.const 0
+  end
+  if
+   block $__inlined_func$~lib/rt/__instanceof0 (result i32)
+    local.get $0
+    i32.const 20
+    i32.sub
+    i32.load offset=12
+    local.tee $2
+    i32.const 15440
+    i32.load
+    i32.le_u
+    if
+     loop $do-continue|01
+      i32.const 1
+      local.get $2
+      i32.const 22
+      i32.eq
+      br_if $__inlined_func$~lib/rt/__instanceof0
+      drop
+      local.get $2
+      i32.const 3
+      i32.shl
+      i32.const 15444
+      i32.add
+      i32.load offset=4
+      local.tee $2
+      br_if $do-continue|01
+     end
+    end
+    i32.const 0
+   end
+   i32.eqz
+   if
+    i32.const 2672
+    i32.const 4464
+    i32.const 310
+    i32.const 37
+    call $~lib/builtins/abort
+    unreachable
+   end
+   local.get $0
+   local.get $1
+   call $~lib/assemblyscript-json/JSON/Obj#get
+   local.tee $0
+   i32.eqz
+   if
+    local.get $0
+    return
+   end
+  end
+  local.get $0
+  if (result i32)
+   block $__inlined_func$~lib/rt/__instanceof3 (result i32)
+    local.get $0
+    i32.const 20
+    i32.sub
+    i32.load offset=12
+    local.tee $2
+    i32.const 15440
+    i32.load
+    i32.le_u
+    if
+     loop $do-continue|04
+      i32.const 1
+      local.get $2
+      i32.const 37
+      i32.eq
+      br_if $__inlined_func$~lib/rt/__instanceof3
+      drop
+      local.get $2
+      i32.const 3
+      i32.shl
+      i32.const 15444
+      i32.add
+      i32.load offset=4
+      local.tee $2
+      br_if $do-continue|04
+     end
+    end
+    i32.const 0
+   end
+  else
+   i32.const 0
+  end
+  if
+   i32.const 0
+   return
+  end
+  local.get $0
+  if (result i32)
+   block $__inlined_func$~lib/rt/__instanceof1 (result i32)
+    local.get $0
+    i32.const 20
+    i32.sub
+    i32.load offset=12
+    local.tee $2
+    i32.const 15440
+    i32.load
+    i32.le_u
+    if
+     loop $do-continue|02
+      i32.const 1
+      local.get $2
+      i32.const 30
+      i32.eq
+      br_if $__inlined_func$~lib/rt/__instanceof1
+      drop
+      local.get $2
+      i32.const 3
+      i32.shl
+      i32.const 15444
+      i32.add
+      i32.load offset=4
+      local.tee $2
+      br_if $do-continue|02
+     end
+    end
+    i32.const 0
+   end
+  else
+   i32.const 0
+  end
+  i32.eqz
+  if
+   i32.const 5072
+   local.get $1
+   call $~lib/string/String#concat
+   i32.const 5136
+   call $~lib/string/String#concat
+   i32.const 4464
+   i32.const 226
+   i32.const 3
+   call $~lib/builtins/abort
+   unreachable
+  end
+  call $~lib/array/Array<~lib/string/String>#constructor
+  local.set $1
+  block $__inlined_func$~lib/rt/__instanceof13 (result i32)
+   local.get $0
+   i32.const 20
+   i32.sub
+   i32.load offset=12
+   local.tee $2
+   i32.const 15440
+   i32.load
+   i32.le_u
+   if
+    loop $do-continue|024
+     i32.const 1
+     local.get $2
+     i32.const 30
+     i32.eq
+     br_if $__inlined_func$~lib/rt/__instanceof13
+     drop
+     local.get $2
+     i32.const 3
+     i32.shl
+     i32.const 15444
+     i32.add
+     i32.load offset=4
+     local.tee $2
+     br_if $do-continue|024
+    end
+   end
+   i32.const 0
+  end
+  i32.eqz
+  if
+   i32.const 2672
+   i32.const 4464
+   i32.const 231
+   i32.const 26
+   call $~lib/builtins/abort
+   unreachable
+  end
+  local.get $0
+  i32.load
+  local.set $0
+  loop $for-loop|0
+   local.get $3
+   local.get $0
+   i32.load offset=12
+   i32.lt_s
+   if
+    local.get $1
+    local.get $0
+    local.get $3
+    call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#__get
+    i32.const 1552
+    call $~lib/near-sdk-bindgen/index/decode<~lib/string/String,~lib/assemblyscript-json/JSON/Obj>
+    call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#push
+    local.get $3
+    i32.const 1
+    i32.add
+    local.set $3
+    br $for-loop|0
+   end
+  end
+  local.get $1
+ )
+ (func $~lib/near-sdk-bindgen/index/requireParameter<~lib/array/Array<~lib/string/String>> (param $0 i32) (result i32)
+  i32.const 6592
+  local.get $0
+  call $~lib/string/String#concat
+  i32.const 4960
+  call $~lib/string/String#concat
+  i32.const 10400
+  call $~lib/string/String#concat
+  i32.const 6640
+  call $~lib/string/String#concat
+  i32.const 4464
+  i32.const 33
+  i32.const 3
+  call $~lib/builtins/abort
+  unreachable
+ )
+ (func $~lib/near-sdk-core/storage/Storage._internalReadBytes (param $0 i32) (result i32)
+  local.get $0
+  call $~lib/near-sdk-core/util/util.stringToBytes
+  local.tee $0
+  i32.load offset=8
+  i64.extend_i32_s
+  local.get $0
+  i32.load offset=4
+  i64.extend_i32_u
+  i64.const 0
+  call $~lib/near-sdk-core/env/env/env.storage_read
+  i64.const 1
+  i64.eq
+  if (result i32)
+   call $~lib/near-sdk-core/util/util.read_register
+  else
+   i32.const 0
+  end
+ )
+ (func $~lib/near-sdk-core/collections/persistentVector/PersistentVector<~lib/string/String>#get:length (param $0 i32) (result i32)
+  (local $1 i32)
+  local.get $0
+  i32.load offset=8
+  i32.const 0
+  i32.lt_s
+  if
+   local.get $0
+   local.get $0
+   i32.load offset=4
+   call $~lib/near-sdk-core/storage/Storage._internalReadBytes
+   call $~lib/near-sdk-core/util/util.bytesToString
+   local.tee $1
+   i32.const 0
+   call $~lib/string/String.__eq
+   if (result i32)
+    i32.const 0
+   else
+    local.get $1
+    i32.eqz
+    if
+     i32.const 2160
+     i32.const 10480
+     i32.const 218
+     i32.const 41
+     call $~lib/builtins/abort
+     unreachable
+    end
+    local.get $1
+    call $~lib/util/string/strtol<i64>
+    i32.wrap_i64
+   end
+   i32.store offset=8
+  end
+  local.get $0
+  i32.load offset=8
+ )
+ (func $~lib/near-sdk-core/storage/Storage.setString (param $0 i32) (param $1 i32)
+  local.get $0
+  call $~lib/near-sdk-core/util/util.stringToBytes
+  local.set $0
+  local.get $1
+  call $~lib/near-sdk-core/util/util.stringToBytes
+  local.set $1
+  local.get $0
+  i32.load offset=8
+  i64.extend_i32_s
+  local.get $0
+  i32.load offset=4
+  i64.extend_i32_u
+  local.get $1
+  i32.load offset=8
+  i64.extend_i32_s
+  local.get $1
+  i32.load offset=4
+  i64.extend_i32_u
+  i64.const 0
+  call $~lib/near-sdk-core/env/env/env.storage_write
+  drop
+ )
+ (func $~lib/near-sdk-core/collections/persistentSet/PersistentSet<~lib/string/String>#add (param $0 i32) (param $1 i32)
+  (local $2 i32)
+  (local $3 i32)
+  (local $4 i32)
+  local.get $0
+  i32.load
+  local.get $1
+  call $~lib/near-sdk-core/collections/persistentSet/PersistentSet<~lib/string/String>#_hashedItem
+  call $~lib/near-sdk-core/collections/persistentMap/PersistentMap<~lib/typedarray/Uint8Array,i32>#contains
+  if
+   return
+  end
+  local.get $0
+  i32.load
+  local.get $1
+  call $~lib/near-sdk-core/collections/persistentSet/PersistentSet<~lib/string/String>#_hashedItem
+  local.get $0
+  i32.load offset=4
+  call $~lib/near-sdk-core/collections/persistentVector/PersistentVector<~lib/string/String>#get:length
+  local.set $4
+  call $~lib/near-sdk-core/collections/persistentMap/PersistentMap<~lib/typedarray/Uint8Array,i32>#_key
+  local.get $4
+  call $~lib/util/number/itoa32
+  call $~lib/near-sdk-core/storage/Storage.setString
+  local.get $0
+  i32.load offset=4
+  local.tee $0
+  call $~lib/near-sdk-core/collections/persistentVector/PersistentVector<~lib/string/String>#get:length
+  local.tee $3
+  i32.const 1
+  i32.add
+  local.set $2
+  local.get $0
+  local.get $2
+  i32.store offset=8
+  local.get $0
+  i32.load offset=4
+  local.get $2
+  call $~lib/util/number/itoa32
+  call $~lib/near-sdk-core/storage/Storage.setString
+  local.get $0
+  i32.load
+  local.get $3
+  call $~lib/util/number/itoa32
+  call $~lib/string/String#concat
+  local.get $1
+  call $~lib/near-sdk-core/storage/Storage.setString
+ )
+ (func $assembly/multicall/index/__wrapper_admins_add
+  (local $0 i32)
+  (local $1 i32)
+  call $~lib/near-sdk-bindgen/index/getInput
+  local.tee $0
+  i32.load
+  i32.const 10352
+  i32.const 10352
+  call $~lib/util/hash/HASH<~lib/string/String>
+  call $~lib/map/Map<~lib/string/String,~lib/assemblyscript-json/JSON/Value>#find
+  if (result i32)
+   local.get $0
+   i32.const 10352
+   call $~lib/near-sdk-bindgen/index/decode<~lib/array/Array<~lib/string/String>,~lib/assemblyscript-json/JSON/Obj>
+  else
+   i32.const 10352
+   call $~lib/near-sdk-bindgen/index/requireParameter<~lib/array/Array<~lib/string/String>>
+  end
+  local.set $0
+  i64.const 0
+  call $~lib/near-sdk-core/env/env/env.predecessor_account_id
+  call $~lib/near-sdk-core/util/util.read_register_string
+  call $assembly/multicall/index/_is_admin
+  call $assembly/multicall/index/_assert_deposit
+  loop $for-loop|0
+   local.get $1
+   local.get $0
+   i32.load offset=12
+   i32.lt_s
+   if
+    global.get $assembly/multicall/index/admins
+    local.get $0
+    local.get $1
+    call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#__get
+    call $~lib/near-sdk-core/collections/persistentSet/PersistentSet<~lib/string/String>#add
+    local.get $1
+    i32.const 1
+    i32.add
+    local.set $1
+    br $for-loop|0
+   end
+  end
+ )
+ (func $~lib/near-sdk-core/storage/Storage.getSome<~lib/string/String> (param $0 i32) (result i32)
+  (local $1 i32)
+  local.get $0
+  call $~lib/near-sdk-core/util/util.stringToBytes
+  local.tee $1
+  i32.load offset=8
+  i64.extend_i32_s
+  local.get $1
+  i32.load offset=4
+  i64.extend_i32_u
+  call $~lib/near-sdk-core/env/env/env.storage_has_key
+  i64.eqz
+  if
+   i32.const 10976
+   local.get $0
+   call $~lib/string/String#concat
+   i32.const 11008
+   call $~lib/string/String#concat
+   i32.const 10480
+   i32.const 237
+   i32.const 7
+   call $~lib/builtins/abort
+   unreachable
+  end
+  local.get $0
+  call $~lib/near-sdk-core/storage/Storage._internalReadBytes
+  call $~lib/near-sdk-core/util/util.bytesToString
+  local.tee $0
+  i32.eqz
+  if
+   i32.const 2160
+   i32.const 10480
+   i32.const 240
+   i32.const 38
+   call $~lib/builtins/abort
+   unreachable
+  end
+  local.get $0
+ )
+ (func $~lib/near-sdk-core/collections/persistentVector/PersistentVector<~lib/string/String>#pop (param $0 i32) (result i32)
+  (local $1 i32)
+  (local $2 i32)
+  local.get $0
+  call $~lib/near-sdk-core/collections/persistentVector/PersistentVector<~lib/string/String>#get:length
+  i32.const 0
+  i32.le_s
+  if
+   i32.const 10784
+   i32.const 10848
+   i32.const 67
+   i32.const 5
+   call $~lib/builtins/abort
+   unreachable
+  end
+  local.get $0
+  local.get $0
+  call $~lib/near-sdk-core/collections/persistentVector/PersistentVector<~lib/string/String>#get:length
+  i32.const 1
+  i32.sub
+  local.tee $1
+  i32.store offset=8
+  local.get $0
+  i32.load offset=4
+  local.get $1
+  call $~lib/util/number/itoa32
+  call $~lib/near-sdk-core/storage/Storage.setString
+  local.get $0
+  i32.load
+  local.get $1
+  call $~lib/util/number/itoa32
+  call $~lib/string/String#concat
+  call $~lib/near-sdk-core/storage/Storage.getSome<~lib/string/String>
+  local.get $0
+  i32.load
+  local.get $1
+  call $~lib/util/number/itoa32
+  call $~lib/string/String#concat
+  call $~lib/near-sdk-core/util/util.stringToBytes
+  local.tee $0
+  i32.load offset=8
+  i64.extend_i32_s
+  local.get $0
+  i32.load offset=4
+  i64.extend_i32_u
+  i64.const 0
+  call $~lib/near-sdk-core/env/env/env.storage_remove
+  drop
+ )
+ (func $~lib/near-sdk-core/collections/persistentVector/PersistentVector<~lib/string/String>#__get (param $0 i32) (param $1 i32) (result i32)
+  local.get $1
+  i32.const 0
+  i32.ge_s
+  if (result i32)
+   local.get $0
+   call $~lib/near-sdk-core/collections/persistentVector/PersistentVector<~lib/string/String>#get:length
+   local.get $1
+   i32.gt_s
+  else
+   i32.const 0
+  end
+  i32.eqz
+  if
+   i32.const 2320
+   i32.const 10848
+   i32.const 40
+   i32.const 5
+   call $~lib/builtins/abort
+   unreachable
+  end
+  local.get $0
+  i32.load
+  local.get $1
+  call $~lib/util/number/itoa32
+  call $~lib/string/String#concat
+  call $~lib/near-sdk-core/storage/Storage.getSome<~lib/string/String>
+ )
+ (func $~lib/near-sdk-core/storage/Storage.getSome<i32> (param $0 i32) (result i32)
+  (local $1 i32)
+  local.get $0
+  call $~lib/near-sdk-core/util/util.stringToBytes
+  local.tee $1
+  i32.load offset=8
+  i64.extend_i32_s
+  local.get $1
+  i32.load offset=4
+  i64.extend_i32_u
+  call $~lib/near-sdk-core/env/env/env.storage_has_key
+  i64.eqz
+  if
+   i32.const 10976
+   local.get $0
+   call $~lib/string/String#concat
+   i32.const 11008
+   call $~lib/string/String#concat
+   i32.const 10480
+   i32.const 237
+   i32.const 7
+   call $~lib/builtins/abort
+   unreachable
+  end
+  local.get $0
+  call $~lib/near-sdk-core/storage/Storage._internalReadBytes
+  call $~lib/near-sdk-core/util/util.bytesToString
+  local.tee $0
+  i32.eqz
+  if
+   i32.const 2160
+   i32.const 10480
+   i32.const 240
+   i32.const 38
+   call $~lib/builtins/abort
+   unreachable
+  end
+  local.get $0
+  call $~lib/util/string/strtol<i64>
+  i32.wrap_i64
+ )
+ (func $~lib/near-sdk-core/collections/persistentSet/PersistentSet<~lib/string/String>#delete (param $0 i32) (param $1 i32)
+  (local $2 i32)
+  (local $3 i32)
+  (local $4 i32)
+  (local $5 i32)
+  local.get $1
+  call $~lib/near-sdk-core/collections/persistentSet/PersistentSet<~lib/string/String>#_hashedItem
+  local.set $1
+  local.get $0
+  i32.load
+  local.get $1
+  call $~lib/near-sdk-core/collections/persistentMap/PersistentMap<~lib/typedarray/Uint8Array,i32>#contains
+  i32.eqz
+  if
+   i32.const 10560
+   i32.const 10656
+   i32.const 36
+   i32.const 5
+   call $~lib/builtins/abort
+   unreachable
+  end
+  local.get $0
+  i32.load offset=4
+  call $~lib/near-sdk-core/collections/persistentVector/PersistentVector<~lib/string/String>#get:length
+  i32.const 1
+  i32.eq
+  if
+   loop $while-continue|0
+    local.get $0
+    i32.load offset=4
+    call $~lib/near-sdk-core/collections/persistentVector/PersistentVector<~lib/string/String>#get:length
+    i32.const 0
+    i32.gt_s
+    if
+     local.get $0
+     i32.load offset=4
+     call $~lib/near-sdk-core/collections/persistentVector/PersistentVector<~lib/string/String>#pop
+     local.set $1
+     local.get $0
+     i32.load
+     local.get $1
+     call $~lib/near-sdk-core/collections/persistentSet/PersistentSet<~lib/string/String>#_hashedItem
+     call $~lib/near-sdk-core/collections/persistentMap/PersistentMap<~lib/typedarray/Uint8Array,i32>#_key
+     call $~lib/near-sdk-core/util/util.stringToBytes
+     local.tee $1
+     i32.load offset=8
+     i64.extend_i32_s
+     local.get $1
+     i32.load offset=4
+     i64.extend_i32_u
+     i64.const 0
+     call $~lib/near-sdk-core/env/env/env.storage_remove
+     drop
+     br $while-continue|0
+    end
+   end
+   return
+  end
+  local.get $0
+  i32.load offset=4
+  local.tee $2
+  local.get $2
+  call $~lib/near-sdk-core/collections/persistentVector/PersistentVector<~lib/string/String>#get:length
+  i32.const 1
+  i32.sub
+  call $~lib/near-sdk-core/collections/persistentVector/PersistentVector<~lib/string/String>#__get
+  local.get $0
+  i32.load
+  local.get $1
+  call $~lib/near-sdk-core/collections/persistentMap/PersistentMap<~lib/typedarray/Uint8Array,i32>#_key
+  call $~lib/near-sdk-core/storage/Storage.getSome<i32>
+  local.tee $2
+  local.get $0
+  i32.load offset=4
+  local.tee $1
+  call $~lib/near-sdk-core/collections/persistentVector/PersistentVector<~lib/string/String>#get:length
+  i32.ge_s
+  if
+   i32.const 11104
+   i32.const 10848
+   i32.const 79
+   i32.const 5
+   call $~lib/builtins/abort
+   unreachable
+  end
+  local.get $1
+  call $~lib/near-sdk-core/collections/persistentVector/PersistentVector<~lib/string/String>#get:length
+  local.get $2
+  i32.const 1
+  i32.add
+  i32.eq
+  if
+   local.get $1
+   call $~lib/near-sdk-core/collections/persistentVector/PersistentVector<~lib/string/String>#pop
+   drop
+  else
+   local.get $1
+   i32.load
+   local.get $2
+   call $~lib/util/number/itoa32
+   call $~lib/string/String#concat
+   call $~lib/near-sdk-core/storage/Storage.getSome<~lib/string/String>
+   drop
+   local.get $1
+   call $~lib/near-sdk-core/collections/persistentVector/PersistentVector<~lib/string/String>#get:length
+   i32.const 1
+   i32.sub
+   local.set $3
+   local.get $1
+   i32.load
+   local.get $3
+   call $~lib/util/number/itoa32
+   call $~lib/string/String#concat
+   call $~lib/near-sdk-core/storage/Storage.getSome<~lib/string/String>
+   local.set $3
+   local.get $1
+   call $~lib/near-sdk-core/collections/persistentVector/PersistentVector<~lib/string/String>#get:length
+   i32.const 1
+   i32.sub
+   local.set $4
+   local.get $1
+   i32.load
+   local.get $4
+   call $~lib/util/number/itoa32
+   call $~lib/string/String#concat
+   call $~lib/near-sdk-core/util/util.stringToBytes
+   local.tee $4
+   i32.load offset=8
+   i64.extend_i32_s
+   local.get $4
+   i32.load offset=4
+   i64.extend_i32_u
+   i64.const 0
+   call $~lib/near-sdk-core/env/env/env.storage_remove
+   drop
+   local.get $1
+   i32.load
+   local.get $2
+   call $~lib/util/number/itoa32
+   call $~lib/string/String#concat
+   local.get $3
+   call $~lib/near-sdk-core/storage/Storage.setString
+   local.get $1
+   local.get $1
+   call $~lib/near-sdk-core/collections/persistentVector/PersistentVector<~lib/string/String>#get:length
+   i32.const 1
+   i32.sub
+   local.tee $3
+   i32.store offset=8
+   local.get $1
+   i32.load offset=4
+   local.get $3
+   call $~lib/util/number/itoa32
+   call $~lib/near-sdk-core/storage/Storage.setString
+  end
+  call $~lib/near-sdk-core/collections/persistentSet/PersistentSet<~lib/string/String>#_hashedItem
+  local.set $1
+  local.get $0
+  i32.load
+  local.get $1
+  call $~lib/near-sdk-core/collections/persistentMap/PersistentMap<~lib/typedarray/Uint8Array,i32>#_key
+  local.get $2
+  call $~lib/util/number/itoa32
+  call $~lib/near-sdk-core/storage/Storage.setString
+ )
+ (func $assembly/multicall/index/__wrapper_admins_remove
+  (local $0 i32)
+  (local $1 i32)
+  call $~lib/near-sdk-bindgen/index/getInput
+  local.tee $0
+  i32.load
+  i32.const 10352
+  i32.const 10352
+  call $~lib/util/hash/HASH<~lib/string/String>
+  call $~lib/map/Map<~lib/string/String,~lib/assemblyscript-json/JSON/Value>#find
+  if (result i32)
+   local.get $0
+   i32.const 10352
+   call $~lib/near-sdk-bindgen/index/decode<~lib/array/Array<~lib/string/String>,~lib/assemblyscript-json/JSON/Obj>
+  else
+   i32.const 10352
+   call $~lib/near-sdk-bindgen/index/requireParameter<~lib/array/Array<~lib/string/String>>
+  end
+  local.set $0
+  i64.const 0
+  call $~lib/near-sdk-core/env/env/env.predecessor_account_id
+  call $~lib/near-sdk-core/util/util.read_register_string
+  call $assembly/multicall/index/_is_admin
+  call $assembly/multicall/index/_assert_deposit
+  loop $for-loop|0
+   local.get $1
+   local.get $0
+   i32.load offset=12
+   i32.lt_s
+   if
+    global.get $assembly/multicall/index/admins
+    local.get $0
+    local.get $1
+    call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#__get
+    call $~lib/near-sdk-core/collections/persistentSet/PersistentSet<~lib/string/String>#delete
+    local.get $1
+    i32.const 1
+    i32.add
+    local.set $1
+    br $for-loop|0
+   end
+  end
+ )
+ (func $~lib/near-sdk-bindgen/index/decode<i32,~lib/assemblyscript-json/JSON/Obj> (param $0 i32) (param $1 i32) (result i32)
+  (local $2 i32)
+  local.get $0
+  if (result i32)
+   block $__inlined_func$~lib/rt/__instanceof (result i32)
+    local.get $0
+    i32.const 20
+    i32.sub
+    i32.load offset=12
+    local.tee $2
+    i32.const 15440
+    i32.load
+    i32.le_u
+    if
+     loop $do-continue|0
+      i32.const 1
+      local.get $2
+      i32.const 22
+      i32.eq
+      br_if $__inlined_func$~lib/rt/__instanceof
+      drop
+      local.get $2
+      i32.const 3
+      i32.shl
+      i32.const 15444
+      i32.add
+      i32.load offset=4
+      local.tee $2
+      br_if $do-continue|0
+     end
+    end
+    i32.const 0
+   end
+  else
+   i32.const 0
+  end
+  if (result i32)
+   local.get $1
+   i32.const 1552
+   call $~lib/string/String.__eq
+   i32.eqz
+  else
+   i32.const 0
+  end
+  if
+   block $__inlined_func$~lib/rt/__instanceof0 (result i32)
+    local.get $0
+    i32.const 20
+    i32.sub
+    i32.load offset=12
+    local.tee $2
+    i32.const 15440
+    i32.load
+    i32.le_u
+    if
+     loop $do-continue|01
+      i32.const 1
+      local.get $2
+      i32.const 22
+      i32.eq
+      br_if $__inlined_func$~lib/rt/__instanceof0
+      drop
+      local.get $2
+      i32.const 3
+      i32.shl
+      i32.const 15444
+      i32.add
+      i32.load offset=4
+      local.tee $2
+      br_if $do-continue|01
+     end
+    end
+    i32.const 0
+   end
+   i32.eqz
+   if
+    i32.const 2672
+    i32.const 4464
+    i32.const 310
+    i32.const 37
+    call $~lib/builtins/abort
+    unreachable
+   end
+   local.get $0
+   local.get $1
+   call $~lib/assemblyscript-json/JSON/Obj#get
+   local.tee $0
+   i32.eqz
+   if
+    i32.const 4688
+    i32.const 11200
+    call $~lib/string/String#concat
+    i32.const 4864
+    call $~lib/string/String#concat
+    i32.const 4464
+    i32.const 323
+    i32.const 9
+    call $~lib/builtins/abort
+    unreachable
+   end
+  end
+  local.get $0
+  if (result i32)
+   block $__inlined_func$~lib/rt/__instanceof5 (result i32)
+    local.get $0
+    i32.const 20
+    i32.sub
+    i32.load offset=12
+    local.tee $2
+    i32.const 15440
+    i32.load
+    i32.le_u
+    if
+     loop $do-continue|06
+      i32.const 1
+      local.get $2
+      i32.const 36
+      i32.eq
+      br_if $__inlined_func$~lib/rt/__instanceof5
+      drop
+      local.get $2
+      i32.const 3
+      i32.shl
+      i32.const 15444
+      i32.add
+      i32.load offset=4
+      local.tee $2
+      br_if $do-continue|06
+     end
+    end
+    i32.const 0
+   end
+  else
+   i32.const 0
+  end
+  i32.eqz
+  if
+   i32.const 5072
+   local.get $1
+   call $~lib/string/String#concat
+   i32.const 4960
+   call $~lib/string/String#concat
+   i32.const 11200
+   call $~lib/string/String#concat
+   i32.const 11232
+   call $~lib/string/String#concat
+   i32.const 4464
+   i32.const 358
+   i32.const 5
+   call $~lib/builtins/abort
+   unreachable
+  end
+  block $__inlined_func$~lib/rt/__instanceof11 (result i32)
+   local.get $0
+   i32.const 20
+   i32.sub
+   i32.load offset=12
+   local.tee $1
+   i32.const 15440
+   i32.load
+   i32.le_u
+   if
+    loop $do-continue|012
+     i32.const 1
+     local.get $1
+     i32.const 36
+     i32.eq
+     br_if $__inlined_func$~lib/rt/__instanceof11
+     drop
+     local.get $1
+     i32.const 3
+     i32.shl
+     i32.const 15444
+     i32.add
+     i32.load offset=4
+     local.tee $1
+     br_if $do-continue|012
+    end
+   end
+   i32.const 0
+  end
+  i32.eqz
+  if
+   i32.const 2672
+   i32.const 4464
+   i32.const 367
+   i32.const 30
+   call $~lib/builtins/abort
+   unreachable
+  end
+  local.get $0
+  i64.load
+  i32.wrap_i64
+ )
+ (func $~lib/near-sdk-core/collections/persistentSet/PersistentSet<~lib/string/String>#values (param $0 i32) (result i32)
+  (local $1 i32)
+  (local $2 i32)
+  call $~lib/array/Array<~lib/string/String>#constructor
+  local.set $2
+  loop $for-loop|0
+   local.get $0
+   i32.load offset=4
+   call $~lib/near-sdk-core/collections/persistentVector/PersistentVector<~lib/string/String>#get:length
+   local.get $1
+   i32.gt_s
+   if
+    local.get $2
+    local.get $0
+    i32.load offset=4
+    local.get $1
+    call $~lib/near-sdk-core/collections/persistentVector/PersistentVector<~lib/string/String>#__get
+    call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#push
+    local.get $1
+    i32.const 1
+    i32.add
+    local.set $1
+    br $for-loop|0
+   end
+  end
+  local.get $2
+ )
+ (func $~lib/array/Array<~lib/string/String>#slice (param $0 i32) (param $1 i32) (param $2 i32) (result i32)
+  (local $3 i32)
+  (local $4 i32)
+  local.get $0
+  i32.load offset=12
+  local.set $3
+  local.get $1
+  i32.const 0
+  i32.lt_s
+  if (result i32)
+   local.get $1
+   local.get $3
+   i32.add
+   local.tee $1
+   i32.const 0
+   local.get $1
+   i32.const 0
+   i32.gt_s
+   select
+  else
+   local.get $1
+   local.get $3
+   local.get $1
+   local.get $3
+   i32.lt_s
+   select
+  end
+  local.set $1
+  local.get $2
+  i32.const 0
+  i32.lt_s
+  if (result i32)
+   local.get $2
+   local.get $3
+   i32.add
+   local.tee $2
+   i32.const 0
+   local.get $2
+   i32.const 0
+   i32.gt_s
+   select
+  else
+   local.get $2
+   local.get $3
+   local.get $2
+   local.get $3
+   i32.lt_s
+   select
+  end
+  local.get $1
+  i32.sub
+  local.tee $2
+  i32.const 0
+  local.get $2
+  i32.const 0
+  i32.gt_s
+  select
+  local.tee $2
+  i32.const 2
+  i32.const 31
+  i32.const 0
+  call $~lib/rt/__newArray
+  local.tee $3
+  i32.load offset=4
+  local.set $4
+  local.get $0
+  i32.load offset=4
+  local.get $1
+  i32.const 2
+  i32.shl
+  i32.add
+  local.set $1
+  i32.const 0
+  local.set $0
+  local.get $2
+  i32.const 2
+  i32.shl
+  local.set $2
+  loop $while-continue|0
+   local.get $0
+   local.get $2
+   i32.lt_u
+   if
+    local.get $0
+    local.get $4
+    i32.add
+    local.get $0
+    local.get $1
+    i32.add
+    i32.load
+    i32.store
+    local.get $0
+    i32.const 4
+    i32.add
+    local.set $0
+    br $while-continue|0
+   end
+  end
+  local.get $3
+ )
+ (func $~lib/near-sdk-bindgen/index/encode<~lib/string/String,~lib/near-sdk-bindgen/index/JSONEncoder> (param $0 i32) (param $1 i32) (param $2 i32)
+  local.get $0
+  if
+   local.get $2
+   local.get $1
+   call $~lib/assemblyscript-json/encoder/JSONEncoder#writeKey
+   local.get $2
+   local.get $0
+   call $~lib/assemblyscript-json/encoder/JSONEncoder#writeString
+  else
+   local.get $2
+   local.get $1
+   call $~lib/assemblyscript-json/encoder/JSONEncoder#writeKey
+   local.get $2
+   i32.load offset=4
+   i32.const 4368
+   call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#push
+  end
+ )
+ (func $~lib/array/Array<i32>#pop (param $0 i32)
+  (local $1 i32)
+  local.get $0
+  i32.load offset=12
+  local.tee $1
+  i32.const 1
+  i32.lt_s
+  if
+   i32.const 3808
+   i32.const 2112
+   i32.const 276
+   i32.const 21
+   call $~lib/builtins/abort
+   unreachable
+  end
+  local.get $0
+  i32.load offset=4
+  local.get $1
+  i32.const 1
+  i32.sub
+  local.tee $1
+  i32.const 2
+  i32.shl
+  i32.add
+  i32.load
+  drop
+  local.get $0
+  local.get $1
+  i32.store offset=12
+ )
+ (func $~lib/near-sdk-bindgen/index/encode<~lib/array/Array<~lib/string/String>,~lib/typedarray/Uint8Array>@varargs (param $0 i32) (result i32)
+  (local $1 i32)
+  (local $2 i32)
+  block $2of2
+   block $1of2
+    block $outOfRange
+     global.get $~argumentsLength
+     i32.const 1
+     i32.sub
+     br_table $1of2 $1of2 $2of2 $outOfRange
+    end
+    unreachable
+   end
+   call $~lib/near-sdk-bindgen/index/JSONEncoder#constructor
+   local.set $1
+  end
+  local.get $0
+  if
+   local.get $1
+   i32.const 1552
+   call $~lib/assemblyscript-json/encoder/JSONEncoder#writeKey
+   local.get $1
+   i32.load offset=4
+   i32.const 3856
+   call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#push
+   local.get $1
+   i32.load
+   i32.const 1
+   call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#push
+   loop $for-loop|0
+    local.get $2
+    local.get $0
+    i32.load offset=12
+    i32.lt_s
+    if
+     local.get $0
+     local.get $2
+     call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#__get
+     i32.const 0
+     local.get $1
+     call $~lib/near-sdk-bindgen/index/encode<~lib/string/String,~lib/near-sdk-bindgen/index/JSONEncoder>
+     local.get $2
+     i32.const 1
+     i32.add
+     local.set $2
+     br $for-loop|0
+    end
+   end
+   local.get $1
+   i32.load offset=4
+   i32.const 3888
+   call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#push
+   local.get $1
+   i32.load
+   call $~lib/array/Array<i32>#pop
+  else
+   local.get $1
+   i32.const 1552
+   call $~lib/assemblyscript-json/encoder/JSONEncoder#writeKey
+   local.get $1
+   i32.load offset=4
+   i32.const 4368
+   call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#push
+  end
+  local.get $1
+  call $~lib/assemblyscript-json/encoder/JSONEncoder#serialize
+ )
+ (func $assembly/multicall/index/__wrapper_get_admins
+  (local $0 i32)
+  (local $1 i32)
+  call $~lib/near-sdk-bindgen/index/getInput
+  local.tee $0
+  i32.load
+  i32.const 11168
+  i32.const 11168
+  call $~lib/util/hash/HASH<~lib/string/String>
+  call $~lib/map/Map<~lib/string/String,~lib/assemblyscript-json/JSON/Value>#find
+  if (result i32)
+   local.get $0
+   i32.const 11168
+   call $~lib/near-sdk-bindgen/index/decode<i32,~lib/assemblyscript-json/JSON/Obj>
+  else
+   i32.const 0
+  end
+  local.set $1
+  local.get $0
+  i32.load
+  i32.const 11296
+  i32.const 11296
+  call $~lib/util/hash/HASH<~lib/string/String>
+  call $~lib/map/Map<~lib/string/String,~lib/assemblyscript-json/JSON/Value>#find
+  if (result i32)
+   local.get $0
+   i32.const 11296
+   call $~lib/near-sdk-bindgen/index/decode<i32,~lib/assemblyscript-json/JSON/Obj>
+  else
+   i32.const 2147483647
+  end
+  local.set $0
+  global.get $assembly/multicall/index/admins
+  call $~lib/near-sdk-core/collections/persistentSet/PersistentSet<~lib/string/String>#values
+  local.get $1
+  local.get $0
+  call $~lib/array/Array<~lib/string/String>#slice
+  i32.const 1
+  global.set $~argumentsLength
+  call $~lib/near-sdk-bindgen/index/encode<~lib/array/Array<~lib/string/String>,~lib/typedarray/Uint8Array>@varargs
+  local.tee $1
+  i32.load offset=8
+  i64.extend_i32_s
+  local.get $1
+  i32.load offset=4
+  i64.extend_i32_u
+  call $~lib/near-sdk-core/env/env/env.value_return
+ )
+ (func $assembly/multicall/index/__wrapper_tokens_add
+  (local $0 i32)
+  (local $1 i32)
+  call $~lib/near-sdk-bindgen/index/getInput
+  local.tee $0
+  i32.load
+  i32.const 11328
+  i32.const 11328
+  call $~lib/util/hash/HASH<~lib/string/String>
+  call $~lib/map/Map<~lib/string/String,~lib/assemblyscript-json/JSON/Value>#find
+  if (result i32)
+   local.get $0
+   i32.const 11328
+   call $~lib/near-sdk-bindgen/index/decode<~lib/array/Array<~lib/string/String>,~lib/assemblyscript-json/JSON/Obj>
+  else
+   i32.const 11328
+   call $~lib/near-sdk-bindgen/index/requireParameter<~lib/array/Array<~lib/string/String>>
+  end
+  local.set $0
+  i64.const 0
+  call $~lib/near-sdk-core/env/env/env.predecessor_account_id
+  call $~lib/near-sdk-core/util/util.read_register_string
+  call $assembly/multicall/index/_is_admin
+  call $assembly/multicall/index/_assert_deposit
+  loop $for-loop|0
+   local.get $1
+   local.get $0
+   i32.load offset=12
+   i32.lt_s
+   if
+    global.get $assembly/multicall/index/tokens
+    local.get $0
+    local.get $1
+    call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#__get
+    call $~lib/near-sdk-core/collections/persistentSet/PersistentSet<~lib/string/String>#add
+    local.get $1
+    i32.const 1
+    i32.add
+    local.set $1
+    br $for-loop|0
+   end
+  end
+ )
+ (func $assembly/multicall/index/__wrapper_tokens_remove
+  (local $0 i32)
+  (local $1 i32)
+  call $~lib/near-sdk-bindgen/index/getInput
+  local.tee $0
+  i32.load
+  i32.const 11328
+  i32.const 11328
+  call $~lib/util/hash/HASH<~lib/string/String>
+  call $~lib/map/Map<~lib/string/String,~lib/assemblyscript-json/JSON/Value>#find
+  if (result i32)
+   local.get $0
+   i32.const 11328
+   call $~lib/near-sdk-bindgen/index/decode<~lib/array/Array<~lib/string/String>,~lib/assemblyscript-json/JSON/Obj>
+  else
+   i32.const 11328
+   call $~lib/near-sdk-bindgen/index/requireParameter<~lib/array/Array<~lib/string/String>>
+  end
+  local.set $0
+  i64.const 0
+  call $~lib/near-sdk-core/env/env/env.predecessor_account_id
+  call $~lib/near-sdk-core/util/util.read_register_string
+  call $assembly/multicall/index/_is_admin
+  call $assembly/multicall/index/_assert_deposit
+  loop $for-loop|0
+   local.get $1
+   local.get $0
+   i32.load offset=12
+   i32.lt_s
+   if
+    global.get $assembly/multicall/index/tokens
+    local.get $0
+    local.get $1
+    call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#__get
+    call $~lib/near-sdk-core/collections/persistentSet/PersistentSet<~lib/string/String>#delete
+    local.get $1
+    i32.const 1
+    i32.add
+    local.set $1
+    br $for-loop|0
+   end
+  end
+ )
+ (func $assembly/multicall/index/__wrapper_get_tokens
+  (local $0 i32)
+  (local $1 i32)
+  call $~lib/near-sdk-bindgen/index/getInput
+  local.tee $0
+  i32.load
+  i32.const 11168
+  i32.const 11168
+  call $~lib/util/hash/HASH<~lib/string/String>
+  call $~lib/map/Map<~lib/string/String,~lib/assemblyscript-json/JSON/Value>#find
+  if (result i32)
+   local.get $0
+   i32.const 11168
+   call $~lib/near-sdk-bindgen/index/decode<i32,~lib/assemblyscript-json/JSON/Obj>
+  else
+   i32.const 0
+  end
+  local.set $1
+  local.get $0
+  i32.load
+  i32.const 11296
+  i32.const 11296
+  call $~lib/util/hash/HASH<~lib/string/String>
+  call $~lib/map/Map<~lib/string/String,~lib/assemblyscript-json/JSON/Value>#find
+  if (result i32)
+   local.get $0
+   i32.const 11296
+   call $~lib/near-sdk-bindgen/index/decode<i32,~lib/assemblyscript-json/JSON/Obj>
+  else
+   i32.const 2147483647
+  end
+  local.set $0
+  global.get $assembly/multicall/index/tokens
+  call $~lib/near-sdk-core/collections/persistentSet/PersistentSet<~lib/string/String>#values
+  local.get $1
+  local.get $0
+  call $~lib/array/Array<~lib/string/String>#slice
+  i32.const 1
+  global.set $~argumentsLength
+  call $~lib/near-sdk-bindgen/index/encode<~lib/array/Array<~lib/string/String>,~lib/typedarray/Uint8Array>@varargs
+  local.tee $1
+  i32.load offset=8
+  i64.extend_i32_s
+  local.get $1
+  i32.load offset=4
+  i64.extend_i32_u
+  call $~lib/near-sdk-core/env/env/env.value_return
  )
  (func $~lib/typedarray/Int8Array#__get (param $0 i32) (param $1 i32) (result i32)
   local.get $1
@@ -12750,8 +14768,8 @@
   i32.load offset=8
   i32.ge_u
   if
-   i32.const 2112
-   i32.const 2176
+   i32.const 2320
+   i32.const 2384
    i32.const 24
    i32.const 45
    call $~lib/builtins/abort
@@ -12769,8 +14787,8 @@
   i32.load offset=8
   i32.ge_u
   if
-   i32.const 2112
-   i32.const 2176
+   i32.const 2320
+   i32.const 2384
    i32.const 35
    i32.const 45
    call $~lib/builtins/abort
@@ -12915,244 +14933,327 @@
    end
   end
  )
- (func $assembly/multicall/index/__wrapper_ft_on_transfer
+ (func $~lib/as-bignum/integer/u128/u128#toString (param $0 i32) (result i32)
+  (local $1 i32)
+  (local $2 i32)
+  (local $3 i32)
+  (local $4 i64)
+  (local $5 i64)
+  local.get $0
+  i64.load
+  local.get $0
+  i64.load offset=8
+  i64.or
+  i64.eqz
+  if
+   i32.const 7376
+   return
+  end
+  block $__inlined_func$~lib/as-bignum/integer/u128/u128#clone@virtual
+   local.get $0
+   i32.const 8
+   i32.sub
+   i32.load
+   i32.const 3
+   i32.eq
+   if
+    local.get $0
+    i64.load
+    local.set $4
+    local.get $0
+    i64.load offset=8
+    local.set $5
+    i32.const 16
+    i32.const 3
+    call $~lib/rt/stub/__new
+    local.get $4
+    local.get $5
+    call $~lib/as-bignum/integer/u128/u128#constructor
+    drop
+    br $__inlined_func$~lib/as-bignum/integer/u128/u128#clone@virtual
+   end
+   i32.const 0
+   local.get $0
+   i64.load
+   local.get $0
+   i64.load offset=8
+   call $~lib/as-bignum/integer/u128/u128#constructor
+   drop
+  end
+  i32.const 12
+  i32.const 47
+  call $~lib/rt/stub/__new
+  i32.const 40
+  call $~lib/arraybuffer/ArrayBufferView#constructor
+  local.tee $2
+  local.get $0
+  i64.load offset=8
+  call $~lib/as-bignum/utils/processU64
+  local.get $2
+  local.get $0
+  i64.load
+  call $~lib/as-bignum/utils/processU64
+  i32.const 1552
+  local.set $0
+  i32.const 39
+  local.set $1
+  loop $for-loop|0
+   local.get $1
+   i32.const -1
+   i32.ne
+   if
+    i32.const 1
+    local.get $3
+    local.get $3
+    if (result i32)
+     i32.const 0
+    else
+     local.get $2
+     local.get $1
+     call $~lib/typedarray/Int8Array#__get
+     i32.const 0
+     i32.gt_s
+    end
+    select
+    local.tee $3
+    if
+     local.get $0
+     i32.const 11712
+     local.get $2
+     local.get $1
+     call $~lib/typedarray/Int8Array#__get
+     call $~lib/string/String#charAt
+     call $~lib/string/String#concat
+     local.set $0
+    end
+    local.get $1
+    i32.const 1
+    i32.sub
+    local.set $1
+    br $for-loop|0
+   end
+  end
+  local.get $0
+ )
+ (func $~lib/near-sdk-bindgen/index/encode<~lib/as-bignum/integer/safe/u128/u128,~lib/typedarray/Uint8Array>@varargs (param $0 i32) (result i32)
+  (local $1 i32)
+  block $2of2
+   block $1of2
+    block $outOfRange
+     global.get $~argumentsLength
+     i32.const 1
+     i32.sub
+     br_table $1of2 $1of2 $2of2 $outOfRange
+    end
+    unreachable
+   end
+   call $~lib/near-sdk-bindgen/index/JSONEncoder#constructor
+   local.set $1
+  end
+  local.get $0
+  if
+   local.get $0
+   call $~lib/as-bignum/integer/u128/u128#toString
+   local.set $0
+   local.get $1
+   i32.const 1552
+   call $~lib/assemblyscript-json/encoder/JSONEncoder#writeKey
+   local.get $1
+   local.get $0
+   call $~lib/assemblyscript-json/encoder/JSONEncoder#writeString
+  else
+   local.get $1
+   i32.const 1552
+   call $~lib/assemblyscript-json/encoder/JSONEncoder#writeKey
+   local.get $1
+   i32.load offset=4
+   i32.const 4368
+   call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#push
+  end
+  local.get $1
+  call $~lib/assemblyscript-json/encoder/JSONEncoder#serialize
+ )
+ (func $~lib/near-sdk-core/storage/Storage.setBytes (param $0 i32) (param $1 i32)
+  local.get $0
+  call $~lib/near-sdk-core/util/util.stringToBytes
+  local.tee $0
+  i32.load offset=8
+  i64.extend_i32_s
+  local.get $0
+  i32.load offset=4
+  i64.extend_i32_u
+  local.get $1
+  i32.load offset=8
+  i64.extend_i32_s
+  local.get $1
+  i32.load offset=4
+  i64.extend_i32_u
+  i64.const 0
+  call $~lib/near-sdk-core/env/env/env.storage_write
+  drop
+ )
+ (func $assembly/multicall/index/__wrapper_init
   (local $0 i32)
   (local $1 i32)
   (local $2 i32)
   (local $3 i32)
   (local $4 i32)
-  (local $5 i64)
-  (local $6 i64)
+  (local $5 i32)
   call $~lib/near-sdk-bindgen/index/getInput
-  local.tee $1
+  local.tee $5
   i32.load
-  i32.const 9760
-  i32.const 9760
+  i32.const 11376
+  i32.const 11376
   call $~lib/util/hash/HASH<~lib/string/String>
   call $~lib/map/Map<~lib/string/String,~lib/assemblyscript-json/JSON/Value>#find
   if (result i32)
-   local.get $1
-   i32.const 9760
+   local.get $5
+   i32.const 11376
+   call $~lib/near-sdk-bindgen/index/decode<~lib/array/Array<~lib/string/String>,~lib/assemblyscript-json/JSON/Obj>
+  else
+   i32.const 11376
+   call $~lib/near-sdk-bindgen/index/requireParameter<~lib/array/Array<~lib/string/String>>
+  end
+  local.set $3
+  local.get $5
+  i32.load
+  i32.const 11424
+  i32.const 11424
+  call $~lib/util/hash/HASH<~lib/string/String>
+  call $~lib/map/Map<~lib/string/String,~lib/assemblyscript-json/JSON/Value>#find
+  if (result i32)
+   local.get $5
+   i32.const 11424
    call $~lib/near-sdk-bindgen/index/decode<~lib/string/String,~lib/assemblyscript-json/JSON/Obj>
   else
-   i32.const 9760
+   i32.const 11424
    call $~lib/near-sdk-bindgen/index/requireParameter<~lib/string/String>
   end
-  local.get $1
+  local.set $2
+  local.get $5
   i32.load
-  i32.const 9808
-  i32.const 9808
+  i32.const 11488
+  i32.const 11488
   call $~lib/util/hash/HASH<~lib/string/String>
   call $~lib/map/Map<~lib/string/String,~lib/assemblyscript-json/JSON/Value>#find
   if (result i32)
-   local.get $1
-   i32.const 9808
+   local.get $5
+   i32.const 11488
    call $~lib/near-sdk-bindgen/index/decode<~lib/as-bignum/integer/safe/u128/u128,~lib/assemblyscript-json/JSON/Obj>
   else
-   i32.const 6176
-   i32.const 9808
-   call $~lib/string/String#concat
-   i32.const 4768
-   call $~lib/string/String#concat
-   i32.const 5728
-   call $~lib/string/String#concat
-   i32.const 6224
-   call $~lib/string/String#concat
-   i32.const 4256
-   i32.const 33
+   i32.const 11488
+   call $~lib/near-sdk-bindgen/index/requireParameter<~lib/as-bignum/integer/safe/u128/u128>
+  end
+  local.set $5
+  i32.const 1760
+  call $~lib/near-sdk-core/storage/Storage._internalReadBytes
+  call $~lib/near-sdk-core/util/util.bytesToString
+  local.tee $0
+  i32.const 0
+  call $~lib/string/String.__eq
+  i32.eqz
+  if
+   local.get $0
+   local.tee $1
+   i32.eqz
+   if
+    i32.const 2160
+    i32.const 10480
+    i32.const 185
+    i32.const 43
+    call $~lib/builtins/abort
+    unreachable
+   end
+  end
+  local.get $1
+  i32.const 0
+  call $~lib/string/String.__eq
+  i32.eqz
+  if
+   i32.const 11536
+   i32.const 9088
+   i32.const 82
    i32.const 3
    call $~lib/builtins/abort
    unreachable
   end
-  local.set $0
-  local.get $1
+  global.get $assembly/multicall/index/admins
+  i64.const 0
+  call $~lib/near-sdk-core/env/env/env.current_account_id
+  call $~lib/near-sdk-core/util/util.read_register_string
+  call $~lib/near-sdk-core/collections/persistentSet/PersistentSet<~lib/string/String>#add
+  loop $for-loop|0
+   local.get $4
+   local.get $3
+   i32.load offset=12
+   i32.lt_s
+   if
+    global.get $assembly/multicall/index/admins
+    local.get $3
+    local.get $4
+    call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#__get
+    call $~lib/near-sdk-core/collections/persistentSet/PersistentSet<~lib/string/String>#add
+    local.get $4
+    i32.const 1
+    i32.add
+    local.set $4
+    br $for-loop|0
+   end
+  end
+  global.get $assembly/multicall/index/_jobs
+  i32.load offset=8
   i32.load
-  i32.const 9840
-  i32.const 9840
+  local.get $2
+  call $~lib/near-sdk-core/storage/Storage.setString
+  global.get $assembly/multicall/index/_jobs
+  i32.load
+  i32.const 1
+  global.set $~argumentsLength
+  local.get $5
+  call $~lib/near-sdk-bindgen/index/encode<~lib/as-bignum/integer/safe/u128/u128,~lib/typedarray/Uint8Array>@varargs
+  call $~lib/near-sdk-core/storage/Storage.setBytes
+  i32.const 1760
+  i32.const 11776
+  call $~lib/near-sdk-core/storage/Storage.setString
+ )
+ (func $assembly/multicall/index/__wrapper_set_croncat_manager
+  (local $0 i32)
+  call $~lib/near-sdk-bindgen/index/getInput
+  local.tee $0
+  i32.load
+  i32.const 5456
+  i32.const 5456
   call $~lib/util/hash/HASH<~lib/string/String>
   call $~lib/map/Map<~lib/string/String,~lib/assemblyscript-json/JSON/Value>#find
   if (result i32)
-   local.get $1
-   i32.const 9840
+   local.get $0
+   i32.const 5456
    call $~lib/near-sdk-bindgen/index/decode<~lib/string/String,~lib/assemblyscript-json/JSON/Obj>
   else
-   i32.const 9840
+   i32.const 5456
    call $~lib/near-sdk-bindgen/index/requireParameter<~lib/string/String>
   end
-  local.set $1
-  global.get $assembly/multicall/index/tokens
+  local.set $0
   i64.const 0
   call $~lib/near-sdk-core/env/env/env.predecessor_account_id
   call $~lib/near-sdk-core/util/util.read_register_string
-  local.set $3
-  i32.load
-  local.get $3
-  call $~lib/near-sdk-core/collections/persistentSet/PersistentSet<~lib/string/String>#_hashedItem
-  call $~lib/near-sdk-core/collections/persistentMap/PersistentMap<~lib/typedarray/Uint8Array,i32>#contains
-  i32.eqz
-  if
-   i64.const 0
-   call $~lib/near-sdk-core/env/env/env.predecessor_account_id
-   i32.const 9956
-   call $~lib/near-sdk-core/util/util.read_register_string
-   i32.store
-   i32.const 9952
-   i32.const 9948
-   i32.load
-   i32.const 2
-   i32.shr_u
-   call $~lib/util/string/joinStringArray
-   i32.const 8672
-   i32.const 68
-   i32.const 3
-   call $~lib/builtins/abort
-   unreachable
-  end
   call $assembly/multicall/index/_is_admin
-  local.get $1
-  call $~lib/near-sdk-core/util/util.stringToBytes
-  call $~lib/near-sdk-bindgen/index/decode<assembly/multicall/model/FtOnTransferArgs,~lib/typedarray/Uint8Array>
-  local.tee $1
+  call $assembly/multicall/index/_assert_deposit
+  global.get $assembly/multicall/index/_jobs
+  i32.load offset=8
   i32.load
-  i32.const 10096
-  call $~lib/string/String.__eq
-  if
-   local.get $1
-   i32.load offset=4
-   call $~lib/near-sdk-core/base64/base64.decode
-   call $~lib/near-sdk-bindgen/index/decode<assembly/multicall/model/MulticallArgs,~lib/typedarray/Uint8Array>
-   i32.load
-   call $assembly/multicall/index/_internal_multicall
-   i32.const 16
-   i32.const 8
-   call $~lib/rt/stub/__new
-   i64.const 0
-   i64.const 0
-   call $~lib/as-bignum/integer/u128/u128#constructor
-   local.set $0
-  end
+  local.get $0
+  call $~lib/near-sdk-core/storage/Storage.setString
+ )
+ (func $assembly/multicall/index/__wrapper_get_croncat_manager
+  (local $0 i32)
+  global.get $assembly/multicall/index/_jobs
+  i32.load offset=8
+  i32.load
+  call $~lib/near-sdk-core/storage/Storage.getSome<~lib/string/String>
   i32.const 1
   global.set $~argumentsLength
-  call $~lib/near-sdk-bindgen/index/JSONEncoder#constructor
-  local.set $2
-  local.get $0
-  if
-   i32.const 0
-   local.set $1
-   block $__inlined_func$~lib/as-bignum/integer/u128/u128#toString
-    local.get $0
-    i64.load
-    local.get $0
-    i64.load offset=8
-    i64.or
-    i64.eqz
-    if
-     i32.const 6960
-     local.set $0
-     br $__inlined_func$~lib/as-bignum/integer/u128/u128#toString
-    end
-    block $__inlined_func$~lib/as-bignum/integer/u128/u128#clone@virtual
-     local.get $0
-     i32.const 8
-     i32.sub
-     i32.load
-     i32.const 8
-     i32.eq
-     if
-      local.get $0
-      i64.load
-      local.set $5
-      local.get $0
-      i64.load offset=8
-      local.set $6
-      i32.const 16
-      i32.const 8
-      call $~lib/rt/stub/__new
-      local.get $5
-      local.get $6
-      call $~lib/as-bignum/integer/u128/u128#constructor
-      drop
-      br $__inlined_func$~lib/as-bignum/integer/u128/u128#clone@virtual
-     end
-     i32.const 0
-     local.get $0
-     i64.load
-     local.get $0
-     i64.load offset=8
-     call $~lib/as-bignum/integer/u128/u128#constructor
-     drop
-    end
-    i32.const 12
-    i32.const 40
-    call $~lib/rt/stub/__new
-    i32.const 40
-    call $~lib/arraybuffer/ArrayBufferView#constructor
-    local.tee $4
-    local.get $0
-    i64.load offset=8
-    call $~lib/as-bignum/utils/processU64
-    local.get $4
-    local.get $0
-    i64.load
-    call $~lib/as-bignum/utils/processU64
-    i32.const 1088
-    local.set $0
-    i32.const 39
-    local.set $3
-    loop $for-loop|0
-     local.get $3
-     i32.const -1
-     i32.ne
-     if
-      i32.const 1
-      local.get $1
-      local.get $1
-      if (result i32)
-       i32.const 0
-      else
-       local.get $4
-       local.get $3
-       call $~lib/typedarray/Int8Array#__get
-       i32.const 0
-       i32.gt_s
-      end
-      select
-      local.tee $1
-      if
-       local.get $0
-       i32.const 10304
-       local.get $4
-       local.get $3
-       call $~lib/typedarray/Int8Array#__get
-       call $~lib/string/String#charAt
-       call $~lib/string/String#concat
-       local.set $0
-      end
-      local.get $3
-      i32.const 1
-      i32.sub
-      local.set $3
-      br $for-loop|0
-     end
-    end
-   end
-   local.get $2
-   i32.const 1088
-   call $~lib/assemblyscript-json/encoder/JSONEncoder#writeKey
-   local.get $2
-   local.get $0
-   call $~lib/assemblyscript-json/encoder/JSONEncoder#writeString
-  else
-   local.get $2
-   i32.const 1088
-   call $~lib/assemblyscript-json/encoder/JSONEncoder#writeKey
-   local.get $2
-   i32.load offset=4
-   i32.const 4160
-   call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#push
-  end
-  local.get $2
-  call $~lib/assemblyscript-json/encoder/JSONEncoder#serialize
+  call $~lib/near-sdk-bindgen/index/encode<~lib/string/String,~lib/typedarray/Uint8Array>@varargs
   local.tee $0
   i32.load offset=8
   i64.extend_i32_s
@@ -13161,110 +15262,1661 @@
   i64.extend_i32_u
   call $~lib/near-sdk-core/env/env/env.value_return
  )
- (func $assembly/multicall/index/__wrapper_near_transfer
+ (func $assembly/multicall/index/__wrapper_job_set_bond
   (local $0 i32)
   (local $1 i32)
-  (local $2 i32)
-  (local $3 i32)
   call $~lib/near-sdk-bindgen/index/getInput
   local.tee $0
   i32.load
-  i32.const 10368
-  i32.const 10368
+  i32.const 9664
+  i32.const 9664
   call $~lib/util/hash/HASH<~lib/string/String>
   call $~lib/map/Map<~lib/string/String,~lib/assemblyscript-json/JSON/Value>#find
   if (result i32)
    local.get $0
-   i32.const 10368
-   call $~lib/near-sdk-bindgen/index/decode<~lib/string/String,~lib/assemblyscript-json/JSON/Obj>
-  else
-   i32.const 10368
-   call $~lib/near-sdk-bindgen/index/requireParameter<~lib/string/String>
-  end
-  local.get $0
-  i32.load
-  i32.const 9808
-  i32.const 9808
-  call $~lib/util/hash/HASH<~lib/string/String>
-  call $~lib/map/Map<~lib/string/String,~lib/assemblyscript-json/JSON/Value>#find
-  if (result i32)
-   local.get $0
-   i32.const 9808
+   i32.const 9664
    call $~lib/near-sdk-bindgen/index/decode<~lib/as-bignum/integer/safe/u128/u128,~lib/assemblyscript-json/JSON/Obj>
   else
-   i32.const 16
-   i32.const 8
-   call $~lib/rt/stub/__new
-   i64.const -1
-   i64.const -1
-   call $~lib/as-bignum/integer/u128/u128#constructor
+   i32.const 9664
+   call $~lib/near-sdk-bindgen/index/requireParameter<~lib/as-bignum/integer/safe/u128/u128>
   end
   local.set $0
   i64.const 0
   call $~lib/near-sdk-core/env/env/env.predecessor_account_id
   call $~lib/near-sdk-core/util/util.read_register_string
   call $assembly/multicall/index/_is_admin
-  i32.const 16
-  i32.const 8
-  call $~lib/rt/stub/__new
-  i64.const -1
-  i64.const -1
-  call $~lib/as-bignum/integer/u128/u128#constructor
-  local.tee $2
-  local.set $3
+  call $assembly/multicall/index/_assert_deposit
+  global.get $assembly/multicall/index/_jobs
+  i32.load
+  i32.const 1
+  global.set $~argumentsLength
   local.get $0
-  i64.load offset=8
-  local.get $2
-  i64.load offset=8
-  i64.eq
+  call $~lib/near-sdk-bindgen/index/encode<~lib/as-bignum/integer/safe/u128/u128,~lib/typedarray/Uint8Array>@varargs
+  call $~lib/near-sdk-core/storage/Storage.setBytes
+ )
+ (func $~lib/near-sdk-bindgen/index/decode<~lib/as-bignum/integer/safe/u128/u128,~lib/typedarray/Uint8Array> (param $0 i32) (result i32)
+  (local $1 i32)
+  (local $2 i32)
+  local.get $0
+  call $~lib/assemblyscript-json/JSON/_JSON.parse<~lib/typedarray/Uint8Array>
+  local.tee $0
   if (result i32)
-   local.get $0
-   i64.load
-   local.get $3
-   i64.load
-   i64.eq
+   block $__inlined_func$~lib/rt/__instanceof (result i32)
+    local.get $0
+    i32.const 20
+    i32.sub
+    i32.load offset=12
+    local.tee $2
+    i32.const 15440
+    i32.load
+    i32.le_u
+    if
+     loop $do-continue|0
+      i32.const 1
+      local.get $2
+      i32.const 22
+      i32.eq
+      br_if $__inlined_func$~lib/rt/__instanceof
+      drop
+      local.get $2
+      i32.const 3
+      i32.shl
+      i32.const 15444
+      i32.add
+      i32.load offset=4
+      local.tee $2
+      br_if $do-continue|0
+     end
+    end
+    i32.const 0
+   end
+  else
+   i32.const 0
+  end
+  if (result i32)
+   i32.const 1552
+   i32.const 1552
+   call $~lib/string/String.__eq
+   i32.eqz
   else
    i32.const 0
   end
   if
-   global.get $assembly/multicall/index/storageCosts
-   i32.load
-   i32.const 0
-   call $~lib/near-sdk-core/env/env/env.storage_usage
-   i64.const 0
-   call $~lib/as-bignum/integer/u128/u128#constructor
-   call $~lib/as-bignum/integer/safe/u128/u128.mul
-   local.set $0
-   call $~lib/near-sdk-core/contract/Context.get:accountBalance
+   block $__inlined_func$~lib/rt/__instanceof0 (result i32)
+    local.get $0
+    i32.const 20
+    i32.sub
+    i32.load offset=12
+    local.tee $2
+    i32.const 15440
+    i32.load
+    i32.le_u
+    if
+     loop $do-continue|01
+      i32.const 1
+      local.get $2
+      i32.const 22
+      i32.eq
+      br_if $__inlined_func$~lib/rt/__instanceof0
+      drop
+      local.get $2
+      i32.const 3
+      i32.shl
+      i32.const 15444
+      i32.add
+      i32.load offset=4
+      local.tee $2
+      br_if $do-continue|01
+     end
+    end
+    i32.const 0
+   end
+   i32.eqz
+   if
+    i32.const 2672
+    i32.const 4464
+    i32.const 310
+    i32.const 37
+    call $~lib/builtins/abort
+    unreachable
+   end
    local.get $0
-   call $~lib/as-bignum/integer/safe/u128/u128.sub
-   local.set $0
+   i32.const 1552
+   call $~lib/assemblyscript-json/JSON/Obj#get
+   local.tee $0
+   i32.eqz
+   if
+    local.get $0
+    return
+   end
   end
-  call $~lib/near-sdk-core/promise/ContractPromiseBatch.create
-  i32.const 12
-  i32.const 4
-  call $~lib/rt/stub/__new
-  i32.const 16
-  call $~lib/arraybuffer/ArrayBufferView#constructor
-  local.tee $3
-  i32.load offset=4
+  local.get $0
   local.tee $1
-  local.get $0
-  i64.load
-  i64.store
+  if (result i32)
+   block $__inlined_func$~lib/rt/__instanceof3 (result i32)
+    local.get $1
+    i32.const 20
+    i32.sub
+    i32.load offset=12
+    local.tee $0
+    i32.const 15440
+    i32.load
+    i32.le_u
+    if
+     loop $do-continue|04
+      i32.const 1
+      local.get $0
+      i32.const 37
+      i32.eq
+      br_if $__inlined_func$~lib/rt/__instanceof3
+      drop
+      local.get $0
+      i32.const 3
+      i32.shl
+      i32.const 15444
+      i32.add
+      i32.load offset=4
+      local.tee $0
+      br_if $do-continue|04
+     end
+    end
+    i32.const 0
+   end
+  else
+   i32.const 0
+  end
+  if
+   i32.const 0
+   return
+  end
   local.get $1
+  if (result i32)
+   block $__inlined_func$~lib/rt/__instanceof10 (result i32)
+    local.get $1
+    i32.const 20
+    i32.sub
+    i32.load offset=12
+    local.tee $0
+    i32.const 15440
+    i32.load
+    i32.le_u
+    if
+     loop $do-continue|011
+      i32.const 1
+      local.get $0
+      i32.const 32
+      i32.eq
+      br_if $__inlined_func$~lib/rt/__instanceof10
+      drop
+      local.get $0
+      i32.const 3
+      i32.shl
+      i32.const 15444
+      i32.add
+      i32.load offset=4
+      local.tee $0
+      br_if $do-continue|011
+     end
+    end
+    i32.const 0
+   end
+  else
+   i32.const 0
+  end
+  i32.eqz
+  if
+   i32.const 5072
+   i32.const 1552
+   call $~lib/string/String#concat
+   i32.const 6176
+   call $~lib/string/String#concat
+   local.get $1
+   call $~lib/near-sdk-bindgen/index/JSONTypeToString<~lib/assemblyscript-json/JSON/Value>
+   call $~lib/string/String#concat
+   i32.const 4464
+   i32.const 468
+   i32.const 5
+   call $~lib/builtins/abort
+   unreachable
+  end
+  local.get $1
+  if (result i32)
+   block $__inlined_func$~lib/rt/__instanceof15 (result i32)
+    local.get $1
+    i32.const 20
+    i32.sub
+    i32.load offset=12
+    local.tee $2
+    i32.const 15440
+    i32.load
+    i32.le_u
+    if
+     loop $do-continue|016
+      i32.const 1
+      local.get $2
+      i32.const 32
+      i32.eq
+      br_if $__inlined_func$~lib/rt/__instanceof15
+      drop
+      local.get $2
+      i32.const 3
+      i32.shl
+      i32.const 15444
+      i32.add
+      i32.load offset=4
+      local.tee $2
+      br_if $do-continue|016
+     end
+    end
+    i32.const 0
+   end
+  else
+   i32.const 0
+  end
+  i32.eqz
+  if
+   i32.const 5072
+   i32.const 1552
+   call $~lib/string/String#concat
+   i32.const 5536
+   call $~lib/string/String#concat
+   i32.const 4464
+   i32.const 218
+   i32.const 3
+   call $~lib/builtins/abort
+   unreachable
+  end
+  block $__inlined_func$~lib/rt/__instanceof19 (result i32)
+   local.get $1
+   i32.const 20
+   i32.sub
+   i32.load offset=12
+   local.tee $0
+   i32.const 15440
+   i32.load
+   i32.le_u
+   if
+    loop $do-continue|020
+     i32.const 1
+     local.get $0
+     i32.const 32
+     i32.eq
+     br_if $__inlined_func$~lib/rt/__instanceof19
+     drop
+     local.get $0
+     i32.const 3
+     i32.shl
+     i32.const 15444
+     i32.add
+     i32.load offset=4
+     local.tee $0
+     br_if $do-continue|020
+    end
+   end
+   i32.const 0
+  end
+  i32.eqz
+  if
+   i32.const 2672
+   i32.const 4464
+   i32.const 222
+   i32.const 21
+   call $~lib/builtins/abort
+   unreachable
+  end
+  local.get $1
+  i32.load
+  call $~lib/as-bignum/utils/atou128
+ )
+ (func $~lib/near-sdk-core/storage/Storage.getSome<~lib/as-bignum/integer/safe/u128/u128> (param $0 i32) (result i32)
+  (local $1 i32)
   local.get $0
-  i64.load offset=8
-  i64.store offset=8
-  i64.load
-  local.get $3
+  call $~lib/near-sdk-core/util/util.stringToBytes
+  local.tee $1
+  i32.load offset=8
+  i64.extend_i32_s
+  local.get $1
   i32.load offset=4
   i64.extend_i32_u
-  call $~lib/near-sdk-core/env/env/env.promise_batch_action_transfer
+  call $~lib/near-sdk-core/env/env/env.storage_has_key
+  i64.eqz
+  if
+   i32.const 10976
+   local.get $0
+   call $~lib/string/String#concat
+   i32.const 11008
+   call $~lib/string/String#concat
+   i32.const 10480
+   i32.const 237
+   i32.const 7
+   call $~lib/builtins/abort
+   unreachable
+  end
+  local.get $0
+  call $~lib/near-sdk-core/storage/Storage._internalReadBytes
+  local.tee $0
+  i32.eqz
+  if
+   i32.const 2160
+   i32.const 10480
+   i32.const 242
+   i32.const 37
+   call $~lib/builtins/abort
+   unreachable
+  end
+  local.get $0
+  call $~lib/near-sdk-bindgen/index/decode<~lib/as-bignum/integer/safe/u128/u128,~lib/typedarray/Uint8Array>
  )
- (func $~lib/near-sdk-bindgen/index/decode<~lib/array/Array<~lib/string/String>,~lib/assemblyscript-json/JSON/Obj> (param $0 i32) (param $1 i32) (result i32)
+ (func $assembly/multicall/index/__wrapper_job_get_bond
+  (local $0 i32)
+  global.get $assembly/multicall/index/_jobs
+  i32.load
+  call $~lib/near-sdk-core/storage/Storage.getSome<~lib/as-bignum/integer/safe/u128/u128>
+  i32.const 1
+  global.set $~argumentsLength
+  call $~lib/near-sdk-bindgen/index/encode<~lib/as-bignum/integer/safe/u128/u128,~lib/typedarray/Uint8Array>@varargs
+  local.tee $0
+  i32.load offset=8
+  i64.extend_i32_s
+  local.get $0
+  i32.load offset=4
+  i64.extend_i32_u
+  call $~lib/near-sdk-core/env/env/env.value_return
+ )
+ (func $~lib/near-sdk-bindgen/index/requireParameter<u64> (param $0 i32) (result i64)
+  i32.const 6592
+  local.get $0
+  call $~lib/string/String#concat
+  i32.const 4960
+  call $~lib/string/String#concat
+  i32.const 5920
+  call $~lib/string/String#concat
+  i32.const 6640
+  call $~lib/string/String#concat
+  i32.const 4464
+  i32.const 33
+  i32.const 3
+  call $~lib/builtins/abort
+  unreachable
+ )
+ (func $~lib/near-sdk-core/collections/persistentMap/PersistentMap<u32,i32>#contains (param $0 i32) (param $1 i32) (result i32)
+  local.get $0
+  i32.load
+  local.get $1
+  call $~lib/util/number/utoa32
+  call $~lib/string/String#concat
+  call $~lib/near-sdk-core/util/util.stringToBytes
+  local.tee $0
+  i32.load offset=8
+  i64.extend_i32_s
+  local.get $0
+  i32.load offset=4
+  i64.extend_i32_u
+  call $~lib/near-sdk-core/env/env/env.storage_has_key
+  i64.const 0
+  i64.ne
+ )
+ (func $~lib/util/number/utoa64_dec_lut (param $0 i32) (param $1 i64) (param $2 i32)
+  (local $3 i32)
+  (local $4 i32)
+  loop $while-continue|0
+   local.get $1
+   i64.const 100000000
+   i64.ge_u
+   if
+    local.get $0
+    local.get $2
+    i32.const 4
+    i32.sub
+    local.tee $2
+    i32.const 1
+    i32.shl
+    i32.add
+    local.get $1
+    local.get $1
+    i64.const 100000000
+    i64.div_u
+    local.tee $1
+    i64.const 100000000
+    i64.mul
+    i64.sub
+    i32.wrap_i64
+    local.tee $3
+    i32.const 10000
+    i32.rem_u
+    local.tee $4
+    i32.const 100
+    i32.div_u
+    i32.const 2
+    i32.shl
+    i32.const 7388
+    i32.add
+    i64.load32_u
+    local.get $4
+    i32.const 100
+    i32.rem_u
+    i32.const 2
+    i32.shl
+    i32.const 7388
+    i32.add
+    i64.load32_u
+    i64.const 32
+    i64.shl
+    i64.or
+    i64.store
+    local.get $0
+    local.get $2
+    i32.const 4
+    i32.sub
+    local.tee $2
+    i32.const 1
+    i32.shl
+    i32.add
+    local.get $3
+    i32.const 10000
+    i32.div_u
+    local.tee $3
+    i32.const 100
+    i32.div_u
+    i32.const 2
+    i32.shl
+    i32.const 7388
+    i32.add
+    i64.load32_u
+    local.get $3
+    i32.const 100
+    i32.rem_u
+    i32.const 2
+    i32.shl
+    i32.const 7388
+    i32.add
+    i64.load32_u
+    i64.const 32
+    i64.shl
+    i64.or
+    i64.store
+    br $while-continue|0
+   end
+  end
+  local.get $0
+  local.get $1
+  i32.wrap_i64
+  local.get $2
+  call $~lib/util/number/utoa32_dec_lut
+ )
+ (func $~lib/util/number/itoa64 (param $0 i64) (result i32)
+  (local $1 i32)
   (local $2 i32)
   (local $3 i32)
+  (local $4 i32)
+  local.get $0
+  i64.eqz
+  if
+   i32.const 7376
+   return
+  end
+  i64.const 0
+  local.get $0
+  i64.sub
+  local.get $0
+  local.get $0
+  i64.const 63
+  i64.shr_u
+  i32.wrap_i64
+  local.tee $2
+  select
+  local.tee $0
+  i64.const 4294967295
+  i64.le_u
+  if
+   local.get $0
+   i32.wrap_i64
+   local.tee $1
+   i32.const 100000
+   i32.lt_u
+   if (result i32)
+    local.get $1
+    i32.const 100
+    i32.lt_u
+    if (result i32)
+     local.get $1
+     i32.const 10
+     i32.ge_u
+     i32.const 1
+     i32.add
+    else
+     local.get $1
+     i32.const 10000
+     i32.ge_u
+     i32.const 3
+     i32.add
+     local.get $1
+     i32.const 1000
+     i32.ge_u
+     i32.add
+    end
+   else
+    local.get $1
+    i32.const 10000000
+    i32.lt_u
+    if (result i32)
+     local.get $1
+     i32.const 1000000
+     i32.ge_u
+     i32.const 6
+     i32.add
+    else
+     local.get $1
+     i32.const 1000000000
+     i32.ge_u
+     i32.const 8
+     i32.add
+     local.get $1
+     i32.const 100000000
+     i32.ge_u
+     i32.add
+    end
+   end
+   local.get $2
+   i32.add
+   local.tee $4
+   i32.const 1
+   i32.shl
+   i32.const 1
+   call $~lib/rt/stub/__new
+   local.tee $3
+   local.get $1
+   local.get $4
+   call $~lib/util/number/utoa32_dec_lut
+  else
+   local.get $0
+   i64.const 1000000000000000
+   i64.lt_u
+   if (result i32)
+    local.get $0
+    i64.const 1000000000000
+    i64.lt_u
+    if (result i32)
+     local.get $0
+     i64.const 100000000000
+     i64.ge_u
+     i32.const 10
+     i32.add
+     local.get $0
+     i64.const 10000000000
+     i64.ge_u
+     i32.add
+    else
+     local.get $0
+     i64.const 100000000000000
+     i64.ge_u
+     i32.const 13
+     i32.add
+     local.get $0
+     i64.const 10000000000000
+     i64.ge_u
+     i32.add
+    end
+   else
+    local.get $0
+    i64.const 100000000000000000
+    i64.lt_u
+    if (result i32)
+     local.get $0
+     i64.const 10000000000000000
+     i64.ge_u
+     i32.const 16
+     i32.add
+    else
+     local.get $0
+     i64.const -8446744073709551616
+     i64.ge_u
+     i32.const 18
+     i32.add
+     local.get $0
+     i64.const 1000000000000000000
+     i64.ge_u
+     i32.add
+    end
+   end
+   local.get $2
+   i32.add
+   local.tee $1
+   i32.const 1
+   i32.shl
+   i32.const 1
+   call $~lib/rt/stub/__new
+   local.tee $3
+   local.get $0
+   local.get $1
+   call $~lib/util/number/utoa64_dec_lut
+  end
+  local.get $2
+  if
+   local.get $3
+   i32.const 45
+   i32.store16
+  end
+  local.get $3
+ )
+ (func $~lib/near-sdk-bindgen/index/encode<~lib/as-bignum/integer/safe/u128/u128,~lib/near-sdk-bindgen/index/JSONEncoder> (param $0 i32) (param $1 i32) (param $2 i32)
+  local.get $0
+  if
+   local.get $0
+   call $~lib/as-bignum/integer/u128/u128#toString
+   local.set $0
+   local.get $2
+   local.get $1
+   call $~lib/assemblyscript-json/encoder/JSONEncoder#writeKey
+   local.get $2
+   local.get $0
+   call $~lib/assemblyscript-json/encoder/JSONEncoder#writeString
+  else
+   local.get $2
+   local.get $1
+   call $~lib/assemblyscript-json/encoder/JSONEncoder#writeKey
+   local.get $2
+   i32.load offset=4
+   i32.const 4368
+   call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#push
+  end
+ )
+ (func $~lib/util/number/utoa64 (param $0 i64) (result i32)
+  (local $1 i32)
+  (local $2 i32)
+  (local $3 i32)
+  local.get $0
+  i64.eqz
+  if
+   i32.const 7376
+   return
+  end
+  local.get $0
+  i64.const 4294967295
+  i64.le_u
+  if
+   local.get $0
+   i32.wrap_i64
+   local.tee $1
+   i32.const 100000
+   i32.lt_u
+   if (result i32)
+    local.get $1
+    i32.const 100
+    i32.lt_u
+    if (result i32)
+     local.get $1
+     i32.const 10
+     i32.ge_u
+     i32.const 1
+     i32.add
+    else
+     local.get $1
+     i32.const 10000
+     i32.ge_u
+     i32.const 3
+     i32.add
+     local.get $1
+     i32.const 1000
+     i32.ge_u
+     i32.add
+    end
+   else
+    local.get $1
+    i32.const 10000000
+    i32.lt_u
+    if (result i32)
+     local.get $1
+     i32.const 1000000
+     i32.ge_u
+     i32.const 6
+     i32.add
+    else
+     local.get $1
+     i32.const 1000000000
+     i32.ge_u
+     i32.const 8
+     i32.add
+     local.get $1
+     i32.const 100000000
+     i32.ge_u
+     i32.add
+    end
+   end
+   local.tee $2
+   i32.const 1
+   i32.shl
+   i32.const 1
+   call $~lib/rt/stub/__new
+   local.tee $3
+   local.get $1
+   local.get $2
+   call $~lib/util/number/utoa32_dec_lut
+  else
+   local.get $0
+   i64.const 1000000000000000
+   i64.lt_u
+   if (result i32)
+    local.get $0
+    i64.const 1000000000000
+    i64.lt_u
+    if (result i32)
+     local.get $0
+     i64.const 100000000000
+     i64.ge_u
+     i32.const 10
+     i32.add
+     local.get $0
+     i64.const 10000000000
+     i64.ge_u
+     i32.add
+    else
+     local.get $0
+     i64.const 100000000000000
+     i64.ge_u
+     i32.const 13
+     i32.add
+     local.get $0
+     i64.const 10000000000000
+     i64.ge_u
+     i32.add
+    end
+   else
+    local.get $0
+    i64.const 100000000000000000
+    i64.lt_u
+    if (result i32)
+     local.get $0
+     i64.const 10000000000000000
+     i64.ge_u
+     i32.const 16
+     i32.add
+    else
+     local.get $0
+     i64.const -8446744073709551616
+     i64.ge_u
+     i32.const 18
+     i32.add
+     local.get $0
+     i64.const 1000000000000000000
+     i64.ge_u
+     i32.add
+    end
+   end
+   local.tee $2
+   i32.const 1
+   i32.shl
+   i32.const 1
+   call $~lib/rt/stub/__new
+   local.tee $3
+   local.get $0
+   local.get $2
+   call $~lib/util/number/utoa64_dec_lut
+  end
+  local.get $3
+ )
+ (func $assembly/multicall/model/JobSchema#_encode (param $0 i32) (param $1 i32)
+  (local $2 i32)
+  (local $3 i32)
+  (local $4 i32)
+  (local $5 i32)
+  (local $6 i32)
+  (local $7 i32)
+  (local $8 i32)
+  (local $9 i32)
+  (local $10 i64)
+  (local $11 i32)
+  local.get $1
+  i32.eqz
+  if
+   call $~lib/near-sdk-bindgen/index/JSONEncoder#constructor
+   local.set $1
+  end
+  local.get $1
+  i32.const 12464
+  call $~lib/assemblyscript-json/encoder/JSONEncoder#writeKey
+  local.get $1
+  i32.load offset=4
+  i32.const 2512
+  call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#push
+  local.get $1
+  i32.load
+  i32.const 1
+  call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#push
+  local.get $0
+  i32.load
+  i64.extend_i32_s
+  local.get $1
+  i32.const 12496
+  call $~lib/assemblyscript-json/encoder/JSONEncoder#writeKey
+  call $~lib/util/number/itoa64
+  local.set $2
+  local.get $1
+  i32.load offset=4
+  local.get $2
+  call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#push
+  local.get $0
+  i32.load offset=4
+  i32.const 12528
+  local.get $1
+  call $~lib/near-sdk-bindgen/index/encode<~lib/string/String,~lib/near-sdk-bindgen/index/JSONEncoder>
+  local.get $0
+  i32.load offset=8
+  i32.const 12576
+  local.get $1
+  call $~lib/near-sdk-bindgen/index/encode<~lib/string/String,~lib/near-sdk-bindgen/index/JSONEncoder>
+  local.get $0
+  i32.load offset=12
+  i32.const 12624
+  local.get $1
+  call $~lib/near-sdk-bindgen/index/encode<~lib/as-bignum/integer/safe/u128/u128,~lib/near-sdk-bindgen/index/JSONEncoder>
+  local.get $0
+  i32.load offset=16
+  i32.const 12656
+  local.get $1
+  call $~lib/near-sdk-bindgen/index/encode<~lib/string/String,~lib/near-sdk-bindgen/index/JSONEncoder>
+  local.get $0
+  i64.load offset=24
+  call $~lib/util/number/utoa64
+  local.set $2
+  local.get $1
+  i32.const 12704
+  call $~lib/assemblyscript-json/encoder/JSONEncoder#writeKey
+  local.get $1
+  local.get $2
+  call $~lib/assemblyscript-json/encoder/JSONEncoder#writeString
+  local.get $0
+  i32.load offset=32
+  i32.const 12752
+  local.get $1
+  call $~lib/near-sdk-bindgen/index/encode<~lib/as-bignum/integer/safe/u128/u128,~lib/near-sdk-bindgen/index/JSONEncoder>
+  local.get $0
+  i32.load offset=36
+  i32.const 12816
+  local.get $1
+  call $~lib/near-sdk-bindgen/index/encode<~lib/as-bignum/integer/safe/u128/u128,~lib/near-sdk-bindgen/index/JSONEncoder>
+  local.get $0
+  i64.load offset=40
+  call $~lib/util/number/utoa64
+  local.set $2
+  local.get $1
+  i32.const 12864
+  call $~lib/assemblyscript-json/encoder/JSONEncoder#writeKey
+  local.get $1
+  local.get $2
+  call $~lib/assemblyscript-json/encoder/JSONEncoder#writeString
+  local.get $0
+  i64.load offset=48
+  call $~lib/util/number/utoa64
+  local.set $2
+  local.get $1
+  i32.const 12912
+  call $~lib/assemblyscript-json/encoder/JSONEncoder#writeKey
+  local.get $1
+  local.get $2
+  call $~lib/assemblyscript-json/encoder/JSONEncoder#writeString
+  local.get $0
+  i64.load offset=56
+  call $~lib/util/number/utoa64
+  local.set $2
+  local.get $1
+  i32.const 12960
+  call $~lib/assemblyscript-json/encoder/JSONEncoder#writeKey
+  local.get $1
+  local.get $2
+  call $~lib/assemblyscript-json/encoder/JSONEncoder#writeString
+  local.get $0
+  i32.load8_u offset=64
+  local.set $2
+  local.get $1
+  i32.const 13008
+  call $~lib/assemblyscript-json/encoder/JSONEncoder#writeKey
+  local.get $1
+  i32.load offset=4
+  i32.const 4112
+  i32.const 4000
+  local.get $2
+  select
+  call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#push
+  local.get $0
+  i32.load offset=68
+  local.tee $7
+  if
+   local.get $1
+   i32.const 4544
+   call $~lib/assemblyscript-json/encoder/JSONEncoder#writeKey
+   local.get $1
+   i32.load offset=4
+   i32.const 3856
+   call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#push
+   local.get $1
+   i32.load
+   i32.const 1
+   call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#push
+   loop $for-loop|0
+    local.get $6
+    local.get $7
+    i32.load offset=12
+    i32.lt_s
+    if
+     i32.const 0
+     local.set $3
+     local.get $7
+     local.get $6
+     call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#__get
+     local.tee $8
+     if
+      local.get $1
+      i32.const 0
+      call $~lib/assemblyscript-json/encoder/JSONEncoder#writeKey
+      local.get $1
+      i32.load offset=4
+      i32.const 3856
+      call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#push
+      local.get $1
+      i32.load
+      i32.const 1
+      call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#push
+      loop $for-loop|03
+       local.get $3
+       local.get $8
+       i32.load offset=12
+       i32.lt_s
+       if
+        local.get $8
+        local.get $3
+        call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#__get
+        local.tee $2
+        if
+         local.get $1
+         if (result i32)
+          local.get $1
+         else
+          call $~lib/near-sdk-bindgen/index/JSONEncoder#constructor
+         end
+         local.tee $0
+         i32.const 0
+         call $~lib/assemblyscript-json/encoder/JSONEncoder#writeKey
+         local.get $0
+         i32.load offset=4
+         i32.const 2512
+         call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#push
+         local.get $0
+         i32.load
+         i32.const 1
+         call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#push
+         local.get $2
+         i32.load
+         i32.const 5456
+         local.get $0
+         call $~lib/near-sdk-bindgen/index/encode<~lib/string/String,~lib/near-sdk-bindgen/index/JSONEncoder>
+         i32.const 0
+         local.set $4
+         local.get $2
+         i32.load offset=4
+         local.tee $9
+         if
+          local.get $0
+          i32.const 5616
+          call $~lib/assemblyscript-json/encoder/JSONEncoder#writeKey
+          local.get $0
+          i32.load offset=4
+          i32.const 3856
+          call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#push
+          local.get $0
+          i32.load
+          i32.const 1
+          call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#push
+          loop $for-loop|00
+           local.get $4
+           local.get $9
+           i32.load offset=12
+           i32.lt_s
+           if
+            local.get $9
+            local.get $4
+            call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#__get
+            local.tee $5
+            if
+             local.get $0
+             if (result i32)
+              local.get $0
+             else
+              call $~lib/near-sdk-bindgen/index/JSONEncoder#constructor
+             end
+             local.tee $2
+             i32.const 0
+             call $~lib/assemblyscript-json/encoder/JSONEncoder#writeKey
+             local.get $2
+             i32.load offset=4
+             i32.const 2512
+             call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#push
+             local.get $2
+             i32.load
+             i32.const 1
+             call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#push
+             local.get $5
+             i32.load
+             i32.const 5824
+             local.get $2
+             call $~lib/near-sdk-bindgen/index/encode<~lib/string/String,~lib/near-sdk-bindgen/index/JSONEncoder>
+             local.get $5
+             i32.load offset=4
+             i32.const 5856
+             local.get $2
+             call $~lib/near-sdk-bindgen/index/encode<~lib/string/String,~lib/near-sdk-bindgen/index/JSONEncoder>
+             local.get $5
+             i64.load offset=8
+             call $~lib/util/number/utoa64
+             local.set $11
+             local.get $2
+             i32.const 5888
+             call $~lib/assemblyscript-json/encoder/JSONEncoder#writeKey
+             local.get $2
+             local.get $11
+             call $~lib/assemblyscript-json/encoder/JSONEncoder#writeString
+             local.get $5
+             i32.load offset=16
+             i32.const 6112
+             local.get $2
+             call $~lib/near-sdk-bindgen/index/encode<~lib/as-bignum/integer/safe/u128/u128,~lib/near-sdk-bindgen/index/JSONEncoder>
+             local.get $2
+             i32.load offset=4
+             i32.const 2832
+             call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#push
+             local.get $2
+             i32.load
+             call $~lib/array/Array<i32>#pop
+            else
+             local.get $0
+             i32.const 0
+             call $~lib/assemblyscript-json/encoder/JSONEncoder#writeKey
+             local.get $0
+             i32.load offset=4
+             i32.const 4368
+             call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#push
+            end
+            local.get $4
+            i32.const 1
+            i32.add
+            local.set $4
+            br $for-loop|00
+           end
+          end
+          local.get $0
+          i32.load offset=4
+          i32.const 3888
+          call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#push
+          local.get $0
+          i32.load
+          call $~lib/array/Array<i32>#pop
+         else
+          local.get $0
+          i32.const 5616
+          call $~lib/assemblyscript-json/encoder/JSONEncoder#writeKey
+          local.get $0
+          i32.load offset=4
+          i32.const 4368
+          call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#push
+         end
+         local.get $0
+         i32.load offset=4
+         i32.const 2832
+         call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#push
+         local.get $0
+         i32.load
+         call $~lib/array/Array<i32>#pop
+        else
+         local.get $1
+         i32.const 0
+         call $~lib/assemblyscript-json/encoder/JSONEncoder#writeKey
+         local.get $1
+         i32.load offset=4
+         i32.const 4368
+         call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#push
+        end
+        local.get $3
+        i32.const 1
+        i32.add
+        local.set $3
+        br $for-loop|03
+       end
+      end
+      local.get $1
+      i32.load offset=4
+      i32.const 3888
+      call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#push
+      local.get $1
+      i32.load
+      call $~lib/array/Array<i32>#pop
+     else
+      local.get $1
+      i32.const 0
+      call $~lib/assemblyscript-json/encoder/JSONEncoder#writeKey
+      local.get $1
+      i32.load offset=4
+      i32.const 4368
+      call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#push
+     end
+     local.get $6
+     i32.const 1
+     i32.add
+     local.set $6
+     br $for-loop|0
+    end
+   end
+   local.get $1
+   i32.load offset=4
+   i32.const 3888
+   call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#push
+   local.get $1
+   i32.load
+   call $~lib/array/Array<i32>#pop
+  else
+   local.get $1
+   i32.const 4544
+   call $~lib/assemblyscript-json/encoder/JSONEncoder#writeKey
+   local.get $1
+   i32.load offset=4
+   i32.const 4368
+   call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#push
+  end
+  local.get $1
+  i32.load offset=4
+  i32.const 2832
+  call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#push
+  local.get $1
+  i32.load
+  call $~lib/array/Array<i32>#pop
+ )
+ (func $~lib/near-sdk-core/storage/Storage.set<~lib/near-sdk-core/collections/util/MapEntry<u32,assembly/multicall/model/JobSchema>> (param $0 i32) (param $1 i32)
+  (local $2 i32)
+  (local $3 i32)
+  (local $4 i64)
+  (local $5 i32)
+  i32.const 1
+  global.set $~argumentsLength
+  local.get $0
+  call $~lib/near-sdk-bindgen/index/JSONEncoder#constructor
+  local.set $2
+  local.get $1
+  if
+   local.get $2
+   if (result i32)
+    local.get $2
+   else
+    call $~lib/near-sdk-bindgen/index/JSONEncoder#constructor
+   end
+   local.tee $0
+   i32.const 1552
+   call $~lib/assemblyscript-json/encoder/JSONEncoder#writeKey
+   local.get $0
+   i32.load offset=4
+   i32.const 2512
+   call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#push
+   local.get $0
+   i32.load
+   i32.const 1
+   call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#push
+   local.get $1
+   i32.load
+   i64.extend_i32_u
+   local.get $0
+   i32.const 12432
+   call $~lib/assemblyscript-json/encoder/JSONEncoder#writeKey
+   call $~lib/util/number/itoa64
+   local.set $5
+   local.get $0
+   i32.load offset=4
+   local.get $5
+   call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#push
+   local.get $1
+   i32.load offset=4
+   local.tee $1
+   if
+    local.get $1
+    local.get $0
+    call $assembly/multicall/model/JobSchema#_encode
+   else
+    local.get $0
+    i32.const 12464
+    call $~lib/assemblyscript-json/encoder/JSONEncoder#writeKey
+    local.get $0
+    i32.load offset=4
+    i32.const 4368
+    call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#push
+   end
+   local.get $0
+   i32.load offset=4
+   i32.const 2832
+   call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#push
+   local.get $0
+   i32.load
+   call $~lib/array/Array<i32>#pop
+  else
+   local.get $2
+   i32.const 1552
+   call $~lib/assemblyscript-json/encoder/JSONEncoder#writeKey
+   local.get $2
+   i32.load offset=4
+   i32.const 4368
+   call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#push
+  end
+  local.get $2
+  call $~lib/assemblyscript-json/encoder/JSONEncoder#serialize
+  call $~lib/near-sdk-core/storage/Storage.setBytes
+ )
+ (func $~lib/near-sdk-core/collections/persistentUnorderedMap/PersistentUnorderedMap<u32,assembly/multicall/model/JobSchema>#set (param $0 i32) (param $1 i32) (param $2 i32)
+  (local $3 i32)
+  (local $4 i32)
+  i32.const 8
+  i32.const 20
+  call $~lib/rt/stub/__new
+  local.tee $3
+  local.get $1
+  i32.store
+  local.get $3
+  local.get $2
+  i32.store offset=4
+  local.get $0
+  i32.load
+  local.get $1
+  call $~lib/near-sdk-core/collections/persistentMap/PersistentMap<u32,i32>#contains
+  if
+   local.get $0
+   i32.load
+   i32.load
+   local.get $1
+   call $~lib/util/number/utoa32
+   call $~lib/string/String#concat
+   call $~lib/near-sdk-core/storage/Storage.getSome<i32>
+   local.set $1
+   local.get $0
+   i32.load offset=4
+   local.set $2
+   local.get $1
+   i32.const 0
+   i32.ge_s
+   if (result i32)
+    local.get $2
+    call $~lib/near-sdk-core/collections/persistentVector/PersistentVector<~lib/string/String>#get:length
+    local.get $1
+    i32.gt_s
+   else
+    i32.const 0
+   end
+   i32.eqz
+   if
+    i32.const 2320
+    i32.const 10848
+    i32.const 49
+    i32.const 5
+    call $~lib/builtins/abort
+    unreachable
+   end
+   local.get $2
+   i32.load
+   local.get $1
+   call $~lib/util/number/itoa32
+   call $~lib/string/String#concat
+   local.get $3
+   call $~lib/near-sdk-core/storage/Storage.set<~lib/near-sdk-core/collections/util/MapEntry<u32,assembly/multicall/model/JobSchema>>
+  else
+   local.get $0
+   i32.load
+   local.get $0
+   i32.load offset=4
+   call $~lib/near-sdk-core/collections/persistentVector/PersistentVector<~lib/string/String>#get:length
+   local.set $2
+   i32.load
+   local.get $1
+   call $~lib/util/number/utoa32
+   call $~lib/string/String#concat
+   local.get $2
+   call $~lib/util/number/itoa32
+   call $~lib/near-sdk-core/storage/Storage.setString
+   local.get $0
+   i32.load offset=4
+   local.tee $2
+   call $~lib/near-sdk-core/collections/persistentVector/PersistentVector<~lib/string/String>#get:length
+   local.tee $0
+   i32.const 1
+   i32.add
+   local.set $1
+   local.get $2
+   local.get $1
+   i32.store offset=8
+   local.get $2
+   i32.load offset=4
+   local.get $1
+   call $~lib/util/number/itoa32
+   call $~lib/near-sdk-core/storage/Storage.setString
+   local.get $2
+   i32.load
+   local.get $0
+   call $~lib/util/number/itoa32
+   call $~lib/string/String#concat
+   local.get $3
+   call $~lib/near-sdk-core/storage/Storage.set<~lib/near-sdk-core/collections/util/MapEntry<u32,assembly/multicall/model/JobSchema>>
+  end
+ )
+ (func $assembly/multicall/index/__wrapper_job_add
+  (local $0 i32)
+  (local $1 i32)
+  (local $2 i32)
+  (local $3 i32)
+  (local $4 i32)
+  (local $5 i32)
+  (local $6 i32)
+  (local $7 i32)
+  (local $8 i64)
+  (local $9 i64)
+  (local $10 i64)
+  (local $11 i64)
+  (local $12 i64)
+  call $~lib/near-sdk-bindgen/index/getInput
+  local.tee $1
+  i32.load
+  i32.const 11808
+  i32.const 11808
+  call $~lib/util/hash/HASH<~lib/string/String>
+  call $~lib/map/Map<~lib/string/String,~lib/assemblyscript-json/JSON/Value>#find
+  if (result i32)
+   local.get $1
+   i32.const 11808
+   call $~lib/near-sdk-bindgen/index/decode<~lib/array/Array<~lib/array/Array<assembly/multicall/model/BatchCall>>,~lib/assemblyscript-json/JSON/Obj>
+  else
+   i32.const 11808
+   call $~lib/near-sdk-bindgen/index/requireParameter<~lib/array/Array<~lib/array/Array<assembly/multicall/model/BatchCall>>>
+  end
+  local.set $6
+  local.get $1
+  i32.load
+  i32.const 11856
+  i32.const 11856
+  call $~lib/util/hash/HASH<~lib/string/String>
+  call $~lib/map/Map<~lib/string/String,~lib/assemblyscript-json/JSON/Value>#find
+  if (result i32)
+   local.get $1
+   i32.const 11856
+   call $~lib/near-sdk-bindgen/index/decode<~lib/string/String,~lib/assemblyscript-json/JSON/Obj>
+  else
+   i32.const 11856
+   call $~lib/near-sdk-bindgen/index/requireParameter<~lib/string/String>
+  end
+  local.set $7
+  local.get $1
+  i32.load
+  i32.const 11904
+  i32.const 11904
+  call $~lib/util/hash/HASH<~lib/string/String>
+  call $~lib/map/Map<~lib/string/String,~lib/assemblyscript-json/JSON/Value>#find
+  if (result i64)
+   local.get $1
+   i32.const 11904
+   call $~lib/near-sdk-bindgen/index/decode<u64,~lib/assemblyscript-json/JSON/Obj>
+  else
+   i32.const 11904
+   call $~lib/near-sdk-bindgen/index/requireParameter<u64>
+  end
+  local.set $8
+  local.get $1
+  i32.load
+  i32.const 11968
+  i32.const 11968
+  call $~lib/util/hash/HASH<~lib/string/String>
+  call $~lib/map/Map<~lib/string/String,~lib/assemblyscript-json/JSON/Value>#find
+  if (result i32)
+   local.get $1
+   i32.const 11968
+   call $~lib/near-sdk-bindgen/index/decode<~lib/as-bignum/integer/safe/u128/u128,~lib/assemblyscript-json/JSON/Obj>
+  else
+   i32.const 11968
+   call $~lib/near-sdk-bindgen/index/requireParameter<~lib/as-bignum/integer/safe/u128/u128>
+  end
+  local.set $3
+  local.get $1
+  i32.load
+  i32.const 12032
+  i32.const 12032
+  call $~lib/util/hash/HASH<~lib/string/String>
+  call $~lib/map/Map<~lib/string/String,~lib/assemblyscript-json/JSON/Value>#find
+  if (result i32)
+   local.get $1
+   i32.const 12032
+   call $~lib/near-sdk-bindgen/index/decode<~lib/as-bignum/integer/safe/u128/u128,~lib/assemblyscript-json/JSON/Obj>
+  else
+   i32.const 12032
+   call $~lib/near-sdk-bindgen/index/requireParameter<~lib/as-bignum/integer/safe/u128/u128>
+  end
+  local.set $2
+  local.get $1
+  i32.load
+  i32.const 12096
+  i32.const 12096
+  call $~lib/util/hash/HASH<~lib/string/String>
+  call $~lib/map/Map<~lib/string/String,~lib/assemblyscript-json/JSON/Value>#find
+  if (result i64)
+   local.get $1
+   i32.const 12096
+   call $~lib/near-sdk-bindgen/index/decode<u64,~lib/assemblyscript-json/JSON/Obj>
+  else
+   i32.const 12096
+   call $~lib/near-sdk-bindgen/index/requireParameter<u64>
+  end
+  local.set $9
+  local.get $1
+  i32.load
+  i32.const 12144
+  i32.const 12144
+  call $~lib/util/hash/HASH<~lib/string/String>
+  call $~lib/map/Map<~lib/string/String,~lib/assemblyscript-json/JSON/Value>#find
+  if (result i64)
+   local.get $1
+   i32.const 12144
+   call $~lib/near-sdk-bindgen/index/decode<u64,~lib/assemblyscript-json/JSON/Obj>
+  else
+   i32.const 12144
+   call $~lib/near-sdk-bindgen/index/requireParameter<u64>
+  end
+  local.set $10
+  global.get $assembly/multicall/index/_jobs
+  local.tee $4
+  i32.load
+  call $~lib/near-sdk-core/storage/Storage.getSome<~lib/as-bignum/integer/safe/u128/u128>
+  local.set $5
+  call $~lib/near-sdk-core/contract/Context.get:attachedDeposit
+  local.tee $1
+  i64.load offset=8
+  local.tee $11
+  local.get $5
+  i64.load offset=8
+  local.tee $12
+  i64.eq
+  if (result i32)
+   local.get $1
+   i64.load
+   local.get $5
+   i64.load
+   i64.lt_u
+  else
+   local.get $11
+   local.get $12
+   i64.lt_u
+  end
+  if
+   i32.const 12192
+   i32.const 12352
+   i32.const 55
+   i32.const 5
+   call $~lib/builtins/abort
+   unreachable
+  end
+  local.get $4
+  i32.load offset=4
+  call $~lib/near-sdk-core/storage/Storage._internalReadBytes
+  call $~lib/near-sdk-core/util/util.bytesToString
+  local.tee $1
+  i32.const 0
+  call $~lib/string/String.__eq
+  if (result i32)
+   i32.const 0
+  else
+   local.get $1
+   i32.eqz
+   if
+    i32.const 2160
+    i32.const 10480
+    i32.const 218
+    i32.const 41
+    call $~lib/builtins/abort
+    unreachable
+   end
+   local.get $1
+   call $~lib/util/string/strtol<i64>
+   i32.wrap_i64
+  end
+  local.set $1
+  i32.const 72
+  i32.const 12
+  call $~lib/rt/stub/__new
+  local.tee $0
+  i32.const 0
+  i32.store
+  local.get $0
+  i32.const 0
+  i32.store offset=4
+  local.get $0
+  i32.const 0
+  i32.store offset=8
+  local.get $0
+  i32.const 0
+  i32.store offset=12
+  local.get $0
+  i32.const 0
+  i32.store offset=16
+  local.get $0
+  i64.const 0
+  i64.store offset=24
+  local.get $0
+  i32.const 0
+  i32.store offset=32
+  local.get $0
+  i32.const 0
+  i32.store offset=36
+  local.get $0
+  i64.const 0
+  i64.store offset=40
+  local.get $0
+  i64.const 0
+  i64.store offset=48
+  local.get $0
+  i64.const 0
+  i64.store offset=56
+  local.get $0
+  i32.const 0
+  i32.store8 offset=64
+  local.get $0
+  i32.const 0
+  i32.store offset=68
+  local.get $0
+  local.get $1
+  i32.store
+  local.get $0
+  i32.const 1552
+  i32.store offset=4
+  i64.const 0
+  call $~lib/near-sdk-core/env/env/env.predecessor_account_id
+  local.get $0
+  call $~lib/near-sdk-core/util/util.read_register_string
+  i32.store offset=8
+  local.get $0
+  local.get $5
+  i32.store offset=12
+  local.get $0
+  local.get $7
+  i32.store offset=16
+  local.get $0
+  local.get $8
+  i64.store offset=24
+  local.get $0
+  local.get $3
+  i32.store offset=32
+  local.get $0
+  local.get $2
+  i32.store offset=36
+  local.get $0
+  local.get $10
+  i64.store offset=40
+  local.get $0
+  local.get $9
+  i64.store offset=48
+  local.get $0
+  i64.const 0
+  i64.store offset=56
+  local.get $0
+  i32.const 0
+  i32.store8 offset=64
+  local.get $0
+  local.get $6
+  i32.store offset=68
+  local.get $4
+  i32.load offset=4
+  local.get $0
+  i32.load
+  i32.const 1
+  i32.add
+  call $~lib/util/number/utoa32
+  call $~lib/near-sdk-core/storage/Storage.setString
+  local.get $4
+  i32.load offset=12
+  local.get $0
+  i32.load
+  local.get $0
+  call $~lib/near-sdk-core/collections/persistentUnorderedMap/PersistentUnorderedMap<u32,assembly/multicall/model/JobSchema>#set
+  local.get $0
+  i32.load
+  i32.const 1
+  global.set $~argumentsLength
+  call $~lib/near-sdk-bindgen/index/JSONEncoder#constructor
+  local.tee $3
+  i32.const 1552
+  call $~lib/assemblyscript-json/encoder/JSONEncoder#writeKey
+  i64.extend_i32_s
+  call $~lib/util/number/itoa64
+  local.set $2
+  local.get $3
+  i32.load offset=4
+  local.get $2
+  call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#push
+  local.get $3
+  call $~lib/assemblyscript-json/encoder/JSONEncoder#serialize
+  local.tee $2
+  i32.load offset=8
+  i64.extend_i32_s
+  local.get $2
+  i32.load offset=4
+  i64.extend_i32_u
+  call $~lib/near-sdk-core/env/env/env.value_return
+ )
+ (func $~lib/near-sdk-bindgen/index/requireParameter<i32> (result i32)
+  i32.const 6592
+  i32.const 13056
+  call $~lib/string/String#concat
+  i32.const 4960
+  call $~lib/string/String#concat
+  i32.const 11200
+  call $~lib/string/String#concat
+  i32.const 6640
+  call $~lib/string/String#concat
+  i32.const 4464
+  i32.const 33
+  i32.const 3
+  call $~lib/builtins/abort
+  unreachable
+ )
+ (func $~lib/near-sdk-bindgen/index/decode<u32,~lib/assemblyscript-json/JSON/Obj> (param $0 i32) (param $1 i32) (result i32)
+  (local $2 i32)
   local.get $0
   if (result i32)
    block $__inlined_func$~lib/rt/__instanceof (result i32)
@@ -13273,21 +16925,21 @@
     i32.sub
     i32.load offset=12
     local.tee $2
-    i32.const 11568
+    i32.const 15440
     i32.load
     i32.le_u
     if
      loop $do-continue|0
       i32.const 1
       local.get $2
-      i32.const 11
+      i32.const 22
       i32.eq
       br_if $__inlined_func$~lib/rt/__instanceof
       drop
       local.get $2
       i32.const 3
       i32.shl
-      i32.const 11572
+      i32.const 15444
       i32.add
       i32.load offset=4
       local.tee $2
@@ -13301,7 +16953,7 @@
   end
   if (result i32)
    local.get $1
-   i32.const 1088
+   i32.const 1552
    call $~lib/string/String.__eq
    i32.eqz
   else
@@ -13314,21 +16966,21 @@
     i32.sub
     i32.load offset=12
     local.tee $2
-    i32.const 11568
+    i32.const 15440
     i32.load
     i32.le_u
     if
      loop $do-continue|01
       i32.const 1
       local.get $2
-      i32.const 11
+      i32.const 22
       i32.eq
       br_if $__inlined_func$~lib/rt/__instanceof0
       drop
       local.get $2
       i32.const 3
       i32.shl
-      i32.const 11572
+      i32.const 15444
       i32.add
       i32.load offset=4
       local.tee $2
@@ -13339,8 +16991,8 @@
    end
    i32.eqz
    if
-    i32.const 2464
-    i32.const 4256
+    i32.const 2672
+    i32.const 4464
     i32.const 310
     i32.const 37
     call $~lib/builtins/abort
@@ -13348,6 +17000,394 @@
    end
    local.get $0
    local.get $1
+   call $~lib/assemblyscript-json/JSON/Obj#get
+   local.tee $0
+   i32.eqz
+   if
+    i32.const 4688
+    i32.const 13280
+    call $~lib/string/String#concat
+    i32.const 4864
+    call $~lib/string/String#concat
+    i32.const 4464
+    i32.const 323
+    i32.const 9
+    call $~lib/builtins/abort
+    unreachable
+   end
+  end
+  local.get $0
+  if (result i32)
+   block $__inlined_func$~lib/rt/__instanceof5 (result i32)
+    local.get $0
+    i32.const 20
+    i32.sub
+    i32.load offset=12
+    local.tee $2
+    i32.const 15440
+    i32.load
+    i32.le_u
+    if
+     loop $do-continue|06
+      i32.const 1
+      local.get $2
+      i32.const 36
+      i32.eq
+      br_if $__inlined_func$~lib/rt/__instanceof5
+      drop
+      local.get $2
+      i32.const 3
+      i32.shl
+      i32.const 15444
+      i32.add
+      i32.load offset=4
+      local.tee $2
+      br_if $do-continue|06
+     end
+    end
+    i32.const 0
+   end
+  else
+   i32.const 0
+  end
+  i32.eqz
+  if
+   i32.const 5072
+   local.get $1
+   call $~lib/string/String#concat
+   i32.const 4960
+   call $~lib/string/String#concat
+   i32.const 13280
+   call $~lib/string/String#concat
+   i32.const 11232
+   call $~lib/string/String#concat
+   i32.const 4464
+   i32.const 358
+   i32.const 5
+   call $~lib/builtins/abort
+   unreachable
+  end
+  block $__inlined_func$~lib/rt/__instanceof11 (result i32)
+   local.get $0
+   i32.const 20
+   i32.sub
+   i32.load offset=12
+   local.tee $1
+   i32.const 15440
+   i32.load
+   i32.le_u
+   if
+    loop $do-continue|012
+     i32.const 1
+     local.get $1
+     i32.const 36
+     i32.eq
+     br_if $__inlined_func$~lib/rt/__instanceof11
+     drop
+     local.get $1
+     i32.const 3
+     i32.shl
+     i32.const 15444
+     i32.add
+     i32.load offset=4
+     local.tee $1
+     br_if $do-continue|012
+    end
+   end
+   i32.const 0
+  end
+  i32.eqz
+  if
+   i32.const 2672
+   i32.const 4464
+   i32.const 367
+   i32.const 30
+   call $~lib/builtins/abort
+   unreachable
+  end
+  local.get $0
+  i64.load
+  i32.wrap_i64
+ )
+ (func $~lib/near-sdk-bindgen/index/decode<bool,~lib/assemblyscript-json/JSON/Obj> (param $0 i32) (param $1 i32) (result i32)
+  (local $2 i32)
+  local.get $0
+  if (result i32)
+   block $__inlined_func$~lib/rt/__instanceof (result i32)
+    local.get $0
+    i32.const 20
+    i32.sub
+    i32.load offset=12
+    local.tee $2
+    i32.const 15440
+    i32.load
+    i32.le_u
+    if
+     loop $do-continue|0
+      i32.const 1
+      local.get $2
+      i32.const 22
+      i32.eq
+      br_if $__inlined_func$~lib/rt/__instanceof
+      drop
+      local.get $2
+      i32.const 3
+      i32.shl
+      i32.const 15444
+      i32.add
+      i32.load offset=4
+      local.tee $2
+      br_if $do-continue|0
+     end
+    end
+    i32.const 0
+   end
+  else
+   i32.const 0
+  end
+  if (result i32)
+   local.get $1
+   i32.const 1552
+   call $~lib/string/String.__eq
+   i32.eqz
+  else
+   i32.const 0
+  end
+  if
+   block $__inlined_func$~lib/rt/__instanceof0 (result i32)
+    local.get $0
+    i32.const 20
+    i32.sub
+    i32.load offset=12
+    local.tee $2
+    i32.const 15440
+    i32.load
+    i32.le_u
+    if
+     loop $do-continue|01
+      i32.const 1
+      local.get $2
+      i32.const 22
+      i32.eq
+      br_if $__inlined_func$~lib/rt/__instanceof0
+      drop
+      local.get $2
+      i32.const 3
+      i32.shl
+      i32.const 15444
+      i32.add
+      i32.load offset=4
+      local.tee $2
+      br_if $do-continue|01
+     end
+    end
+    i32.const 0
+   end
+   i32.eqz
+   if
+    i32.const 2672
+    i32.const 4464
+    i32.const 310
+    i32.const 37
+    call $~lib/builtins/abort
+    unreachable
+   end
+   local.get $0
+   local.get $1
+   call $~lib/assemblyscript-json/JSON/Obj#get
+   local.tee $0
+   i32.eqz
+   if
+    i32.const 4688
+    i32.const 13360
+    call $~lib/string/String#concat
+    i32.const 4864
+    call $~lib/string/String#concat
+    i32.const 4464
+    i32.const 323
+    i32.const 9
+    call $~lib/builtins/abort
+    unreachable
+   end
+  end
+  local.get $0
+  if (result i32)
+   block $__inlined_func$~lib/rt/__instanceof5 (result i32)
+    local.get $0
+    i32.const 20
+    i32.sub
+    i32.load offset=12
+    local.tee $2
+    i32.const 15440
+    i32.load
+    i32.le_u
+    if
+     loop $do-continue|06
+      i32.const 1
+      local.get $2
+      i32.const 33
+      i32.eq
+      br_if $__inlined_func$~lib/rt/__instanceof5
+      drop
+      local.get $2
+      i32.const 3
+      i32.shl
+      i32.const 15444
+      i32.add
+      i32.load offset=4
+      local.tee $2
+      br_if $do-continue|06
+     end
+    end
+    i32.const 0
+   end
+  else
+   i32.const 0
+  end
+  i32.eqz
+  if
+   i32.const 5072
+   local.get $1
+   call $~lib/string/String#concat
+   i32.const 4960
+   call $~lib/string/String#concat
+   i32.const 13360
+   call $~lib/string/String#concat
+   i32.const 13392
+   call $~lib/string/String#concat
+   i32.const 4464
+   i32.const 331
+   i32.const 5
+   call $~lib/builtins/abort
+   unreachable
+  end
+  block $__inlined_func$~lib/rt/__instanceof11 (result i32)
+   local.get $0
+   i32.const 20
+   i32.sub
+   i32.load offset=12
+   local.tee $1
+   i32.const 15440
+   i32.load
+   i32.le_u
+   if
+    loop $do-continue|012
+     i32.const 1
+     local.get $1
+     i32.const 33
+     i32.eq
+     br_if $__inlined_func$~lib/rt/__instanceof11
+     drop
+     local.get $1
+     i32.const 3
+     i32.shl
+     i32.const 15444
+     i32.add
+     i32.load offset=4
+     local.tee $1
+     br_if $do-continue|012
+    end
+   end
+   i32.const 0
+  end
+  i32.eqz
+  if
+   i32.const 2672
+   i32.const 4464
+   i32.const 340
+   i32.const 24
+   call $~lib/builtins/abort
+   unreachable
+  end
+  local.get $0
+  i32.load8_u
+ )
+ (func $~lib/near-sdk-bindgen/index/decode<assembly/multicall/model/JobSchema,~lib/assemblyscript-json/JSON/Obj> (param $0 i32) (result i32)
+  (local $1 i32)
+  (local $2 i32)
+  local.get $0
+  if (result i32)
+   block $__inlined_func$~lib/rt/__instanceof (result i32)
+    local.get $0
+    i32.const 20
+    i32.sub
+    i32.load offset=12
+    local.tee $2
+    i32.const 15440
+    i32.load
+    i32.le_u
+    if
+     loop $do-continue|0
+      i32.const 1
+      local.get $2
+      i32.const 22
+      i32.eq
+      br_if $__inlined_func$~lib/rt/__instanceof
+      drop
+      local.get $2
+      i32.const 3
+      i32.shl
+      i32.const 15444
+      i32.add
+      i32.load offset=4
+      local.tee $2
+      br_if $do-continue|0
+     end
+    end
+    i32.const 0
+   end
+  else
+   i32.const 0
+  end
+  if (result i32)
+   i32.const 12464
+   i32.const 1552
+   call $~lib/string/String.__eq
+   i32.eqz
+  else
+   i32.const 0
+  end
+  if
+   block $__inlined_func$~lib/rt/__instanceof0 (result i32)
+    local.get $0
+    i32.const 20
+    i32.sub
+    i32.load offset=12
+    local.tee $2
+    i32.const 15440
+    i32.load
+    i32.le_u
+    if
+     loop $do-continue|01
+      i32.const 1
+      local.get $2
+      i32.const 22
+      i32.eq
+      br_if $__inlined_func$~lib/rt/__instanceof0
+      drop
+      local.get $2
+      i32.const 3
+      i32.shl
+      i32.const 15444
+      i32.add
+      i32.load offset=4
+      local.tee $2
+      br_if $do-continue|01
+     end
+    end
+    i32.const 0
+   end
+   i32.eqz
+   if
+    i32.const 2672
+    i32.const 4464
+    i32.const 310
+    i32.const 37
+    call $~lib/builtins/abort
+    unreachable
+   end
+   local.get $0
+   i32.const 12464
    call $~lib/assemblyscript-json/JSON/Obj#get
    local.tee $0
    i32.eqz
@@ -13364,21 +17404,21 @@
     i32.sub
     i32.load offset=12
     local.tee $2
-    i32.const 11568
+    i32.const 15440
     i32.load
     i32.le_u
     if
      loop $do-continue|04
       i32.const 1
       local.get $2
-      i32.const 26
+      i32.const 37
       i32.eq
       br_if $__inlined_func$~lib/rt/__instanceof3
       drop
       local.get $2
       i32.const 3
       i32.shl
-      i32.const 11572
+      i32.const 15444
       i32.add
       i32.load offset=4
       local.tee $2
@@ -13396,31 +17436,31 @@
   end
   local.get $0
   if (result i32)
-   block $__inlined_func$~lib/rt/__instanceof1 (result i32)
+   block $__inlined_func$~lib/rt/__instanceof10 (result i32)
     local.get $0
     i32.const 20
     i32.sub
     i32.load offset=12
     local.tee $2
-    i32.const 11568
+    i32.const 15440
     i32.load
     i32.le_u
     if
-     loop $do-continue|02
+     loop $do-continue|011
       i32.const 1
       local.get $2
-      i32.const 19
+      i32.const 22
       i32.eq
-      br_if $__inlined_func$~lib/rt/__instanceof1
+      br_if $__inlined_func$~lib/rt/__instanceof10
       drop
       local.get $2
       i32.const 3
       i32.shl
-      i32.const 11572
+      i32.const 15444
       i32.add
       i32.load offset=4
       local.tee $2
-      br_if $do-continue|02
+      br_if $do-continue|011
      end
     end
     i32.const 0
@@ -13428,277 +17468,673 @@
   else
    i32.const 0
   end
+  if (result i32)
+   i32.const 1
+  else
+   local.get $0
+   if (result i32)
+    block $__inlined_func$~lib/rt/__instanceof12 (result i32)
+     local.get $0
+     i32.const 20
+     i32.sub
+     i32.load offset=12
+     local.tee $2
+     i32.const 15440
+     i32.load
+     i32.le_u
+     if
+      loop $do-continue|013
+       i32.const 1
+       local.get $2
+       i32.const 22
+       i32.eq
+       br_if $__inlined_func$~lib/rt/__instanceof12
+       drop
+       local.get $2
+       i32.const 3
+       i32.shl
+       i32.const 15444
+       i32.add
+       i32.load offset=4
+       local.tee $2
+       br_if $do-continue|013
+      end
+     end
+     i32.const 0
+    end
+   else
+    i32.const 0
+   end
+  end
   i32.eqz
   if
-   i32.const 4880
-   local.get $1
+   i32.const 5072
+   i32.const 12464
    call $~lib/string/String#concat
-   i32.const 4944
+   i32.const 4960
    call $~lib/string/String#concat
-   i32.const 4256
-   i32.const 226
-   i32.const 3
+   i32.const 13312
+   call $~lib/string/String#concat
+   i32.const 5376
+   call $~lib/string/String#concat
+   i32.const 4112
+   i32.const 4000
+   local.get $0
+   if (result i32)
+    block $__inlined_func$~lib/rt/__instanceof18 (result i32)
+     local.get $0
+     i32.const 20
+     i32.sub
+     i32.load offset=12
+     local.tee $2
+     i32.const 15440
+     i32.load
+     i32.le_u
+     if
+      loop $do-continue|019
+       i32.const 1
+       local.get $2
+       i32.const 22
+       i32.eq
+       br_if $__inlined_func$~lib/rt/__instanceof18
+       drop
+       local.get $2
+       i32.const 3
+       i32.shl
+       i32.const 15444
+       i32.add
+       i32.load offset=4
+       local.tee $2
+       br_if $do-continue|019
+      end
+     end
+     i32.const 0
+    end
+   else
+    i32.const 0
+   end
+   select
+   call $~lib/string/String#concat
+   i32.const 4464
+   i32.const 401
+   i32.const 5
    call $~lib/builtins/abort
    unreachable
   end
-  call $~lib/array/Array<~lib/string/String>#constructor
-  local.set $1
-  block $__inlined_func$~lib/rt/__instanceof13 (result i32)
+  i32.const 72
+  i32.const 12
+  call $~lib/rt/stub/__new
+  block $__inlined_func$~lib/rt/__instanceof21 (result i32)
    local.get $0
+   local.tee $1
    i32.const 20
    i32.sub
    i32.load offset=12
-   local.tee $2
-   i32.const 11568
+   local.tee $0
+   i32.const 15440
    i32.load
    i32.le_u
    if
-    loop $do-continue|024
+    loop $do-continue|022
      i32.const 1
-     local.get $2
-     i32.const 19
+     local.get $0
+     i32.const 22
      i32.eq
-     br_if $__inlined_func$~lib/rt/__instanceof13
+     br_if $__inlined_func$~lib/rt/__instanceof21
      drop
-     local.get $2
+     local.get $0
      i32.const 3
      i32.shl
-     i32.const 11572
+     i32.const 15444
      i32.add
      i32.load offset=4
-     local.tee $2
-     br_if $do-continue|024
+     local.tee $0
+     br_if $do-continue|022
     end
    end
    i32.const 0
   end
   i32.eqz
   if
-   i32.const 2464
-   i32.const 4256
-   i32.const 231
-   i32.const 26
+   i32.const 2672
+   i32.const 4464
+   i32.const 418
+   i32.const 47
    call $~lib/builtins/abort
    unreachable
   end
-  local.get $0
-  i32.load
-  local.set $0
-  loop $for-loop|0
-   local.get $3
-   local.get $0
-   i32.load offset=12
-   i32.lt_s
-   if
-    local.get $1
-    local.get $0
-    local.get $3
-    call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#__get
-    i32.const 1088
-    call $~lib/near-sdk-bindgen/index/decode<~lib/string/String,~lib/assemblyscript-json/JSON/Obj>
-    call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#push
-    local.get $3
-    i32.const 1
-    i32.add
-    local.set $3
-    br $for-loop|0
-   end
-  end
-  local.get $1
- )
- (func $~lib/near-sdk-bindgen/index/requireParameter<~lib/array/Array<~lib/string/String>> (param $0 i32) (result i32)
-  i32.const 6176
-  local.get $0
-  call $~lib/string/String#concat
-  i32.const 4768
-  call $~lib/string/String#concat
-  i32.const 10464
-  call $~lib/string/String#concat
-  i32.const 6224
-  call $~lib/string/String#concat
-  i32.const 4256
-  i32.const 33
-  i32.const 3
-  call $~lib/builtins/abort
-  unreachable
- )
- (func $~lib/near-sdk-core/storage/Storage.getString (param $0 i32) (result i32)
-  local.get $0
-  call $~lib/near-sdk-core/util/util.stringToBytes
   local.tee $0
-  i32.load offset=8
-  i64.extend_i32_s
-  local.get $0
-  i32.load offset=4
-  i64.extend_i32_u
-  i64.const 0
-  call $~lib/near-sdk-core/env/env/env.storage_read
-  i64.const 1
-  i64.eq
-  if (result i32)
-   call $~lib/near-sdk-core/util/util.read_register
-  else
-   i32.const 0
-  end
-  call $~lib/near-sdk-core/util/util.bytesToString
- )
- (func $~lib/near-sdk-core/collections/persistentVector/PersistentVector<~lib/string/String>#get:length (param $0 i32) (result i32)
-  (local $1 i32)
-  local.get $0
-  i32.load offset=8
-  i32.const 0
-  i32.lt_s
-  if
-   local.get $0
-   local.get $0
-   i32.load offset=4
-   call $~lib/near-sdk-core/storage/Storage.getString
-   local.tee $1
-   i32.const 0
-   call $~lib/string/String.__eq
-   if (result i32)
-    i32.const 0
-   else
-    local.get $1
-    i32.eqz
-    if
-     i32.const 1952
-     i32.const 10544
-     i32.const 218
-     i32.const 41
-     call $~lib/builtins/abort
-     unreachable
-    end
-    local.get $1
-    call $~lib/util/string/strtol<i64>
-    i32.wrap_i64
-   end
-   i32.store offset=8
-  end
-  local.get $0
-  i32.load offset=8
- )
- (func $~lib/near-sdk-core/storage/Storage.setString (param $0 i32) (param $1 i32)
-  local.get $0
-  call $~lib/near-sdk-core/util/util.stringToBytes
-  local.set $0
   local.get $1
-  call $~lib/near-sdk-core/util/util.stringToBytes
-  local.set $1
-  local.get $0
-  i32.load offset=8
-  i64.extend_i32_s
-  local.get $0
-  i32.load offset=4
-  i64.extend_i32_u
-  local.get $1
-  i32.load offset=8
-  i64.extend_i32_s
-  local.get $1
-  i32.load offset=4
-  i64.extend_i32_u
-  i64.const 0
-  call $~lib/near-sdk-core/env/env/env.storage_write
-  drop
- )
- (func $~lib/near-sdk-core/collections/persistentSet/PersistentSet<~lib/string/String>#add (param $0 i32) (param $1 i32)
-  (local $2 i32)
-  (local $3 i32)
-  (local $4 i32)
-  local.get $0
   i32.load
-  local.get $1
-  call $~lib/near-sdk-core/collections/persistentSet/PersistentSet<~lib/string/String>#_hashedItem
-  call $~lib/near-sdk-core/collections/persistentMap/PersistentMap<~lib/typedarray/Uint8Array,i32>#contains
-  if
-   return
-  end
-  local.get $0
-  i32.load
-  local.get $1
-  call $~lib/near-sdk-core/collections/persistentSet/PersistentSet<~lib/string/String>#_hashedItem
-  local.set $2
-  local.get $0
-  i32.load offset=4
-  call $~lib/near-sdk-core/collections/persistentVector/PersistentVector<~lib/string/String>#get:length
-  local.set $4
-  i32.load
-  local.get $2
-  i32.load offset=4
-  local.get $2
-  i32.load offset=8
-  call $~lib/util/string/joinIntegerArray<u8>
-  call $~lib/string/String#concat
-  local.get $4
-  call $~lib/util/number/itoa32
-  call $~lib/near-sdk-core/storage/Storage.setString
-  local.get $0
-  i32.load offset=4
-  local.tee $0
-  call $~lib/near-sdk-core/collections/persistentVector/PersistentVector<~lib/string/String>#get:length
-  local.tee $3
-  i32.const 1
-  i32.add
-  local.set $2
-  local.get $0
-  local.get $2
-  i32.store offset=8
-  local.get $0
-  i32.load offset=4
-  local.get $2
-  call $~lib/util/number/itoa32
-  call $~lib/near-sdk-core/storage/Storage.setString
-  local.get $0
-  i32.load
-  local.get $3
-  call $~lib/util/number/itoa32
-  call $~lib/string/String#concat
-  local.get $1
-  call $~lib/near-sdk-core/storage/Storage.setString
- )
- (func $assembly/multicall/index/__wrapper_admins_add
-  (local $0 i32)
-  (local $1 i32)
-  call $~lib/near-sdk-bindgen/index/getInput
-  local.tee $0
-  i32.load
-  i32.const 10416
-  i32.const 10416
+  i32.const 12496
+  i32.const 12496
   call $~lib/util/hash/HASH<~lib/string/String>
   call $~lib/map/Map<~lib/string/String,~lib/assemblyscript-json/JSON/Value>#find
   if (result i32)
-   local.get $0
-   i32.const 10416
-   call $~lib/near-sdk-bindgen/index/decode<~lib/array/Array<~lib/string/String>,~lib/assemblyscript-json/JSON/Obj>
-  else
-   i32.const 10416
-   call $~lib/near-sdk-bindgen/index/requireParameter<~lib/array/Array<~lib/string/String>>
-  end
-  local.set $0
-  i64.const 0
-  call $~lib/near-sdk-core/env/env/env.predecessor_account_id
-  call $~lib/near-sdk-core/util/util.read_register_string
-  call $assembly/multicall/index/_is_admin
-  loop $for-loop|0
    local.get $1
-   local.get $0
-   i32.load offset=12
-   i32.lt_s
-   if
-    global.get $assembly/multicall/index/admins
+   i32.const 12496
+   call $~lib/near-sdk-bindgen/index/decode<i32,~lib/assemblyscript-json/JSON/Obj>
+  else
+   i32.const 0
+  end
+  i32.store
+  local.get $0
+  local.get $1
+  i32.load
+  i32.const 12528
+  i32.const 12528
+  call $~lib/util/hash/HASH<~lib/string/String>
+  call $~lib/map/Map<~lib/string/String,~lib/assemblyscript-json/JSON/Value>#find
+  if (result i32)
+   local.get $1
+   i32.const 12528
+   call $~lib/near-sdk-bindgen/index/decode<~lib/string/String,~lib/assemblyscript-json/JSON/Obj>
+  else
+   i32.const 0
+  end
+  i32.store offset=4
+  local.get $0
+  local.get $1
+  i32.load
+  i32.const 12576
+  i32.const 12576
+  call $~lib/util/hash/HASH<~lib/string/String>
+  call $~lib/map/Map<~lib/string/String,~lib/assemblyscript-json/JSON/Value>#find
+  if (result i32)
+   local.get $1
+   i32.const 12576
+   call $~lib/near-sdk-bindgen/index/decode<~lib/string/String,~lib/assemblyscript-json/JSON/Obj>
+  else
+   i32.const 0
+  end
+  i32.store offset=8
+  local.get $0
+  local.get $1
+  i32.load
+  i32.const 12624
+  i32.const 12624
+  call $~lib/util/hash/HASH<~lib/string/String>
+  call $~lib/map/Map<~lib/string/String,~lib/assemblyscript-json/JSON/Value>#find
+  if (result i32)
+   local.get $1
+   i32.const 12624
+   call $~lib/near-sdk-bindgen/index/decode<~lib/as-bignum/integer/safe/u128/u128,~lib/assemblyscript-json/JSON/Obj>
+  else
+   i32.const 0
+  end
+  i32.store offset=12
+  local.get $0
+  local.get $1
+  i32.load
+  i32.const 12656
+  i32.const 12656
+  call $~lib/util/hash/HASH<~lib/string/String>
+  call $~lib/map/Map<~lib/string/String,~lib/assemblyscript-json/JSON/Value>#find
+  if (result i32)
+   local.get $1
+   i32.const 12656
+   call $~lib/near-sdk-bindgen/index/decode<~lib/string/String,~lib/assemblyscript-json/JSON/Obj>
+  else
+   i32.const 0
+  end
+  i32.store offset=16
+  local.get $0
+  local.get $1
+  i32.load
+  i32.const 12704
+  i32.const 12704
+  call $~lib/util/hash/HASH<~lib/string/String>
+  call $~lib/map/Map<~lib/string/String,~lib/assemblyscript-json/JSON/Value>#find
+  if (result i64)
+   local.get $1
+   i32.const 12704
+   call $~lib/near-sdk-bindgen/index/decode<u64,~lib/assemblyscript-json/JSON/Obj>
+  else
+   i64.const 0
+  end
+  i64.store offset=24
+  local.get $0
+  local.get $1
+  i32.load
+  i32.const 12752
+  i32.const 12752
+  call $~lib/util/hash/HASH<~lib/string/String>
+  call $~lib/map/Map<~lib/string/String,~lib/assemblyscript-json/JSON/Value>#find
+  if (result i32)
+   local.get $1
+   i32.const 12752
+   call $~lib/near-sdk-bindgen/index/decode<~lib/as-bignum/integer/safe/u128/u128,~lib/assemblyscript-json/JSON/Obj>
+  else
+   i32.const 0
+  end
+  i32.store offset=32
+  local.get $0
+  local.get $1
+  i32.load
+  i32.const 12816
+  i32.const 12816
+  call $~lib/util/hash/HASH<~lib/string/String>
+  call $~lib/map/Map<~lib/string/String,~lib/assemblyscript-json/JSON/Value>#find
+  if (result i32)
+   local.get $1
+   i32.const 12816
+   call $~lib/near-sdk-bindgen/index/decode<~lib/as-bignum/integer/safe/u128/u128,~lib/assemblyscript-json/JSON/Obj>
+  else
+   i32.const 0
+  end
+  i32.store offset=36
+  local.get $0
+  local.get $1
+  i32.load
+  i32.const 12864
+  i32.const 12864
+  call $~lib/util/hash/HASH<~lib/string/String>
+  call $~lib/map/Map<~lib/string/String,~lib/assemblyscript-json/JSON/Value>#find
+  if (result i64)
+   local.get $1
+   i32.const 12864
+   call $~lib/near-sdk-bindgen/index/decode<u64,~lib/assemblyscript-json/JSON/Obj>
+  else
+   i64.const 0
+  end
+  i64.store offset=40
+  local.get $0
+  local.get $1
+  i32.load
+  i32.const 12912
+  i32.const 12912
+  call $~lib/util/hash/HASH<~lib/string/String>
+  call $~lib/map/Map<~lib/string/String,~lib/assemblyscript-json/JSON/Value>#find
+  if (result i64)
+   local.get $1
+   i32.const 12912
+   call $~lib/near-sdk-bindgen/index/decode<u64,~lib/assemblyscript-json/JSON/Obj>
+  else
+   i64.const 0
+  end
+  i64.store offset=48
+  local.get $0
+  local.get $1
+  i32.load
+  i32.const 12960
+  i32.const 12960
+  call $~lib/util/hash/HASH<~lib/string/String>
+  call $~lib/map/Map<~lib/string/String,~lib/assemblyscript-json/JSON/Value>#find
+  if (result i64)
+   local.get $1
+   i32.const 12960
+   call $~lib/near-sdk-bindgen/index/decode<u64,~lib/assemblyscript-json/JSON/Obj>
+  else
+   i64.const 0
+  end
+  i64.store offset=56
+  local.get $0
+  local.get $1
+  i32.load
+  i32.const 13008
+  i32.const 13008
+  call $~lib/util/hash/HASH<~lib/string/String>
+  call $~lib/map/Map<~lib/string/String,~lib/assemblyscript-json/JSON/Value>#find
+  if (result i32)
+   local.get $1
+   i32.const 13008
+   call $~lib/near-sdk-bindgen/index/decode<bool,~lib/assemblyscript-json/JSON/Obj>
+  else
+   i32.const 0
+  end
+  i32.store8 offset=64
+  local.get $0
+  local.get $1
+  i32.load
+  i32.const 4544
+  i32.const 4544
+  call $~lib/util/hash/HASH<~lib/string/String>
+  call $~lib/map/Map<~lib/string/String,~lib/assemblyscript-json/JSON/Value>#find
+  if (result i32)
+   local.get $1
+   i32.const 4544
+   call $~lib/near-sdk-bindgen/index/decode<~lib/array/Array<~lib/array/Array<assembly/multicall/model/BatchCall>>,~lib/assemblyscript-json/JSON/Obj>
+  else
+   i32.const 0
+  end
+  i32.store offset=68
+  local.get $0
+ )
+ (func $~lib/near-sdk-bindgen/index/decode<~lib/near-sdk-core/collections/util/MapEntry<u32,assembly/multicall/model/JobSchema>,~lib/typedarray/Uint8Array> (param $0 i32) (result i32)
+  (local $1 i32)
+  (local $2 i32)
+  local.get $0
+  call $~lib/assemblyscript-json/JSON/_JSON.parse<~lib/typedarray/Uint8Array>
+  local.tee $0
+  if (result i32)
+   block $__inlined_func$~lib/rt/__instanceof (result i32)
     local.get $0
-    local.get $1
-    call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#__get
-    call $~lib/near-sdk-core/collections/persistentSet/PersistentSet<~lib/string/String>#add
-    local.get $1
-    i32.const 1
-    i32.add
-    local.set $1
-    br $for-loop|0
+    i32.const 20
+    i32.sub
+    i32.load offset=12
+    local.tee $1
+    i32.const 15440
+    i32.load
+    i32.le_u
+    if
+     loop $do-continue|0
+      i32.const 1
+      local.get $1
+      i32.const 22
+      i32.eq
+      br_if $__inlined_func$~lib/rt/__instanceof
+      drop
+      local.get $1
+      i32.const 3
+      i32.shl
+      i32.const 15444
+      i32.add
+      i32.load offset=4
+      local.tee $1
+      br_if $do-continue|0
+     end
+    end
+    i32.const 0
+   end
+  else
+   i32.const 0
+  end
+  if (result i32)
+   i32.const 1552
+   i32.const 1552
+   call $~lib/string/String.__eq
+   i32.eqz
+  else
+   i32.const 0
+  end
+  if
+   block $__inlined_func$~lib/rt/__instanceof0 (result i32)
+    local.get $0
+    i32.const 20
+    i32.sub
+    i32.load offset=12
+    local.tee $1
+    i32.const 15440
+    i32.load
+    i32.le_u
+    if
+     loop $do-continue|01
+      i32.const 1
+      local.get $1
+      i32.const 22
+      i32.eq
+      br_if $__inlined_func$~lib/rt/__instanceof0
+      drop
+      local.get $1
+      i32.const 3
+      i32.shl
+      i32.const 15444
+      i32.add
+      i32.load offset=4
+      local.tee $1
+      br_if $do-continue|01
+     end
+    end
+    i32.const 0
+   end
+   i32.eqz
+   if
+    i32.const 2672
+    i32.const 4464
+    i32.const 310
+    i32.const 37
+    call $~lib/builtins/abort
+    unreachable
+   end
+   local.get $0
+   i32.const 1552
+   call $~lib/assemblyscript-json/JSON/Obj#get
+   local.tee $0
+   i32.eqz
+   if
+    local.get $0
+    return
    end
   end
+  local.get $0
+  if (result i32)
+   block $__inlined_func$~lib/rt/__instanceof3 (result i32)
+    local.get $0
+    i32.const 20
+    i32.sub
+    i32.load offset=12
+    local.tee $1
+    i32.const 15440
+    i32.load
+    i32.le_u
+    if
+     loop $do-continue|04
+      i32.const 1
+      local.get $1
+      i32.const 37
+      i32.eq
+      br_if $__inlined_func$~lib/rt/__instanceof3
+      drop
+      local.get $1
+      i32.const 3
+      i32.shl
+      i32.const 15444
+      i32.add
+      i32.load offset=4
+      local.tee $1
+      br_if $do-continue|04
+     end
+    end
+    i32.const 0
+   end
+  else
+   i32.const 0
+  end
+  if
+   i32.const 0
+   return
+  end
+  local.get $0
+  if (result i32)
+   block $__inlined_func$~lib/rt/__instanceof10 (result i32)
+    local.get $0
+    i32.const 20
+    i32.sub
+    i32.load offset=12
+    local.tee $1
+    i32.const 15440
+    i32.load
+    i32.le_u
+    if
+     loop $do-continue|011
+      i32.const 1
+      local.get $1
+      i32.const 22
+      i32.eq
+      br_if $__inlined_func$~lib/rt/__instanceof10
+      drop
+      local.get $1
+      i32.const 3
+      i32.shl
+      i32.const 15444
+      i32.add
+      i32.load offset=4
+      local.tee $1
+      br_if $do-continue|011
+     end
+    end
+    i32.const 0
+   end
+  else
+   i32.const 0
+  end
+  if (result i32)
+   i32.const 1
+  else
+   local.get $0
+   if (result i32)
+    block $__inlined_func$~lib/rt/__instanceof12 (result i32)
+     local.get $0
+     i32.const 20
+     i32.sub
+     i32.load offset=12
+     local.tee $1
+     i32.const 15440
+     i32.load
+     i32.le_u
+     if
+      loop $do-continue|013
+       i32.const 1
+       local.get $1
+       i32.const 22
+       i32.eq
+       br_if $__inlined_func$~lib/rt/__instanceof12
+       drop
+       local.get $1
+       i32.const 3
+       i32.shl
+       i32.const 15444
+       i32.add
+       i32.load offset=4
+       local.tee $1
+       br_if $do-continue|013
+      end
+     end
+     i32.const 0
+    end
+   else
+    i32.const 0
+   end
+  end
+  i32.eqz
+  if
+   i32.const 5072
+   i32.const 1552
+   call $~lib/string/String#concat
+   i32.const 4960
+   call $~lib/string/String#concat
+   i32.const 13152
+   call $~lib/string/String#concat
+   i32.const 5376
+   call $~lib/string/String#concat
+   i32.const 4112
+   i32.const 4000
+   local.get $0
+   if (result i32)
+    block $__inlined_func$~lib/rt/__instanceof18 (result i32)
+     local.get $0
+     i32.const 20
+     i32.sub
+     i32.load offset=12
+     local.tee $2
+     i32.const 15440
+     i32.load
+     i32.le_u
+     if
+      loop $do-continue|019
+       i32.const 1
+       local.get $2
+       i32.const 22
+       i32.eq
+       br_if $__inlined_func$~lib/rt/__instanceof18
+       drop
+       local.get $2
+       i32.const 3
+       i32.shl
+       i32.const 15444
+       i32.add
+       i32.load offset=4
+       local.tee $2
+       br_if $do-continue|019
+      end
+     end
+     i32.const 0
+    end
+   else
+    i32.const 0
+   end
+   select
+   call $~lib/string/String#concat
+   i32.const 4464
+   i32.const 401
+   i32.const 5
+   call $~lib/builtins/abort
+   unreachable
+  end
+  i32.const 8
+  i32.const 20
+  call $~lib/rt/stub/__new
+  block $__inlined_func$~lib/rt/__instanceof21 (result i32)
+   local.get $0
+   local.tee $2
+   i32.const 20
+   i32.sub
+   i32.load offset=12
+   local.tee $0
+   i32.const 15440
+   i32.load
+   i32.le_u
+   if
+    loop $do-continue|022
+     i32.const 1
+     local.get $0
+     i32.const 22
+     i32.eq
+     br_if $__inlined_func$~lib/rt/__instanceof21
+     drop
+     local.get $0
+     i32.const 3
+     i32.shl
+     i32.const 15444
+     i32.add
+     i32.load offset=4
+     local.tee $0
+     br_if $do-continue|022
+    end
+   end
+   i32.const 0
+  end
+  i32.eqz
+  if
+   i32.const 2672
+   i32.const 4464
+   i32.const 418
+   i32.const 47
+   call $~lib/builtins/abort
+   unreachable
+  end
+  local.tee $0
+  local.get $2
+  i32.load
+  i32.const 12432
+  i32.const 12432
+  call $~lib/util/hash/HASH<~lib/string/String>
+  call $~lib/map/Map<~lib/string/String,~lib/assemblyscript-json/JSON/Value>#find
+  if (result i32)
+   local.get $2
+   i32.const 12432
+   call $~lib/near-sdk-bindgen/index/decode<u32,~lib/assemblyscript-json/JSON/Obj>
+  else
+   i32.const 0
+  end
+  i32.store
+  local.get $0
+  local.get $2
+  i32.load
+  i32.const 12464
+  i32.const 12464
+  call $~lib/util/hash/HASH<~lib/string/String>
+  call $~lib/map/Map<~lib/string/String,~lib/assemblyscript-json/JSON/Value>#find
+  if (result i32)
+   local.get $2
+   call $~lib/near-sdk-bindgen/index/decode<assembly/multicall/model/JobSchema,~lib/assemblyscript-json/JSON/Obj>
+  else
+   i32.const 0
+  end
+  i32.store offset=4
+  local.get $0
  )
- (func $~lib/near-sdk-core/collections/persistentVector/PersistentVector<~lib/string/String>#__unchecked_get (param $0 i32) (param $1 i32) (result i32)
+ (func $~lib/near-sdk-core/collections/persistentVector/PersistentVector<~lib/near-sdk-core/collections/util/MapEntry<u32,assembly/multicall/model/JobSchema>>#__unchecked_get (param $0 i32) (param $1 i32) (result i32)
   local.get $0
   i32.load
   local.get $1
@@ -13715,32 +18151,2217 @@
   call $~lib/near-sdk-core/env/env/env.storage_has_key
   i64.eqz
   if
-   i32.const 11040
+   i32.const 10976
    local.get $0
    call $~lib/string/String#concat
-   i32.const 11072
+   i32.const 11008
    call $~lib/string/String#concat
-   i32.const 10544
+   i32.const 10480
    i32.const 237
    i32.const 7
    call $~lib/builtins/abort
    unreachable
   end
   local.get $0
-  call $~lib/near-sdk-core/storage/Storage.getString
+  call $~lib/near-sdk-core/storage/Storage._internalReadBytes
   local.tee $0
   i32.eqz
   if
-   i32.const 1952
-   i32.const 10544
-   i32.const 240
-   i32.const 38
+   i32.const 2160
+   i32.const 10480
+   i32.const 242
+   i32.const 37
    call $~lib/builtins/abort
    unreachable
   end
   local.get $0
+  call $~lib/near-sdk-bindgen/index/decode<~lib/near-sdk-core/collections/util/MapEntry<u32,assembly/multicall/model/JobSchema>,~lib/typedarray/Uint8Array>
  )
- (func $~lib/near-sdk-core/collections/persistentVector/PersistentVector<~lib/string/String>#pop (param $0 i32) (result i32)
+ (func $~lib/near-sdk-core/collections/persistentVector/PersistentVector<~lib/near-sdk-core/collections/util/MapEntry<u32,assembly/multicall/model/JobSchema>>#__get (param $0 i32) (param $1 i32) (result i32)
+  local.get $1
+  i32.const 0
+  i32.ge_s
+  if (result i32)
+   local.get $0
+   call $~lib/near-sdk-core/collections/persistentVector/PersistentVector<~lib/string/String>#get:length
+   local.get $1
+   i32.gt_s
+  else
+   i32.const 0
+  end
+  i32.eqz
+  if
+   i32.const 2320
+   i32.const 10848
+   i32.const 40
+   i32.const 5
+   call $~lib/builtins/abort
+   unreachable
+  end
+  local.get $0
+  local.get $1
+  call $~lib/near-sdk-core/collections/persistentVector/PersistentVector<~lib/near-sdk-core/collections/util/MapEntry<u32,assembly/multicall/model/JobSchema>>#__unchecked_get
+ )
+ (func $~lib/near-sdk-core/base64/base64.encode (param $0 i32) (result i32)
+  (local $1 i32)
+  (local $2 i32)
+  (local $3 i32)
+  (local $4 i32)
+  (local $5 i32)
+  (local $6 i32)
+  local.get $0
+  i32.load offset=8
+  local.get $0
+  i32.load offset=8
+  i32.const 3
+  i32.rem_s
+  local.tee $1
+  i32.sub
+  local.set $5
+  local.get $0
+  i32.load offset=8
+  i32.const 3
+  i32.div_s
+  i32.const 2
+  i32.shl
+  i32.const 4
+  i32.const 0
+  local.get $1
+  select
+  i32.add
+  i32.const 1
+  i32.shl
+  i32.const 1
+  call $~lib/rt/stub/__new
+  local.set $6
+  local.get $0
+  i32.load offset=8
+  i32.eqz
+  if
+   i32.const 1552
+   return
+  end
+  local.get $6
+  i32.const 2
+  i32.sub
+  local.set $1
+  loop $for-loop|0
+   local.get $2
+   local.get $5
+   i32.lt_s
+   if
+    local.get $1
+    i32.const 2
+    i32.add
+    local.tee $1
+    block $__inlined_func$~lib/string/String#charCodeAt (result i32)
+     i32.const -1
+     local.get $0
+     local.get $2
+     call $~lib/typedarray/Uint8Array#__get
+     i32.const 16
+     i32.shl
+     local.get $0
+     local.get $2
+     i32.const 1
+     i32.add
+     call $~lib/typedarray/Uint8Array#__get
+     i32.const 8
+     i32.shl
+     i32.or
+     local.get $0
+     local.get $2
+     i32.const 2
+     i32.add
+     call $~lib/typedarray/Uint8Array#__get
+     i32.or
+     local.tee $3
+     i32.const 18
+     i32.shr_u
+     local.tee $4
+     i32.const 13836
+     i32.load
+     i32.const 1
+     i32.shr_u
+     i32.ge_u
+     br_if $__inlined_func$~lib/string/String#charCodeAt
+     drop
+     local.get $4
+     i32.const 1
+     i32.shl
+     i32.const 13840
+     i32.add
+     i32.load16_u
+    end
+    i32.store16
+    local.get $1
+    i32.const 2
+    i32.add
+    local.tee $1
+    block $__inlined_func$~lib/string/String#charCodeAt0 (result i32)
+     i32.const -1
+     local.get $3
+     i32.const 12
+     i32.shr_u
+     i32.const 63
+     i32.and
+     local.tee $4
+     i32.const 13836
+     i32.load
+     i32.const 1
+     i32.shr_u
+     i32.ge_u
+     br_if $__inlined_func$~lib/string/String#charCodeAt0
+     drop
+     local.get $4
+     i32.const 1
+     i32.shl
+     i32.const 13840
+     i32.add
+     i32.load16_u
+    end
+    i32.store16
+    local.get $1
+    i32.const 2
+    i32.add
+    local.tee $1
+    block $__inlined_func$~lib/string/String#charCodeAt2 (result i32)
+     i32.const -1
+     local.get $3
+     i32.const 6
+     i32.shr_u
+     i32.const 63
+     i32.and
+     local.tee $4
+     i32.const 13836
+     i32.load
+     i32.const 1
+     i32.shr_u
+     i32.ge_u
+     br_if $__inlined_func$~lib/string/String#charCodeAt2
+     drop
+     local.get $4
+     i32.const 1
+     i32.shl
+     i32.const 13840
+     i32.add
+     i32.load16_u
+    end
+    i32.store16
+    local.get $1
+    i32.const 2
+    i32.add
+    local.tee $1
+    block $__inlined_func$~lib/string/String#charCodeAt4 (result i32)
+     i32.const -1
+     local.get $3
+     i32.const 63
+     i32.and
+     local.tee $3
+     i32.const 13836
+     i32.load
+     i32.const 1
+     i32.shr_u
+     i32.ge_u
+     br_if $__inlined_func$~lib/string/String#charCodeAt4
+     drop
+     local.get $3
+     i32.const 1
+     i32.shl
+     i32.const 13840
+     i32.add
+     i32.load16_u
+    end
+    i32.store16
+    local.get $2
+    i32.const 3
+    i32.add
+    local.set $2
+    br $for-loop|0
+   end
+  end
+  block $break|1
+   block $case1|1
+    local.get $0
+    i32.load offset=8
+    local.get $5
+    i32.sub
+    local.tee $3
+    i32.const 1
+    i32.ne
+    if
+     local.get $3
+     i32.const 2
+     i32.eq
+     br_if $case1|1
+     br $break|1
+    end
+    local.get $1
+    i32.const 2
+    i32.add
+    local.tee $1
+    block $__inlined_func$~lib/string/String#charCodeAt6 (result i32)
+     i32.const -1
+     local.get $0
+     local.get $2
+     call $~lib/typedarray/Uint8Array#__get
+     i32.const 16
+     i32.shl
+     local.tee $5
+     i32.const 18
+     i32.shr_u
+     local.tee $0
+     i32.const 13836
+     i32.load
+     i32.const 1
+     i32.shr_u
+     i32.ge_u
+     br_if $__inlined_func$~lib/string/String#charCodeAt6
+     drop
+     local.get $0
+     i32.const 1
+     i32.shl
+     i32.const 13840
+     i32.add
+     i32.load16_u
+    end
+    i32.store16
+    local.get $1
+    i32.const 2
+    i32.add
+    local.tee $0
+    block $__inlined_func$~lib/string/String#charCodeAt8 (result i32)
+     i32.const -1
+     local.get $5
+     i32.const 12
+     i32.shr_u
+     i32.const 63
+     i32.and
+     local.tee $1
+     i32.const 13836
+     i32.load
+     i32.const 1
+     i32.shr_u
+     i32.ge_u
+     br_if $__inlined_func$~lib/string/String#charCodeAt8
+     drop
+     local.get $1
+     i32.const 1
+     i32.shl
+     i32.const 13840
+     i32.add
+     i32.load16_u
+    end
+    i32.store16
+    local.get $0
+    i32.const 2
+    i32.add
+    block $__inlined_func$~lib/string/String#charCodeAt10 (result i32)
+     i32.const -1
+     i32.const 9356
+     i32.load
+     i32.const 1
+     i32.shr_u
+     i32.eqz
+     br_if $__inlined_func$~lib/string/String#charCodeAt10
+     drop
+     i32.const 9360
+     i32.load16_u
+    end
+    i32.store16
+    local.get $0
+    block $__inlined_func$~lib/string/String#charCodeAt12 (result i32)
+     i32.const -1
+     i32.const 9356
+     i32.load
+     i32.const 1
+     i32.shr_u
+     i32.eqz
+     br_if $__inlined_func$~lib/string/String#charCodeAt12
+     drop
+     i32.const 9360
+     i32.load16_u
+    end
+    i32.store16 offset=4
+    br $break|1
+   end
+   local.get $1
+   i32.const 2
+   i32.add
+   local.tee $1
+   block $__inlined_func$~lib/string/String#charCodeAt14 (result i32)
+    i32.const -1
+    local.get $0
+    local.get $2
+    call $~lib/typedarray/Uint8Array#__get
+    i32.const 16
+    i32.shl
+    local.get $0
+    local.get $2
+    i32.const 1
+    i32.add
+    call $~lib/typedarray/Uint8Array#__get
+    i32.const 8
+    i32.shl
+    i32.or
+    local.tee $2
+    i32.const 18
+    i32.shr_u
+    local.tee $0
+    i32.const 13836
+    i32.load
+    i32.const 1
+    i32.shr_u
+    i32.ge_u
+    br_if $__inlined_func$~lib/string/String#charCodeAt14
+    drop
+    local.get $0
+    i32.const 1
+    i32.shl
+    i32.const 13840
+    i32.add
+    i32.load16_u
+   end
+   i32.store16
+   local.get $1
+   i32.const 2
+   i32.add
+   local.tee $0
+   block $__inlined_func$~lib/string/String#charCodeAt16 (result i32)
+    i32.const -1
+    local.get $2
+    i32.const 12
+    i32.shr_u
+    i32.const 63
+    i32.and
+    local.tee $3
+    i32.const 13836
+    i32.load
+    i32.const 1
+    i32.shr_u
+    i32.ge_u
+    br_if $__inlined_func$~lib/string/String#charCodeAt16
+    drop
+    local.get $3
+    i32.const 1
+    i32.shl
+    i32.const 13840
+    i32.add
+    i32.load16_u
+   end
+   i32.store16
+   local.get $0
+   i32.const 2
+   i32.add
+   block $__inlined_func$~lib/string/String#charCodeAt18 (result i32)
+    i32.const -1
+    local.get $2
+    i32.const 6
+    i32.shr_u
+    i32.const 63
+    i32.and
+    local.tee $2
+    i32.const 13836
+    i32.load
+    i32.const 1
+    i32.shr_u
+    i32.ge_u
+    br_if $__inlined_func$~lib/string/String#charCodeAt18
+    drop
+    local.get $2
+    i32.const 1
+    i32.shl
+    i32.const 13840
+    i32.add
+    i32.load16_u
+   end
+   i32.store16
+   local.get $0
+   block $__inlined_func$~lib/string/String#charCodeAt20 (result i32)
+    i32.const -1
+    i32.const 9356
+    i32.load
+    i32.const 1
+    i32.shr_u
+    i32.eqz
+    br_if $__inlined_func$~lib/string/String#charCodeAt20
+    drop
+    i32.const 9360
+    i32.load16_u
+   end
+   i32.store16 offset=4
+  end
+  local.get $6
+ )
+ (func $assembly/multicall/jobs/Jobs#activate (param $0 i32) (param $1 i32)
+  (local $2 i32)
+  (local $3 i32)
+  (local $4 i32)
+  (local $5 i64)
+  (local $6 i32)
+  (local $7 i32)
+  (local $8 i32)
+  (local $9 i32)
+  (local $10 i64)
+  local.get $0
+  i32.load offset=12
+  local.tee $2
+  i32.load
+  i32.load
+  local.get $1
+  call $~lib/util/number/utoa32
+  call $~lib/string/String#concat
+  call $~lib/near-sdk-core/storage/Storage.getSome<i32>
+  local.set $1
+  local.get $2
+  i32.load offset=4
+  local.get $1
+  call $~lib/near-sdk-core/collections/persistentVector/PersistentVector<~lib/near-sdk-core/collections/util/MapEntry<u32,assembly/multicall/model/JobSchema>>#__get
+  i32.load offset=4
+  local.tee $4
+  i32.load8_u offset=64
+  if
+   i32.const 13556
+   local.get $4
+   i32.load
+   call $~lib/util/number/itoa32
+   i32.store
+   i32.const 13552
+   i32.const 13548
+   i32.load
+   i32.const 2
+   i32.shr_u
+   call $~lib/util/string/joinStringArray
+   call $~lib/near-sdk-core/util/util.stringToBytes
+   local.tee $0
+   i32.load offset=8
+   i64.extend_i32_s
+   local.get $0
+   i32.load offset=4
+   i64.extend_i32_u
+   call $~lib/near-sdk-core/env/env/env.log_utf8
+   return
+  end
+  local.get $4
+  i32.load offset=4
+  i32.const 1552
+  call $~lib/string/String.__eq
+  if
+   i32.const 13764
+   local.get $4
+   i32.load
+   call $~lib/util/number/itoa32
+   i32.store
+   i32.const 13760
+   i32.const 13756
+   i32.load
+   i32.const 2
+   i32.shr_u
+   call $~lib/util/string/joinStringArray
+   call $~lib/near-sdk-core/util/util.stringToBytes
+   local.set $9
+   local.get $0
+   i32.load offset=8
+   i32.const 36
+   i32.const 48
+   call $~lib/rt/stub/__new
+   local.tee $3
+   i32.const 0
+   i32.store
+   local.get $3
+   i32.const 0
+   i32.store offset=4
+   local.get $3
+   i32.const 0
+   i32.store offset=8
+   local.get $3
+   i32.const 0
+   i32.store8 offset=12
+   local.get $3
+   i32.const 0
+   i32.store offset=16
+   local.get $3
+   i64.const 0
+   i64.store offset=24
+   local.get $3
+   i32.const 0
+   i32.store offset=32
+   i64.const 0
+   call $~lib/near-sdk-core/env/env/env.current_account_id
+   local.get $3
+   call $~lib/near-sdk-core/util/util.read_register_string
+   i32.store
+   local.get $3
+   i32.const 13792
+   i32.store offset=4
+   local.get $3
+   local.get $4
+   i32.load offset=16
+   i32.store offset=8
+   local.get $3
+   local.get $4
+   i64.load offset=48
+   i64.const 1
+   i64.gt_u
+   i32.store8 offset=12
+   local.get $3
+   local.get $4
+   i32.load offset=32
+   i32.store offset=16
+   local.get $3
+   local.get $4
+   i64.load offset=24
+   i64.store offset=24
+   local.get $3
+   local.get $9
+   call $~lib/near-sdk-core/base64/base64.encode
+   i32.store offset=32
+   call $~lib/near-sdk-core/env/env/env.prepaid_gas
+   local.get $0
+   i64.load offset=16
+   i64.sub
+   local.set $5
+   local.get $4
+   i32.load offset=36
+   local.set $7
+   i32.load
+   call $~lib/near-sdk-core/storage/Storage.getSome<~lib/string/String>
+   i32.const 1
+   global.set $~argumentsLength
+   call $~lib/near-sdk-bindgen/index/JSONEncoder#constructor
+   local.set $2
+   local.get $3
+   if
+    local.get $2
+    if (result i32)
+     local.get $2
+    else
+     call $~lib/near-sdk-bindgen/index/JSONEncoder#constructor
+    end
+    local.tee $1
+    i32.const 1552
+    call $~lib/assemblyscript-json/encoder/JSONEncoder#writeKey
+    local.get $1
+    i32.load offset=4
+    i32.const 2512
+    call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#push
+    local.get $1
+    i32.load
+    i32.const 1
+    call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#push
+    local.get $3
+    i32.load
+    i32.const 14048
+    local.get $1
+    call $~lib/near-sdk-bindgen/index/encode<~lib/string/String,~lib/near-sdk-bindgen/index/JSONEncoder>
+    local.get $3
+    i32.load offset=4
+    i32.const 9904
+    local.get $1
+    call $~lib/near-sdk-bindgen/index/encode<~lib/string/String,~lib/near-sdk-bindgen/index/JSONEncoder>
+    local.get $3
+    i32.load offset=8
+    i32.const 12656
+    local.get $1
+    call $~lib/near-sdk-bindgen/index/encode<~lib/string/String,~lib/near-sdk-bindgen/index/JSONEncoder>
+    local.get $3
+    i32.load8_u offset=12
+    local.set $6
+    local.get $1
+    i32.const 14096
+    call $~lib/assemblyscript-json/encoder/JSONEncoder#writeKey
+    local.get $1
+    i32.load offset=4
+    i32.const 4112
+    i32.const 4000
+    local.get $6
+    select
+    call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#push
+    local.get $3
+    i32.load offset=16
+    i32.const 14144
+    local.get $1
+    call $~lib/near-sdk-bindgen/index/encode<~lib/as-bignum/integer/safe/u128/u128,~lib/near-sdk-bindgen/index/JSONEncoder>
+    local.get $3
+    i64.load offset=24
+    call $~lib/util/number/utoa64
+    local.set $6
+    local.get $1
+    i32.const 5888
+    call $~lib/assemblyscript-json/encoder/JSONEncoder#writeKey
+    local.get $1
+    local.get $6
+    call $~lib/assemblyscript-json/encoder/JSONEncoder#writeString
+    local.get $3
+    i32.load offset=32
+    i32.const 14192
+    local.get $1
+    call $~lib/near-sdk-bindgen/index/encode<~lib/string/String,~lib/near-sdk-bindgen/index/JSONEncoder>
+    local.get $1
+    i32.load offset=4
+    i32.const 2832
+    call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#push
+    local.get $1
+    i32.load
+    call $~lib/array/Array<i32>#pop
+   else
+    local.get $2
+    i32.const 1552
+    call $~lib/assemblyscript-json/encoder/JSONEncoder#writeKey
+    local.get $2
+    i32.load offset=4
+    i32.const 4368
+    call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#push
+   end
+   local.get $2
+   call $~lib/assemblyscript-json/encoder/JSONEncoder#serialize
+   local.set $1
+   call $~lib/near-sdk-core/util/util.stringToBytes
+   local.set $2
+   i32.const 14000
+   call $~lib/near-sdk-core/util/util.stringToBytes
+   local.set $3
+   i32.const 12
+   i32.const 7
+   call $~lib/rt/stub/__new
+   i32.const 16
+   call $~lib/arraybuffer/ArrayBufferView#constructor
+   local.tee $8
+   i32.load offset=4
+   local.tee $6
+   local.get $7
+   i64.load
+   i64.store
+   local.get $6
+   local.get $7
+   i64.load offset=8
+   i64.store offset=8
+   local.get $2
+   i32.load offset=8
+   i64.extend_i32_s
+   local.get $2
+   i32.load offset=4
+   i64.extend_i32_u
+   local.get $3
+   i32.load offset=8
+   i64.extend_i32_s
+   local.get $3
+   i32.load offset=4
+   i64.extend_i32_u
+   local.get $1
+   i32.load offset=8
+   i64.extend_i32_s
+   local.get $1
+   i32.load offset=4
+   i64.extend_i32_u
+   local.get $8
+   i32.load offset=4
+   i64.extend_i32_u
+   local.get $5
+   call $~lib/near-sdk-core/env/env/env.promise_create
+   local.set $5
+   i32.const 8
+   i32.const 49
+   call $~lib/rt/stub/__new
+   local.tee $1
+   i64.const 0
+   i64.store
+   local.get $1
+   local.get $5
+   i64.store
+   i64.const 0
+   call $~lib/near-sdk-core/env/env/env.current_account_id
+   call $~lib/near-sdk-core/util/util.read_register_string
+   local.get $0
+   i64.load offset=40
+   local.set $5
+   i32.const 16
+   i32.const 3
+   call $~lib/rt/stub/__new
+   i64.const 0
+   i64.const 0
+   call $~lib/as-bignum/integer/u128/u128#constructor
+   local.set $2
+   call $~lib/near-sdk-core/util/util.stringToBytes
+   local.set $3
+   i32.const 13088
+   call $~lib/near-sdk-core/util/util.stringToBytes
+   local.set $7
+   i32.const 12
+   i32.const 7
+   call $~lib/rt/stub/__new
+   i32.const 16
+   call $~lib/arraybuffer/ArrayBufferView#constructor
+   local.tee $8
+   i32.load offset=4
+   local.tee $6
+   local.get $2
+   i64.load
+   i64.store
+   local.get $6
+   local.get $2
+   i64.load offset=8
+   i64.store offset=8
+   local.get $1
+   i64.load
+   local.get $3
+   i32.load offset=8
+   i64.extend_i32_s
+   local.get $3
+   i32.load offset=4
+   i64.extend_i32_u
+   local.get $7
+   i32.load offset=8
+   i64.extend_i32_s
+   local.get $7
+   i32.load offset=4
+   i64.extend_i32_u
+   local.get $9
+   i32.load offset=8
+   i64.extend_i32_s
+   local.get $9
+   i32.load offset=4
+   i64.extend_i32_u
+   local.get $8
+   i32.load offset=4
+   i64.extend_i32_u
+   local.get $5
+   call $~lib/near-sdk-core/env/env/env.promise_then
+   local.set $5
+   i32.const 8
+   i32.const 49
+   call $~lib/rt/stub/__new
+   local.tee $1
+   i64.const 0
+   i64.store
+   local.get $1
+   local.get $5
+   i64.store
+  else
+   i32.const 13668
+   local.get $4
+   i32.load
+   call $~lib/util/number/itoa32
+   i32.store
+   i32.const 13676
+   local.get $4
+   i32.load offset=4
+   i32.store
+   i32.const 13664
+   i32.const 13660
+   i32.load
+   i32.const 2
+   i32.shr_u
+   call $~lib/util/string/joinStringArray
+   call $~lib/near-sdk-core/util/util.stringToBytes
+   local.tee $1
+   i32.load offset=8
+   i64.extend_i32_s
+   local.get $1
+   i32.load offset=4
+   i64.extend_i32_u
+   call $~lib/near-sdk-core/env/env/env.log_utf8
+  end
+  local.get $4
+  i32.load offset=12
+  local.set $1
+  i32.const 16
+  i32.const 3
+  call $~lib/rt/stub/__new
+  i64.const 0
+  i64.const 0
+  call $~lib/as-bignum/integer/u128/u128#constructor
+  local.tee $2
+  local.set $3
+  local.get $1
+  i64.load offset=8
+  local.tee $5
+  local.get $2
+  i64.load offset=8
+  local.tee $10
+  i64.eq
+  if (result i32)
+   local.get $1
+   i64.load
+   local.get $3
+   i64.load
+   i64.gt_u
+  else
+   local.get $5
+   local.get $10
+   i64.gt_u
+  end
+  if
+   local.get $4
+   i32.load offset=12
+   local.set $1
+   local.get $4
+   i32.const 16
+   i32.const 3
+   call $~lib/rt/stub/__new
+   i64.const 0
+   i64.const 0
+   call $~lib/as-bignum/integer/u128/u128#constructor
+   i32.store offset=12
+   local.get $4
+   i32.load offset=8
+   call $~lib/near-sdk-core/promise/ContractPromiseBatch.create
+   local.get $1
+   call $~lib/near-sdk-core/promise/ContractPromiseBatch#transfer
+   drop
+   local.get $0
+   i32.load offset=12
+   local.get $4
+   i32.load
+   local.get $4
+   call $~lib/near-sdk-core/collections/persistentUnorderedMap/PersistentUnorderedMap<u32,assembly/multicall/model/JobSchema>#set
+  end
+ )
+ (func $assembly/multicall/index/__wrapper_job_activate
+  (local $0 i32)
+  call $~lib/near-sdk-bindgen/index/getInput
+  local.tee $0
+  i32.load
+  i32.const 13056
+  i32.const 13056
+  call $~lib/util/hash/HASH<~lib/string/String>
+  call $~lib/map/Map<~lib/string/String,~lib/assemblyscript-json/JSON/Value>#find
+  if (result i32)
+   local.get $0
+   i32.const 13056
+   call $~lib/near-sdk-bindgen/index/decode<i32,~lib/assemblyscript-json/JSON/Obj>
+  else
+   call $~lib/near-sdk-bindgen/index/requireParameter<i32>
+  end
+  local.set $0
+  i64.const 0
+  call $~lib/near-sdk-core/env/env/env.predecessor_account_id
+  call $~lib/near-sdk-core/util/util.read_register_string
+  call $assembly/multicall/index/_is_admin
+  call $assembly/multicall/index/_assert_deposit
+  global.get $assembly/multicall/index/_jobs
+  local.get $0
+  call $assembly/multicall/jobs/Jobs#activate
+ )
+ (func $assembly/multicall/jobs/Jobs#activate_callback (param $0 i32) (param $1 i32)
+  (local $2 i32)
+  (local $3 i32)
+  (local $4 i32)
+  (local $5 i32)
+  (local $6 i32)
+  (local $7 i64)
+  local.get $0
+  i32.load offset=12
+  local.tee $2
+  i32.load
+  i32.load
+  local.get $1
+  call $~lib/util/number/utoa32
+  call $~lib/string/String#concat
+  call $~lib/near-sdk-core/storage/Storage.getSome<i32>
+  local.set $1
+  local.get $2
+  i32.load offset=4
+  local.get $1
+  call $~lib/near-sdk-core/collections/persistentVector/PersistentVector<~lib/near-sdk-core/collections/util/MapEntry<u32,assembly/multicall/model/JobSchema>>#__get
+  i32.load offset=4
+  local.set $5
+  call $~lib/near-sdk-core/env/env/env.promise_results_count
+  local.set $7
+  i32.const 16
+  i32.const 51
+  call $~lib/rt/stub/__new
+  local.tee $1
+  i32.const 0
+  i32.store
+  local.get $1
+  i32.const 0
+  i32.store offset=4
+  local.get $1
+  i32.const 0
+  i32.store offset=8
+  local.get $1
+  i32.const 0
+  i32.store offset=12
+  local.get $7
+  i32.wrap_i64
+  local.tee $2
+  i32.const 268435455
+  i32.gt_u
+  if
+   i32.const 2000
+   i32.const 2112
+   i32.const 64
+   i32.const 60
+   call $~lib/builtins/abort
+   unreachable
+  end
+  local.get $2
+  i32.const 8
+  local.get $2
+  i32.const 8
+  i32.gt_u
+  select
+  i32.const 2
+  i32.shl
+  local.tee $3
+  i32.const 0
+  call $~lib/rt/stub/__new
+  local.tee $6
+  local.get $3
+  call $~lib/memory/memory.fill
+  local.get $1
+  local.get $6
+  i32.store
+  local.get $1
+  local.get $6
+  i32.store offset=4
+  local.get $1
+  local.get $3
+  i32.store offset=8
+  local.get $1
+  local.get $2
+  i32.store offset=12
+  loop $for-loop|0
+   local.get $7
+   local.get $4
+   i64.extend_i32_s
+   i64.gt_s
+   if
+    block $for-continue|0
+     local.get $4
+     i64.extend_i32_s
+     i64.const 0
+     call $~lib/near-sdk-core/env/env/env.promise_result
+     i32.wrap_i64
+     local.tee $3
+     i32.const 1
+     i32.ne
+     if
+      i32.const 1
+      global.set $~argumentsLength
+      i32.const 8
+      i32.const 50
+      call $~lib/rt/stub/__new
+      local.tee $2
+      local.get $3
+      i32.store
+      local.get $2
+      i32.const 0
+      i32.store offset=4
+      br $for-continue|0
+     end
+     call $~lib/near-sdk-core/util/util.read_register
+     local.set $6
+     i32.const 8
+     i32.const 50
+     call $~lib/rt/stub/__new
+     local.tee $2
+     local.get $3
+     i32.store
+     local.get $2
+     local.get $6
+     i32.store offset=4
+    end
+    local.get $4
+    local.get $1
+    i32.load offset=12
+    i32.ge_u
+    if
+     local.get $4
+     i32.const 0
+     i32.lt_s
+     if
+      i32.const 2320
+      i32.const 2112
+      i32.const 115
+      i32.const 22
+      call $~lib/builtins/abort
+      unreachable
+     end
+     local.get $1
+     local.get $4
+     i32.const 1
+     i32.add
+     local.tee $3
+     i32.const 2
+     call $~lib/array/ensureCapacity
+     local.get $1
+     local.get $3
+     i32.store offset=12
+    end
+    local.get $1
+    i32.load offset=4
+    local.get $4
+    i32.const 2
+    i32.shl
+    i32.add
+    local.get $2
+    i32.store
+    local.get $4
+    i32.const 1
+    i32.add
+    local.set $4
+    br $for-loop|0
+   end
+  end
+  local.get $1
+  i32.const 0
+  call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#__get
+  local.tee $1
+  i32.load
+  i32.const 1
+  i32.eq
+  if
+   block $__inlined_func$~lib/near-sdk-bindgen/index/decode<~lib/string/String,~lib/typedarray/Uint8Array>
+    local.get $1
+    i32.load offset=4
+    call $~lib/assemblyscript-json/JSON/_JSON.parse<~lib/typedarray/Uint8Array>
+    local.tee $1
+    if (result i32)
+     block $__inlined_func$~lib/rt/__instanceof (result i32)
+      local.get $1
+      i32.const 20
+      i32.sub
+      i32.load offset=12
+      local.tee $2
+      i32.const 15440
+      i32.load
+      i32.le_u
+      if
+       loop $do-continue|0
+        i32.const 1
+        local.get $2
+        i32.const 22
+        i32.eq
+        br_if $__inlined_func$~lib/rt/__instanceof
+        drop
+        local.get $2
+        i32.const 3
+        i32.shl
+        i32.const 15444
+        i32.add
+        i32.load offset=4
+        local.tee $2
+        br_if $do-continue|0
+       end
+      end
+      i32.const 0
+     end
+    else
+     i32.const 0
+    end
+    if (result i32)
+     i32.const 1552
+     i32.const 1552
+     call $~lib/string/String.__eq
+     i32.eqz
+    else
+     i32.const 0
+    end
+    if
+     block $__inlined_func$~lib/rt/__instanceof0 (result i32)
+      local.get $1
+      i32.const 20
+      i32.sub
+      i32.load offset=12
+      local.tee $2
+      i32.const 15440
+      i32.load
+      i32.le_u
+      if
+       loop $do-continue|01
+        i32.const 1
+        local.get $2
+        i32.const 22
+        i32.eq
+        br_if $__inlined_func$~lib/rt/__instanceof0
+        drop
+        local.get $2
+        i32.const 3
+        i32.shl
+        i32.const 15444
+        i32.add
+        i32.load offset=4
+        local.tee $2
+        br_if $do-continue|01
+       end
+      end
+      i32.const 0
+     end
+     i32.eqz
+     if
+      i32.const 2672
+      i32.const 4464
+      i32.const 310
+      i32.const 37
+      call $~lib/builtins/abort
+      unreachable
+     end
+     local.get $1
+     i32.const 1552
+     call $~lib/assemblyscript-json/JSON/Obj#get
+     local.tee $1
+     i32.eqz
+     br_if $__inlined_func$~lib/near-sdk-bindgen/index/decode<~lib/string/String,~lib/typedarray/Uint8Array>
+    end
+    local.get $1
+    if (result i32)
+     block $__inlined_func$~lib/rt/__instanceof3 (result i32)
+      local.get $1
+      i32.const 20
+      i32.sub
+      i32.load offset=12
+      local.tee $2
+      i32.const 15440
+      i32.load
+      i32.le_u
+      if
+       loop $do-continue|04
+        i32.const 1
+        local.get $2
+        i32.const 37
+        i32.eq
+        br_if $__inlined_func$~lib/rt/__instanceof3
+        drop
+        local.get $2
+        i32.const 3
+        i32.shl
+        i32.const 15444
+        i32.add
+        i32.load offset=4
+        local.tee $2
+        br_if $do-continue|04
+       end
+      end
+      i32.const 0
+     end
+    else
+     i32.const 0
+    end
+    if
+     i32.const 0
+     local.set $1
+     br $__inlined_func$~lib/near-sdk-bindgen/index/decode<~lib/string/String,~lib/typedarray/Uint8Array>
+    end
+    local.get $1
+    if (result i32)
+     block $__inlined_func$~lib/rt/__instanceof10 (result i32)
+      local.get $1
+      i32.const 20
+      i32.sub
+      i32.load offset=12
+      local.tee $2
+      i32.const 15440
+      i32.load
+      i32.le_u
+      if
+       loop $do-continue|011
+        i32.const 1
+        local.get $2
+        i32.const 32
+        i32.eq
+        br_if $__inlined_func$~lib/rt/__instanceof10
+        drop
+        local.get $2
+        i32.const 3
+        i32.shl
+        i32.const 15444
+        i32.add
+        i32.load offset=4
+        local.tee $2
+        br_if $do-continue|011
+       end
+      end
+      i32.const 0
+     end
+    else
+     i32.const 0
+    end
+    i32.eqz
+    if
+     i32.const 5072
+     i32.const 1552
+     call $~lib/string/String#concat
+     i32.const 5536
+     call $~lib/string/String#concat
+     i32.const 4464
+     i32.const 218
+     i32.const 3
+     call $~lib/builtins/abort
+     unreachable
+    end
+    block $__inlined_func$~lib/rt/__instanceof14 (result i32)
+     local.get $1
+     i32.const 20
+     i32.sub
+     i32.load offset=12
+     local.tee $2
+     i32.const 15440
+     i32.load
+     i32.le_u
+     if
+      loop $do-continue|015
+       i32.const 1
+       local.get $2
+       i32.const 32
+       i32.eq
+       br_if $__inlined_func$~lib/rt/__instanceof14
+       drop
+       local.get $2
+       i32.const 3
+       i32.shl
+       i32.const 15444
+       i32.add
+       i32.load offset=4
+       local.tee $2
+       br_if $do-continue|015
+      end
+     end
+     i32.const 0
+    end
+    i32.eqz
+    if
+     i32.const 2672
+     i32.const 4464
+     i32.const 222
+     i32.const 21
+     call $~lib/builtins/abort
+     unreachable
+    end
+    local.get $1
+    i32.load
+    local.set $1
+   end
+   local.get $5
+   local.get $1
+   i32.store offset=4
+   local.get $5
+   i32.const 1
+   i32.store8 offset=64
+   local.get $0
+   i32.load offset=12
+   local.get $5
+   i32.load
+   local.get $5
+   call $~lib/near-sdk-core/collections/persistentUnorderedMap/PersistentUnorderedMap<u32,assembly/multicall/model/JobSchema>#set
+  end
+ )
+ (func $assembly/multicall/index/__wrapper_job_activate_callback
+  (local $0 i32)
+  (local $1 i32)
+  call $~lib/near-sdk-bindgen/index/getInput
+  local.tee $0
+  i32.load
+  i32.const 13056
+  i32.const 13056
+  call $~lib/util/hash/HASH<~lib/string/String>
+  call $~lib/map/Map<~lib/string/String,~lib/assemblyscript-json/JSON/Value>#find
+  if (result i32)
+   local.get $0
+   i32.const 13056
+   call $~lib/near-sdk-bindgen/index/decode<i32,~lib/assemblyscript-json/JSON/Obj>
+  else
+   call $~lib/near-sdk-bindgen/index/requireParameter<i32>
+  end
+  local.set $0
+  i64.const 0
+  call $~lib/near-sdk-core/env/env/env.current_account_id
+  call $~lib/near-sdk-core/util/util.read_register_string
+  i64.const 0
+  call $~lib/near-sdk-core/env/env/env.predecessor_account_id
+  call $~lib/near-sdk-core/util/util.read_register_string
+  call $~lib/string/String.__eq
+  i32.eqz
+  if
+   i32.const 14240
+   i32.const 9088
+   i32.const 153
+   i32.const 3
+   call $~lib/builtins/abort
+   unreachable
+  end
+  global.get $assembly/multicall/index/_jobs
+  local.get $0
+  call $assembly/multicall/jobs/Jobs#activate_callback
+ )
+ (func $~lib/near-sdk-bindgen/index/decode<~lib/array/Array<u32>,~lib/assemblyscript-json/JSON/Obj> (param $0 i32) (result i32)
+  (local $1 i32)
+  (local $2 i32)
+  (local $3 i32)
+  local.get $0
+  if (result i32)
+   block $__inlined_func$~lib/rt/__instanceof (result i32)
+    local.get $0
+    i32.const 20
+    i32.sub
+    i32.load offset=12
+    local.tee $1
+    i32.const 15440
+    i32.load
+    i32.le_u
+    if
+     loop $do-continue|0
+      i32.const 1
+      local.get $1
+      i32.const 22
+      i32.eq
+      br_if $__inlined_func$~lib/rt/__instanceof
+      drop
+      local.get $1
+      i32.const 3
+      i32.shl
+      i32.const 15444
+      i32.add
+      i32.load offset=4
+      local.tee $1
+      br_if $do-continue|0
+     end
+    end
+    i32.const 0
+   end
+  else
+   i32.const 0
+  end
+  if (result i32)
+   i32.const 14304
+   i32.const 1552
+   call $~lib/string/String.__eq
+   i32.eqz
+  else
+   i32.const 0
+  end
+  if
+   block $__inlined_func$~lib/rt/__instanceof0 (result i32)
+    local.get $0
+    i32.const 20
+    i32.sub
+    i32.load offset=12
+    local.tee $1
+    i32.const 15440
+    i32.load
+    i32.le_u
+    if
+     loop $do-continue|01
+      i32.const 1
+      local.get $1
+      i32.const 22
+      i32.eq
+      br_if $__inlined_func$~lib/rt/__instanceof0
+      drop
+      local.get $1
+      i32.const 3
+      i32.shl
+      i32.const 15444
+      i32.add
+      i32.load offset=4
+      local.tee $1
+      br_if $do-continue|01
+     end
+    end
+    i32.const 0
+   end
+   i32.eqz
+   if
+    i32.const 2672
+    i32.const 4464
+    i32.const 310
+    i32.const 37
+    call $~lib/builtins/abort
+    unreachable
+   end
+   local.get $0
+   i32.const 14304
+   call $~lib/assemblyscript-json/JSON/Obj#get
+   local.tee $0
+   i32.eqz
+   if
+    local.get $0
+    return
+   end
+  end
+  local.get $0
+  if (result i32)
+   block $__inlined_func$~lib/rt/__instanceof3 (result i32)
+    local.get $0
+    i32.const 20
+    i32.sub
+    i32.load offset=12
+    local.tee $1
+    i32.const 15440
+    i32.load
+    i32.le_u
+    if
+     loop $do-continue|04
+      i32.const 1
+      local.get $1
+      i32.const 37
+      i32.eq
+      br_if $__inlined_func$~lib/rt/__instanceof3
+      drop
+      local.get $1
+      i32.const 3
+      i32.shl
+      i32.const 15444
+      i32.add
+      i32.load offset=4
+      local.tee $1
+      br_if $do-continue|04
+     end
+    end
+    i32.const 0
+   end
+  else
+   i32.const 0
+  end
+  if
+   i32.const 0
+   return
+  end
+  i32.const 0
+  local.set $1
+  local.get $0
+  if (result i32)
+   block $__inlined_func$~lib/rt/__instanceof1 (result i32)
+    local.get $0
+    i32.const 20
+    i32.sub
+    i32.load offset=12
+    local.tee $2
+    i32.const 15440
+    i32.load
+    i32.le_u
+    if
+     loop $do-continue|02
+      i32.const 1
+      local.get $2
+      i32.const 30
+      i32.eq
+      br_if $__inlined_func$~lib/rt/__instanceof1
+      drop
+      local.get $2
+      i32.const 3
+      i32.shl
+      i32.const 15444
+      i32.add
+      i32.load offset=4
+      local.tee $2
+      br_if $do-continue|02
+     end
+    end
+    i32.const 0
+   end
+  else
+   i32.const 0
+  end
+  i32.eqz
+  if
+   i32.const 5072
+   i32.const 14304
+   call $~lib/string/String#concat
+   i32.const 5136
+   call $~lib/string/String#concat
+   i32.const 4464
+   i32.const 226
+   i32.const 3
+   call $~lib/builtins/abort
+   unreachable
+  end
+  i32.const 16
+  i32.const 52
+  call $~lib/rt/stub/__new
+  local.tee $3
+  i32.const 0
+  i32.store
+  local.get $3
+  i32.const 0
+  i32.store offset=4
+  local.get $3
+  i32.const 0
+  i32.store offset=8
+  local.get $3
+  i32.const 0
+  i32.store offset=12
+  i32.const 32
+  i32.const 0
+  call $~lib/rt/stub/__new
+  local.tee $2
+  i32.const 32
+  call $~lib/memory/memory.fill
+  local.get $3
+  local.get $2
+  i32.store
+  local.get $3
+  local.get $2
+  i32.store offset=4
+  local.get $3
+  i32.const 32
+  i32.store offset=8
+  local.get $3
+  i32.const 0
+  i32.store offset=12
+  block $__inlined_func$~lib/rt/__instanceof13 (result i32)
+   local.get $0
+   i32.const 20
+   i32.sub
+   i32.load offset=12
+   local.tee $2
+   i32.const 15440
+   i32.load
+   i32.le_u
+   if
+    loop $do-continue|024
+     i32.const 1
+     local.get $2
+     i32.const 30
+     i32.eq
+     br_if $__inlined_func$~lib/rt/__instanceof13
+     drop
+     local.get $2
+     i32.const 3
+     i32.shl
+     i32.const 15444
+     i32.add
+     i32.load offset=4
+     local.tee $2
+     br_if $do-continue|024
+    end
+   end
+   i32.const 0
+  end
+  i32.eqz
+  if
+   i32.const 2672
+   i32.const 4464
+   i32.const 231
+   i32.const 26
+   call $~lib/builtins/abort
+   unreachable
+  end
+  local.get $0
+  i32.load
+  local.set $0
+  loop $for-loop|0
+   local.get $1
+   local.get $0
+   i32.load offset=12
+   i32.lt_s
+   if
+    local.get $3
+    local.get $0
+    local.get $1
+    call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#__get
+    i32.const 1552
+    call $~lib/near-sdk-bindgen/index/decode<u32,~lib/assemblyscript-json/JSON/Obj>
+    call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#push
+    local.get $1
+    i32.const 1
+    i32.add
+    local.set $1
+    br $for-loop|0
+   end
+  end
+  local.get $3
+ )
+ (func $~lib/near-sdk-bindgen/index/requireParameter<~lib/array/Array<u32>> (result i32)
+  i32.const 6592
+  i32.const 14304
+  call $~lib/string/String#concat
+  i32.const 4960
+  call $~lib/string/String#concat
+  i32.const 14352
+  call $~lib/string/String#concat
+  i32.const 6640
+  call $~lib/string/String#concat
+  i32.const 4464
+  i32.const 33
+  i32.const 3
+  call $~lib/builtins/abort
+  unreachable
+ )
+ (func $~lib/array/Array<u32>#__get (param $0 i32) (param $1 i32) (result i32)
+  local.get $1
+  local.get $0
+  i32.load offset=12
+  i32.ge_u
+  if
+   i32.const 2320
+   i32.const 2112
+   i32.const 99
+   i32.const 42
+   call $~lib/builtins/abort
+   unreachable
+  end
+  local.get $0
+  i32.load offset=4
+  local.get $1
+  i32.const 2
+  i32.shl
+  i32.add
+  i32.load
+ )
+ (func $~lib/near-sdk-core/collections/persistentUnorderedMap/PersistentUnorderedMap<u32,assembly/multicall/model/JobSchema>#get (param $0 i32) (param $1 i32) (result i32)
+  local.get $0
+  i32.load
+  local.get $1
+  call $~lib/near-sdk-core/collections/persistentMap/PersistentMap<u32,i32>#contains
+  i32.eqz
+  if
+   i32.const 0
+   return
+  end
+  local.get $0
+  i32.load
+  i32.load
+  local.get $1
+  call $~lib/util/number/utoa32
+  call $~lib/string/String#concat
+  call $~lib/near-sdk-core/storage/Storage.getSome<i32>
+  local.set $1
+  local.get $0
+  i32.load offset=4
+  local.get $1
+  call $~lib/near-sdk-core/collections/persistentVector/PersistentVector<~lib/near-sdk-core/collections/util/MapEntry<u32,assembly/multicall/model/JobSchema>>#__get
+  i32.load offset=4
+ )
+ (func $assembly/multicall/index/__wrapper_jobs_pause
+  (local $0 i32)
+  (local $1 i32)
+  (local $2 i32)
+  (local $3 i32)
+  call $~lib/near-sdk-bindgen/index/getInput
+  local.tee $1
+  i32.load
+  i32.const 14304
+  i32.const 14304
+  call $~lib/util/hash/HASH<~lib/string/String>
+  call $~lib/map/Map<~lib/string/String,~lib/assemblyscript-json/JSON/Value>#find
+  if (result i32)
+   local.get $1
+   call $~lib/near-sdk-bindgen/index/decode<~lib/array/Array<u32>,~lib/assemblyscript-json/JSON/Obj>
+  else
+   call $~lib/near-sdk-bindgen/index/requireParameter<~lib/array/Array<u32>>
+  end
+  local.set $1
+  i64.const 0
+  call $~lib/near-sdk-core/env/env/env.predecessor_account_id
+  call $~lib/near-sdk-core/util/util.read_register_string
+  call $assembly/multicall/index/_is_admin
+  call $assembly/multicall/index/_assert_deposit
+  global.get $assembly/multicall/index/_jobs
+  local.set $3
+  loop $for-loop|0
+   local.get $2
+   local.get $1
+   i32.load offset=12
+   i32.lt_s
+   if
+    local.get $3
+    i32.load offset=12
+    local.get $1
+    local.get $2
+    call $~lib/array/Array<u32>#__get
+    call $~lib/near-sdk-core/collections/persistentUnorderedMap/PersistentUnorderedMap<u32,assembly/multicall/model/JobSchema>#get
+    local.tee $0
+    if
+     block $for-continue|0
+      local.get $0
+      i32.load8_u offset=64
+      i32.eqz
+      if
+       i32.const 14468
+       local.get $0
+       i32.load
+       call $~lib/util/number/itoa32
+       i32.store
+       i32.const 14464
+       i32.const 14460
+       i32.load
+       i32.const 2
+       i32.shr_u
+       call $~lib/util/string/joinStringArray
+       call $~lib/near-sdk-core/util/util.stringToBytes
+       local.tee $0
+       i32.load offset=8
+       i64.extend_i32_s
+       local.get $0
+       i32.load offset=4
+       i64.extend_i32_u
+       call $~lib/near-sdk-core/env/env/env.log_utf8
+       br $for-continue|0
+      end
+      local.get $0
+      i32.const 0
+      i32.store8 offset=64
+      local.get $3
+      i32.load offset=12
+      local.get $0
+      i32.load
+      local.get $0
+      call $~lib/near-sdk-core/collections/persistentUnorderedMap/PersistentUnorderedMap<u32,assembly/multicall/model/JobSchema>#set
+     end
+    else
+     i32.const 14548
+     local.get $1
+     local.get $2
+     call $~lib/array/Array<u32>#__get
+     call $~lib/util/number/utoa32
+     i32.store
+     i32.const 14544
+     i32.const 14540
+     i32.load
+     i32.const 2
+     i32.shr_u
+     call $~lib/util/string/joinStringArray
+     call $~lib/near-sdk-core/util/util.stringToBytes
+     local.tee $0
+     i32.load offset=8
+     i64.extend_i32_s
+     local.get $0
+     i32.load offset=4
+     i64.extend_i32_u
+     call $~lib/near-sdk-core/env/env/env.log_utf8
+    end
+    local.get $2
+    i32.const 1
+    i32.add
+    local.set $2
+    br $for-loop|0
+   end
+  end
+ )
+ (func $assembly/multicall/index/__wrapper_jobs_resume
+  (local $0 i32)
+  (local $1 i32)
+  (local $2 i32)
+  (local $3 i32)
+  call $~lib/near-sdk-bindgen/index/getInput
+  local.tee $1
+  i32.load
+  i32.const 14304
+  i32.const 14304
+  call $~lib/util/hash/HASH<~lib/string/String>
+  call $~lib/map/Map<~lib/string/String,~lib/assemblyscript-json/JSON/Value>#find
+  if (result i32)
+   local.get $1
+   call $~lib/near-sdk-bindgen/index/decode<~lib/array/Array<u32>,~lib/assemblyscript-json/JSON/Obj>
+  else
+   call $~lib/near-sdk-bindgen/index/requireParameter<~lib/array/Array<u32>>
+  end
+  local.set $1
+  i64.const 0
+  call $~lib/near-sdk-core/env/env/env.predecessor_account_id
+  call $~lib/near-sdk-core/util/util.read_register_string
+  call $assembly/multicall/index/_is_admin
+  call $assembly/multicall/index/_assert_deposit
+  global.get $assembly/multicall/index/_jobs
+  local.set $3
+  loop $for-loop|0
+   local.get $2
+   local.get $1
+   i32.load offset=12
+   i32.lt_s
+   if
+    local.get $3
+    i32.load offset=12
+    local.get $1
+    local.get $2
+    call $~lib/array/Array<u32>#__get
+    call $~lib/near-sdk-core/collections/persistentUnorderedMap/PersistentUnorderedMap<u32,assembly/multicall/model/JobSchema>#get
+    local.tee $0
+    if
+     block $for-continue|0
+      local.get $0
+      i32.load8_u offset=64
+      if
+       i32.const 14580
+       local.get $0
+       i32.load
+       call $~lib/util/number/itoa32
+       i32.store
+       i32.const 14576
+       i32.const 14572
+       i32.load
+       i32.const 2
+       i32.shr_u
+       call $~lib/util/string/joinStringArray
+       call $~lib/near-sdk-core/util/util.stringToBytes
+       local.tee $0
+       i32.load offset=8
+       i64.extend_i32_s
+       local.get $0
+       i32.load offset=4
+       i64.extend_i32_u
+       call $~lib/near-sdk-core/env/env/env.log_utf8
+       br $for-continue|0
+      end
+      local.get $0
+      i32.const 1
+      i32.store8 offset=64
+      local.get $3
+      i32.load offset=12
+      local.get $0
+      i32.load
+      local.get $0
+      call $~lib/near-sdk-core/collections/persistentUnorderedMap/PersistentUnorderedMap<u32,assembly/multicall/model/JobSchema>#set
+     end
+    else
+     i32.const 14612
+     local.get $1
+     local.get $2
+     call $~lib/array/Array<u32>#__get
+     call $~lib/util/number/utoa32
+     i32.store
+     i32.const 14608
+     i32.const 14604
+     i32.load
+     i32.const 2
+     i32.shr_u
+     call $~lib/util/string/joinStringArray
+     call $~lib/near-sdk-core/util/util.stringToBytes
+     local.tee $0
+     i32.load offset=8
+     i64.extend_i32_s
+     local.get $0
+     i32.load offset=4
+     i64.extend_i32_u
+     call $~lib/near-sdk-core/env/env/env.log_utf8
+    end
+    local.get $2
+    i32.const 1
+    i32.add
+    local.set $2
+    br $for-loop|0
+   end
+  end
+ )
+ (func $~lib/near-sdk-bindgen/index/requireParameter<u32> (result i32)
+  i32.const 6592
+  i32.const 13056
+  call $~lib/string/String#concat
+  i32.const 4960
+  call $~lib/string/String#concat
+  i32.const 13280
+  call $~lib/string/String#concat
+  i32.const 6640
+  call $~lib/string/String#concat
+  i32.const 4464
+  i32.const 33
+  i32.const 3
+  call $~lib/builtins/abort
+  unreachable
+ )
+ (func $~lib/near-sdk-core/contract/ContractPromise.create<assembly/multicall/model/CroncatRefillTaskArgs> (param $0 i32) (param $1 i32) (param $2 i32) (param $3 i64) (param $4 i32) (result i32)
+  (local $5 i32)
+  (local $6 i32)
+  i32.const 1
+  global.set $~argumentsLength
+  call $~lib/near-sdk-bindgen/index/JSONEncoder#constructor
+  local.set $5
+  local.get $2
+  if
+   local.get $2
+   local.get $5
+   if (result i32)
+    local.get $5
+   else
+    call $~lib/near-sdk-bindgen/index/JSONEncoder#constructor
+   end
+   local.tee $2
+   i32.const 1552
+   call $~lib/assemblyscript-json/encoder/JSONEncoder#writeKey
+   local.get $2
+   i32.load offset=4
+   i32.const 2512
+   call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#push
+   local.get $2
+   i32.load
+   i32.const 1
+   call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#push
+   i32.load
+   i32.const 14736
+   local.get $2
+   call $~lib/near-sdk-bindgen/index/encode<~lib/string/String,~lib/near-sdk-bindgen/index/JSONEncoder>
+   local.get $2
+   i32.load offset=4
+   i32.const 2832
+   call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#push
+   local.get $2
+   i32.load
+   call $~lib/array/Array<i32>#pop
+  else
+   local.get $5
+   i32.const 1552
+   call $~lib/assemblyscript-json/encoder/JSONEncoder#writeKey
+   local.get $5
+   i32.load offset=4
+   i32.const 4368
+   call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#push
+  end
+  local.get $5
+  call $~lib/assemblyscript-json/encoder/JSONEncoder#serialize
+  local.set $2
+  local.get $0
+  call $~lib/near-sdk-core/util/util.stringToBytes
+  local.set $0
+  local.get $1
+  call $~lib/near-sdk-core/util/util.stringToBytes
+  local.set $1
+  i32.const 12
+  i32.const 7
+  call $~lib/rt/stub/__new
+  i32.const 16
+  call $~lib/arraybuffer/ArrayBufferView#constructor
+  local.tee $5
+  i32.load offset=4
+  local.tee $6
+  local.get $4
+  i64.load
+  i64.store
+  local.get $6
+  local.get $4
+  i64.load offset=8
+  i64.store offset=8
+  local.get $0
+  i32.load offset=8
+  i64.extend_i32_s
+  local.get $0
+  i32.load offset=4
+  i64.extend_i32_u
+  local.get $1
+  i32.load offset=8
+  i64.extend_i32_s
+  local.get $1
+  i32.load offset=4
+  i64.extend_i32_u
+  local.get $2
+  i32.load offset=8
+  i64.extend_i32_s
+  local.get $2
+  i32.load offset=4
+  i64.extend_i32_u
+  local.get $5
+  i32.load offset=4
+  i64.extend_i32_u
+  local.get $3
+  call $~lib/near-sdk-core/env/env/env.promise_create
+  local.set $3
+  i32.const 8
+  i32.const 49
+  call $~lib/rt/stub/__new
+  local.tee $0
+  i64.const 0
+  i64.store
+  local.get $0
+  local.get $3
+  i64.store
+  local.get $0
+ )
+ (func $assembly/multicall/index/__wrapper_job_edit
+  (local $0 i32)
+  (local $1 i32)
+  (local $2 i32)
+  (local $3 i32)
+  (local $4 i64)
+  (local $5 i32)
+  (local $6 i64)
+  (local $7 i32)
+  (local $8 i32)
+  call $~lib/near-sdk-bindgen/index/getInput
+  local.tee $0
+  i32.load
+  i32.const 13056
+  i32.const 13056
+  call $~lib/util/hash/HASH<~lib/string/String>
+  call $~lib/map/Map<~lib/string/String,~lib/assemblyscript-json/JSON/Value>#find
+  if (result i32)
+   local.get $0
+   i32.const 13056
+   call $~lib/near-sdk-bindgen/index/decode<u32,~lib/assemblyscript-json/JSON/Obj>
+  else
+   call $~lib/near-sdk-bindgen/index/requireParameter<u32>
+  end
+  local.set $2
+  local.get $0
+  i32.load
+  i32.const 11808
+  i32.const 11808
+  call $~lib/util/hash/HASH<~lib/string/String>
+  call $~lib/map/Map<~lib/string/String,~lib/assemblyscript-json/JSON/Value>#find
+  if (result i32)
+   local.get $0
+   i32.const 11808
+   call $~lib/near-sdk-bindgen/index/decode<~lib/array/Array<~lib/array/Array<assembly/multicall/model/BatchCall>>,~lib/assemblyscript-json/JSON/Obj>
+  else
+   i32.const 11808
+   call $~lib/near-sdk-bindgen/index/requireParameter<~lib/array/Array<~lib/array/Array<assembly/multicall/model/BatchCall>>>
+  end
+  local.set $3
+  local.get $0
+  i32.load
+  i32.const 12032
+  i32.const 12032
+  call $~lib/util/hash/HASH<~lib/string/String>
+  call $~lib/map/Map<~lib/string/String,~lib/assemblyscript-json/JSON/Value>#find
+  if (result i32)
+   local.get $0
+   i32.const 12032
+   call $~lib/near-sdk-bindgen/index/decode<~lib/as-bignum/integer/safe/u128/u128,~lib/assemblyscript-json/JSON/Obj>
+  else
+   i32.const 12032
+   call $~lib/near-sdk-bindgen/index/requireParameter<~lib/as-bignum/integer/safe/u128/u128>
+  end
+  local.set $5
+  local.get $0
+  i32.load
+  i32.const 12096
+  i32.const 12096
+  call $~lib/util/hash/HASH<~lib/string/String>
+  call $~lib/map/Map<~lib/string/String,~lib/assemblyscript-json/JSON/Value>#find
+  if (result i64)
+   local.get $0
+   i32.const 12096
+   call $~lib/near-sdk-bindgen/index/decode<u64,~lib/assemblyscript-json/JSON/Obj>
+  else
+   i32.const 12096
+   call $~lib/near-sdk-bindgen/index/requireParameter<u64>
+  end
+  local.set $6
+  local.get $0
+  i32.load
+  i32.const 12144
+  i32.const 12144
+  call $~lib/util/hash/HASH<~lib/string/String>
+  call $~lib/map/Map<~lib/string/String,~lib/assemblyscript-json/JSON/Value>#find
+  if (result i64)
+   local.get $0
+   i32.const 12144
+   call $~lib/near-sdk-bindgen/index/decode<u64,~lib/assemblyscript-json/JSON/Obj>
+  else
+   i32.const 12144
+   call $~lib/near-sdk-bindgen/index/requireParameter<u64>
+  end
+  local.set $4
+  local.get $0
+  i32.load
+  i32.const 14640
+  i32.const 14640
+  call $~lib/util/hash/HASH<~lib/string/String>
+  call $~lib/map/Map<~lib/string/String,~lib/assemblyscript-json/JSON/Value>#find
+  if (result i32)
+   local.get $0
+   i32.const 14640
+   call $~lib/near-sdk-bindgen/index/decode<bool,~lib/assemblyscript-json/JSON/Obj>
+  else
+   i32.const 6592
+   i32.const 14640
+   call $~lib/string/String#concat
+   i32.const 4960
+   call $~lib/string/String#concat
+   i32.const 13360
+   call $~lib/string/String#concat
+   i32.const 6640
+   call $~lib/string/String#concat
+   i32.const 4464
+   i32.const 33
+   i32.const 3
+   call $~lib/builtins/abort
+   unreachable
+  end
+  local.set $8
+  i64.const 0
+  call $~lib/near-sdk-core/env/env/env.predecessor_account_id
+  call $~lib/near-sdk-core/util/util.read_register_string
+  call $assembly/multicall/index/_is_admin
+  call $assembly/multicall/index/_assert_deposit
+  global.get $assembly/multicall/index/_jobs
+  local.tee $7
+  i32.load offset=12
+  local.tee $0
+  i32.load
+  i32.load
+  local.get $2
+  call $~lib/util/number/utoa32
+  call $~lib/string/String#concat
+  call $~lib/near-sdk-core/storage/Storage.getSome<i32>
+  local.set $2
+  local.get $0
+  i32.load offset=4
+  local.get $2
+  call $~lib/near-sdk-core/collections/persistentVector/PersistentVector<~lib/near-sdk-core/collections/util/MapEntry<u32,assembly/multicall/model/JobSchema>>#__get
+  i32.load offset=4
+  local.tee $1
+  local.get $3
+  i32.store offset=68
+  local.get $1
+  local.get $6
+  i64.store offset=48
+  local.get $1
+  local.get $4
+  i64.store offset=40
+  local.get $1
+  local.get $8
+  i32.store8 offset=64
+  local.get $1
+  i32.load offset=36
+  local.tee $3
+  i64.load offset=8
+  local.tee $6
+  local.get $5
+  i64.load offset=8
+  local.tee $4
+  i64.eq
+  if (result i32)
+   local.get $3
+   i64.load
+   local.get $5
+   i64.load
+   i64.lt_u
+  else
+   local.get $4
+   local.get $6
+   i64.gt_u
+  end
+  if
+   local.get $7
+   i32.load offset=8
+   i32.const 4
+   i32.const 53
+   call $~lib/rt/stub/__new
+   local.tee $0
+   i32.const 0
+   i32.store
+   local.get $0
+   local.get $1
+   i32.load offset=4
+   i32.store
+   call $~lib/near-sdk-core/env/env/env.prepaid_gas
+   local.get $7
+   i64.load offset=24
+   i64.sub
+   local.set $4
+   local.get $5
+   local.get $1
+   i32.load offset=36
+   call $~lib/as-bignum/integer/safe/u128/u128.sub
+   local.set $3
+   i32.load
+   call $~lib/near-sdk-core/storage/Storage.getSome<~lib/string/String>
+   i32.const 14688
+   local.get $0
+   local.get $4
+   local.get $3
+   call $~lib/near-sdk-core/contract/ContractPromise.create<assembly/multicall/model/CroncatRefillTaskArgs>
+   drop
+  end
+  local.get $7
+  i32.load offset=12
+  local.get $1
+  i32.load
+  local.get $1
+  call $~lib/near-sdk-core/collections/persistentUnorderedMap/PersistentUnorderedMap<u32,assembly/multicall/model/JobSchema>#set
+ )
+ (func $~lib/near-sdk-core/collections/persistentVector/PersistentVector<~lib/near-sdk-core/collections/util/MapEntry<u32,assembly/multicall/model/JobSchema>>#pop (param $0 i32) (result i32)
   (local $1 i32)
   (local $2 i32)
   local.get $0
@@ -13748,8 +20369,8 @@
   i32.const 0
   i32.le_s
   if
+   i32.const 10784
    i32.const 10848
-   i32.const 10912
    i32.const 67
    i32.const 5
    call $~lib/builtins/abort
@@ -13769,7 +20390,7 @@
   call $~lib/near-sdk-core/storage/Storage.setString
   local.get $0
   local.get $1
-  call $~lib/near-sdk-core/collections/persistentVector/PersistentVector<~lib/string/String>#__unchecked_get
+  call $~lib/near-sdk-core/collections/persistentVector/PersistentVector<~lib/near-sdk-core/collections/util/MapEntry<u32,assembly/multicall/model/JobSchema>>#__unchecked_get
   local.get $0
   i32.load
   local.get $1
@@ -13786,999 +20407,575 @@
   call $~lib/near-sdk-core/env/env/env.storage_remove
   drop
  )
- (func $~lib/near-sdk-core/collections/persistentVector/PersistentVector<~lib/string/String>#__get (param $0 i32) (param $1 i32) (result i32)
-  local.get $1
-  i32.const 0
-  i32.ge_s
-  if (result i32)
-   local.get $0
-   call $~lib/near-sdk-core/collections/persistentVector/PersistentVector<~lib/string/String>#get:length
-   local.get $1
-   i32.gt_s
-  else
-   i32.const 0
-  end
-  i32.eqz
-  if
-   i32.const 2112
-   i32.const 10912
-   i32.const 40
-   i32.const 5
-   call $~lib/builtins/abort
-   unreachable
-  end
-  local.get $0
-  local.get $1
-  call $~lib/near-sdk-core/collections/persistentVector/PersistentVector<~lib/string/String>#__unchecked_get
- )
- (func $~lib/near-sdk-core/collections/persistentSet/PersistentSet<~lib/string/String>#delete (param $0 i32) (param $1 i32)
+ (func $assembly/multicall/index/__wrapper_job_delete
+  (local $0 i32)
+  (local $1 i32)
   (local $2 i32)
   (local $3 i32)
   (local $4 i32)
   (local $5 i32)
-  local.get $1
-  call $~lib/near-sdk-core/collections/persistentSet/PersistentSet<~lib/string/String>#_hashedItem
+  (local $6 i32)
+  (local $7 i32)
+  (local $8 i32)
+  (local $9 i64)
+  call $~lib/near-sdk-bindgen/index/getInput
+  local.tee $1
+  i32.load
+  i32.const 13056
+  i32.const 13056
+  call $~lib/util/hash/HASH<~lib/string/String>
+  call $~lib/map/Map<~lib/string/String,~lib/assemblyscript-json/JSON/Value>#find
+  if (result i32)
+   local.get $1
+   i32.const 13056
+   call $~lib/near-sdk-bindgen/index/decode<u32,~lib/assemblyscript-json/JSON/Obj>
+  else
+   call $~lib/near-sdk-bindgen/index/requireParameter<u32>
+  end
   local.set $1
-  local.get $0
+  i64.const 0
+  call $~lib/near-sdk-core/env/env/env.predecessor_account_id
+  call $~lib/near-sdk-core/util/util.read_register_string
+  call $assembly/multicall/index/_is_admin
+  call $assembly/multicall/index/_assert_deposit
+  global.get $assembly/multicall/index/_jobs
+  local.tee $4
+  i32.load offset=12
+  local.tee $0
+  i32.load
   i32.load
   local.get $1
-  call $~lib/near-sdk-core/collections/persistentMap/PersistentMap<~lib/typedarray/Uint8Array,i32>#contains
-  i32.eqz
-  if
-   i32.const 10624
-   i32.const 10720
-   i32.const 36
-   i32.const 5
-   call $~lib/builtins/abort
-   unreachable
-  end
+  call $~lib/util/number/utoa32
+  call $~lib/string/String#concat
+  call $~lib/near-sdk-core/storage/Storage.getSome<i32>
+  local.set $2
   local.get $0
   i32.load offset=4
-  call $~lib/near-sdk-core/collections/persistentVector/PersistentVector<~lib/string/String>#get:length
-  i32.const 1
-  i32.eq
-  if
-   loop $while-continue|0
+  local.get $2
+  call $~lib/near-sdk-core/collections/persistentVector/PersistentVector<~lib/near-sdk-core/collections/util/MapEntry<u32,assembly/multicall/model/JobSchema>>#__get
+  i32.load offset=4
+  local.set $7
+  block $__inlined_func$~lib/near-sdk-core/collections/persistentUnorderedMap/PersistentUnorderedMap<u32,assembly/multicall/model/JobSchema>#delete
+   local.get $4
+   i32.load offset=12
+   local.tee $2
+   i32.load
+   i32.load
+   local.get $1
+   call $~lib/util/number/utoa32
+   call $~lib/string/String#concat
+   call $~lib/near-sdk-core/storage/Storage.getSome<i32>
+   local.tee $3
+   local.get $2
+   i32.load offset=4
+   call $~lib/near-sdk-core/collections/persistentVector/PersistentVector<~lib/string/String>#get:length
+   i32.const 1
+   i32.sub
+   i32.eq
+   if
+    local.get $2
+    i32.load offset=4
+    call $~lib/near-sdk-core/collections/persistentVector/PersistentVector<~lib/near-sdk-core/collections/util/MapEntry<u32,assembly/multicall/model/JobSchema>>#pop
+    local.set $1
+    local.get $2
+    i32.load
+    i32.load
+    local.get $1
+    i32.load
+    call $~lib/util/number/utoa32
+    call $~lib/string/String#concat
+    call $~lib/near-sdk-core/util/util.stringToBytes
+    local.tee $1
+    i32.load offset=8
+    i64.extend_i32_s
+    local.get $1
+    i32.load offset=4
+    i64.extend_i32_u
+    i64.const 0
+    call $~lib/near-sdk-core/env/env/env.storage_remove
+    drop
+    br $__inlined_func$~lib/near-sdk-core/collections/persistentUnorderedMap/PersistentUnorderedMap<u32,assembly/multicall/model/JobSchema>#delete
+   end
+   local.get $2
+   i32.load offset=4
+   local.tee $0
+   local.get $0
+   call $~lib/near-sdk-core/collections/persistentVector/PersistentVector<~lib/string/String>#get:length
+   i32.const 1
+   i32.sub
+   call $~lib/near-sdk-core/collections/persistentVector/PersistentVector<~lib/near-sdk-core/collections/util/MapEntry<u32,assembly/multicall/model/JobSchema>>#__get
+   i32.load
+   local.set $8
+   local.get $2
+   i32.load offset=4
+   local.tee $0
+   call $~lib/near-sdk-core/collections/persistentVector/PersistentVector<~lib/string/String>#get:length
+   local.get $3
+   i32.le_s
+   if
+    i32.const 11104
+    i32.const 10848
+    i32.const 79
+    i32.const 5
+    call $~lib/builtins/abort
+    unreachable
+   end
+   local.get $0
+   call $~lib/near-sdk-core/collections/persistentVector/PersistentVector<~lib/string/String>#get:length
+   local.get $3
+   i32.const 1
+   i32.add
+   i32.eq
+   if
+    local.get $0
+    call $~lib/near-sdk-core/collections/persistentVector/PersistentVector<~lib/near-sdk-core/collections/util/MapEntry<u32,assembly/multicall/model/JobSchema>>#pop
+    drop
+   else
+    local.get $0
+    local.get $3
+    call $~lib/near-sdk-core/collections/persistentVector/PersistentVector<~lib/near-sdk-core/collections/util/MapEntry<u32,assembly/multicall/model/JobSchema>>#__unchecked_get
+    drop
+    local.get $0
+    local.get $0
+    call $~lib/near-sdk-core/collections/persistentVector/PersistentVector<~lib/string/String>#get:length
+    i32.const 1
+    i32.sub
+    call $~lib/near-sdk-core/collections/persistentVector/PersistentVector<~lib/near-sdk-core/collections/util/MapEntry<u32,assembly/multicall/model/JobSchema>>#__unchecked_get
+    local.set $5
+    local.get $0
+    call $~lib/near-sdk-core/collections/persistentVector/PersistentVector<~lib/string/String>#get:length
+    i32.const 1
+    i32.sub
+    local.set $6
+    local.get $0
+    i32.load
+    local.get $6
+    call $~lib/util/number/itoa32
+    call $~lib/string/String#concat
+    call $~lib/near-sdk-core/util/util.stringToBytes
+    local.tee $6
+    i32.load offset=8
+    i64.extend_i32_s
+    local.get $6
+    i32.load offset=4
+    i64.extend_i32_u
+    i64.const 0
+    call $~lib/near-sdk-core/env/env/env.storage_remove
+    drop
+    local.get $0
+    i32.load
+    local.get $3
+    call $~lib/util/number/itoa32
+    call $~lib/string/String#concat
+    local.get $5
+    call $~lib/near-sdk-core/storage/Storage.set<~lib/near-sdk-core/collections/util/MapEntry<u32,assembly/multicall/model/JobSchema>>
+    local.get $0
+    local.get $0
+    call $~lib/near-sdk-core/collections/persistentVector/PersistentVector<~lib/string/String>#get:length
+    i32.const 1
+    i32.sub
+    local.tee $5
+    i32.store offset=8
     local.get $0
     i32.load offset=4
-    call $~lib/near-sdk-core/collections/persistentVector/PersistentVector<~lib/string/String>#get:length
-    i32.const 0
-    i32.gt_s
-    if
-     local.get $0
-     i32.load offset=4
-     call $~lib/near-sdk-core/collections/persistentVector/PersistentVector<~lib/string/String>#pop
-     local.get $0
-     i32.load
-     local.set $2
-     call $~lib/near-sdk-core/collections/persistentSet/PersistentSet<~lib/string/String>#_hashedItem
-     local.set $1
-     local.get $2
-     i32.load
-     local.get $1
-     i32.load offset=4
-     local.get $1
-     i32.load offset=8
-     call $~lib/util/string/joinIntegerArray<u8>
-     call $~lib/string/String#concat
-     call $~lib/near-sdk-core/util/util.stringToBytes
-     local.tee $1
-     i32.load offset=8
-     i64.extend_i32_s
-     local.get $1
-     i32.load offset=4
-     i64.extend_i32_u
-     i64.const 0
-     call $~lib/near-sdk-core/env/env/env.storage_remove
-     drop
-     br $while-continue|0
-    end
+    local.get $5
+    call $~lib/util/number/itoa32
+    call $~lib/near-sdk-core/storage/Storage.setString
    end
-   return
-  end
-  local.get $0
-  i32.load offset=4
-  local.tee $2
-  local.get $2
-  call $~lib/near-sdk-core/collections/persistentVector/PersistentVector<~lib/string/String>#get:length
-  i32.const 1
-  i32.sub
-  call $~lib/near-sdk-core/collections/persistentVector/PersistentVector<~lib/string/String>#__get
-  local.get $0
-  i32.load
-  i32.load
-  local.get $1
-  i32.load offset=4
-  local.get $1
-  i32.load offset=8
-  call $~lib/util/string/joinIntegerArray<u8>
-  call $~lib/string/String#concat
-  local.tee $1
-  call $~lib/near-sdk-core/util/util.stringToBytes
-  local.tee $2
-  i32.load offset=8
-  i64.extend_i32_s
-  local.get $2
-  i32.load offset=4
-  i64.extend_i32_u
-  call $~lib/near-sdk-core/env/env/env.storage_has_key
-  i64.eqz
-  if
-   i32.const 11040
-   local.get $1
-   call $~lib/string/String#concat
-   i32.const 11072
-   call $~lib/string/String#concat
-   i32.const 10544
-   i32.const 237
-   i32.const 7
-   call $~lib/builtins/abort
-   unreachable
-  end
-  local.get $1
-  call $~lib/near-sdk-core/storage/Storage.getString
-  local.tee $1
-  i32.eqz
-  if
-   i32.const 1952
-   i32.const 10544
-   i32.const 240
-   i32.const 38
-   call $~lib/builtins/abort
-   unreachable
-  end
-  local.get $1
-  call $~lib/util/string/strtol<i64>
-  i32.wrap_i64
-  local.tee $2
-  local.get $0
-  i32.load offset=4
-  local.tee $1
-  call $~lib/near-sdk-core/collections/persistentVector/PersistentVector<~lib/string/String>#get:length
-  i32.ge_s
-  if
-   i32.const 11168
-   i32.const 10912
-   i32.const 79
-   i32.const 5
-   call $~lib/builtins/abort
-   unreachable
-  end
-  local.get $1
-  call $~lib/near-sdk-core/collections/persistentVector/PersistentVector<~lib/string/String>#get:length
-  local.get $2
-  i32.const 1
-  i32.add
-  i32.eq
-  if
-   local.get $1
-   call $~lib/near-sdk-core/collections/persistentVector/PersistentVector<~lib/string/String>#pop
-   drop
-  else
-   local.get $1
    local.get $2
-   call $~lib/near-sdk-core/collections/persistentVector/PersistentVector<~lib/string/String>#__unchecked_get
-   drop
-   local.get $1
-   local.get $1
-   call $~lib/near-sdk-core/collections/persistentVector/PersistentVector<~lib/string/String>#get:length
-   i32.const 1
-   i32.sub
-   call $~lib/near-sdk-core/collections/persistentVector/PersistentVector<~lib/string/String>#__unchecked_get
-   local.set $3
-   local.get $1
-   call $~lib/near-sdk-core/collections/persistentVector/PersistentVector<~lib/string/String>#get:length
-   i32.const 1
-   i32.sub
-   local.set $4
-   local.get $1
    i32.load
-   local.get $4
+   i32.load
+   local.get $8
+   call $~lib/util/number/utoa32
+   call $~lib/string/String#concat
+   local.get $3
    call $~lib/util/number/itoa32
+   call $~lib/near-sdk-core/storage/Storage.setString
+   local.get $2
+   i32.load
+   i32.load
+   local.get $1
+   call $~lib/util/number/utoa32
    call $~lib/string/String#concat
    call $~lib/near-sdk-core/util/util.stringToBytes
-   local.tee $4
+   local.tee $1
    i32.load offset=8
    i64.extend_i32_s
-   local.get $4
+   local.get $1
    i32.load offset=4
    i64.extend_i32_u
    i64.const 0
    call $~lib/near-sdk-core/env/env/env.storage_remove
    drop
-   local.get $1
-   i32.load
-   local.get $2
-   call $~lib/util/number/itoa32
-   call $~lib/string/String#concat
-   local.get $3
-   call $~lib/near-sdk-core/storage/Storage.setString
-   local.get $1
-   local.get $1
-   call $~lib/near-sdk-core/collections/persistentVector/PersistentVector<~lib/string/String>#get:length
-   i32.const 1
-   i32.sub
-   local.tee $3
-   i32.store offset=8
-   local.get $1
-   i32.load offset=4
-   local.get $3
-   call $~lib/util/number/itoa32
-   call $~lib/near-sdk-core/storage/Storage.setString
   end
-  call $~lib/near-sdk-core/collections/persistentSet/PersistentSet<~lib/string/String>#_hashedItem
-  local.set $1
-  local.get $0
-  i32.load
-  i32.load
-  local.get $1
-  i32.load offset=4
-  local.get $1
+  local.get $4
   i32.load offset=8
-  call $~lib/util/string/joinIntegerArray<u8>
-  call $~lib/string/String#concat
-  local.get $2
-  call $~lib/util/number/itoa32
-  call $~lib/near-sdk-core/storage/Storage.setString
- )
- (func $assembly/multicall/index/__wrapper_admins_remove
-  (local $0 i32)
-  (local $1 i32)
-  call $~lib/near-sdk-bindgen/index/getInput
-  local.tee $0
-  i32.load
-  i32.const 10416
-  i32.const 10416
-  call $~lib/util/hash/HASH<~lib/string/String>
-  call $~lib/map/Map<~lib/string/String,~lib/assemblyscript-json/JSON/Value>#find
-  if (result i32)
-   local.get $0
-   i32.const 10416
-   call $~lib/near-sdk-bindgen/index/decode<~lib/array/Array<~lib/string/String>,~lib/assemblyscript-json/JSON/Obj>
-  else
-   i32.const 10416
-   call $~lib/near-sdk-bindgen/index/requireParameter<~lib/array/Array<~lib/string/String>>
-  end
-  local.set $0
+  i32.const 4
+  i32.const 54
+  call $~lib/rt/stub/__new
+  local.tee $1
+  i32.const 0
+  i32.store
+  local.get $1
+  local.get $7
+  i32.load offset=4
+  i32.store
+  call $~lib/near-sdk-core/env/env/env.prepaid_gas
+  local.get $4
+  i64.load offset=32
+  i64.sub
+  local.set $9
+  i32.const 16
+  i32.const 3
+  call $~lib/rt/stub/__new
   i64.const 0
-  call $~lib/near-sdk-core/env/env/env.predecessor_account_id
-  call $~lib/near-sdk-core/util/util.read_register_string
-  call $assembly/multicall/index/_is_admin
-  loop $for-loop|0
-   local.get $1
-   local.get $0
-   i32.load offset=12
-   i32.lt_s
-   if
-    global.get $assembly/multicall/index/admins
-    local.get $0
-    local.get $1
-    call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#__get
-    call $~lib/near-sdk-core/collections/persistentSet/PersistentSet<~lib/string/String>#delete
-    local.get $1
-    i32.const 1
-    i32.add
-    local.set $1
-    br $for-loop|0
-   end
-  end
- )
- (func $~lib/near-sdk-bindgen/index/decode<i32,~lib/assemblyscript-json/JSON/Obj> (param $0 i32) (param $1 i32) (result i32)
-  (local $2 i32)
-  local.get $0
-  if (result i32)
-   block $__inlined_func$~lib/rt/__instanceof (result i32)
-    local.get $0
-    i32.const 20
-    i32.sub
-    i32.load offset=12
-    local.tee $2
-    i32.const 11568
-    i32.load
-    i32.le_u
-    if
-     loop $do-continue|0
-      i32.const 1
-      local.get $2
-      i32.const 11
-      i32.eq
-      br_if $__inlined_func$~lib/rt/__instanceof
-      drop
-      local.get $2
-      i32.const 3
-      i32.shl
-      i32.const 11572
-      i32.add
-      i32.load offset=4
-      local.tee $2
-      br_if $do-continue|0
-     end
-    end
-    i32.const 0
-   end
-  else
-   i32.const 0
-  end
-  if (result i32)
-   local.get $1
-   i32.const 1088
-   call $~lib/string/String.__eq
-   i32.eqz
-  else
-   i32.const 0
-  end
-  if
-   block $__inlined_func$~lib/rt/__instanceof0 (result i32)
-    local.get $0
-    i32.const 20
-    i32.sub
-    i32.load offset=12
-    local.tee $2
-    i32.const 11568
-    i32.load
-    i32.le_u
-    if
-     loop $do-continue|01
-      i32.const 1
-      local.get $2
-      i32.const 11
-      i32.eq
-      br_if $__inlined_func$~lib/rt/__instanceof0
-      drop
-      local.get $2
-      i32.const 3
-      i32.shl
-      i32.const 11572
-      i32.add
-      i32.load offset=4
-      local.tee $2
-      br_if $do-continue|01
-     end
-    end
-    i32.const 0
-   end
-   i32.eqz
-   if
-    i32.const 2464
-    i32.const 4256
-    i32.const 310
-    i32.const 37
-    call $~lib/builtins/abort
-    unreachable
-   end
-   local.get $0
-   local.get $1
-   call $~lib/assemblyscript-json/JSON/Obj#get
-   local.tee $0
-   i32.eqz
-   if
-    i32.const 4496
-    i32.const 11264
-    call $~lib/string/String#concat
-    i32.const 4672
-    call $~lib/string/String#concat
-    i32.const 4256
-    i32.const 323
-    i32.const 9
-    call $~lib/builtins/abort
-    unreachable
-   end
-  end
-  local.get $0
-  if (result i32)
-   block $__inlined_func$~lib/rt/__instanceof5 (result i32)
-    local.get $0
-    i32.const 20
-    i32.sub
-    i32.load offset=12
-    local.tee $2
-    i32.const 11568
-    i32.load
-    i32.le_u
-    if
-     loop $do-continue|06
-      i32.const 1
-      local.get $2
-      i32.const 25
-      i32.eq
-      br_if $__inlined_func$~lib/rt/__instanceof5
-      drop
-      local.get $2
-      i32.const 3
-      i32.shl
-      i32.const 11572
-      i32.add
-      i32.load offset=4
-      local.tee $2
-      br_if $do-continue|06
-     end
-    end
-    i32.const 0
-   end
-  else
-   i32.const 0
-  end
-  i32.eqz
-  if
-   i32.const 4880
-   local.get $1
-   call $~lib/string/String#concat
-   i32.const 4768
-   call $~lib/string/String#concat
-   i32.const 11264
-   call $~lib/string/String#concat
-   i32.const 11296
-   call $~lib/string/String#concat
-   i32.const 4256
-   i32.const 358
-   i32.const 5
-   call $~lib/builtins/abort
-   unreachable
-  end
-  block $__inlined_func$~lib/rt/__instanceof11 (result i32)
-   local.get $0
-   i32.const 20
-   i32.sub
-   i32.load offset=12
-   local.tee $1
-   i32.const 11568
-   i32.load
-   i32.le_u
-   if
-    loop $do-continue|012
-     i32.const 1
-     local.get $1
-     i32.const 25
-     i32.eq
-     br_if $__inlined_func$~lib/rt/__instanceof11
-     drop
-     local.get $1
-     i32.const 3
-     i32.shl
-     i32.const 11572
-     i32.add
-     i32.load offset=4
-     local.tee $1
-     br_if $do-continue|012
-    end
-   end
-   i32.const 0
-  end
-  i32.eqz
-  if
-   i32.const 2464
-   i32.const 4256
-   i32.const 367
-   i32.const 30
-   call $~lib/builtins/abort
-   unreachable
-  end
-  local.get $0
+  i64.const 0
+  call $~lib/as-bignum/integer/u128/u128#constructor
+  local.set $2
+  i32.load
+  call $~lib/near-sdk-core/storage/Storage.getSome<~lib/string/String>
+  i32.const 14784
+  local.get $1
+  local.get $9
+  local.get $2
+  call $~lib/near-sdk-core/contract/ContractPromise.create<assembly/multicall/model/CroncatRefillTaskArgs>
   i64.load
-  i32.wrap_i64
+  call $~lib/near-sdk-core/env/env/env.promise_return
  )
- (func $~lib/near-sdk-core/collections/persistentSet/PersistentSet<~lib/string/String>#values (param $0 i32) (result i32)
+ (func $assembly/multicall/index/__wrapper_job_trigger
+  (local $0 i32)
   (local $1 i32)
   (local $2 i32)
-  call $~lib/array/Array<~lib/string/String>#constructor
-  local.set $2
-  loop $for-loop|0
-   local.get $0
-   i32.load offset=4
-   call $~lib/near-sdk-core/collections/persistentVector/PersistentVector<~lib/string/String>#get:length
-   local.get $1
-   i32.gt_s
-   if
-    local.get $2
-    local.get $0
-    i32.load offset=4
-    local.get $1
-    call $~lib/near-sdk-core/collections/persistentVector/PersistentVector<~lib/string/String>#__get
-    call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#push
-    local.get $1
-    i32.const 1
-    i32.add
-    local.set $1
-    br $for-loop|0
-   end
-  end
-  local.get $2
- )
- (func $~lib/array/Array<~lib/string/String>#slice (param $0 i32) (param $1 i32) (param $2 i32) (result i32)
   (local $3 i32)
-  (local $4 i32)
-  local.get $0
-  i32.load offset=12
-  local.set $3
-  local.get $1
-  i32.const 0
-  i32.lt_s
+  (local $4 i64)
+  call $~lib/near-sdk-bindgen/index/getInput
+  local.tee $1
+  i32.load
+  i32.const 13056
+  i32.const 13056
+  call $~lib/util/hash/HASH<~lib/string/String>
+  call $~lib/map/Map<~lib/string/String,~lib/assemblyscript-json/JSON/Value>#find
   if (result i32)
    local.get $1
-   local.get $3
-   i32.add
-   local.tee $1
-   i32.const 0
-   local.get $1
-   i32.const 0
-   i32.gt_s
-   select
+   i32.const 13056
+   call $~lib/near-sdk-bindgen/index/decode<i32,~lib/assemblyscript-json/JSON/Obj>
   else
-   local.get $1
-   local.get $3
-   local.get $1
-   local.get $3
-   i32.lt_s
-   select
+   call $~lib/near-sdk-bindgen/index/requireParameter<i32>
   end
   local.set $1
-  local.get $2
-  i32.const 0
-  i32.lt_s
-  if (result i32)
-   local.get $2
-   local.get $3
-   i32.add
-   local.tee $2
-   i32.const 0
-   local.get $2
-   i32.const 0
-   i32.gt_s
-   select
-  else
-   local.get $2
-   local.get $3
-   local.get $2
-   local.get $3
-   i32.lt_s
-   select
-  end
-  local.get $1
-  i32.sub
-  local.tee $2
-  i32.const 0
-  local.get $2
-  i32.const 0
-  i32.gt_s
-  select
-  local.tee $2
-  i32.const 2
-  i32.const 20
-  i32.const 0
-  call $~lib/rt/__newArray
-  local.tee $3
-  i32.load offset=4
-  local.set $4
-  local.get $0
-  i32.load offset=4
-  local.get $1
-  i32.const 2
-  i32.shl
-  i32.add
-  local.set $1
-  i32.const 0
+  i64.const 0
+  call $~lib/near-sdk-core/env/env/env.predecessor_account_id
+  call $~lib/near-sdk-core/util/util.read_register_string
   local.set $0
-  local.get $2
-  i32.const 2
-  i32.shl
-  local.set $2
-  loop $while-continue|0
-   local.get $0
-   local.get $2
-   i32.lt_u
-   if
-    local.get $0
-    local.get $4
-    i32.add
-    local.get $0
-    local.get $1
-    i32.add
-    i32.load
-    i32.store
-    local.get $0
-    i32.const 4
-    i32.add
-    local.set $0
-    br $while-continue|0
-   end
-  end
-  local.get $3
- )
- (func $~lib/near-sdk-bindgen/index/encode<~lib/array/Array<~lib/string/String>,~lib/typedarray/Uint8Array>@varargs (param $0 i32) (result i32)
-  (local $1 i32)
-  (local $2 i32)
-  (local $3 i32)
-  block $2of2
-   block $1of2
-    block $outOfRange
-     global.get $~argumentsLength
-     i32.const 1
-     i32.sub
-     br_table $1of2 $1of2 $2of2 $outOfRange
-    end
-    unreachable
-   end
-   call $~lib/near-sdk-bindgen/index/JSONEncoder#constructor
-   local.set $1
-  end
+  global.get $assembly/multicall/index/_jobs
+  i32.load offset=8
+  i32.load
+  call $~lib/near-sdk-core/storage/Storage.getSome<~lib/string/String>
   local.get $0
+  call $~lib/string/String.__eq
+  i32.eqz
   if
-   local.get $1
-   i32.const 1088
-   call $~lib/assemblyscript-json/encoder/JSONEncoder#writeKey
-   local.get $1
-   i32.load offset=4
-   i32.const 3648
-   call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#push
-   local.get $1
-   i32.load
-   call $~lib/array/Array<i32>#push
-   loop $for-loop|0
-    local.get $2
-    local.get $0
-    i32.load offset=12
-    i32.lt_s
-    if
-     local.get $0
-     local.get $2
-     call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#__get
-     local.tee $3
-     if
-      local.get $1
-      i32.const 0
-      call $~lib/assemblyscript-json/encoder/JSONEncoder#writeKey
-      local.get $1
-      local.get $3
-      call $~lib/assemblyscript-json/encoder/JSONEncoder#writeString
-     else
-      local.get $1
-      i32.const 0
-      call $~lib/assemblyscript-json/encoder/JSONEncoder#writeKey
-      local.get $1
-      i32.load offset=4
-      i32.const 4160
-      call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#push
-     end
-     local.get $2
-     i32.const 1
-     i32.add
-     local.set $2
-     br $for-loop|0
-    end
-   end
-   local.get $1
-   i32.load offset=4
-   i32.const 3680
-   call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#push
-   local.get $1
-   i32.load
-   local.tee $0
-   i32.load offset=12
-   local.tee $2
-   i32.const 1
-   i32.lt_s
-   if
-    i32.const 3600
-    i32.const 1904
-    i32.const 276
-    i32.const 21
-    call $~lib/builtins/abort
-    unreachable
-   end
+   i32.const 14948
    local.get $0
-   i32.load offset=4
-   local.get $2
-   i32.const 1
-   i32.sub
-   local.tee $2
+   i32.store
+   i32.const 14944
+   i32.const 14940
+   i32.load
    i32.const 2
-   i32.shl
-   i32.add
-   i32.load
-   drop
-   local.get $0
-   local.get $2
-   i32.store offset=12
-  else
-   local.get $1
-   i32.const 1088
-   call $~lib/assemblyscript-json/encoder/JSONEncoder#writeKey
-   local.get $1
-   i32.load offset=4
-   i32.const 4160
-   call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#push
-  end
-  local.get $1
-  call $~lib/assemblyscript-json/encoder/JSONEncoder#serialize
- )
- (func $assembly/multicall/index/__wrapper_get_admins
-  (local $0 i32)
-  (local $1 i32)
-  call $~lib/near-sdk-bindgen/index/getInput
-  local.tee $0
-  i32.load
-  i32.const 11232
-  i32.const 11232
-  call $~lib/util/hash/HASH<~lib/string/String>
-  call $~lib/map/Map<~lib/string/String,~lib/assemblyscript-json/JSON/Value>#find
-  if (result i32)
-   local.get $0
-   i32.const 11232
-   call $~lib/near-sdk-bindgen/index/decode<i32,~lib/assemblyscript-json/JSON/Obj>
-  else
-   i32.const 0
-  end
-  local.set $1
-  local.get $0
-  i32.load
-  i32.const 11360
-  i32.const 11360
-  call $~lib/util/hash/HASH<~lib/string/String>
-  call $~lib/map/Map<~lib/string/String,~lib/assemblyscript-json/JSON/Value>#find
-  if (result i32)
-   local.get $0
-   i32.const 11360
-   call $~lib/near-sdk-bindgen/index/decode<i32,~lib/assemblyscript-json/JSON/Obj>
-  else
-   i32.const 2147483647
-  end
-  local.set $0
-  global.get $assembly/multicall/index/admins
-  call $~lib/near-sdk-core/collections/persistentSet/PersistentSet<~lib/string/String>#values
-  local.get $1
-  local.get $0
-  call $~lib/array/Array<~lib/string/String>#slice
-  i32.const 1
-  global.set $~argumentsLength
-  call $~lib/near-sdk-bindgen/index/encode<~lib/array/Array<~lib/string/String>,~lib/typedarray/Uint8Array>@varargs
-  local.tee $1
-  i32.load offset=8
-  i64.extend_i32_s
-  local.get $1
-  i32.load offset=4
-  i64.extend_i32_u
-  call $~lib/near-sdk-core/env/env/env.value_return
- )
- (func $assembly/multicall/index/__wrapper_tokens_add
-  (local $0 i32)
-  (local $1 i32)
-  call $~lib/near-sdk-bindgen/index/getInput
-  local.tee $0
-  i32.load
-  i32.const 11392
-  i32.const 11392
-  call $~lib/util/hash/HASH<~lib/string/String>
-  call $~lib/map/Map<~lib/string/String,~lib/assemblyscript-json/JSON/Value>#find
-  if (result i32)
-   local.get $0
-   i32.const 11392
-   call $~lib/near-sdk-bindgen/index/decode<~lib/array/Array<~lib/string/String>,~lib/assemblyscript-json/JSON/Obj>
-  else
-   i32.const 11392
-   call $~lib/near-sdk-bindgen/index/requireParameter<~lib/array/Array<~lib/string/String>>
-  end
-  local.set $0
-  i64.const 0
-  call $~lib/near-sdk-core/env/env/env.predecessor_account_id
-  call $~lib/near-sdk-core/util/util.read_register_string
-  call $assembly/multicall/index/_is_admin
-  loop $for-loop|0
-   local.get $1
-   local.get $0
-   i32.load offset=12
-   i32.lt_s
-   if
-    global.get $assembly/multicall/index/tokens
-    local.get $0
-    local.get $1
-    call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#__get
-    call $~lib/near-sdk-core/collections/persistentSet/PersistentSet<~lib/string/String>#add
-    local.get $1
-    i32.const 1
-    i32.add
-    local.set $1
-    br $for-loop|0
-   end
-  end
- )
- (func $assembly/multicall/index/__wrapper_tokens_remove
-  (local $0 i32)
-  (local $1 i32)
-  call $~lib/near-sdk-bindgen/index/getInput
-  local.tee $0
-  i32.load
-  i32.const 11392
-  i32.const 11392
-  call $~lib/util/hash/HASH<~lib/string/String>
-  call $~lib/map/Map<~lib/string/String,~lib/assemblyscript-json/JSON/Value>#find
-  if (result i32)
-   local.get $0
-   i32.const 11392
-   call $~lib/near-sdk-bindgen/index/decode<~lib/array/Array<~lib/string/String>,~lib/assemblyscript-json/JSON/Obj>
-  else
-   i32.const 11392
-   call $~lib/near-sdk-bindgen/index/requireParameter<~lib/array/Array<~lib/string/String>>
-  end
-  local.set $0
-  i64.const 0
-  call $~lib/near-sdk-core/env/env/env.predecessor_account_id
-  call $~lib/near-sdk-core/util/util.read_register_string
-  call $assembly/multicall/index/_is_admin
-  loop $for-loop|0
-   local.get $1
-   local.get $0
-   i32.load offset=12
-   i32.lt_s
-   if
-    global.get $assembly/multicall/index/tokens
-    local.get $0
-    local.get $1
-    call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#__get
-    call $~lib/near-sdk-core/collections/persistentSet/PersistentSet<~lib/string/String>#delete
-    local.get $1
-    i32.const 1
-    i32.add
-    local.set $1
-    br $for-loop|0
-   end
-  end
- )
- (func $assembly/multicall/index/__wrapper_get_tokens
-  (local $0 i32)
-  (local $1 i32)
-  call $~lib/near-sdk-bindgen/index/getInput
-  local.tee $0
-  i32.load
-  i32.const 11232
-  i32.const 11232
-  call $~lib/util/hash/HASH<~lib/string/String>
-  call $~lib/map/Map<~lib/string/String,~lib/assemblyscript-json/JSON/Value>#find
-  if (result i32)
-   local.get $0
-   i32.const 11232
-   call $~lib/near-sdk-bindgen/index/decode<i32,~lib/assemblyscript-json/JSON/Obj>
-  else
-   i32.const 0
-  end
-  local.set $1
-  local.get $0
-  i32.load
-  i32.const 11360
-  i32.const 11360
-  call $~lib/util/hash/HASH<~lib/string/String>
-  call $~lib/map/Map<~lib/string/String,~lib/assemblyscript-json/JSON/Value>#find
-  if (result i32)
-   local.get $0
-   i32.const 11360
-   call $~lib/near-sdk-bindgen/index/decode<i32,~lib/assemblyscript-json/JSON/Obj>
-  else
-   i32.const 2147483647
-  end
-  local.set $0
-  global.get $assembly/multicall/index/tokens
-  call $~lib/near-sdk-core/collections/persistentSet/PersistentSet<~lib/string/String>#values
-  local.get $1
-  local.get $0
-  call $~lib/array/Array<~lib/string/String>#slice
-  i32.const 1
-  global.set $~argumentsLength
-  call $~lib/near-sdk-bindgen/index/encode<~lib/array/Array<~lib/string/String>,~lib/typedarray/Uint8Array>@varargs
-  local.tee $1
-  i32.load offset=8
-  i64.extend_i32_s
-  local.get $1
-  i32.load offset=4
-  i64.extend_i32_u
-  call $~lib/near-sdk-core/env/env/env.value_return
- )
- (func $assembly/multicall/index/__wrapper_init
-  (local $0 i32)
-  (local $1 i32)
-  (local $2 i32)
-  (local $3 i32)
-  call $~lib/near-sdk-bindgen/index/getInput
-  local.tee $3
-  i32.load
-  i32.const 11440
-  i32.const 11440
-  call $~lib/util/hash/HASH<~lib/string/String>
-  call $~lib/map/Map<~lib/string/String,~lib/assemblyscript-json/JSON/Value>#find
-  if (result i32)
-   local.get $3
-   i32.const 11440
-   call $~lib/near-sdk-bindgen/index/decode<~lib/array/Array<~lib/string/String>,~lib/assemblyscript-json/JSON/Obj>
-  else
-   i32.const 11440
-   call $~lib/near-sdk-bindgen/index/requireParameter<~lib/array/Array<~lib/string/String>>
-  end
-  local.set $3
-  i32.const 1424
-  call $~lib/near-sdk-core/storage/Storage.getString
-  local.tee $1
-  i32.const 0
-  call $~lib/string/String.__eq
-  i32.eqz
-  if
-   local.get $1
-   local.tee $0
-   i32.eqz
-   if
-    i32.const 1952
-    i32.const 10544
-    i32.const 185
-    i32.const 43
-    call $~lib/builtins/abort
-    unreachable
-   end
-  end
-  local.get $0
-  i32.const 0
-  call $~lib/string/String.__eq
-  i32.eqz
-  if
-   i32.const 11488
-   i32.const 8672
-   i32.const 110
+   i32.shr_u
+   call $~lib/util/string/joinStringArray
+   i32.const 9088
+   i32.const 150
    i32.const 3
    call $~lib/builtins/abort
    unreachable
   end
-  global.get $assembly/multicall/index/admins
-  i64.const 0
-  call $~lib/near-sdk-core/env/env/env.current_account_id
-  call $~lib/near-sdk-core/util/util.read_register_string
-  call $~lib/near-sdk-core/collections/persistentSet/PersistentSet<~lib/string/String>#add
-  loop $for-loop|0
-   local.get $2
-   local.get $3
-   i32.load offset=12
-   i32.lt_s
-   if
-    global.get $assembly/multicall/index/admins
-    local.get $3
-    local.get $2
-    call $~lib/array/Array<~lib/assemblyscript-json/JSON/Value>#__get
-    call $~lib/near-sdk-core/collections/persistentSet/PersistentSet<~lib/string/String>#add
-    local.get $2
-    i32.const 1
-    i32.add
-    local.set $2
-    br $for-loop|0
-   end
+  global.get $assembly/multicall/index/_jobs
+  local.tee $2
+  i32.load offset=12
+  local.tee $0
+  i32.load
+  i32.load
+  local.get $1
+  call $~lib/util/number/utoa32
+  call $~lib/string/String#concat
+  call $~lib/near-sdk-core/storage/Storage.getSome<i32>
+  local.set $3
+  local.get $0
+  i32.load offset=4
+  local.get $3
+  call $~lib/near-sdk-core/collections/persistentVector/PersistentVector<~lib/near-sdk-core/collections/util/MapEntry<u32,assembly/multicall/model/JobSchema>>#__get
+  i32.load offset=4
+  local.tee $0
+  i32.load8_u offset=64
+  i32.eqz
+  if
+   i32.const 15044
+   local.get $1
+   call $~lib/util/number/itoa32
+   i32.store
+   i32.const 15040
+   i32.const 15036
+   i32.load
+   i32.const 2
+   i32.shr_u
+   call $~lib/util/string/joinStringArray
+   i32.const 12352
+   i32.const 166
+   i32.const 5
+   call $~lib/builtins/abort
+   unreachable
   end
-  i32.const 1424
-  i32.const 11552
-  call $~lib/near-sdk-core/storage/Storage.setString
+  call $~lib/near-sdk-core/env/env/env.block_timestamp
+  local.get $0
+  i64.load offset=40
+  i64.lt_u
+  if
+   i32.const 15072
+   i32.const 12352
+   i32.const 167
+   i32.const 5
+   call $~lib/builtins/abort
+   unreachable
+  end
+  block $__inlined_func$assembly/multicall/jobs/Jobs#trigger
+   local.get $0
+   i64.load offset=48
+   local.get $0
+   i64.load offset=56
+   i64.le_u
+   if
+    i32.const 15268
+    local.get $1
+    call $~lib/util/number/itoa32
+    i32.store
+    i32.const 15264
+    i32.const 15260
+    i32.load
+    i32.const 2
+    i32.shr_u
+    call $~lib/util/string/joinStringArray
+    call $~lib/near-sdk-core/util/util.stringToBytes
+    local.tee $1
+    i32.load offset=8
+    i64.extend_i32_s
+    local.get $1
+    i32.load offset=4
+    i64.extend_i32_u
+    call $~lib/near-sdk-core/env/env/env.log_utf8
+    local.get $2
+    i32.load offset=8
+    i32.const 4
+    i32.const 54
+    call $~lib/rt/stub/__new
+    local.tee $1
+    i32.const 0
+    i32.store
+    local.get $1
+    local.get $0
+    i32.load offset=4
+    i32.store
+    call $~lib/near-sdk-core/env/env/env.prepaid_gas
+    local.get $2
+    i64.load offset=32
+    i64.sub
+    local.set $4
+    i32.const 16
+    i32.const 3
+    call $~lib/rt/stub/__new
+    i64.const 0
+    i64.const 0
+    call $~lib/as-bignum/integer/u128/u128#constructor
+    local.set $0
+    i32.load
+    call $~lib/near-sdk-core/storage/Storage.getSome<~lib/string/String>
+    i32.const 14784
+    local.get $1
+    local.get $4
+    local.get $0
+    call $~lib/near-sdk-core/contract/ContractPromise.create<assembly/multicall/model/CroncatRefillTaskArgs>
+    drop
+    br $__inlined_func$assembly/multicall/jobs/Jobs#trigger
+   end
+   local.get $0
+   local.get $0
+   i64.load offset=56
+   i64.const 1
+   i64.add
+   i64.store offset=56
+   i32.const 15412
+   local.get $0
+   i32.load
+   call $~lib/util/number/itoa32
+   i32.store
+   i32.const 15420
+   local.get $0
+   i64.load offset=48
+   call $~lib/util/number/utoa64
+   i32.store
+   i32.const 15428
+   local.get $0
+   i64.load offset=56
+   call $~lib/util/number/utoa64
+   i32.store
+   i32.const 15408
+   i32.const 15404
+   i32.load
+   i32.const 2
+   i32.shr_u
+   call $~lib/util/string/joinStringArray
+   call $~lib/near-sdk-core/util/util.stringToBytes
+   local.tee $1
+   i32.load offset=8
+   i64.extend_i32_s
+   local.get $1
+   i32.load offset=4
+   i64.extend_i32_u
+   call $~lib/near-sdk-core/env/env/env.log_utf8
+   local.get $2
+   i32.load offset=12
+   local.get $0
+   i32.load
+   local.get $0
+   call $~lib/near-sdk-core/collections/persistentUnorderedMap/PersistentUnorderedMap<u32,assembly/multicall/model/JobSchema>#set
+   local.get $0
+   i32.load offset=68
+   call $assembly/multicall/internal/_internal_multicall
+  end
  )
  (func $~start
   (local $0 i32)
   (local $1 i32)
   (local $2 i32)
-  i32.const 11900
+  (local $3 i32)
+  i32.const 15884
   global.set $~lib/rt/stub/offset
-  i32.const 1360
+  i32.const 1056
+  call $~lib/as-bignum/utils/atou128
+  global.set $assembly/multicall/utils/StorageCostUtils.STORAGE_PRICE_PER_BYTE
+  i32.const 1696
   call $~lib/near-sdk-core/collections/persistentSet/PersistentSet<~lib/string/String>#constructor
   global.set $assembly/multicall/index/admins
-  i32.const 1392
+  i32.const 1728
   call $~lib/near-sdk-core/collections/persistentSet/PersistentSet<~lib/string/String>#constructor
   global.set $assembly/multicall/index/tokens
-  i32.const 4
-  i32.const 7
+  i32.const 48
+  i32.const 10
   call $~lib/rt/stub/__new
   local.tee $0
-  i32.const 1456
-  call $~lib/as-bignum/utils/atou128
+  i32.const 0
   i32.store
   local.get $0
-  global.set $assembly/multicall/index/storageCosts
+  i32.const 0
+  i32.store offset=4
+  local.get $0
+  i32.const 0
+  i32.store offset=8
+  local.get $0
+  i32.const 0
+  i32.store offset=12
+  local.get $0
+  i64.const 40000000000000
+  i64.store offset=16
+  local.get $0
+  i64.const 20000000000000
+  i64.store offset=24
+  local.get $0
+  i64.const 15000000000000
+  i64.store offset=32
+  local.get $0
+  i64.const 15000000000000
+  i64.store offset=40
   i32.const 4
-  i32.const 14
+  i32.const 11
+  call $~lib/rt/stub/__new
+  local.tee $1
+  i32.const 0
+  i32.store
+  local.get $1
+  i32.const 1792
+  i32.store
+  local.get $0
+  local.get $1
+  i32.store offset=8
+  local.get $0
+  i32.const 1824
+  i32.store
+  i32.const 8
+  i32.const 18
+  call $~lib/rt/stub/__new
+  local.tee $2
+  i32.const 0
+  i32.store
+  local.get $2
+  i32.const 0
+  i32.store offset=4
+  i32.const 1856
+  i32.const 1920
+  call $~lib/string/String#concat
+  local.set $3
+  i32.const 4
+  i32.const 19
+  call $~lib/rt/stub/__new
+  local.tee $1
+  i32.const 0
+  i32.store
+  local.get $1
+  local.get $3
+  i32.const 1520
+  call $~lib/string/String#concat
+  i32.store
+  local.get $2
+  local.get $1
+  i32.store
+  i32.const 1856
+  i32.const 1952
+  call $~lib/string/String#concat
+  local.set $3
+  i32.const 12
+  i32.const 21
+  call $~lib/rt/stub/__new
+  local.tee $1
+  i32.const 0
+  i32.store
+  local.get $1
+  i32.const 0
+  i32.store offset=4
+  local.get $1
+  i32.const 0
+  i32.store offset=8
+  local.get $1
+  local.get $3
+  i32.const 1616
+  call $~lib/string/String#concat
+  i32.store offset=4
+  local.get $1
+  local.get $3
+  i32.const 1520
+  call $~lib/string/String#concat
+  i32.store
+  local.get $1
+  i32.const -1
+  i32.store offset=8
+  local.get $2
+  local.get $1
+  i32.store offset=4
+  local.get $0
+  local.get $2
+  i32.store offset=12
+  local.get $0
+  i32.const 1888
+  i32.store offset=4
+  local.get $0
+  global.set $assembly/multicall/index/_jobs
+  i32.const 4
+  i32.const 25
   call $~lib/rt/stub/__new
   local.tee $0
   i32.eqz
   if
    i32.const 0
-   i32.const 15
+   i32.const 26
    call $~lib/rt/stub/__new
    local.set $0
   end
@@ -14790,7 +20987,7 @@
   global.get $~lib/assemblyscript-json/JSON/_JSON.handler
   local.set $1
   i32.const 8
-  i32.const 17
+  i32.const 28
   call $~lib/rt/stub/__new
   local.tee $0
   i32.const 0
@@ -14804,26 +21001,26 @@
   local.get $0
   global.set $~lib/assemblyscript-json/JSON/_JSON.decoder
   i32.const 0
-  i32.const 26
+  i32.const 37
   call $~lib/rt/stub/__new
   local.tee $0
   if (result i32)
    local.get $0
   else
    i32.const 0
-   i32.const 12
+   i32.const 23
    call $~lib/rt/stub/__new
   end
   global.set $~lib/assemblyscript-json/JSON/NULL
   i32.const 128
   i32.const 0
-  i32.const 10
-  i32.const 9536
+  i32.const 5
+  i32.const 9392
   call $~lib/rt/__newArray
   local.tee $0
   i32.load offset=12
   local.tee $1
-  i32.const 36
+  i32.const 44
   call $~lib/rt/stub/__new
   local.tee $2
   local.get $0
