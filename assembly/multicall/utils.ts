@@ -7,10 +7,13 @@ export class StorageCostUtils {
   // Price per 1 byte of storage from mainnet genesis config.
   // TODO: will be using the host function when it will be available.
   static STORAGE_PRICE_PER_BYTE: u128 = u128.fromString("10000000000000000000");
-  storage_byte_cost(): u128 { return StorageCostUtils.STORAGE_PRICE_PER_BYTE };
-  get_min_storage_balance () : u128 {
+  static storage_byte_cost(): u128 { return StorageCostUtils.STORAGE_PRICE_PER_BYTE };
+  static get_min_storage_balance () : u128 {
     // calculate $NEAR amount reserved for storage
-    return u128.mul(this.storage_byte_cost() , u128.fromU64(context.storageUsage));
+    return u128.mul(
+      StorageCostUtils.storage_byte_cost(),
+      u128.fromU64(context.storageUsage)
+    );
   }
 }
 
@@ -77,8 +80,8 @@ export class Croncat {
     call_args: CroncatRemoveTaskArgs,
     call_gas: u64,
     call_deposit: u128
-  ): void {
-    ContractPromise.create<CroncatRemoveTaskArgs>(
+  ): ContractPromise {
+    return ContractPromise.create<CroncatRemoveTaskArgs>(
       this.get_manager_address(),
       "remove_task",
       call_args,
@@ -98,8 +101,8 @@ export class Croncat {
     call_args: CroncatRefillTaskArgs,
     call_gas: u64,
     call_deposit: u128
-  ): void {
-    ContractPromise.create<CroncatRefillTaskArgs>(
+  ): ContractPromise {
+    return ContractPromise.create<CroncatRefillTaskArgs>(
       this.get_manager_address(),
       "refill_balance",
       call_args,
