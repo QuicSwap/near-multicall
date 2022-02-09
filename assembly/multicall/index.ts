@@ -1,5 +1,5 @@
 import { context, ContractPromiseBatch, storage, PersistentSet, u128, base64, util } from 'near-sdk-as';
-import { BatchCall, FtOnTransferArgs, MulticallArgs } from './model';
+import { BatchCall, JobSchema, FtOnTransferArgs, MulticallArgs, JobActivateArgs } from './model';
 import { _internal_multicall } from './internal';
 import { Jobs } from './jobs';
 import { StorageCostUtils } from './utils';
@@ -25,7 +25,7 @@ const _jobs = new Jobs(
  * 
  * @param actions 
  */
-export function multicall(calls: BatchCall[][]): void {
+export function multicall (calls: BatchCall[][]): void {
   _is_admin(context.predecessor);
   _assert_deposit();
 
@@ -34,14 +34,25 @@ export function multicall(calls: BatchCall[][]): void {
 
 /**
  * following functions can be used in callback:
- * 1- multicall()
+ * 1- multicall
+ * 2- job_activate
+ * 
+ * !!! Note: NEP-141 indicates that ft_on_transfer should return number of unused tokens
+ * in string form. However we return promises as result. The token contract interprets
+ * this as ft_on_transfer failing, which leads it to rollback the transfer from ft_resolve_transfer.
+ * 
+ * !!! Why we do this? this allows the calls made by multicall to use any amount of the
+ * attached fungible tokens without worrying about re-imbursement of unused amount. That will
+ * be done automatically by the token's ft_resolve_tranfer when it interprets this as "failed".
+ * Of course tokens spent by multicall will not be re-imbursed, only the unused amount will be.
+ * 
  * 
  * @param sender_id 
  * @param amount 
  * @param msg 
  * @returns 
  */
-export function ft_on_transfer(sender_id: string, amount: u128, msg: string): void {
+export function ft_on_transfer (sender_id: string, amount: u128, msg: string): void {
   assert(tokens.has(context.predecessor), `${context.predecessor} not on token whitelist`);
   _is_admin(sender_id);
 
@@ -49,14 +60,20 @@ export function ft_on_transfer(sender_id: string, amount: u128, msg: string): vo
 
   // decode the respective function arguments
   if (methodAndArgs.function_id == "multicall") {
-    const multicallArgs : MulticallArgs = util.parseFromBytes<MulticallArgs>(
+    const multicallArgs: MulticallArgs = util.parseFromBytes<MulticallArgs>(
       base64.decode(methodAndArgs.args)
     );
     // call multicall (returns promise)
     _internal_multicall(multicallArgs.calls);
+  } else if (methodAndArgs.function_id == "job_activate") {
+    const jobActivateArgs: JobActivateArgs = util.parseFromBytes<JobActivateArgs>(
+      base64.decode(methodAndArgs.args)
+    );
+    // call job_activate (returns promise)
+    _jobs.activate(jobActivateArgs.job_id, "job_activate_callback");
   }
 
-  // otherwise don't return anything, ft standard reimburses full amount
+  // otherwise don't return anything, ft standard reimburses full amount to sender
 
 }
 
@@ -66,7 +83,7 @@ export function ft_on_transfer(sender_id: string, amount: u128, msg: string): vo
  * @param account_id 
  * @param amount 
  */
-export function near_transfer(account_id: string, amount: u128 = u128.Max): void {
+export function near_transfer (account_id: string, amount: u128 = u128.Max): void {
   _is_admin(context.predecessor);
   _assert_deposit()
 
@@ -78,7 +95,7 @@ export function near_transfer(account_id: string, amount: u128 = u128.Max): void
   ContractPromiseBatch.create(account_id).transfer(amount);
 }
 
-export function admins_add(account_ids: string[]): void {
+export function admins_add (account_ids: string[]): void {
   _is_admin(context.predecessor);
   _assert_deposit()
 
@@ -86,7 +103,7 @@ export function admins_add(account_ids: string[]): void {
     admins.add(account_ids[i]);
 }
 
-export function admins_remove(account_ids: string[]): void {
+export function admins_remove (account_ids: string[]): void {
   _is_admin(context.predecessor);
   _assert_deposit()
 
@@ -94,11 +111,11 @@ export function admins_remove(account_ids: string[]): void {
     admins.delete(account_ids[i]);
 }
 
-export function get_admins(start: i32 = 0, end: i32 = i32.MAX_VALUE): string[] {
+export function get_admins (start: i32 = 0, end: i32 = i32.MAX_VALUE): string[] {
   return admins.values().slice(start, end);
 }
 
-export function tokens_add(addresses: string[]): void {
+export function tokens_add (addresses: string[]): void {
   _is_admin(context.predecessor);
   _assert_deposit()
 
@@ -106,7 +123,7 @@ export function tokens_add(addresses: string[]): void {
     tokens.add(addresses[i]);
 }
 
-export function tokens_remove(addresses: string[]): void {
+export function tokens_remove (addresses: string[]): void {
   _is_admin(context.predecessor);
   _assert_deposit()
 
@@ -114,12 +131,12 @@ export function tokens_remove(addresses: string[]): void {
     tokens.delete(addresses[i]);
 }
 
-export function get_tokens(start: i32 = 0, end: i32 = i32.MAX_VALUE): string[] {
+export function get_tokens (start: i32 = 0, end: i32 = i32.MAX_VALUE): string[] {
   return tokens.values().slice(start, end);
 }
 
 // init contract
-export function init(
+export function init (
   admin_accounts: string[],
   croncat_manager: string,
   job_bond: u128
@@ -181,6 +198,16 @@ export function get_croncat_manager (): string {
 
 export function job_get_bond (): u128 {
   return _jobs.get_bond();
+}
+
+/**
+ * list all registered jobs
+ * 
+ * @param start 
+ * @param end 
+ */
+export function get_jobs (start: i32 = 0, end: i32 = _jobs.jobMap.length): JobSchema[] {
+  return _jobs.get_jobs(start, end);
 }
 
 /**
@@ -326,7 +353,7 @@ export function job_trigger (job_id: i32): void {
  * 
  * @param account_id 
  */
-function _is_admin(account_id: string): void {
+function _is_admin (account_id: string): void {
   assert(
     admins.has(account_id),
     `${account_id} must be admin to call this function`
@@ -338,7 +365,7 @@ function _is_admin(account_id: string): void {
  * security in case DAOs add an EOA admin to the contract
  * 
  */
-function _assert_deposit(): void {
+function _assert_deposit (): void {
   assert(
     u128.gt( context.attachedDeposit, u128.Zero ),
     `attached deposit must be more than zero`
@@ -350,7 +377,7 @@ function _assert_deposit(): void {
  * 
  * @param account_id 
  */
- function _is_croncat_manager(account_id: string): void {
+ function _is_croncat_manager (account_id: string): void {
   assert(
     get_croncat_manager() == account_id,
     `${account_id} must be croncat manager to call this function`
@@ -360,7 +387,7 @@ function _assert_deposit(): void {
 /**
  * panick if caller isn't this contract's address
  */
- function _is_private(): void {
+ function _is_private (): void {
   assert(
     context.contractName == context.predecessor,
     `Method is private`

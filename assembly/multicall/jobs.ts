@@ -1,5 +1,5 @@
-import { context, storage, PersistentUnorderedMap, logging, u128, util, base64, ContractPromise, ContractPromiseBatch } from "near-sdk-as";
-import { JobSchema, BatchCall } from "./model";
+import { context, storage, PersistentUnorderedMap, logging, u128, base64, ContractPromise, ContractPromiseBatch } from "near-sdk-as";
+import { JobSchema, BatchCall, JobActivateArgs } from "./model";
 import { _internal_multicall } from "./internal";
 import { Croncat } from "./utils";
 
@@ -106,7 +106,7 @@ export class Jobs {
       u128.ge(context.attachedDeposit, bondAmount),
       "attached deposit must be greater or equal than the required bond"
     );
-    let currentJobId: i32 =  storage.getPrimitive<u32>(this.KEY_JOB_COUNT, 0);
+    let currentJobId: u32 =  storage.getPrimitive<u32>(this.KEY_JOB_COUNT, 0);
     let newJob: JobSchema = {
       id: currentJobId,
       croncat_hash: '', // added after croncat task creation (job activation)
@@ -134,7 +134,7 @@ export class Jobs {
    * @param job_id 
    * @param callback_name 
    */
-  activate (job_id: i32, callback_name: string): void {
+  activate (job_id: u32, callback_name: string): void {
     let aJob: JobSchema = this.jobMap.getSome(job_id);
     // is job already active?
     if (aJob.is_active == true) {
@@ -145,10 +145,10 @@ export class Jobs {
     if (aJob.croncat_hash != '') {
       logging.log(`job ${aJob.id} already has croncat task ${aJob.croncat_hash}`);
     } else {
-      let croncatTaskArgs: Uint8Array = util.stringToBytes(`{"job_id":${aJob.id}}`);
+      let croncatTaskArgs: JobActivateArgs = {job_id: aJob.id};
 
       // create a croncat task
-      this.croncat.create_task(
+      let promise = this.croncat.create_task(
         {
           contract_id: context.contractName,
           function_id: "job_trigger",
@@ -156,17 +156,20 @@ export class Jobs {
           recurring: aJob.runs_max > 1 ? true : false,
           deposit: aJob.trigger_deposit,
           gas: aJob.trigger_gas,
-          arguments: base64.encode(croncatTaskArgs)
+          arguments: base64.encode(croncatTaskArgs.encode())
         },
         context.prepaidGas - this.GAS_ACTIVATE,
         aJob.croncat_budget,
-      ).then(
+      ).then<JobActivateArgs>(
         context.contractName,
         callback_name,
         croncatTaskArgs,
         this.GAS_CREATE_TASK_CALLBACK,
         u128.Zero
       );
+
+      // return promise as result
+      promise.returnAsResult();
 
     }
     // reimburse bond on first time activation
@@ -180,7 +183,7 @@ export class Jobs {
     }
   }
 
-  activate_callback (job_id: i32): void {
+  activate_callback (job_id: u32): void {
 
     let aJob: JobSchema = this.jobMap.getSome(job_id);
     // get task hash from promise results
@@ -307,7 +310,7 @@ export class Jobs {
    * 
    * @param job_id 
    */
-  trigger (job_id: i32): void {
+  trigger (job_id: u32): void {
 
     const aJob: JobSchema = this.jobMap.getSome(job_id);
     assert(aJob.is_active == true, `job ${job_id} must be active`);

@@ -27,6 +27,11 @@ export class MulticallArgs {
 }
 
 @nearBindgen
+export class JobActivateArgs {
+  job_id: u32;
+}
+
+@nearBindgen
 export class CroncatRemoveTaskArgs {
   task_hash: string;
 }
@@ -49,7 +54,7 @@ export class CroncatCreateTaskArgs {
 
 @nearBindgen
 export class JobSchema {
-  id: i32;
+  id: u32;
   croncat_hash: string;
   creator: string;
   bond: u128;
