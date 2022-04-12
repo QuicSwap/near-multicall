@@ -1,3 +1,16 @@
+## This repository is archived.
+
+This repository is archived and will not receive any updates or accept issues or pull requests.  
+development of Near-multicall contracts will continue on a [new repository](https://github.com/near-multicall/contracts).
+
+To report bugs in this repo please open an issue on the [new repository](https://github.com/near-multicall/contracts/issues).
+
+If you have found a critical security bug, please exercise responsible disclosure and e-mail [security@multicall.app](mailto:security@multicall.app?subject=[Bug%20report]%20Near-multicall%20smart%20contracts).  
+
+
+---
+
+
 # multicall.near
 
 ![tests workflow](https://github.com/quicswap/near-multicall/actions/workflows/tests.yml/badge.svg)  
